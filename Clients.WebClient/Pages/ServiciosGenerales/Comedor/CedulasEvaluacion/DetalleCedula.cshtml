@@ -136,32 +136,32 @@
                                 @foreach (var fac in Model.Facturas)
                                 {
                                     i++;
-                                    <tr>
-                                        <td>@i</td>
-                                        <td class="@fac.Estatus.Fondo.Replace("bg","text") font-weight-bold">@fac.Estatus.Nombre</td>
-                                        <td>@(fac.Tipo.Equals("NC") ? "Nota de Crédito" : "Factura")</td>
-                                        <td>@fac.Nombre</td>
-                                        <td>
-                                            @fac.UUID
-                                        </td>
-                                        <td>@fac.Folio</td>
-                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)</td>
-                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)</td>
-                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)</td>
-                                        <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy")</td>
-                                        <td class="text-center">
-                                            <a href="#" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id" data-toggle="tooltip" title="Mostrar/Ocultar el detalle de la factura" data-placement="top">
-                                                <i class="fas fa-eye text-success mr-2"></i>
-                                            </a>
-                                            <a href="javascript:" class="verFactura" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
-                                               data-folio="@(fac.Serie + fac.Folio)" data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)"
-                                               data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)"
-                                               data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)"
-                                               data-toggle="tooltip" title="Ver y descargar el PDF" data-placement="top">
-                                                <i class='fa-solid fa-file-pdf text-danger'></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>@i</td>
+                                    <td class="@fac.Estatus.Fondo.Replace("bg","text") font-weight-bold">@fac.Estatus.Nombre</td>
+                                    <td>@(fac.Tipo.Equals("NC") ? "Nota de Crédito" : "Factura")</td>
+                                    <td>@fac.Nombre</td>
+                                    <td>
+                                        @fac.UUID
+                                    </td><!-- SE MODIFICO EL STRING.FORMAT A {0:C4} PARA EL FORMATO DE PESOS, SIN REDONDEO Y CON 4 DECIMALES -->
+                                    <td>@fac.Folio</td>
+                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)</td>
+                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)</td>
+                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)</td>
+                                    <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy")</td>
+                                    <td class="text-center">
+                                        <a href="#" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id" data-toggle="tooltip" title="Mostrar/Ocultar el detalle de la factura" data-placement="top">
+                                            <i class="fas fa-eye text-success mr-2"></i>
+                                        </a>
+                                        <a href="javascript:" class="verFactura" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
+                                           data-folio="@(fac.Serie + fac.Folio)" data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)"
+                                           data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)"
+                                           data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)"
+                                           data-toggle="tooltip" title="Ver y descargar el PDF" data-placement="top">
+                                            <i class='fa-solid fa-file-pdf text-danger'></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>

@@ -371,7 +371,7 @@
                                                                 {
                                                                     <th>Fecha de entrega</th>
                                                                 }
-
+                                                               
                                                                 @if (@rs.ciMensajeria.NumeroGuia)
                                                                 {
                                                                     <th>Número de guía</th>
@@ -386,7 +386,7 @@
                                                                 {
                                                                     <th>Acuse</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciMensajeria.Sobrepeso)
                                                                 {
                                                                     <th>Sobrepeso (Kg)</th>
@@ -396,7 +396,7 @@
                                                                 {
                                                                     <th>Tipo de servicio</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciMensajeria.TipoIndemnizacion)
                                                                 {
                                                                     <th>Tipo de contenido</th>
@@ -411,7 +411,7 @@
                                                                 {
                                                                     <th>Escrito robo/extravio</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciMensajeria.Comprobante)
                                                                 {
                                                                     <th>Comprobante</th>
@@ -423,13 +423,13 @@
                                                                 }
 
                                                                 @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
                                                                     <th>Monto Penalizacion</th>
                                                                 }
 
                                                                 @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                               Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                              Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
                                                                     <th>Acciones</th>
                                                                 }

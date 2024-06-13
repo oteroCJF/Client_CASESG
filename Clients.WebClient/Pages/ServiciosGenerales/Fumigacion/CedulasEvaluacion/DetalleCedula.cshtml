@@ -2887,6 +2887,7 @@
                         });
             });
 
+            // ESTATUS ENVIAR CEDULA
             $(".enviarCedula").click(function () {
                 if (validaCuestionario()) {
                     if (validaEntregables()) {
@@ -2910,6 +2911,7 @@
                                 axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR 
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Elimina: false,
                                     Bloqueada: true,
@@ -2926,6 +2928,7 @@
                                             window.location.reload();
                                         });
                                     }
+                                    
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
@@ -3025,6 +3028,7 @@
                 });
             });
 
+            //ESTATUS AUTORIZAR
             $(".autorizar").click(function () {
                 Swal.fire({
                     icon: 'warning',
@@ -3096,6 +3100,8 @@
                 });
             });
 
+            //ESTATUS RECHAZAR 
+
             $(".rechazar").click(function () {
                 Swal.fire({
                     icon: 'warning',
@@ -3131,6 +3137,7 @@
                                 axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Observaciones: coments.value,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR 
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(facturacion.id),
                                     UsuarioId: usuario,
@@ -3167,6 +3174,8 @@
                     }
                 });
             });
+
+            //ESTATUS REVISAR CAE
 
             $(".revisarCAE").click(function () {
                 if (!validaNC()) {
@@ -3234,6 +3243,8 @@
                     });
                 }
             });
+
+            //ESTATUS AUTORIZADA CAE
 
             $(".autorizarCAE").click(function () {
                 Swal.fire({
@@ -3305,6 +3316,8 @@
                     }
                 });
             });
+
+            // ESTATUS TRAMITE RECHAZADO
 
             $(".tramiteRechazado").click(function () {
                 Swal.fire({
