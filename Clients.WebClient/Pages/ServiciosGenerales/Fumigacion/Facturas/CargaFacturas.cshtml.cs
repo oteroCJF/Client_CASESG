@@ -1,0 +1,149 @@
+using Api.Gateway.Models.Catalogos.DTOs.Servicios;
+using Api.Gateway.Models.CFDIs.ServiciosGenerales.Commands;
+using Api.Gateway.Models.CFDIs.ServiciosGenerales.DTOs;
+using Api.Gateway.Models.Repositorios.DTOs;
+using Api.Gateway.Models.Inmuebles.DTOs.Inmuebles;
+using Api.Gateway.Models.Modulos.DTOs;
+using Api.Gateway.Models.Permisos.DTOs;
+using Api.Gateway.WebClient.Proxy.Catalogos.CTServicios;
+using Api.Gateway.WebClient.Proxy.Fumigacion.Repositorios;
+using Api.Gateway.WebClient.Proxy.Fumigacion.Facturas;
+using Api.Gateway.WebClient.Proxy.Inmuebles;
+using Api.Gateway.WebClient.Proxy.Modulos;
+using Api.Gateway.WebClient.Proxy.Permisos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Spire.Xls;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Clients.WebClient.Pages.Fumigacion.Facturas
+{
+    public class CargaFacturasModel : PageModel
+    {
+        private readonly IModuloProxy _modulo;
+        private readonly IInmuebleProxy _inmuebles;
+        private readonly IFRepositorioProxy _repositorios;
+        private readonly IFCFDIProxy _facturas;
+        private readonly ICTServicioProxy _servicios;
+        private readonly IPermisoProxy _permisos;
+
+        public int Anio { get; set; }
+        public ModuloDto Modulo { get; set; }
+        public SubmoduloDto Submodulo { get; set; }
+        public List<int> InmueblesServicio { get; set; } = new List<int>();
+        public List<InmuebleDto> Inmuebles { get; set; }
+        public RepositorioDto Repositorio { get; set; }
+        public CTServicioDto Servicio { get; set; }
+        public List<PermisoUsuarioDto> Permisos { get; set; }
+
+        public CargaFacturasModel(IModuloProxy modulo, IFRepositorioProxy facturacion, ICTServicioProxy servicios, IInmuebleProxy inmuebles,
+           IPermisoProxy permisos, IFCFDIProxy facturas)
+        {
+            _modulo = modulo;
+            _inmuebles = inmuebles;
+            _repositorios = facturacion;
+            _facturas = facturas;
+            _servicios = servicios;
+            _permisos = permisos;
+
+        }
+        public async Task OnGet(int moduloId, int submoduloId, int facturacion)
+        {
+            Permisos = await _permisos.GetPermisosByModuloUsuario(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value, moduloId);
+            if (Permisos.Where(p => p.Permiso.Nombre.Equals("Ver")).Count() != 0)
+            {
+                Modulo = await _modulo.GetModuloByIdAsync(moduloId);
+                Submodulo = await _modulo.GetSubmoduloByIdAsync(submoduloId);
+                Servicio = await _servicios.GetServicioByIdAsync((int)Modulo.ServicioId);
+                InmueblesServicio = (await _inmuebles.GetInmueblesByServicio((int)Modulo.ServicioId)).Select(i => i.InmuebleId).ToList();
+                Inmuebles = (await _inmuebles.GetAllInmueblesAsync()).Where(i => InmueblesServicio.Contains(i.Id)).ToList();
+                Repositorio = await _repositorios.GetRepositorioById(facturacion);
+            }
+            else
+            {
+                Response.Redirect("/error/denegado");
+            }
+        }
+
+        public async Task<IActionResult> OnPostFacturas(CFDICommand facturas, ICollection<IFormFile> files)
+        {
+            int statusFactura = 0;
+
+            if (!facturas.File.ContentType.Contains("pdf"))
+            {
+                CFDICreateCommand factura = new CFDICreateCommand();
+                factura.Anio = facturas.Anio;
+                factura.InmuebleId = facturas.InmuebleId;
+                factura.Inmueble = facturas.Inmueble;
+                factura.RepositorioId = facturas.RepositorioId;
+                factura.Mes = facturas.Mes;
+                factura.UsuarioId = facturas.UsuarioId;
+                factura.TipoFacturacion = facturas.TipoFacturacion;
+                factura.XML = files.FirstOrDefault();
+                statusFactura = (await _facturas.CreateFactura(factura)).EstatusId;
+            }
+            else if (facturas.File.ContentType.Contains("pdf"))
+            {
+                CFDIUpdateCommand factura = new CFDIUpdateCommand();
+                factura.Anio = facturas.Anio;
+                factura.Mes = facturas.Mes;
+                factura.Inmueble = facturas.Inmueble;
+                factura.PDF = files.FirstOrDefault();
+                statusFactura = (await _facturas.UpdateFactura(factura)).EstatusId;
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+            return StatusCode(statusFactura);
+        }
+
+        public async Task<IActionResult> OnGetReporteFacturas(int facturacionId)
+        {
+            Workbook workbook = new Workbook();
+            workbook.Worksheets.Clear();
+            var sheet = workbook.Worksheets.Add("Sheet1");
+            sheet.Range["A1:I20000"].Style.Font.Size = 10;
+            sheet.Range["A1:I1"].Style.Font.IsBold = true; //set the font bold
+            sheet.Range["A1:I1"].ColumnWidth = 20; 
+            sheet.Range["A1:I1"].Style.Font.FontName = "Calibri"; 
+            List< HistorialMFDto> historial = await _facturas.GetHistorialMFByFacturacion(facturacionId);
+            DataTable dt = CreateTable(historial);
+            sheet.InsertDataTable(dt, true, 1, 1);
+
+            byte[] toArray = null;
+            using (MemoryStream ms1 = new MemoryStream())
+            {
+                workbook.SaveToStream(ms1, FileFormat.Version2016);
+                toArray = ms1.ToArray();
+            }
+
+            return File(toArray, "application/vnd.ms-excel", "Prueba.xlsx");
+        }
+
+        private static DataTable CreateTable(List<HistorialMFDto> historial)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Año", typeof(int));
+            dt.Columns.Add("Mes", typeof(string));
+            dt.Columns.Add("Inmueble", typeof(string));
+            dt.Columns.Add("Elaboró", typeof(string));
+            dt.Columns.Add("TipoArchivo", typeof(string));
+            dt.Columns.Add("ArchivoXML", typeof(string));
+            dt.Columns.Add("ArchivoPDF", typeof(string));
+            dt.Columns.Add("Observaciones", typeof(string));
+            dt.Columns.Add("FechaCreacion", typeof(string));
+            foreach (var hs in historial)
+            {
+                dt.Rows.Add(hs.Anio, hs.Mes, hs.Inmueble, hs.Usuario, hs.TipoArchivo, hs.ArchivoXML, hs.ArchivoPDF, hs.Observaciones, hs.FechaCreacion);
+            }
+            return dt;
+        }
+    }
+}

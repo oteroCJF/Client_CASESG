@@ -1,0 +1,266 @@
+﻿@page "/mensajeria/facturas/{moduloId}/{submoduloId}/index"
+@model Clients.WebClient.Pages.Mensajeria.Facturas.IndexModel
+@{
+    ViewData["Title"] = "Servicio de "+Model.Servicio.Nombre;
+    ViewData["Titulo"] = "Repositorio(s) de " + Model.Servicio.Descripcion;
+    ViewData["Action"] = "Inicio";
+}
+
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <div class="col-lg-3">
+            <form method="get" id="getAnio" asp-page-handler="GetAnio">
+                <div class="row">
+                    <label class="label">Consultar información del año: </label>
+                    <div class="input-group mb-3">
+                        <select class="form-control" id="anioActual" asp-for="Anio">
+                            <option value="">Seleccione el año</option>
+                            @for (var i = 2022; i <= DateTime.Now.Year; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <div class="row">
+                            <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar información</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        @if (Model.Anio != 0)
+        {
+            <div class="col-lg-9">
+                <a href="javascript:" class="btn btn-sm btn-primary float-right mr-2 CreateRepositorio"
+                   data-toggle="tooltip" title="Crear nueva facturación" data-placement="top">
+                    <i class="fal fa-plus"></i>
+                </a>
+            </div>
+        }
+    </div>
+    @if (Model.Repositorio != null && Model.Repositorio.Count() > 0)
+    {
+        <div class="row col-lg-12">
+            <div class="row col-lg-12">
+                <h5>Repositorio(s) del año @Model.Anio</h5>
+            </div>
+            @foreach (var item in Model.Repositorio)
+            {
+                <div class="col-lg-3">
+                    <div class="small-box text-white" style="background-color: @item.Mes.Fondo">
+                        <div class="inner mt-2">
+                            <div class="form-row mt-2">
+                                <strong><p>@item.Mes.Nombre - @item.Contrato.NoContrato</p></strong>
+                            </div>
+                            <h6>Factura(s) cargada(s) - @item.Facturas Factura(s)</h6>
+                            <h6>Notas(s) de Crédito cargadas - @item.NotasCredito Nota(s)</h6>
+                        </div>
+                        <div class="icon">
+                            <i class="fal fa-building mt-2"></i>
+                        </div>
+                        <a href="~/mensajeria/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@item.Id/@item.MesId" class="small-box-footer moreInformation" data-mes="@item.Mes.Nombre">Detalle <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@* Modal para generar la facturacion *@
+<div class="modal fade" id="modal-facturacion">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white">Generar repositorio mensual de comprobantes fiscales digitales por internet</h4>
+                <button type="button" class="close close-incidencias text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Detalle de la Facturación</h4>
+                        <div class="row col-lg-12" id="divDetallesContrato">
+                            <div class="form-row col-lg-12">
+                                <div class="col-lg-3">
+                                    <label for="tipoIncidencia">Año:</label>
+                                    <input class="form-control" id="campoAnio" value="@Model.Anio" disabled/>
+                                </div>
+                                <div class="form-group col-md-3" id="divFechaIncio">
+                                    <label for="mes">Mes: </label>
+                                    <select id="campoMes" class="form-control">
+                                        <option value="">Seleccione el mes</option>
+                                        @foreach(var ms in Model.Meses)
+                                        {
+                                            <option value="@ms.Id">@ms.Nombre</option>
+                                        }
+                                    </select>
+                                    <div class="col-sm-12" id="error_campoMes">
+                                        <small id="dateHelp" class="text-danger">
+                                            Seleccione el mes
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4" id="divFechaFin">
+                                    <label for="Contrato">Contrato: </label>
+                                    <select id="campoContrato" class="form-control">
+                                        <option value="">Seleccione el Contrato</option>
+                                        @foreach (var cn in Model.Contratos)
+                                        {
+                                            <option value="@cn.Id">@cn.NoContrato</option>
+                                        }
+                                    </select>
+                                    <div class="col-sm-12" id="error_campoContrato">
+                                        <small id="dateHelp" class="text-danger">
+                                            Seleccione el contrato
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardarRepositorio">Generar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@* Modal para generar la facturacion *@
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            var servicio = @Html.Raw(Json.Serialize(@Model.Servicio));
+
+            $(".moreInformation").click(function () {
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: "Servicio de " + @Html.Raw(Json.Serialize(@Model.Servicio.Nombre)),
+                    html: "Cargando el listado de inmuebles de <b>"+$(this).data('mes')+" "+ $("#anioActual").val() + "</b>."
+                })
+                Swal.showLoading();
+            });
+
+            var anio = @Html.Raw(Json.Serialize(DateTime.Now.Year))
+
+            $("#anioActual").val(anio);
+
+            $('#getAnio').validate({
+                rules: {
+                    Anio: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    Anio: {
+                        required: "Por favor seleccione el año a consultar",
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.input-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: "Servicio de " + @Html.Raw(Json.Serialize(@Model.Servicio.Nombre)),
+                        html: "Obtiendo los repositorios del año <b>" + $("#anioActual").val() + "</b>."
+                    })
+                    Swal.showLoading();
+                    form.submit();
+                }
+            });
+
+            /*************************************** Captura de la Facturacion ****************************************/
+            $("#error_campoMes").css("display","none");
+            $("#error_campoContrato").css("display","none");
+
+            $(".CreateRepositorio").click(function () {
+                $("#modal-facturacion").modal("show");
+            });
+
+            function validaCampos() {
+                if ($("#campoMes").val() != "" && $("#campoContrato").val()) {
+                    return true;
+                }
+
+                if ($("#campoContrato").val() == "")
+                {
+                    $('#campoContrato').removeClass('is-valid');
+                    $('#campoContrato').addClass('is-invalid');
+                    $("#error_campoContrato").css("display", "block");
+                }
+
+                if ($("#campoMes").val() == "") {
+                    $('#campoMes').removeClass('is-valid');
+                    $('#campoMes').addClass('is-invalid');
+                    $("#error_campoMes").css("display", "block");
+                }
+            }
+
+            $("#guardarRepositorio").click(function (){
+                var mes = $("#campoMes").val();
+                var nMes = $("#campoMes option:selected").text();
+                var contrato = $("#campoContrato").val();
+
+                if (validaCampos()) {
+                    axios.post('/mensajeria/facturas/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/index?Anio='+@Model.Anio+'&Handler=CreateRepositorio', {
+                        MesId: parseInt(mes), ContratoId: parseInt(contrato), Anio: @Model.Anio
+                    }).then(response => {
+                        console.log(response);
+                        if (response.status == 200 && response.data != null) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Servicio de " + @Html.Raw(Json.Serialize(@Model.Servicio.Nombre)),
+                                html: "El repositorio de <b>" + nMes + " - " +@Model.Anio+"</b> se generó correctamente.",
+                                confirmButtonText: 'Cerrar'
+                            }).then(function () {
+                                $("#modal-facturacion").modal("hide");
+                                window.location.reload();
+                            });
+                        }
+                        else if (response.status == 205) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: 'Repositorio de ' + servicio.nombre,
+                                html: "El repositorio que intenta crear ya existe.",
+                                confirmButtonText: 'Cerrar'
+                            });
+                        }
+                        else if(response.status == 208)
+                        {
+                            Swal.fire({
+                                icon: "warning",
+                                title: 'Repositorio de ' + servicio.nombre,
+                                html: "No se puede crear un repositorio fuera de la fecha de inicio del contrato.",
+                                confirmButtonText: 'Cerrar'
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Repositorio de '+servicio.nombre,
+                            html: "Hubo un error al generar el repositorio. Contacte a su administrador del sistema.",
+                            confirmButtonText: 'Cerrar'
+                        });
+                    });
+                }
+
+            });
+        });
+    </script>
+}

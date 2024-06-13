@@ -1,0 +1,347 @@
+﻿@page "/usuarios/{moduloId}/detalle/{usuarioId}"
+@model Clients.WebClient.Pages.Usuarios.DetalleModel
+@{
+    ViewData["Title"] = "Detalle de servidor público ";
+    ViewData["Titulo"] = "Servidor público - " + System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToLower(Model.Usuario.NombreEmp + " " + Model.Usuario.PaternoEmp + " " + Model.Usuario.MaternoEmp));
+    int ci = 0;
+    int i = 0;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <a href="/usuarios/@Model.Modulo.Id/index" type='button' class="btn btn-sm btn-warning float-right"
+           data-toggle="tooltip" title="Regresar" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>Detalles del usuario</h4>
+        </div>
+        <div class="card-body">
+            <div class="row col-lg-12">
+                <table class="table table-borderless">
+                    <tr>
+                        <td><strong>Nombre: </strong> @(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToLower(Model.Usuario.NombreEmp + " " + Model.Usuario.PaternoEmp + " " + Model.Usuario.MaternoEmp)))</td>
+                        <td><strong>Expediente: </strong>@Model.Usuario.Expediente</td>
+                        <td><strong>RFC: </strong>@Model.Usuario.RFC</td>
+                        <td><strong>Puesto: </strong>@Model.Usuario.Puesto</td>
+                        <td><strong>Correo Electrónico: </strong>@Model.Usuario.Email</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row col-lg-12">
+                <div class="col-lg-12 mt-3">
+                    <h5>Módulos del sistema</h5>
+                </div>
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        @foreach (var mod in Model.Modulos)
+                        {
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="tab_@mod.Nombre-tab" data-toggle="tab" href="#tab_@mod.Nombre" role="tab" aria-controls="@mod.Nombre" aria-selected="false">
+                                    @Html.Raw(mod.Icono) @mod.Nombre.Replace("_", " ")
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        @foreach (var mod in Model.Modulos)
+                        {
+                            <div class="tab-pane fade mt-2 ml-3" id="tab_@mod.Nombre" role="tabpanel" aria-labelledby="@mod.Nombre-tab">
+                                <div class="mt-2">
+                                    <h4>Permisos para los submódulos del servicio de "@mod.Nombre.Replace("_", " ")"</h4>
+                                </div>
+                                @if (mod.ServicioId != null)
+                                {
+                                    <div class="col-lg-12 mt-2">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#Permisos_@mod.ServicioId">
+                                                    <i class="fad fa-lock mr-2"></i>Permisos
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#Inmuebles_@mod.ServicioId">
+                                                    <i class="fad fa-building mr-2"></i>Inmuebles
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="Permisos_@mod.ServicioId">
+                                                <div class="col-lg-12 mt-4">
+                                                    <h4>Permisos para los submódulos</h4>
+                                                </div>
+                                                <div class="mt-3">
+                                                    @foreach (var sm in mod.Submodulos)
+                                                    {
+                                                        <div class="row col-lg-12 mt-3" id="div@(sm.Nombre)">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-header cabecera@(sm.Nombre)">
+                                                                        @Html.Raw(sm.Icono) Submódulo "@(sm.Nombre)"
+                                                                    </div>
+                                                                    <div class="card-body cuerpo@(sm.Nombre)">
+                                                                        @foreach (var p in sm.Permisos)
+                                                                        {
+                                                                            @if (Model.Permisos.Where(ps => ps.PermisoId == p.PermisoId &&
+                                                                          ps.ModuloId == mod.Id &&
+                                                                          ps.SubmoduloId == p.SubmoduloId).Count() != 0)
+                                                                            {
+                                                                                <div class="form-check-inline i-checks mt-3">
+                                                                                    <strong class="text-black mr-3">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.Permiso.Nombre)</strong>
+                                                                                    <input class="chkPermiso" type="checkbox" data-toggle="toggle"
+                                                                                           data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                                                           data-onstyle="success" data-offstyle="danger"
+                                                                                           data-modulo="@sm.ModuloId"
+                                                                                           data-submodulo="@p.SubmoduloId"
+                                                                                           data-permiso="@p.PermisoId"
+                                                                                           data-style="ios" value="@p.Permiso.Nombre" checked>
+                                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div class="form-check-inline i-checks mt-3">
+                                                                                    <strong class="text-black mr-3">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.Permiso.Nombre)</strong>
+                                                                                    <input class="chkPermiso" type="checkbox" data-toggle="toggle"
+                                                                                           data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                                                           data-onstyle="success" data-offstyle="danger"
+                                                                                           data-modulo="@sm.ModuloId"
+                                                                                           data-submodulo="@p.SubmoduloId"
+                                                                                           data-permiso="@p.PermisoId"
+                                                                                           data-style="ios" value="@p.Permiso.Nombre">
+                                                                                </div>
+                                                                            }
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="Inmuebles_@mod.ServicioId">
+                                                <div class="mt-3">
+                                                    <h5>Inmuebles de @mod.Nombre.Replace("_", " ")</h5>
+                                                    <div class="row mt-3">
+                                                        <div class="col-lg-12">
+                                                            <table class="table tblInmueblesUsr" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Inmueble</th>
+                                                                        <th>Dirección</th>
+                                                                        <th>Estado</th>
+                                                                        <th>Administrador</th>
+                                                                        <th>¿Asignado?</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var sm in Model.Inmuebles.Where(i => Model.InmueblesServicio.Where(i => i.ServicioId == @mod.ServicioId).Select(si => si.InmuebleId).ToList().Contains(i.Id)))
+                                                                    {
+                                                                        i++;
+                                                                        <tr>
+                                                                            <td>@i</td>
+                                                                            <td>@sm.Nombre</td>
+                                                                            <td>@sm.Direccion</td>
+                                                                            <td>@sm.Estado</td>
+                                                                            <td>@sm.Administrador</td>
+                                                                            <td>
+                                                                                @if (Model.InmueblesUsuario.Where(i => i.InmuebleId == sm.Id && i.ServicioId == mod.ServicioId).Count() != 0)
+                                                                                {
+                                                                                    <div class="form-check-inline i-checks mt-3">
+                                                                                        <input class="chkInmuebles" type="checkbox" data-toggle="toggle" name="CHInmubles"
+                                                                                               data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                                                               data-onstyle="success" data-offstyle="danger" data-inmueble="@sm.Id" data-servicio="@mod.ServicioId"
+                                                                                               data-style="ios" value="@sm.Id" checked>
+                                                                                    </div>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <div class="form-check-inline i-checks mt-3">
+                                                                                        <input class="chkInmuebles" type="checkbox" data-toggle="toggle" name="CHInmubles"
+                                                                                               data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                                                               data-onstyle="success" data-offstyle="danger" data-inmueble="@sm.Id" data-servicio="@mod.ServicioId"
+                                                                                               data-style="ios" value="@sm.Id">
+                                                                                    </div>
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    i = 0;
+                                }
+                                else
+                                {
+                                    @foreach (var sm in mod.Submodulos)
+                                    {
+                                        @foreach (var p in sm.Permisos)
+                                        {
+                                            @if (Model.Permisos.Where(ps => ps.PermisoId == p.PermisoId &&
+                                          ps.ModuloId == mod.Id &&
+                                          ps.SubmoduloId == p.SubmoduloId).Count() != 0)
+                                            {
+                                                <div class="form-check-inline i-checks mt-3">
+                                                    <strong class="text-black mr-3">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.Permiso.Nombre)</strong>
+                                                    <input class="chkPermiso" type="checkbox" data-toggle="toggle"
+                                                           data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                           data-onstyle="success" data-offstyle="danger"
+                                                           data-modulo="@sm.ModuloId"
+                                                           data-submodulo="@p.SubmoduloId"
+                                                           data-permiso="@p.PermisoId"
+                                                           data-style="ios" value="@p.Permiso.Nombre" checked>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-check-inline i-checks mt-3">
+                                                    <strong class="text-black mr-3">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.Permiso.Nombre)</strong>
+                                                    <input class="chkPermiso" type="checkbox" data-toggle="toggle"
+                                                           data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                           data-onstyle="success" data-offstyle="danger"
+                                                           data-modulo="@sm.ModuloId"
+                                                           data-submodulo="@p.SubmoduloId"
+                                                           data-permiso="@p.PermisoId"
+                                                           data-style="ios" value="@p.Permiso.Nombre">
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="col-lg-12 mt-3">
+                <a href="javascript:" class="btn btn-sm btn-primary float-right" id="guardarPermisos">
+                    Guardar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('.listadoInmuebles').DataTable({
+                lengthMenu: [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            var tableIU = $('.tblInmueblesUsr').DataTable({
+                    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                    responsive: true,
+                    autoWidth: true,
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    },
+                });
+
+            $("#guardarPermisos").click(function () {
+                var permiso = new Array();
+                var inmueblesUS = new Array();
+                var usuario = @Html.Raw(Json.Serialize(@Model.Usuario));
+                var modulo= @Html.Raw(Json.Serialize(@Model.Modulo.Id));
+
+                $('.chkPermiso').each(function () {
+                    if ($(this).prop('checked') == true) {
+                        permiso.push({ UsuarioId: usuario.id,
+                                        ModuloId: parseInt($(this).data("modulo")),
+                                        SubmoduloId: parseInt($(this).data("submodulo")),
+                                        PermisoId: parseInt($(this).data("permiso"))
+                        });
+                    }
+                });
+
+                tableIU.$("input[type='checkbox']").each(function () {
+                    if ($(this).parent().hasClass("off") == false) {
+                        inmueblesUS.push({ UsuarioId: usuario.id,
+                                        ServicioId: parseInt($(this).data("servicio")),
+                                        InmuebleId: parseInt($(this).data("inmueble"))
+                        });
+                    }
+                });
+
+                console.log(usuario);
+
+                axios.delete('/usuarios/'+modulo+'/detalle/'+usuario.id+'?Usuario='+usuario.id+'&handler=BorrarPermisos').then(borrar => {
+                    if(borrar.status == 200){
+                        Swal.fire({
+                            allowOutsideClick: false,
+                            icon: "info",
+                            title: 'Usuarios',
+                            html: "Asignando los permisos al usuario."
+                        })
+                        Swal.showLoading();
+                        $.ajax({
+                            url: '/usuarios/' + modulo + '/detalle/' + usuario.id + '?Usuario=' + usuario.id + '&handler=CrearPermisos',
+                            type: "post",
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(permiso),
+                            success: function () {
+                                Swal.hideLoading();
+                                Swal.fire({
+                                    'icon': 'success',
+                                    'title': 'Usuarios',
+                                    'html': 'Se asignaron los permisos al servidor público <b>'+(usuario.nombreEmp+' '+usuario.paternoEmp+' '+usuario.maternoEmp)+'</b>',
+                                }).then(function () {
+                                    Swal.fire({
+                                        allowOutsideClick: false,
+                                        icon: "info",
+                                        title: 'Usuarios',
+                                        html: "Asignando los inmuebles por servicio al usuario."
+                                    })
+                                    Swal.showLoading();
+                                    axios.delete('/usuarios/' + modulo + '/detalle/' + usuario.id + '?Usuario=' + usuario.id + '&handler=BorrarInmueblesUS').then(borrar => {
+                                        if (borrar.status == 200) {
+                                            $.ajax({
+                                                url: '/usuarios/' + modulo + '/detalle/' + usuario.id + '?Usuario=' + usuario.id + '&handler=CrearInmueblesUS',
+                                                type: "post",
+                                                contentType: 'application/json; charset=utf-8',
+                                                data: JSON.stringify(inmueblesUS),
+                                                success: function () {
+                                                    Swal.hideLoading();
+                                                    Swal.fire({
+                                                        'icon': 'success',
+                                                        'title': 'Usuarios',
+                                                        'html': 'Se asignaron los inmuebles por servicio al servidor público <b>' + (usuario.nombreEmp + ' ' + usuario.paternoEmp + ' ' + usuario.maternoEmp) + '</b>',
+                                                    }).then(function () {
+                                                        Swal.fire({
+                                                            allowOutsideClick: false,
+                                                            icon: "info",
+                                                            title: 'Usuarios',
+                                                            html: "Actualizando listas de permisos e inmuebles por servicio."
+                                                        })
+                                                        Swal.showLoading();
+                                                        window.location.reload();
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

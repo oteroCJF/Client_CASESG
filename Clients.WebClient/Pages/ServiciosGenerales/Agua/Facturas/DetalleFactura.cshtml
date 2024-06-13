@@ -1,0 +1,761 @@
+﻿@page "/agua/facturas/{moduloId}/{submoduloId}/facturacion/{facturacion}/inmueble/{inmueble}"
+@model Clients.WebClient.Pages.Agua.Facturas.DetalleFacturaModel
+@{
+    ViewData["Titulo"] = @Model.Servicio.Nombre + " - Detalle del inmueble - " + Model.Inmueble.Nombre;
+    ViewData["Title"] = "Detalle del inmueble";
+    var i = 0;
+    var cf = 0;
+}
+
+<div class="row col-lg-12">
+    <div class="col-lg-12">
+        <a href="/agua/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/@Model.Repositorio.MesId" type='button'
+           class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+        <a href="javascript:" type='button' class="btn btn-sm btn-success float-right ml-2 btnXML" data-toggle="tooltip" title="Adjuntar XML" data-placement="top">
+            <i class="fal fa-plus"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row col-lg-12 mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header cabeceraInformacion">
+                <i class="fa-sharp fa-light fa-list-check mr-2"></i> Información
+            </div>
+            <div class="card-body" id="cuerpoInformacion" style="display:none">
+                <div class="row col-lg-12">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header cabeceraContrato">
+                                <i class="fa-sharp fa-light fa-file-contract mr-2"></i> Contrato
+                            </div>
+                            <div class="card-body" id="cuerpoContrato" style="display: none">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <ul class="ml-4 mb-0 fa-ul">
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-calendar-check"></i></span> <b>Repositorio: </b> @Model.Repositorio.Mes.Nombre @Model.Repositorio.Anio</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span> <b># de Contrato: </b> @Model.Repositorio.Contrato.NoContrato</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fad fa-calendar"></i></span> <b>Vigencia: </b> Del @Model.Repositorio.Contrato.InicioVigencia.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es")) al @Model.Repositorio.Contrato.FinVigencia.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-building-user"></i></span> <b>Empresa: </b> @Model.Repositorio.Contrato.Empresa <br /></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header cabeceraInmueble">
+                                <i class="fa-sharp fa-light fa-building mr-2"></i> Inmueble
+                            </div>
+                            <div class="card-body" id="cuerpoInmueble" style="display: none">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <ul class="mb-0 fa-ul">
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span><b>Número de Cliente:</b> @Model.Inmueble.ClienteEstafeta</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-building-circle-check"></i></span><b>Inmueble:</b> @Model.Inmueble.Nombre</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-building-user"></i></span><b>Administración:</b> @Model.Inmueble.Descripcion</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-address-card"></i></span><b>Dirección:</b> @Model.Inmueble.Direccion</li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span><b>Administrador:</b> @Model.Inmueble.Administrador</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row col-lg-12 mt-3" id="divFacturacion">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header cabeceraFacturas">
+                <i class="fa-sharp fa-light fa-money-bill-1-wave mr-2"></i> Facturación
+            </div>
+            <div class="card-body cuerpoFactura" style="display: none">
+                <div class="row col-lg-12 mt-3">
+                    <h5> Factura(s)</h5>
+                    <div class="col-lg-12 mt-3 ml-2">
+                        <table class="table tblIncidencias tablaFacturas" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tipo</th>
+                                    <th>Empresa</th>
+                                    <th>Folio Fiscal</th>
+                                    <th>Número Factura</th>
+                                    <th>Subtotal Factura</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                    <th>Fecha de Carga</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AA">
+                                @foreach (var fac in Model.Facturas)
+                                {
+                                    @if (fac.Tipo.Equals("Factura"))
+                                    {
+                                        i++;
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@fac.Tipo</td>
+                                            <td>@fac.Nombre</td>
+                                            <td>
+                                                @fac.UUID
+                                            </td>
+                                            <td>@fac.Folio</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)</td>
+                                            <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))</td>
+                                            <td class="text-center">
+                                                <a href="javascript:" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id">
+                                                    <i class="fas fa-eye text-success"></i>
+                                                </a>
+                                                <a href="javascript:" class="ml-2 descargaXML" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoXML" 
+                                                   data-folio="@(fac.Serie+fac.Folio)" 
+                                                   data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)" 
+                                                   data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)"
+                                                   data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)"
+                                                   >
+                                                    <i class='fa-solid fa-download text-danger mr-2'></i>
+                                                </a>
+                                                <a href="javascript:" class="verEntregable" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF" 
+                                                   data-folio="@(fac.Serie+fac.Folio)"
+                                                   data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)" 
+                                                   data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)"
+                                                   data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)"
+                                                   >
+                                                    <i class='fa-solid fa-file-pdf text-danger'></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12 mt-3 ml-2 mb-3">
+                        @foreach (var fac in Model.Facturas)
+                        {
+                            <div class="conceptosFactura" id="conceptoFactura_@fac.Id">
+                                <h3>Conceptos de la factura con folio: @fac.Folio</h3>
+                                <table id="@fac.Folio" style="width: 90%" class="table tableConceptos mt-3 float-right">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad</th>
+                                            <th>Descripción</th>
+                                            <th>Precio Unitario</th>
+                                            <th>SubTotal</th>
+                                            <th>IVA</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var con in fac.ConceptosFactura)
+                                        {
+                                            if (@fac.Id == con.FacturaId)
+                                            {
+                                                cf++;
+                                                <tr>
+                                                    <td>@cf</td>
+                                                    <td class="text-right">@con.Cantidad</td>
+                                                    <td>@con.Unidad</td>
+                                                    <td>@con.Descripcion</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.PrecioUnitario)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.Subtotal)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.IVA)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.Subtotal + con.IVA)</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row col-lg-12 mt-3" id="divFacturacion">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header cabeceraNC">
+                <i class="fa-sharp fa-light fa-money-bill-1-wave mr-2"></i> Nota(s) de Crédito
+            </div>
+            <div class="card-body cuerpoNC" style="display: none">
+                <div class="row col-lg-12 mt-3">
+                    <h5> Nota(s) de Crédito</h5>
+                    <div class="col-lg-12 mt-3 ml-2">
+                        <table class="table tblIncidencias tablaFacturas" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tipo</th>
+                                    <th>Empresa</th>
+                                    <th>Folio Fiscal</th>
+                                    <th>Número Factura</th>
+                                    <th>Subtotal Factura</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                    <th>Fecha de Carga</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AA">
+                                @foreach (var fac in Model.Facturas)
+                                {
+                                    @if (fac.Tipo.Equals("NC"))
+                                    {
+                                        i++;
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@fac.Tipo</td>
+                                            <td>@fac.Nombre</td>
+                                            <td>
+                                                @fac.UUID
+                                            </td>
+                                            <td>@fac.Folio</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)</td>
+                                            <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))</td>
+                                            <td class="text-center">
+                                                <a href="javascript:" class="viewConceptosNC" id="viewConceptos_@fac.Id" data-factura="@fac.Id">
+                                                    <i class="fas fa-eye text-success"></i>
+                                                </a>
+                                                <a href="javascript:" class="ml-2 descargaXML" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoXML"
+                                                   data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
+                                                   data-iva="@fac.IVA">
+                                                    <i class='fa-solid fa-download text-danger mr-2'></i>
+                                                </a>
+                                                <a href="javascript:" class="verEntregable" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
+                                                   data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
+                                                   data-iva="@fac.IVA">
+                                                    <i class='fa-solid fa-file-pdf text-danger'></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12 mt-3 ml-2 mb-3">
+                        @foreach (var fac in Model.Facturas)
+                        {
+                            <div class="conceptosNC" id="conceptoNC_@fac.Id">
+                                <h3>Conceptos de la nota de crédito con folio: @fac.Folio</h3>
+                                <table id="@fac.Folio" style="width: 90%" class="table tableConceptos mt-3 float-right">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad</th>
+                                            <th>Descripción</th>
+                                            <th>Precio Unitario</th>
+                                            <th>SubTotal</th>
+                                            <th>IVA</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var con in fac.ConceptosFactura)
+                                        {
+                                            if (@fac.Id == con.FacturaId)
+                                            {
+                                                cf++;
+                                                <tr>
+                                                    <td>@cf</td>
+                                                    <td>@con.Cantidad</td>
+                                                    <td>@con.Unidad</td>
+                                                    <td>@con.Descripcion</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.PrecioUnitario)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.Subtotal)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.IVA)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.Subtotal + con.IVA)</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal para la captura de la Factura *@
+<div class="modal fade" id="modalXML">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white">Adjuntar XML</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <label>Tipo de XML</label>
+                        <select class="form-control" id="campoTipoFacturacion">
+                            <option value="">Seleccione el tipo de facturación</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Complementaria">Complementaria</option>
+                        </select>
+                        <div class="col-sm-12" id="error_campoTipoFacturacion">
+                            <small id="dateHelp" class="text-danger">
+                                Por favor seleccione el tipo de facturacion
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="elegirArchivo">Seleccionar Archivo XML: </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fileXML" accept=".xml, .XML" asp-for="XML">
+                            <label class="custom-file-label" for="customFile">Seleccionar Archivo</label>
+                        </div>
+                        <div class="col-sm-12" id="error_fileXML">
+                            <small id="dateHelp" class="text-danger">
+                                No ha seleccionado el archivo XML o ha subido un archivo diferente a XML
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="elegirArchivo">Seleccionar Archivo PDF: </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="filePDF" accept=".pdf, .PDF">
+                            <label class="custom-file-label custom-pdf" for="customFile">Seleccionar Archivo</label>
+                        </div>
+                        <div class="col-sm-12" id="error_filePDF">
+                            <small id="dateHelp" class="text-danger">
+                                No ha seleccionado el archivo PDF o ha subido un archivo diferente a PDF
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="adjuntarArchivo">Subir</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la captura de la Factura*@
+
+@*Modal para ver la factura*@
+<div class="modal fade" id="modalVerEntregables">
+    <div class="modal-dialog modal-xl-view">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white" id="titleVerEntregables"></h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body-view">
+                <div class="row col-lg-12" id="detalleEntregable"></div>
+                <div class="table-responsive">
+                    <div class="row mb-2 col-lg-12" id="objectPdf">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para ver la factura*@
+
+
+<style>
+    .cabeceraFacturas {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraNC {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraInformacion {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraContrato {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraInmueble {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $(".conceptosFactura").css("display", "none");
+            $(".conceptosNC").css("display", "none");
+
+            const modulo = @Html.Raw(Json.Serialize(@Model.Modulo));
+            const submodulo = @Html.Raw(Json.Serialize(@Model.Submodulo));
+            const inmueble = @Html.Raw(Json.Serialize(@Model.Inmueble));
+            const facturacion = @Html.Raw(Json.Serialize(@Model.Repositorio));
+            const usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+
+            $(".cabeceraFacturas").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraNC").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraInformacion").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraContrato").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraInmueble").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $('#error_filePDF').css('display', 'none');
+            $('#error_fileXML').css('display', 'none');
+            $('#error_campoTipoFacturacion').css('display', 'none');
+            $('#error_entregablePDF').css('display', 'none');
+
+            //Validaciones
+            function validaCamposArchivo() {
+                var fileXML = $('#fileXML').val().split("\\").pop();
+                var extXML = fileXML.split('.').pop();
+                var filePDF = $('#filePDF').val().split("\\").pop();
+                var extPDF = filePDF.split('.').pop();
+
+                if ($("#campoTipoFacturacion").val() == "" && $('#fileXML').val() == "" && $('#filePDF').val() == "") {
+                    $('#campoTipoFacturacion').addClass('is-invalid');
+                    $('#error_campoTipoFacturacion').css('display', 'block');
+
+                    $('#fileXML').addClass('is-invalid');
+                    $('#error_fileXML').css('display', 'block');
+                    $('#filePDF').addClass('is-invalid');
+                    $('#error_filePDF').css('display', 'block');
+                    return false;
+                }
+
+                if (extXML != "xml" && extXML != "XML") {
+                    $('#fileXML').addClass('is-invalid');
+                    $('#error_fileXML').css('display', 'block');
+                    return false;
+                }
+
+                if (extPDF != "pdf" && extPDF != "PDF") {
+                    $('#filePDF').addClass('is-invalid');
+                    $('#error_filePDF').css('display', 'block');
+                    return false;
+                }
+                return true;
+            }
+
+            $('#campoTipoFacturacion').change(function () {
+                if ($('#campoTipoFacturacion').val() == "") {
+                    $('#campoTipoFacturacion').addClass('is-invalid');
+                    $('#error_campoTipoFacturacion').css('display', 'block');
+                    return false;
+                } else {
+                    $('#campoTipoFacturacion').removeClass('is-invalid');
+                    $('#campoTipoFacturacion').addClass('is-valid');
+                    $('#error_campoTipoFacturacion').css('display', 'none');
+                }
+            });
+
+            $("#filePDF").change(function (e) {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "pdf" || ext == "PDF") {
+                    $('#filePDF').removeClass('is-invalid');
+                    $('#filePDF').addClass('is-valid');
+                    $('#error_filePDF').css('display', 'none');
+                    $(this).siblings(".custom-pdf").addClass("selected").html(fileName);
+                } else {
+                    $('#filePDF').removeClass('is-valid');
+                    $('#filePDF').addClass('is-invalid');
+                    $('#error_filePDF').css('display', 'block');
+                    Swal.fire({
+                        'icon': 'error',
+                        title: "Servicio de Mensajería Acelerada",
+                        'text': 'El archivo que intenta adjuntar no es válido. Favor de solo seleccionar archivos "PDF"'
+                    });
+                    $(".custom-pdf").text("Seleccionar Archivo");
+                    document.getElementById('filePDF').value = '';
+                }
+            });
+
+            $("#fileXML").change(function (e) {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "xml" || ext == "XML") {
+                    $('#fileXML').removeClass('is-invalid');
+                    $('#fileXML').addClass('is-valid');
+                    $('#error_fileXML').css('display', 'none');
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                } else {
+                    $('#fileXML').removeClass('is-valid');
+                    $('#fileXML').addClass('is-invalid');
+                    $('#error_fileXML').css('display', 'block');
+                    Swal.fire({
+                        'icon': 'error',
+                        title: "Servicio de Mensajería Acelerada",
+                        'text': 'El archivo que intenta adjuntar no es válido. Favor de solo seleccionar archivos "XML"'
+                    });
+                    $(".custom-file-label").text("Seleccionar Archivo");
+                    document.getElementById('fileXML').value = '';
+                }
+            });
+
+            $("#adjuntarArchivo").click(function () {
+                if (validaCamposArchivo()) {
+                    var formData = new FormData();
+                    var tipoFacturacion = $("#campoTipoFacturacion").val();
+                    var fileXML = document.getElementById('fileXML').files[0];
+                    var filePDF = document.getElementById('filePDF').files[0];
+
+                    formData.append("RepositorioId", @Model.Repositorio.Id);
+                    formData.append("Anio", @Model.Repositorio.Anio);
+                    formData.append("MesId", @Model.Mes.Id);
+                    formData.append("Mes", facturacion.mes.nombre);
+                    formData.append("InmuebleId", @Model.Inmueble.Id);
+                    formData.append("Inmueble", inmueble.nombre);
+                    formData.append("TipoFacturacion", tipoFacturacion);
+                    formData.append("UsuarioId", usuario);
+                    formData.append("XML", fileXML);
+                    formData.append("PDF", filePDF);
+
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: "Servicio de Mensajería Acelerada",
+                        html: "Cargando la información del repositorio de <b>" + facturacion.mes.nombre +" "+facturacion.anio+"</b>.",
+                        'confirmButtonText': 'Cerrar'
+                    })
+                    Swal.showLoading();
+
+                    axios.post('/agua/facturas/' +@Model.Modulo.Id+'/' +@Model.Submodulo.Id+'/facturacion/' +@Model.Repositorio.Id+'/inmueble/' +@Model.Inmueble.Id+'?handler=Facturas', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(response => {
+                        if (response.data.estatusId == 201) {
+                            Swal.fire({
+                                'icon': "success",
+                                'title': 'Servicio de Mensajería Acelerada',
+                                'text': 'Se adjuntó la documentación correctamente.',
+                                'confirmButtonText': 'Cerrar'
+                            }).then(function () {
+                                window.location.reload();
+                            });
+                        }
+                        else if (response.data.estatusId == 205)
+                        {
+                            Swal.fire({
+                                'icon': "warning",
+                                'title': 'Servicio de Mensajería Acelerada',
+                                'text': 'La documentación que intenta adjuntar ya existe.',
+                                'confirmButtonText': 'Cerrar'
+                            }).then(function () {
+                                window.location.reload();
+                            });
+                        }
+                        else if (response.data.estatusId == 206)
+                        {
+                            Swal.fire({
+                                'icon': "error",
+                                'title': 'Servicio de Mensajería Acelerada',
+                                'text': 'La documentación que intenta adjuntar no corresponde al servicio.',
+                                'confirmButtonText': 'Cerrar'
+                            }).then(function () {
+                                window.location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                'icon': "error",
+                                'title': 'Servicio de Mensajería Acelerada',
+                                'text': 'No se adjuntó la documentación. Contactar al administrador del sistema',
+                                'confirmButtonText': 'Cerrar'
+                            }).then(function () {
+                                window.location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+
+            $(".btnXML").click(function () {
+                $("#modalXML").modal('show');
+            });
+
+            $('.viewConceptosF').click(function () {
+                let factura = $(this).data('factura');
+                if ($("#conceptoFactura_" + factura).css('display') == 'none') {
+                    $("#conceptoFactura_" + factura).css("display", "block");
+                }
+                else {
+                    $("#conceptoFactura_" + factura).css("display", "none");
+                }
+            });
+
+            $(".viewConceptosF").click(function () {
+                if ($("#viewConceptos_" + $(this).data('factura') + " > i").hasClass("text-success")) {
+                    $("#viewConceptos_" + $(this).data('factura') + " > i").removeClass("text-success");
+                    $("#viewConceptos_" + $(this).data('factura') + "> i").addClass("text-danger");
+                } else {
+                    $("#viewConceptos_" + $(this).data('factura') + " > i").removeClass("text-danger");
+                    $("#viewConceptos_" + $(this).data('factura') + " > i").addClass("text-success");
+                }
+            });
+
+            $('.viewConceptosNC').click(function () {
+                let factura = $(this).data('factura');
+                if ($("#conceptoNC_" + factura).css('display') == 'none') {
+                    $("#conceptoNC_" + factura).css("display", "block");
+                }
+                else {
+                    $("#conceptoNC" + factura).css("display", "none");
+                }
+            });
+
+            $(".viewConceptosNC").click(function () {
+                if ($("#viewNC_" + $(this).data('factura') + " > i").hasClass("text-success")) {
+                    $("#viewNC_" + $(this).data('factura') + " > i").removeClass("text-success");
+                    $("#viewNC_" + $(this).data('factura') + "> i").addClass("text-danger");
+                } else {
+                    $("#viewNC_" + $(this).data('factura') + " > i").removeClass("text-danger");
+                    $("#viewNC_" + $(this).data('factura') + " > i").addClass("text-success");
+                }
+            });
+
+            $(".verEntregable").click(function () {
+                var folio = $(this).data("folio");
+                var archivo = $(this).data("archivo");
+                var tipo = $(this).data("tipo");
+                var subtotal  = $(this).data("subtotal");
+                var total  = $(this).data("total");
+                var iva = $(this).data("iva");
+
+                let url = '/agua/facturas/' + modulo.id + '/' + submodulo.id + '/facturacion/' + facturacion.id + '/inmueble/' + inmueble.id + '?cAnio=' + facturacion.anio + '&cMes=' + facturacion.mes.nombre + '&cFolio=' + folio + '&tipo=' + tipo + '&cInmueble=' + inmueble.nombre + '&cArchivo=' + archivo + '&handler=VisualizarFactura';
+                let data = '<object class="vistaPdf" embedded=True data="' + url + '"></object>';
+                let detail = '<tr>'+
+                                '<td><label>Año: </label> '+ facturacion.anio+'</td>'+
+                                '<td><label>Mes: </label> '+ facturacion.mes.nombre+'</td>'+
+                                '<td><label>Inmueble: </label> '+ inmueble.nombre+'</td>'+
+                                '<td><label>Folio: </label> '+folio+'</td>'+
+                                '<td><label>Tipo: </label> ' + tipo + '</td>' +
+                    '</tr>';
+
+                let detail2 = '<tr>' +
+                                '<td><label>Subtotal: </label> '+ subtotal +'</td>'+
+                                '<td><label>IVA: </label> '+ iva +'</td>'+
+                                '<td><label>Total: </label> '+ total +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>';
+                $("#titleVerEntregables").text("Vista del entregable - " + tipo);
+                $('#detalleEntregable').html('<table class="table">' + detail +detail2+'</table>');
+                $('#objectPdf').html(data);
+                $("#modalVerEntregables").modal("show");
+            });
+
+            $(".descargaXML").click(function () {
+                var folio = $(this).data("folio");
+                var archivo = $(this).data("archivo");
+                var tipo = $(this).data("tipo");
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: 'Servicio de Mensajería Acelerada',
+                    html: "Generando el <b>Acta Entrega - Recepción</b> de la evaluación, espere por favor."
+                });
+                Swal.showLoading();
+                axios.get('/agua/facturas/' + modulo.id + '/' + submodulo.id + '/facturacion/' + facturacion.id + '/inmueble/' + inmueble.id + '?cAnio=' + facturacion.anio + '&cMes=' + facturacion.mes.nombre + '&cFolio=' + folio + '&tipo=' + tipo + '&cInmueble=' + inmueble.nombre + '&cArchivo=' + archivo + '&handler=DescargarXML',
+                    { responseType: 'blob'}).then(response => {
+                    if (response.status == 200) {
+                            const href = URL.createObjectURL(response.data);
+
+                            // create "a" HTML element with href to file & click
+                            const link = document.createElement('a');
+                            link.href = href;
+                            link.setAttribute('download', archivo); //or any other extension
+                            document.body.appendChild(link);
+                            link.click();
+
+                            // clean up "a" element & remove ObjectURL
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(href);
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Servicio de Mensajería Acelerada',
+                                html: "El <b>Archivo XML</b> se descargó correctamente.",
+                                confirmButtonText: 'Cerrar'
+
+                            });
+                            Swal.hideLoading();
+                    }
+                });
+            });
+
+            function formatMoney(number) {
+                return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            }
+        })
+    </script>
+}

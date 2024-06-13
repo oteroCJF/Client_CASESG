@@ -1,0 +1,375 @@
+﻿@page "/agua/facturas/{moduloId}/{submoduloId}/facturacion/{facturacion}/cargaFacturas"
+@using System.Security.Claims;
+@model Clients.WebClient.Pages.Agua.Facturas.CargaFacturasModel
+@{
+    ViewData["Title"] = "Servicio de "+Model.Servicio.Nombre;
+    ViewData["Titulo"] = Model.Servicio.Descripcion + " - Carga masiva de Facturas/Notas de Crédito";
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3 text-center mt-2">
+                            <img src="~/img/servicios/@String.Concat(Model.Modulo.ServicioId, ".png")" alt="" class="img-fluid" width="100" height="100">
+                        </div>
+                        <div class="col-8">
+                            <h2 class="lead"><b>Contrato</b></h2>
+                            <b>Repositorio: </b> @Model.Repositorio.Mes.Nombre - @Model.Repositorio.Anio<br />
+                            <b># de Contrato: </b> @Model.Repositorio.Contrato.NoContrato<br />
+                            <b>Vigencia: </b> Del @Model.Repositorio.Contrato.InicioVigencia.ToString("dd/MMMM/yyyy") al @Model.Repositorio.Contrato.FinVigencia.ToString("dd/MMMM/yyyy")<br />
+                            <b>Empresa: </b> @Model.Repositorio.Contrato.Empresa <br />
+                            <b>Representante Legal: </b> @Model.Repositorio.Contrato.Representante <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <a href="/agua/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/@Model.Repositorio.MesId" 
+               type='button' class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar" data-placement="top">
+                <i class="fal fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <span>
+                        Para realizar la carga masiva es necesario indicar el tipo de facturación y el tipo de archivo a adjuntar, los formatos admitidos por el sistema son:
+                    </span>
+                    <span class="badge bg-success m-1">.xml </span> y <span class="badge bg-danger m-1">.pdf</span>
+                </div>
+                <div class="card-body">
+                    <div class="row col-lg-12">
+                        <div class="form-group col-lg-2">
+                            <label>Tipo de Facturación</label>
+                            <select class="form-control tipoFacturacion">
+                                <option value="">Seleccione el tipo de facturación</option>
+                                <option value="Mensual">Mensual</option>
+                                <option value="Complementaria">Complementaria</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" id="divDropzone">
+                        <div id="actions" class="row col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="btn-group w-100">
+                                    <span class="btn btn-success col fileinput-button">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Agregar Carpeta</span>
+                                    </span>
+                                    <button type="submit" class="btn btn-primary col start">
+                                        <i class="fas fa-upload"></i>
+                                        <span>Iniciar Carga</span>
+                                    </button>
+                                    <button type="reset" class="btn btn-warning col cancel">
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cancelar Carga</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center">
+                                <div class="fileupload-process w-100">
+                                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table table-striped files" id="previews">
+                            <div class="row col-lg-12" id="template">
+                                <table class="table" id="divInmuebles">
+                                    <thead>
+                                        <tr>
+                                            <th>Inmueble</th>
+                                            <th>Cliente</th>
+                                            <th>Archivo</th>
+                                            <th>Tamaño</th>
+                                            <th>Proceso</th>
+                                            <th>Observaciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-lg-3">
+                                                <select class="form-control input-sm inmuebleCorrespondiente" disabled>
+                                                    <option value="">Seleccione un Inmueble</option>
+                                                    @foreach (var inm in Model.Inmuebles)
+                                                    {
+                                                        <option value="@inm.ClienteEstafeta" data-inmueble="@inm.Id">@inm.Nombre</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td class="col-lg-3">
+                                                <input type="text" name="txtCteEstafeta" class="clienteXML" disabled />
+                                            </td>
+                                            <td><span class="lead" data-dz-name></span></td>
+                                            <td><span data-dz-size></span></td>
+                                            <td>
+                                                <div class="col-12 d-flex align-items-center">
+                                                    <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <strong class="error text-danger" data-dz-errormessage></strong>
+                                                <strong class="success text-success" data-dz-success></strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            const facturacion = @Html.Raw(Json.Serialize(Model.Repositorio));
+            const modulo = @Html.Raw(Json.Serialize(Model.Modulo));
+            const submodulo = @Html.Raw(Json.Serialize(Model.Submodulo));
+            const usuarioId = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+            var fileswe = false;
+            var filesd = false;
+            var extFile = null;
+            var myDropzone = null;
+
+            $('#divInmuebles').DataTable({
+                lengthMenu: [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $("#divDropzone").css("display", "none");
+
+            $(".tipoFacturacion").change(function () {
+                if ($(this).val() != "")
+                {
+                    $("#divDropzone").css("display", "block");
+                }
+                else
+                {
+                    $("#divDropzone").css("display", "none");
+                }
+            });
+
+            function workaroundDropzone() {
+                return "files";
+            }
+
+            // DropzoneJS Demo Code Start
+            Dropzone.autoDiscover = false
+
+            if(extFile != "")
+            {
+                // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+                var previewNode = document.querySelector("#template")
+                previewNode.id = ""
+                var previewTemplate = previewNode.parentNode.innerHTML
+                previewNode.parentNode.removeChild(previewNode)
+
+                myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+                    url: "/agua/facturas/"+modulo.id+"/"+submodulo.id+"/facturacion/"+facturacion.id+"/cargaFacturas?Handler=Facturas", // Set the url
+                    paramName: workaroundDropzone,
+                    uploadMultiple: true,
+                    clickable: ".fileinput-button",
+                    previewTemplate: previewTemplate,
+                    autoQueue: false,
+                    previewsContainer: "#previews",
+                    parallelUploads: 1,
+                    init: function () {
+                        this.hiddenFileInput.setAttribute("webkitdirectory", true);
+                        this.on("sending", function (file, response, formData) {
+                            var sel = file.previewElement.querySelector(".inmuebleCorrespondiente");
+
+                            formData.append("Anio", facturacion.anio);
+                            formData.append("Mes", facturacion.mes.nombre);
+                            formData.append("RepositorioId", facturacion.id);
+                            formData.append("UsuarioId", usuarioId);
+                            formData.append("TipoFacturacion", $(".tipoFacturacion").val());
+                            formData.append("InmuebleId", sel.options[sel.selectedIndex].dataset.inmueble);
+                            formData.append("Inmueble", sel.options[sel.selectedIndex].text);
+                            formData.append("File", file);
+                        });
+                        this.on('error', function (file, errorMessage, xhr) {
+                            console.log(errorMessage);
+                            if (errorMessage.status == 400 || errorMessage.includes(500) || errorMessage.includes("NullReferenceException")) {
+                                let errorDisplay = file.previewElement.querySelector('[data-dz-errormessage]');
+                                fileswe = true;
+                                errorDisplay.innerHTML = 'Se presentó un error al intentar adjuntar el XML.';
+                            }
+                            else {
+                                let errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
+                                errorDisplay[errorDisplay.length - 1].innerHTML = 'El servicio no está disponible.';
+                            }
+                        });
+
+                        this.on('success', function (file, successMessage, response) {
+                            if(response.currentTarget.status == 205)
+                            {
+                                let preview = $(file.previewElement);
+                                let successDisplay = file.previewElement.querySelector('[data-dz-errormessage]');
+                                filesd = true;
+                                successDisplay.innerHTML = 'La factura ya fue previamente cargada.';
+                            }
+                            else if (response.currentTarget.status == 206)
+                            {
+                                let preview = $(file.previewElement);
+                                let successDisplay = file.previewElement.querySelector('[data-dz-errormessage]');
+                                filesd = true;
+                                successDisplay.innerHTML = 'La factura adjuntada no corresponde al prestador del servicio.';
+                            }
+                            else
+                            {
+                                let preview = $(file.previewElement);
+                                let successDisplay = file.previewElement.querySelector('[data-dz-success]');
+                                successDisplay.innerHTML = 'El archivo se cargó correctamente.';
+                            }
+                        });
+
+                        this.on("complete", function (file, completeMessage) {
+                            let msg = (fileswe && filesd)  ?
+                                     '<p style="text-align: justify">Se cargaron los archivos correctamente, sin embargo se encontró lo siguiente: <br><br><b>- Archivos con errores<br>- Archivos duplicados</b></p>':
+                                      (fileswe && !filesd) ?
+                                    '<p style="text-align: justify">Se cargaron los archivos correctamente, sin embargo se encontró lo siguiente: <br><br><b>- Archivos con errores</b></p>' :
+                                    !fileswe && filesd ? 'Se cargaron los archivos correctamente, sin embargo se encontró lo siguiente: <br><br><b>- Archivos duplicados</b>' :
+                                    'Se cargaron los archivos correctamente.';
+
+                            let icon = (fileswe && filesd) || (fileswe && !filesd) ? 'warning' : !fileswe && filesd ? 'info' : 'success';
+
+
+                            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                                Swal.fire({
+                                    'icon': icon,
+                                    'title': 'Carga de CFDIs',
+                                    'html': msg
+                                }).then(function () {
+                                    document.querySelector("#actions .cancel").disabled = true;
+                                    Swal.fire({
+                                        allowOutsideClick: false,
+                                        icon: "info",
+                                        title: 'Servicio de Mensajería Acelerada',
+                                        html: "Generando el <b>Reporte de cargas masivas</b>, espere por favor."
+                                    });
+                                    Swal.showLoading();
+                                    axios.get("/agua/facturas/" + modulo.id + "/" + submodulo.id + "/facturacion/" + facturacion.id + "/cargaFacturas?FacturacionId="+facturacion.id+"&Handler=ReporteFacturas",
+                                        { responseType: 'blob' }).then(response => {
+                                            if (response.status == 200) {
+                                                const href = URL.createObjectURL(response.data);
+                                                const link = document.createElement('a');
+                                                link.href = href;
+                                                link.setAttribute('download', 'Reporte de Carga Masiva.xlsx'); //or any other extension
+                                                document.body.appendChild(link);
+                                                link.click();
+                                                document.body.removeChild(link);
+                                                URL.revokeObjectURL(href);
+                                                Swal.fire({
+                                                    allowOutsideClick: false,
+                                                    icon: "info",
+                                                    title: 'Servicio de Mensajería Acelerada',
+                                                    html: "El <b>Reporte de cargas masivas</b> se descargó correctamente.",
+                                                    confirmButtonText: 'Cerrar'
+                                                });
+                                                Swal.hideLoading();
+                                            }
+                                        });
+                                });
+                            }
+                        });
+                    },
+                })
+
+                myDropzone.on("addedfile", function (file) {
+                    let mes = @Html.Raw(Json.Serialize(Model.Repositorio.Mes.Nombre));
+                    let carpeta = file.webkitRelativePath.replace(mes, "");
+                    let fileName = file.name;
+
+                    carpeta = carpeta.split("/")[carpeta.split("/").length - 2];
+                    carpeta = carpeta.split("_")[0];
+
+                    file.previewElement.querySelector(".inmuebleCorrespondiente").value = parseInt(carpeta);
+                    file.previewElement.querySelector(".clienteXML").value = parseInt(carpeta);
+
+                    document.querySelector("#actions .fileinput-button").disabled = true;
+                })
+
+                document.querySelector("#actions .start").onclick = function () {
+                    let TiposArchivo = ["XML", "PDF"];
+                    let Files = myDropzone.files;
+
+                    if (Files.length == 0) {
+                        Swal.fire({
+                            allowOutsideClick: false,
+                            icon: "error",
+                            title: "Facturación",
+                            html: "No hay archivos para cargar, favor de verificar."
+                        });
+                    }
+                    else
+                    {
+                        myDropzone.removeAllFiles(true);
+
+                        for (let t = 0;t<TiposArchivo.length; t++) {
+                            for (let i = 0; i < Files.length; i++) {
+                                let ext = Files[i].name.split(".")[1];
+                                if (ext == TiposArchivo[t] || ext == TiposArchivo[t].toLowerCase()) {
+                                    myDropzone.addFile(Files[i]);
+                                }
+                            }
+                        }
+
+                        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+                        document.querySelector("#actions .start").disabled = true;
+                        document.querySelector("#actions .fileinput-button").disabled = true;
+                        Swal.fire({
+                            allowOutsideClick: false,
+                            icon: "info",
+                            title: "Facturación",
+                            html: "Realizando la carga de los archivos por favor espere."
+                        });
+                        Swal.showLoading();
+                    }
+                }
+
+                document.querySelector("#actions .cancel").onclick = function () {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Servicio de Mensajería Acelerada',
+                        html: '<strong>Advertencia:</strong><p>¿Desea cancelar el proceso y volver a comenzar? </strong></p>',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Comenzar de nuevo',
+                        cancelButtonText: 'Cancelar',
+                        showCancelButton: true
+                    }).then(p => {
+                        if (p.isConfirmed) {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: "Facturación",
+                                html: "Cancelando la carga de los archivos por favor espere."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+        })
+    </script>
+}
+
+
+

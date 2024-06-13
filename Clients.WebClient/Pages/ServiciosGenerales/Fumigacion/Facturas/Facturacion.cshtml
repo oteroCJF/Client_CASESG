@@ -1,0 +1,144 @@
+﻿@page "/fumigacion/facturas/{moduloId}/{submoduloId}/facturacion/{facturacion}/{mes}"
+@model Clients.WebClient.Pages.Fumigacion.Facturas.FacturacionModel
+@{
+    ViewData["Title"] = "Servicio de "+@Model.Servicio.Nombre;
+    ViewData["Titulo"] = @Model.Servicio.Nombre+ " - Repositorio del mes - " + Model.Mes.Nombre + " " + Model.Repositorio.Anio;
+    ViewData["Action"] = "Repositorio de "+Model.Repositorio.Mes.Nombre +" "+Model.Repositorio.Anio;
+    decimal totalFactura = 0;
+    decimal totalNC = 0;
+    int nf = 0;
+    int nnc = 0;
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3 text-center mt-3">
+                            <img src="~/img/servicios/@String.Concat(Model.Modulo.ServicioId, ".png")" alt="" class="img-fluid" width="100" height="100">
+                        </div>
+                        <div class="col-8">
+                            <h2 class="lead"><b>Contrato</b></h2>
+                            <b># de contrato: </b> @Model.Repositorio.Contrato.NoContrato<br />
+                            <b>Vigencia: </b> Del @Model.Repositorio.Contrato.InicioVigencia.ToString("dd/MMMM/yyyy") al @Model.Repositorio.Contrato.FinVigencia.ToString("dd/MMMM/yyyy")<br />
+                            <b>Empresa: </b> @Model.Repositorio.Contrato.Empresa <br />
+                            <b>Representante legal: </b> @Model.Repositorio.Contrato.Representante <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <a href="/fumigacion/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar a Facturaciones" data-placement="top">
+                <i class="fal fa-arrow-left"></i>
+            </a>
+            <a href="/fumigacion/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/cargaFacturas" type='button' class="btn btn-sm btn-primary float-right" data-toggle="tooltip" title="Realizar Carga Masiva de Archivos" data-placement="top">
+                <i class="fal fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <section class="col-xl-12 connectedSortable">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Facturas y Notas de Crédito del repositorio
+                    </h3>
+                </div>
+                <div class="card-body" style="font-size: 14px;">
+                    <table class="table" id="tblInmuebles">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Inmueble</th>
+                                <th>Cliente</th>
+                                <th>Facturas</th>
+                                <th>Monto total factura</th>
+                                <th>Notas de crédito</th>
+                                <th class="text-center">Monto total NC</th>
+                                <th>Estatus cédula</th>
+                                <th>Fecha de Carga</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var inm in Model.Inmuebles)
+                            {
+                                <tr>
+                                    <td>@inm.Id</td>
+                                    <td>@inm.Nombre</td>
+                                    <td>@inm.ClienteEstafeta</td>
+                                    <td>@inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Count() - Factura(s)</td>
+                                    <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total))</td>
+                                    @if (@inm.Cedula.EstatusCedula.Equals("En Proceso") || @inm.Cedula.EstatusCedula.Equals("Sin Iniciar"))
+                                    {
+                                        <td class="text-center"><b>Sin definir</b></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@(@inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count() > 0 ? "text-danger":"text-success")"
+                                            data-toggle="tooltip" title="Requiere Nota de Crédito"
+                                            data-placement="top" style="font-weight: bold">
+                                            <i class="fas fa-warning"></i> @inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count() - Nota(s) de Crédito
+                                        </td>
+                                    }
+                                    @if (@inm.Cedula.EstatusCedula.Equals("En Proceso") || @inm.Cedula.EstatusCedula.Equals("Sin Iniciar"))
+                                    {
+                                        <td class ="text-center">-</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center @(@inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count() > 0 ?"text-danger":"text-warning")" style="font-weight: bold">
+                                            @String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Total))
+                                        </td>
+                                    }                                    
+                                    <td>@inm.Cedula.EstatusCedula</td>
+                                    <td>@(Model.Repositorio.Usuario.NombreEmp + " " + Model.Repositorio.Usuario.PaternoEmp + " " + Model.Repositorio.Usuario.MaternoEmp)</td>
+                                    <td class="text-center">
+                                        <a href="~/fumigacion/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/inmueble/@inm.Id"
+                                           data-toggle="tooltip" title="Ver Detalle de la Factura" data-placement="top">
+                                            <i class="fad fa-eye text-success"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                nf += inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Count();
+                                nnc += inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count();
+                                totalFactura += Convert.ToDecimal(inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total));
+                                totalNC += Convert.ToDecimal(inm.Facturas.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Total));
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Total:</th>
+                                <th>@nf Factura(s)</th>
+                                <th>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", totalFactura)</th>
+                                <th></th>
+                                <th>@nnc Nota(s) de Crédito</th>
+                                <th class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", totalNC)</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('#tblInmuebles').DataTable({
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+        });
+    </script>
+}

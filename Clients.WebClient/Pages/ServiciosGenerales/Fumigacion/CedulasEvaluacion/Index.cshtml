@@ -1,0 +1,111 @@
+﻿@page "/fumigacion/cedulasEvaluacion/{moduloId}/{submoduloId}/index"
+@model Clients.WebClient.Pages.Fumigacion.CedulasEvaluacion.IndexModel
+@{
+    ViewData["Title"] = "Servicio de "+Model.Servicio.Descripcion;
+    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
+    ViewData["Action"] = "Inicio";
+}
+
+<div class="container-fluid">
+    <form method="get" id="getAnio" asp-page-handler="GetAnio">
+        <div class="row col-lg-2">
+            <label class="label">Consultar información del año: </label>
+            <div class="input-group mb-3">
+                <select class="form-control" id="anioActual" asp-for="Anio">
+                    <option value="">Seleccione el Año</option>
+                    @for (var i = 2022; i <= DateTime.Now.Year; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <div class="row">
+                    <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    @if (Model.Cedulas != null && Model.Cedulas.Count() > 0)
+    {
+        <div class="row col-lg-12">
+            <div class="row col-lg-12">
+                <h5>Cédulas de Evaluación del año @Model.Anio</h5>
+            </div>
+            @foreach (var item in Model.Cedulas)
+            {
+                <div class="col-lg-3">
+                    <div class="small-box text-white" style="background-color: @item.Mes.Fondo">
+                        <div class="inner mt-2">
+                            <div class="form-row mt-2">
+                                <strong><p>@item.Mes.Nombre - @item.Contrato.NoContrato</p></strong>
+                            </div>
+                            <h6>Cédulas de Evaluación - @item.TotalCedulas Cédula(s)</h6>
+                        </div>
+                        <div class="icon">
+                            <i class="fal fa-building mt-2"></i>
+                        </div>
+                        <a href="~/fumigacion/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@item.Anio/@item.MesId/@item.ContratoId" class="small-box-footer moreInformation" data-mes="@item.Mes.Nombre">
+                            Detalle <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            var anio = @Html.Raw(Json.Serialize(DateTime.Now.Year))
+            var anioM = @Html.Raw(Json.Serialize(Model.Anio));
+            var servicio = @Html.Raw(Json.Serialize(Model.Servicio));
+
+            $("#anioActual").val(anioM != 0 ? anioM : anio);
+
+            $(".moreInformation").click(function () {
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: "Servicio de "+servicio.descripcion,
+                    html: "Obteniendo el listado de cédulas de <b>" +$(this).data('mes')+" - "+ $("#anioActual").val() + "</b>."
+                })
+                Swal.showLoading();
+            });
+
+            $('#getAnio').validate({
+                rules: {
+                    Anio: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    Anio: {
+                        required: "Por favor seleccione el año a consultar",
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.input-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: "Servicio de " + servicio.descripcion,
+                        html: "Obtiendo las cédulas del año <b>" + $("#anioActual").val() + "</b>."
+                    })
+                    Swal.showLoading();
+                    form.submit();
+                }
+            });
+        });
+    </script>
+}

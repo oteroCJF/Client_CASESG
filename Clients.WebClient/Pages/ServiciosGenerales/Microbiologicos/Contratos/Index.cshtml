@@ -1,0 +1,660 @@
+﻿@page "/microbiologicos/contratos/{moduloId}/{submoduloId}/index"
+@model Clients.WebClient.Pages.Microbiologicos.Contratos.IndexModel
+@{
+    ViewData["Titulo"] = Model.Servicio.Descripcion;
+    ViewData["Title"] = "Contratos del servicio ";
+    var c = 0;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        @if (Model.Contratos.Where(c => c.Activo).Count() != 0)
+        {
+            <div class="col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3 text-center mt-3">
+                                <img src="~/img/servicios/@String.Concat(@Model.Servicio.Id, ".png")" alt="" class="img-fluid" width="100" height="100">
+                            </div>
+                            <div class="col-7 ml-3">
+                                <h2 class="lead"><b>Servicio de @Model.Servicio.Nombre</b></h2>
+                                <p class="text-muted text-sm"><b>Contrato actual: </b> @Model.Contratos.Single(c => c.Activo).NoContrato</p>
+                                <p class="text-muted text-sm">
+                                    <b>Vigencia: </b> Del @Model.Contratos.Single(c => c.Activo).InicioVigencia.ToString("dd") de @Model.Contratos.Single(c => c.Activo).InicioVigencia.ToString("MMMM", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))
+                                    @Model.Contratos.Single(c => c.Activo).InicioVigencia.ToString("yyyy") al @Model.Contratos.Single(c => c.Activo).FinVigencia.ToString("dd") de @Model.Contratos.Single(c => c.Activo).FinVigencia.ToString("MMMM", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))
+                                    @Model.Contratos.Single(c => c.Activo).FinVigencia.ToString("yyyy")
+                                </p>
+                                <p class="text-muted text-sm"><b>Prestador de servicios: </b> @Model.Contratos.Single(c => c.Activo).Empresa </p>
+                                <p class="text-muted text-sm"><b>Representante legal: </b>@Model.Contratos.Single(c => c.Activo).Representante</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-5"></div>
+        }
+        <div class="col-lg-7">
+            <a href="javascript:" class="btn btn-sm btn-primary float-right mr-2 createContrato"
+               data-toggle="tooltip" title="Capturar nuevo contrato" data-placement="top">
+                <i class="fal fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header h5">
+                    <i class="fad fa-list mr-2"></i>Listado de Contratos
+                </div>
+                <div class="card-body">
+                    <div row col-lg-12>
+                        <table class="table dataTable tableContratos" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Contrato</th>
+                                    <th>Empresa</th>
+                                    <th>Monto mínimo</th>
+                                    <th>Monto máximo</th>
+                                    <th >Volumetría mínima</th>
+                                    <th >Volumetria máxima</th>
+                                    <th class="text-center">Vigente</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cont in Model.Contratos)
+                                {
+                                    c++;
+                                    <tr>
+                                        <td>@c</td>
+                                        <td>@cont.NoContrato</td>
+                                        <td>@cont.Empresa</td>
+                                        <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cont.MontoMin)</td>
+                                        <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cont.MontoMax)</td>
+                                        <td class="text-center">@cont.VolumetriaMin</td>
+                                        <td class="text-center">@cont.VolumetriaMax</td>
+                                        <td class="text-center">
+                                            @if (@cont.Activo)
+                                            {
+                                                <div class="icon">
+                                                    <i class="fad fa-check-circle text-success"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {   
+                                                <div class="icon">
+                                                    <i class="fad fa-times-circle text-danger"></i>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/microbiologicos/contratos/@Model.Modulo.Id/@Model.Submodulo.Id/contrato/@cont.Id">
+                                                <i class="fad fa-eye text-success"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal para capturar el contrato *@
+<div class="modal fade" id="modal-contrato">
+    <div class="modal-dialog modal-xl-view">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white">Nuevo contrato</h4>
+                <button type="button" class="close close-incidencias text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Detalle del Contrato</h4>
+                        <div class="row col-lg-12" id="divDetallesContrato">
+                            <div class="form-row col-lg-12">
+                                <div class="col col-lg-3">
+                                    <div class="col-sm-6" id="DCContrato">
+                                        <div class="text-gray">
+                                        </div>
+                                    </div>
+                                    <label for="tipoIncidencia"><i class="text-danger mr-1">*</i>Contrato:</label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countContrato" style="font-style: oblique;"></span>
+                                    <input type="text" class="form-control" id="campoContrato" />
+                                    <div class="row col-lg-12">
+                                        <div class="col-sm-6" id="error_campoContrato">
+                                            <small id="dateHelp" class="text-danger float-right">
+                                                Capture el número de contrato
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" id="divFechaIncio">
+                                    <label for="fechaIncidencia"><i class="text-danger mr-1">*</i>Fecha de inicio: </label>
+                                    <input type="date" class="form-control" id="campoFechaInicio" />
+                                    <div class="col-sm-12" id="error_campoFechaInicio">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la fecha de Inicio
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" id="divFechaFin">
+                                    <label for="fechaIncidencia">Fecha de término: </label>
+                                    <input type="date" class="form-control" id="campoFechaFin" name="fechaFin" />
+                                    <div class="col-sm-12" id="error_campoFechaFin">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la fecha de Término
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" id="divFechaFirma">
+                                    <label for="fechaIncidencia"><i class="text-danger mr-1">*</i>Firma del contrato: </label>
+                                    <input type="date" class="form-control" id="campoFechaFirma" name="fechaFirma" />
+                                    <div class="col-sm-12" id="error_campoFechaFirma">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la fecha de firma del contrato
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" id="divFechaFirma">
+                                    <label for="fechaIncidencia"><i class="text-danger mr-1">*</i>Fecha de recepción: </label>
+                                    <input type="date" class="form-control" id="campoFechaRecepcion" name="fechaRecepcion" />
+                                    <div class="col-sm-12" id="error_campoFechaRecepcion">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la fecha de recepción
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row col-lg-12">
+                                <div class="col-lg-2">
+                                    <label for="volMinima"><i class="text-danger mr-1">*</i>Volumetría mínima:</label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countVolMin" style="font-style: oblique;"></span>
+                                    <input type="number" class="form-control" id="campoVolumetriaMin" max="1500" />
+                                    <div class="col-sm-12" id="error_campoVolumetriaMin">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la volumetría mínima
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="volMinima"><i class="text-danger mr-1">*</i>Volumetría máxima:</label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countVolMax" style="font-style: oblique;"></span>
+                                    <input class="form-control" id="campoVolumetriaMax" max="1500" />
+                                    <div class="col-sm-12" id="error_campoVolumetriaMax">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la volumetría máxima
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="volMinima"><i class="text-danger mr-1">*</i>Monto mínimo:</label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countMonMin" style="font-style: oblique;"></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control" id="campoMontoMin" pattern="[0-9.,]+" data-type="number" />
+                                        <div class="col-sm-12" id="error_campoMontoMin">
+                                            <small id="dateHelp" class="text-danger">
+                                                Capture la volumetría mínima
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="volMinima"><i class="text-danger mr-1">*</i>Monto máximo:</label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countMonMax" style="font-style: oblique;"></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input class="form-control" id="campoMontoMax" pattern="[0-9.,]+" data-type="number" />
+                                        <div class="col-sm-12" id="error_campoMontoMax">
+                                            <small id="dateHelp" class="text-danger">
+                                                Capture la volumetría máxima
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Detalle del Prestador de Servicios</h4>
+                        <div class="row col-lg-12" id="divDetallesPS">
+                            <div class="form-row col-lg-12">
+                                <div class="col col-lg-3">
+                                    <label for="tipoIncidencia"><i class="text-danger mr-1">*</i>Empresa:</label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countEmpresa" style="font-style: oblique;"></span>
+                                    <input type="text" class="form-control" id="campoEmpresa" />
+                                    <div class="col-sm-12" id="error_campoEmpresa">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la empresa
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" id="divFechaIncio">
+                                    <label for="fechaIncidencia"><i class="text-danger mr-1">*</i>RFC: </label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countRFC" style="font-style: oblique;"></span>
+                                    <input type="text" class="form-control" id="campoRFC" name="RFC" />
+                                    <div class="col-sm-12" id="error_campoRFC">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture el RFC
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3" id="divRepresenante">
+                                    <label for="fechaIncidencia"><i class="text-danger mr-1">*</i>Representante legal: </label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countRepLeg" style="font-style: oblique;"></span>
+                                    <input type="text" class="form-control" id="campoRepresentante" name="Representante" />
+                                    <div class="col-sm-12" id="error_campoRepresentante">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture el representante legal
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row col-lg-12">
+                                <div class="form-group col-lg-12" id="divFechaFin">
+                                    <label for="fechaIncidencia"><i class="text-danger mr-1">*</i>Dirección: </label>
+                                    <span class="valid-text float-right font-weight-light text-sm text-primary mt-2" id="countDir" style="font-style: oblique;"></span>
+                                    <textarea class="form-control" style="resize:none;" height="200" id="campoDireccion"></textarea>
+                                    <div class="col-sm-12" id="error_campoDireccion">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture la dirección
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardaContrato">Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@* Modal para editar el contrato *@
+
+@section Scripts {
+    <script>
+        $(function () {
+            const servicio = @Html.Raw(Json.Serialize(@Model.Servicio));
+
+            $('.tableContratos').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Contratos',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Listado de Contratos',
+                        className: "bg-cjf mr-1"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Listado de Contratos',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            /******************************** Capturar Nuevo Contrato **************************************/
+            $("#error_campoContrato").css("display", "none");
+            $("#error_campoFechaInicio").css("display", "none");
+            $("#error_campoFechaFin").css("display", "none");
+            $("#error_campoFechaFirma").css("display", "none");
+            $("#error_campoFechaRecepcion").css("display", "none");
+            $("#error_campoVolumetriaMin").css("display", "none");
+            $("#error_campoVolumetriaMax").css("display", "none");
+            $("#error_campoMontoMin").css("display", "none");
+            $("#error_campoMontoMax").css("display", "none");
+            $("#error_campoEmpresa").css("display", "none");
+            $("#error_campoRFC").css("display", "none");
+            $("#error_campoRepresentante").css("display", "none");
+            $("#error_campoDireccion").css("display", "none");
+
+            $("#campoContrato").on("input", function () {
+                var limite = 30;
+                $("#campoContrato").attr('maxlength', limite);
+                var init = $(this).val().length - 1;
+
+
+                if ($(this).val() == "") {
+                    $('#countContrato').text("");
+                } else {
+                    if (init < limite) {
+                        init++;
+                        $('#countContrato').text("Máximo " + limite + ": " + init + " caracteres");
+                    }
+                }
+            });
+
+            $("#campoVolumetriaMin").on("input", function () {
+                var init = $(this).val();
+
+                if ($(this).val() == "") {
+                    $('#countVolMin').text("");
+                } else if ($(this).val() > 99999) {
+                    $(this).val(99999);
+                    $('#countVolMin').text("Valor máximo: 99,999");
+                }
+            });
+
+            $("#campoVolumetriaMax").on("input", function () {
+                var init = $(this).val();
+
+                if ($(this).val() == "") {
+                    $('#countVolMax').text("");
+                } else if ($(this).val() > 99999) {
+                    $(this).val(99999);
+                    $('#countVolMax').text("Valor máximo: 99,999");
+                }
+            });
+
+            $("#campoMontoMin").on("input", function () {
+                var limite = 14;
+                $("#campoMontoMin").attr('maxlength', limite);
+            });
+
+            $("#campoMontoMax").on("input", function () {
+                var limite = 14;
+                $("#campoMontoMax").attr('maxlength', limite);
+            });
+
+            $("#campoRepresentante").on("input", function () {
+                var limite = 100;
+                $("#campoRepresentante").attr('maxlength', limite);
+                var init = $(this).val().length - 1;
+
+
+                if ($(this).val() == "") {
+                    $('#countRepLeg').text("");
+                } else {
+                    if (init < limite) {
+                        init++;
+                        $('#countRepLeg').text("Máximo " + limite + ": " + init + " caracteres");
+                    }
+                }
+            });
+
+            $("#campoDireccion").on("input", function () {
+                var limite = 256;
+                $("#campoDireccion").attr('maxlength', limite);
+                var init = $(this).val().length - 1;
+
+
+                if ($(this).val() == "") {
+                    $('#countDir').text("");
+                } else {
+                    if (init < limite) {
+                        init++;
+                        $('#countDir').text("Máximo " + limite + ": " + init + " caracteres");
+                    }
+                }
+            });
+
+            $("#campoRFC").on("input", function () {
+                var limite = 15;
+                $("#campoRFC").attr('maxlength', limite);
+                var init = $(this).val().length - 1;
+
+
+                if ($(this).val() == "") {
+                    $('#countRFC').text("");
+                } else {
+                    if (init < limite) {
+                        init++;
+                        $('#countRFC').text("Máximo " + limite + ": " + init + " caracteres");
+                    }
+                }
+            });
+
+            $("#campoEmpresa").on("input", function () {
+                var limite = 100;
+                $("#campoEmpresa").attr('maxlength', limite);
+                var init = $(this).val().length - 1;
+
+
+                if ($(this).val() == "") {
+                    $('#countEmpresa').text("");
+                } else {
+                    if (init < limite) {
+                        init++;
+                        $('#countEmpresa').text("Máximo " + limite + ": " + init + " caracteres");
+                    }
+                }
+            });
+
+            $(".updateContrato").click(function () {
+                let montoMax = $('#campoMontoMax').val().split(".");
+                let valorMx = montoMax[0].replace(/\D/g, ""), decimalMx = montoMax[1]
+
+                let gNumero = Number((decimalMx !== undefined ? valorMx + "." + decimalMx : valorMx));
+                let numeroFmx = new Intl.NumberFormat('en-EN').format(valorMx);
+                numeroFmx = decimalMx !== undefined ? numeroFmx + "." + decimalMx : numeroFmx;
+                $('#campoMontoMax').val(numeroFmx);
+
+                let montoMin = $('#campoMontoMin').val().split(".");
+                let valorMn = montoMin[0].replace(/\D/g, ""), decimalMn = montoMin[1]
+
+                let gNumeroMn = Number((decimalMn !== undefined ? valorMn + "." + decimalMn : valorMn));
+                let numeroFmn = new Intl.NumberFormat('en-EN').format(valorMn);
+                numeroFmn = decimalMn !== undefined ? numeroFmn + "." + decimalMn : numeroFmn;
+                $('#campoMontoMin').val(numeroFmn);
+                $("#modal-contrato").modal("show");
+            });
+
+            $('#campoMontoMax').keydown(function (e) {
+                setTimeout(() => {
+                    let montoMax = $('#campoMontoMax').val().split(".");
+                    let valorMx = montoMax[0].replace(/\D/g, ""), decimalMx = montoMax[1]
+                    let valorMax = 999999999;
+
+                    let gNumero = Number((decimalMx !== undefined ? valorMx + "." + decimalMx : valorMx));
+                    let numeroFmx = new Intl.NumberFormat('en-EN').format(valorMx);
+                    numeroFmx = decimalMx !== undefined ? numeroFmx + "." + decimalMx : numeroFmx;
+                    $('#campoMontoMax').val(numeroFmx);
+
+                    if ($(this).val() == "") {
+                        $('#countMonMax').text("");
+                    } else if ($(this).val() > valorMax) {
+                        $(this).val(valorMax);
+                        $('#countMonMax').text("Valor máximo: $ 999,999,999.00");
+                    }
+                })
+            });
+
+            $('#campoMontoMin').keydown(function (e) {
+                setTimeout(() => {
+                    let montoMin = $('#campoMontoMin').val().split(".");
+                    let valorMn = montoMin[0].replace(/\D/g, ""), decimalMn = montoMin[1]
+                    let valorMin = 999999999
+
+                    let gNumeroMn = Number((decimalMn !== undefined ? valorMn + "." + decimalMn : valorMn));
+                    let numeroFmn = new Intl.NumberFormat('en-EN').format(valorMn);
+                    numeroFmn = decimalMn !== undefined ? numeroFmn + "." + decimalMn : numeroFmn;
+                    $('#campoMontoMin').val(numeroFmn);
+                })
+            });
+
+            function limpiaCampos() {
+                $("#campoContrato").val('');
+                $("#campoFechaIncio").val('');
+                $("#campoFechaFin").val('');
+                $("#campoFechaFirma").val('');
+                $("#campoFechaRecepcion").val('');
+                $("#campoVolumetriaMin").val('');
+                $("#campoVolumetriaMax").val('');
+                $("#campoMontoMin").val('');
+                $("#campoMontoMax").val('');
+                $("#campoEmpresa").val('');
+                $("#campoRFC").val('');
+                $("#campoRepresentante").val('');
+                $("#campoDireccion").val('');
+            }
+
+            $(".createContrato").click(function () {
+                limpiaCampos();
+                $("#modal-contrato").modal("show");
+            });
+
+            $('#campoMontoMax').keydown(function (e) {
+                setTimeout(() => {
+                    let montoMax = $('#campoMontoMax').val().split(".");
+                    let valorMx = montoMax[0].replace(/\D/g, ""), decimalMx = montoMax[1]
+
+                    let gNumero = Number((decimalMx !== undefined ? valorMx + "." + decimalMx : valorMx));
+                    let numeroFmx = new Intl.NumberFormat('en-EN').format(valorMx);
+                    numeroFmx = decimalMx !== undefined ? numeroFmx + "." + decimalMx : numeroFmx;
+                    $('#campoMontoMax').val(numeroFmx);
+                })
+            });
+
+            $('#campoMontoMin').keydown(function (e) {
+                setTimeout(() => {
+                    let parts = $(this).val().split(".");
+                    let v = parts[0].replace(/\D/g, ""),
+                        dec = parts[1]
+                    let calc_num = Number((dec !== undefined ? v + "." + dec : v));
+                    // use this for numeric calculations
+                    // console.log('number for calculations: ', calc_num);
+                    let n = new Intl.NumberFormat('en-EN').format(v);
+                    n = dec !== undefined ? n + "." + dec : n;
+                    $(this).val(n);
+                })
+            });
+
+            function validaCampos() {
+                if ($("#campoContrato").val() != "" && $("#campoFechaInicio").val() != "" && $("#campoFechaFin").val() != "" &&
+                    $("#campoFechaFirma").val() != "" && $("#campoFechaRecepcion").val() != "" && $("#campoVolumetriaMin").val() != "" &&
+                    $("#campoVolumetriaMax").val() != "" && $("#campoMontoMin").val() != "" && $("#campoMontoMax").val() != "" &&
+                    $("#campoEmpresa").val() != "" && $("#campoRFC").val() != "" && $("#campoRepresentante").val() != "" && $("#campoDireccion").val() != "") {
+                    return true;
+                }
+
+                if ($("#campoContrato").val() == "") {
+                    $("#error_campoContrato").css("display", "block");
+                }
+                if ($("#campoFechaInicio").val() == "") {
+                    $("#error_campoFechaInicio").css("display", "block");
+                }
+                if ($("#campoFechaFin").val() == "") {
+                    $("#error_campoFechaFin").css("display", "block");
+                }
+                if ($("#campoFechaFirma").val() == "") {
+                    $("#error_campoFechaFirma").css("display", "block");
+                }
+                if ($("#campoFechaRecepcion").val() == "") {
+                    $("#error_campoFechaRecepcion").css("display", "block");
+                }
+                if ($("#campoVolumetriaMin").val() == "") {
+                    $("#error_campoVolumetriaMin").css("display", "block");
+                }
+                if ($("#campoVolumetriaMax").val() == "") {
+                    $("#error_campoVolumetriaMax").css("display", "block");
+                }
+                if ($("#campoMontoMin").val() == "") {
+                    $("#error_campoMontoMin").css("display", "block");
+                }
+                if ($("#campoMontoMax").val() == "") {
+                    $("#error_campoMontoMax").css("display", "block");
+                }
+                if ($("#campoEmpresa").val() == "") {
+                    $("#error_campoEmpresa").css("display", "block");
+                }
+                if ($("#campoRFC").val() == "") {
+                    $("#error_campoRFC").css("display", "block");
+                }
+                if ($("#campoRepresentante").val() == "") {
+                    $("#error_campoRepresentante").css("display", "block");
+                }
+                if ($("#campoDireccion").val() == "") {
+                    $("#error_campoDireccion").css("display", "block");
+                }
+
+                return false;
+            }
+
+            $("#guardaContrato").click(function () {
+                let contrato = $("#campoContrato").val();
+                let fechaInicio = $("#campoFechaInicio").val();
+                let fechaFin = $("#campoFechaFin").val();
+                let fechaFirma = $("#campoFechaFirma").val();
+                let fechaRecepcion = $("#campoFechaRecepcion").val();
+                let volumetriaMin = $("#campoVolumetriaMin").val();
+                let volumetriaMax = $("#campoVolumetriaMax").val();
+                let montoMin = $("#campoMontoMin").val().replace(/[^0-9.-]+/g, "");
+                let montoMax = $("#campoMontoMax").val().replace(/[^0-9.-]+/g, "");
+                let empresa = $("#campoEmpresa").val();
+                let rfc = $("#campoRFC").val();
+                let representante = $("#campoRepresentante").val();
+                let direccion = $("#campoDireccion").val();
+                //var activo = $(".chkCActivo").prop('checked');
+
+
+                if (validaCampos()) {
+                    axios.post("/microbiologicos/contratos/" + @Model.Modulo.Id+"/" + @Model.Submodulo.Id+"/index?Handler=CrearContrato", {
+                        NoContrato: contrato, InicioVigencia: fechaInicio,
+                        FinVigencia: fechaFin, FechaFirmaContrato: fechaFirma, FechaRecepcion: fechaRecepcion, VolumetriaMin: parseInt(volumetriaMin), VolumetriaMax: parseInt(volumetriaMax),
+                        MontoMin: parseFloat(montoMin), MontoMax: parseFloat(montoMax), Empresa: empresa, RFC: rfc, Representante: representante, Direccion: direccion
+                        //,Activo: activo
+                    }).then(send => {
+                        if (send.data == 201) {
+                            Swal.fire({
+                                'icon': 'success',
+                                'title': 'Contratos de Mensajería Acelerada',
+                                'html': 'Se capturó el contrato correctamente.'
+                            }).then(function () {
+                                $("#modal-contrato").modal("hide");
+                                window.location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                'icon': 'error',
+                                'title': 'Contratos de Mensajería Acelerada',
+                                'html': 'No se capturó el contrato. Contactar al administrador'
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': 'Contratos de Mensajería Acelerada',
+                        'html': 'Favor de capturar todos los campos.'
+                    });
+                }
+            });
+            /******************************** Capturar Nuevo Contrato **************************************/
+        })
+    </script>
+}

@@ -1,0 +1,641 @@
+﻿@page "/financieros/mensajeria/{moduloId}/detalle/{servicioId}/{anio}/oficio/{oficioId}"
+@model Clients.WebClient.Pages.Financieros.Mensajeria.DetalleOficioModel
+@{
+    ViewData["Titulo"] = "Detalle del Oficio - " + Model.Oficio.NumeroOficio;
+    ViewData["Title"] = "Detalle del Oficio";
+    var f = 0;
+}
+
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header cabeceraOficio">
+            <h5>Detalle del Oficio</h5>
+        </div>
+        <div class="card-body bg-transparent">
+            <table class="table table-borderless">
+                <tr>
+                    <td data-toggle="tooltip" title="Número de oficio" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;">
+                        <strong>Número de oficio: </strong> @Model.Oficio.NumeroOficio
+                    </td>
+                    <td data-toggle="tooltip" title="Año del oficio" data-placement="top">
+                        <strong>Año: </strong>@Model.Oficio.Anio
+                    </td>
+                    <td class="@(Model.Oficio.Estatus.Fondo.Replace("bg","text")) font-weight-bold" data-toggle="tooltip" title="Estatus del oficio" data-placement="top">
+                        <strong>Estatus: </strong>@Model.Oficio.Estatus.Nombre
+                    </td>
+                    <td data-toggle="tooltip" title="Estatus del oficio" data-placement="top">
+                        <strong>Fecha de trámite: </strong>@Convert.ToDateTime(Model.Oficio.FechaTramitado).ToString("dd/MM/yyyy")
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @if (Model.Oficio.Estatus.Abreviacion.Equals("enProceso") || Model.Oficio.Estatus.Abreviacion.Equals("enCorreccion"))
+    {
+        <div class="card">
+            <div class="card-header cabeceraFNCPendiebtes">
+                <i class="fa-sharp fa-light fa-money-bill-1-wave mr-2"></i> Factura(s) y Nota(s) de Crédito pendientes
+            </div>
+            <div class="card-body bg-transparent">
+                <table class="table tblFacturas" width="100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tipo</th>
+                            <th>Inmueble</th>
+                            <th>Folio cédula</th>
+                            <th>Folio factura</th>
+                            <th>UUID</th>
+                            <th>RFC</th>
+                            <th>Empresa</th>
+                            <th>Subtotal</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>Estatus factura</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var fc in Model.FacturasP)
+                        {
+                            f++;
+                            <tr>
+                                <td>@f</td>
+                                <td>@fc.Tipo</td>
+                                <td>@fc.Inmueble.Nombre</td>
+                                <td>@fc.Cedula.Folio</td>
+                                <td>@fc.Folio</td>
+                                <td>@fc.UUID</td>
+                                <td>@fc.RFC</td>
+                                <td>@fc.Nombre</td>
+                                <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.Subtotal)</td>
+                                <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.IVA)</td>
+                                <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.Total)</td>
+                                <td class="@(fc.Estatus.Fondo.Replace("bg","text")) font-weight-bold">@fc.Estatus.Nombre</td>
+                                <td>
+                                    <div class="form-check-inline i-checks mt-3 eliminarFactura" data-id="@fc.Id">
+                                        <input class="enviarDGPPT" id="" type="checkbox" data-size="small" data-toggle="toggle" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                               data-onstyle="success" data-offstyle="danger" data-style="ios" value="@fc.Id" name="tramitar[]"
+                                               data-facturaid="@fc.Id" data-cedulaid="@fc.Cedula.Id">
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a href="javascript:" id="btnAgregarFacturas" class="btn btn-success">
+                        <i class="fa fas-plus text-success"></i> Agregar
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="card mt-3">
+        <div class="card-header cabeceraFNCOficio">
+            <i class="fa-sharp fa-light fa-money-bill-1-wave mr-2"></i> Factura(s) y Nota(s) de Crédito que serán enviadas a pago
+        </div>
+        <div class="card-body bg-transparent">
+            <div class="row col-lg-12">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#facturas" role="tab" aria-controls="pregunta" aria-selected="false">
+                                <i class="fa-sharp fa-regular fa-sack-dollar mr-2 text-success"></i>Facturas
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pregunta-tab" data-toggle="tab" href="#notas" role="tab" aria-controls="pregunta" aria-selected="false">
+                                <i class="fa-solid fa-comments-dollar mr-2 text-danger"></i> Notas de Crédito
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active mt-2 ml-3 " id="facturas" role="tabpanel" aria-labelledby="home-tab">
+                            <h4 class="mt-2">Facturas asignadas al oficio</h4>
+                            <table class="table tblFacturas" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tipo</th>
+                                        <th>Folio cédula</th>
+                                        <th>Estatus cédula</th>
+                                        <th>Folio factura</th>
+                                        <th>UUID</th>
+                                        <th>RFC</th>
+                                        <th>Empresa</th>
+                                        <th>Subtotal</th>
+                                        <th>IVA</th>
+                                        <th>Total</th>
+                                        <th>Estatus factura</th>
+                                        @if (Model.Oficio.Estatus.Abreviacion.Equals("enProceso") || Model.Oficio.Estatus.Abreviacion.Equals("enCorreccion"))
+                                        {
+                                            <th>Acciones</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ f = 0; }
+                                    @foreach (var fc in Model.Oficio.CFDIs)
+                                    {
+                                        @if (fc.Tipo.Equals("Factura"))
+                                        {
+                                            f++;
+                                            <tr>
+                                                <td>@f</td>
+                                                <td>@fc.Tipo</td>
+                                                <td class="@(fc.Estatus.Fondo.Replace("bg","text")) font-weight-bold">@fc.Estatus.Nombre</td>
+                                                <td>@fc.FolioCedula</td>
+                                                <td>@fc.FolioFactura</td>
+                                                <td>@fc.UUID</td>
+                                                <td>@fc.RFC</td>
+                                                <td>@fc.Nombre</td>
+                                                <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.Subtotal)</td>
+                                                <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.IVA)</td>
+                                                <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.Total)</td>
+                                                <td class="@(fc.EFactura.Fondo.Replace("bg","text")) font-weight-bold">@fc.EFactura.Nombre</td>
+                                                @if (Model.Oficio.Estatus.Abreviacion.Equals("enProceso") || Model.Oficio.Estatus.Abreviacion.Equals("enCorreccion"))
+                                                {
+                                                    <td>
+                                                        <a href="javascript:" class="eliminarFactura" data-facturaid="@fc.Id" data-cedulaid="@fc.CedulaId" data-oficioid="@Model.Oficio.Id">
+                                                            <i class="fa fa-times text-danger"></i>
+                                                        </a>
+                                                    </td>
+
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Total:</th>
+                                        <th class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Oficio.CFDIs.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Subtotal))</th>
+                                        <th class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Oficio.CFDIs.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.IVA))</th>
+                                        <th class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Oficio.CFDIs.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total))</th>
+                                        <th></th>
+                                        @if (Model.Oficio.Estatus.Abreviacion.Equals("enProceso") || Model.Oficio.Estatus.Abreviacion.Equals("enCorreccion"))
+                                        {
+                                            <th></th>
+                                        }
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade mt-2 ml-3 " id="notas" role="tabpanel" aria-labelledby="pregunta-tab">
+                            <h4>Nota(s) de Crédito por aplicar</h4>
+                            <table class="table tblFacturas" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tipo</th>
+                                        <th>Folio cédula</th>
+                                        <th>Estatus cédula</th>
+                                        <th>Folio factura</th>
+                                        <th>UUID</th>
+                                        <th>RFC</th>
+                                        <th>Empresa</th>
+                                        <th>Subtotal</th>
+                                        <th>IVA</th>
+                                        <th>Total</th>
+                                        <th>Estatus factura</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var fc in Model.Oficio.CFDIs)
+                                    {
+                                        @if (fc.Tipo.Equals("NC"))
+                                        {
+                                            f++;
+                                            <tr>
+                                                <td>@f</td>
+                                                <td>@fc.Tipo</td>
+                                                <td class="@(fc.Estatus.Fondo.Replace("bg","text")) font-weight-bold">@fc.Estatus.Nombre</td>
+                                                <td>@fc.FolioCedula</td>
+                                                <td>@fc.FolioFactura</td>
+                                                <td>@fc.UUID</td>
+                                                <td>@fc.RFC</td>
+                                                <td>@fc.Nombre</td>
+                                                <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.Subtotal)</td>
+                                                <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.IVA)</td>
+                                                <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fc.Total)</td>
+                                                <td class="@(fc.EFactura.Fondo.Replace("bg","text")) font-weight-bold">@fc.EFactura.Nombre</td>
+                                                <td>
+                                                    <div class="form-check-inline i-checks mt-3 eliminarFactura" data-id="@fc.Id">
+                                                        <input class="enviarDGPPT" id="" type="checkbox" data-size="small" data-toggle="toggle" data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                                               data-onstyle="success" data-offstyle="danger" data-style="ios" value="@fc.Id" name="tramitar[]" data-id="@fc.Id">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Total:</th>
+                                        <th class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Oficio.CFDIs.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Subtotal))</th>
+                                        <th class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Oficio.CFDIs.Where(f => f.Tipo.Equals("NC")).Sum(f => f.IVA))</th>
+                                        <th class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Oficio.CFDIs.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Total))</th>
+                                        <th></th>
+                                        @if (Model.Oficio.Estatus.Abreviacion.Equals("enProceso") || Model.Oficio.Estatus.Abreviacion.Equals("enCorreccion"))
+                                        {
+                                            <th></th>
+                                        }
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            @foreach (var bt in Model.Flujo)
+            {
+                @Html.Raw(bt.Boton)
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .cabeceraOficio{
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraFNCPendiebtes {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraFNCOficio {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            var estatus = [];
+            var inmuebles = [];
+            const oficio = @Html.Raw(Json.Serialize(Model.Oficio));
+            const servicio = @Html.Raw(Json.Serialize(Model.Servicio));
+            const modulo = @Html.Raw(Json.Serialize(Model.Modulo));
+            const usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+
+            $(".cabeceraFNCPendiebtes").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraFNCOficio").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            var table = $('.tblFacturas').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Facturas',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Listado de Facturas',
+                        className: "bg-cjf mr-1",
+                        orientation: "landscape"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Listado de Facturas',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[5, 25, 50, -1], [5, 25, 50, "Todos"]],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $("#btnAgregarFacturas").click(function () {
+                var detalle = new Array();
+
+                table.$("input[type='checkbox']").each(function () {
+                    var activo = $(this).parent().hasClass("off");
+                    if (activo == false) {
+                        detalle.push({
+                            OficioId: oficio.id, FacturaId: parseInt($(this).data("facturaid")),
+                            CedulaId: parseInt($(this).data('cedulaid')), ServicioId: parseInt(servicio.id)
+                        });
+                    }
+                });
+
+                $.ajax({
+                    url: '/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id +'?handler=CreateDTOficio',
+                    type: "post",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(detalle),
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Oficios de pago del ' + servicio.descripcion,
+                            html: 'Se agregaron las facturas y/o nota(s) de crédito al oficio correctamente.',
+                            confirmButtonText: 'Cerrar'
+                        }).then(function () {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Oficios de ' + servicio.descripcion,
+                                html: "Actualizando el oficio de pago, espere por favor."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        });
+                    }
+                });
+            });
+
+            $(".eliminarFactura").click(function () {
+                var facturaId = $(this).data("facturaid");
+                var cedulaId = $(this).data("cedulaid");
+                var oficioId = $(this).data("oficioid");
+                axios.post('/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=DeleteDTOficio', {
+                    FacturaId: parseInt(facturaId),
+                    CedulaId: parseInt(cedulaId),
+                    OficioId: parseInt(oficioId),
+                }).then(response => {
+                    if (response.status == 200) {
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Oficios de ' + servicio.descripcion,
+                            html: "La factura/nota de crédito se eliminó correctamente.",
+                            confirmButtonText: 'Cerrar'
+                        }).then(function () {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Oficios de ' + servicio.descripcion,
+                                html: "Actualizando el oficio de pago, espere por favor."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        });
+                    }
+                })
+            })
+
+            $(".enviarDGPPT").click(function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oficios de ' + servicio.descripcion,
+                    html: '¿Está seguro que desea <b>Enviar a DGPPT </b>el oficio de pago?',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, enviar a DGPPT',
+                    cancelButtonText: 'Cancelar',
+                    showCancelButton: true
+                }).then(confirm => {
+                    if (confirm.isConfirmed) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Oficios de ' + servicio.descripcion,
+                            text: 'Por favor capture el motivo por el cual enviará el oficio de pago.',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonText: 'Enviar a DGPPT',
+                            input: 'textarea',
+                            inputPlaceholder: 'Escriba los comentarios correspondientes'
+                        }).then(coments => {
+                            if (coments.value.length > 0) {
+                                Swal.fire({
+                                    allowOutsideClick: false,
+                                    icon: "info",
+                                    title: 'Oficios de ' + servicio.descripcion,
+                                    html: "Enviando a <b>DGPPT</b> el oficio de pago, espere por favor."
+                                });
+                                Swal.showLoading();
+                                axios.post('/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=EDGPPTOficio', {
+                                    Id: parseInt(oficio.id),
+                                    UsuarioId: usuario,
+                                    ESucesivoId: parseInt($(this).data("estatusid")),
+                                    EFacturaId: parseInt($(this).data("efacturaid")),
+                                    ECedulaId: parseInt($(this).data("cedulaid")),
+                                    Observaciones: coments.value,
+                                }).then(response => {
+                                    if (response.status == 200) {
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: 'Oficios de ' + servicio.descripcion,
+                                            html: "El oficio se envió a DGPPT correctamente.",
+                                            confirmButtonText: 'Cerrar'
+                                        }).then(function () {
+                                            Swal.fire({
+                                                allowOutsideClick: false,
+                                                icon: "info",
+                                                title: 'Oficios de ' + servicio.descripcion,
+                                                html: "Actualizando el oficio de pago, espere por favor."
+                                            });
+                                            Swal.showLoading();
+                                            window.location.reload();
+                                        });
+                                    }
+                                }).catch(error => {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: 'Oficios de ' + servicio.descripcion,
+                                        html: "Hubo un error al enviar el oficio de pago. Contacte a su administrador del sistema.",
+                                        confirmButtonText: 'Cerrar'
+                                    });
+                                });
+                            }
+                        })
+                    }
+                });
+            });
+
+            $(".pagarOficio").click(function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oficios de ' + servicio.descripcion,
+                    html: '¿Está seguro que desea <b>Pagar el Oficio</b>el oficio de pago?',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, pagar',
+                    cancelButtonText: 'Cancelar',
+                    showCancelButton: true
+                }).then(confirm => {
+                    if (confirm.isConfirmed) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Oficios de ' + servicio.descripcion,
+                            html: '<p style="text-align: justify">Por favor capture el motivo por el cual enviará el oficio de pago así como la fecha en que se realizó el pago del oficio.' +
+                                  '</p>'+'<br><input type="date" class="swal2-input" id="fechaPago">',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonText: 'Pagar',
+                            input: 'textarea',
+                            inputPlaceholder: 'Escriba los comentarios correspondientes'
+                        }).then(coments => {
+                            var fechaPago = $("#fechaPago").val();
+                            if (coments.value.length > 0 && (fechaPago != "" && fechaPago != null)) {
+                                Swal.fire({
+                                    allowOutsideClick: false,
+                                    icon: "info",
+                                    title: 'Oficios de ' + servicio.descripcion,
+                                    html: "Pagando el oficio de pago, espere por favor."
+                                });
+                                Swal.showLoading();
+                                axios.post('/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=PagarOficio', {
+                                    Id: parseInt(oficio.id),
+                                    UsuarioId: usuario,
+                                    FechaPago: fechaPago,
+                                    ESucesivoId: parseInt($(this).data("estatusid")),
+                                    EFacturaId: parseInt($(this).data("efacturaid")),
+                                    ECedulaId: parseInt($(this).data("cedulaid")),
+                                    Observaciones: coments.value,
+                                }).then(response => {
+                                    if (response.status == 200) {
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: 'Oficios de ' + servicio.descripcion,
+                                            html: "El oficio se pagó correctamente.",
+                                            confirmButtonText: 'Cerrar'
+                                        }).then(function () {
+                                            Swal.fire({
+                                                allowOutsideClick: false,
+                                                icon: "info",
+                                                title: 'Oficios de ' + servicio.descripcion,
+                                                html: "Actualizando el oficio de pago, espere por favor."
+                                            });
+                                            Swal.showLoading();
+                                            window.location.reload();
+                                        });
+                                    }
+                                }).catch(error => {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: 'Oficios de ' + servicio.descripcion,
+                                        html: "Hubo un error al pagar el oficio de pago. Contacte a su administrador del sistema.",
+                                        confirmButtonText: 'Cerrar'
+                                    });
+                                });
+                            }
+                        })
+                    }
+                });
+            });
+
+            $(".corregirOficio").click(function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oficios de ' + servicio.descripcion,
+                    html: '¿Está seguro que desea <b>Corregir el Oficio</b> de pago?',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, corregir',
+                    cancelButtonText: 'Cancelar',
+                    showCancelButton: true
+                }).then(confirm => {
+                    if (confirm.isConfirmed) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Oficios de ' + servicio.descripcion,
+                            text: 'Por favor capture el motivo por el cual corregirá el oficio de pago.',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Corregir',
+                            confirmButtonText: 'Cancelar corrección',
+                            input: 'textarea',
+                            inputPlaceholder: 'Escriba los comentarios correspondientes'
+                        }).then(coments => {
+                            if (coments.value.length > 0) {
+                                Swal.fire({
+                                    allowOutsideClick: false,
+                                    icon: "info",
+                                    title: 'Oficios de ' + servicio.descripcion,
+                                    html: "Enviando la solicitud de corrección del oficio de pago, espere por favor."
+                                });
+                                Swal.showLoading();
+                                axios.post('/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=CorregirOficio', {
+                                    Id: parseInt(oficio.id),
+                                    UsuarioId: usuario,
+                                    ESucesivoId: parseInt($(this).data("estatusid")),
+                                    EFacturaId: parseInt($(this).data("efacturaid")),
+                                    ECedulaId: parseInt($(this).data("cedulaid")),
+                                    Observaciones: coments.value,
+                                }).then(response => {
+                                    if (response.status == 200) {
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: 'Oficios de ' + servicio.descripcion,
+                                            html: "Se finalizó la corrección del oficio correctamente.",
+                                            confirmButtonText: 'Cerrar'
+                                        }).then(function () {
+                                            Swal.fire({
+                                                allowOutsideClick: false,
+                                                icon: "info",
+                                                title: 'Oficios de ' + servicio.descripcion,
+                                                html: "Actualizando el oficio de pago, espere por favor."
+                                            });
+                                            Swal.showLoading();
+                                            window.location.reload();
+                                        });
+                                    }
+                                }).catch(error => {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: 'Oficios de ' + servicio.descripcion,
+                                        html: "Hubo un error al corregir el oficio de pago. Contacte a su administrador del sistema.",
+                                        confirmButtonText: 'Cerrar'
+                                    });
+                                });
+                            }
+                        })
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,85 @@
+﻿@page "/bmuebles/solicitudes/{moduloId}/{submoduloId}/index"
+@model Clients.WebClient.Pages.ServiciosGenerales.BMuebles.Solicitudes.IndexModel
+@{
+    ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
+    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
+    ViewData["Action"] = "Inicio";
+    int c = 0;
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <div class="col-lg-6">
+            <form method="get" id="getAnio" asp-page-handler="GetAnio">
+                <div class="row col-lg-5">
+                    <label class="label">Consultar información del año: </label>
+                    <div class="input-group mb-3">
+                        <select class="form-control" id="anioActual" asp-for="Anio">
+                            <option value="">Seleccione el Año</option>
+                            @for (var i = 2022; i <= DateTime.Now.Year; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <div class="row">
+                            <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        @if (Model.Anio != 0)
+        {
+            <div class="col-lg-6">
+                <a href="/bmuebles/solicitudes/@Model.Modulo.Id/@Model.Submodulo.Id/solicitud/create/@Model.Anio" class="btn btn-sm btn-primary float-right" id="crearSolicitud">
+                    <i class="fas fa-plus mr-1"></i> Nueva Solicitud
+                </a>
+            </div>
+        }
+    </div>
+    @if (Model.Anio != 0)
+    {
+        <div class="row col-lg-12">
+            <div class="col-lg-10">
+                <section class="col-xl-12 connectedSortable">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Solicitudes del servicio de @Model.Servicio.Descripcion.ToLower()
+                            </h3>
+                        </div>
+                        <div class="card-body" style="font-size: 14px;" width="100%">
+                            <table class="table cedulasEvaluacion">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tipo</th>
+                                        <th>Inmueble Solicitante</th>
+                                        <th>Partida</th>
+                                        <th>Estatus</th>
+                                        <th class="text-center">Fecha de Solicitud</th>
+                                        <th>Fecha de Servicio</th>
+                                        <th class="text-center">Hora</th>
+                                        <th>Validación</th>
+                                        <th>Última actualización</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cedula in Model.Solicitudes)
+                                    {
+                                        c++;
+                                        <tr>
+                                            <td>@c</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    }
+</div>
+

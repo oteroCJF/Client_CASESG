@@ -1,0 +1,354 @@
+﻿@page "/agua/facturas/{moduloId}/{submoduloId}/facturacion/{repositorio}/{mes}"
+@model Clients.WebClient.Pages.Agua.Facturas.FacturacionModel
+@{
+    ViewData["Title"] = "Servicio de " + @Model.Servicio.Nombre;
+    ViewData["Titulo"] = @Model.Servicio.Nombre + " - Repositorio del mes - " + Model.Mes.Nombre + " " + Model.Repositorio.Anio;
+    ViewData["Action"] = "Repositorio de " + Model.Repositorio.Mes.Nombre + " " + Model.Repositorio.Anio;
+    decimal totalFactura = 0;
+    decimal totalNC = 0;
+    int nf = 0;
+    int nnc = 0;
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3 text-center mt-3">
+                            <img src="~/img/servicios/@String.Concat(Model.Modulo.ServicioId, ".png")" alt="" class="img-fluid" width="100" height="100">
+                        </div>
+                        <div class="col-8">
+                            <h2 class="lead"><b>Contrato</b></h2>
+                            <b># de contrato: </b> @Model.Repositorio.Contrato.NoContrato<br />
+                            <b>Vigencia: </b> Del @Model.Repositorio.Contrato.InicioVigencia.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es")) al @Model.Repositorio.Contrato.FinVigencia.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))<br />
+                            <b>Empresa: </b> @Model.Repositorio.Contrato.Empresa <br />
+                            <b>Representante legal: </b> @Model.Repositorio.Contrato.Representante <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <a href="/agua/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar a Facturaciones" data-placement="top">
+                <i class="fal fa-arrow-left"></i>
+            </a>
+            <a href="#" type='button' class="btn btn-sm btn-primary float-right btnASoportePago" data-toggle="tooltip" title="Actualizar Soporte de Pago" data-placement="top">
+                <i class="fal fa-file-text"></i>
+            </a>
+            <a href="#" type='button' class="btn btn-sm btn-success float-right btnSoportePago mr-2" data-toggle="tooltip" title="Cargar Soporte de Pago" data-placement="top">
+                <i class="fal fa-file-text"></i>
+            </a>
+            <a href="/agua/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/cargaFacturas" type='button' class="btn btn-sm btn-primary mr-2 float-right" data-toggle="tooltip" title="Realizar Carga Masiva de Archivos" data-placement="top">
+                <i class="fal fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <section class="col-xl-12 connectedSortable">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Facturas y Notas de Crédito del repositorio
+                    </h3>
+                </div>
+                <div class="card-body" style="font-size: 14px;">
+                    <table class="table" id="tblInmuebles">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Inmueble</th>
+                                <th># de cliente</th>
+                                <th>Facturas</th>
+                                <th>Monto total factura</th>
+                                <th>Notas de crédito</th>
+                                <th class="text-center">Monto total NC</th>
+                                <th>Estatus cédula</th>
+                                <th>Fecha de Carga</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var inm in Model.Inmuebles)
+                            {
+                                <tr>
+                                    <td>@inm.Id</td>
+                                    <td>@inm.Nombre</td>
+                                    <td>@inm.ClienteEstafeta</td>
+                                    <td>@inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Count() - Factura(s)</td>
+                                    <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total))</td>
+                                    @if (@inm.Cedula.EstatusCedula.Equals("En Proceso") || @inm.Cedula.EstatusCedula.Equals("Sin Iniciar"))
+                                    {
+                                        <td class="text-center"><b>Sin definir</b></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@(@inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count() > 0 ? "text-danger":"text-success")"
+                                            data-toggle="tooltip" title="Requiere Nota de Crédito"
+                                            data-placement="top" style="font-weight: bold">
+                                            <i class="fas fa-warning"></i> @inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count() - Nota(s) de Crédito
+                                        </td>
+                                    }
+                                    @if (@inm.Cedula.EstatusCedula.Equals("En Proceso") || @inm.Cedula.EstatusCedula.Equals("Sin Iniciar"))
+                                    {
+                                        <td class="text-center">-</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center @(@inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count() > 0 ?"text-danger":"text-warning")" style="font-weight: bold">
+                                            @String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Total))
+                                        </td>
+                                    }
+                                    <td>@(inm.Cedula.EstatusCedula.Equals("") ? "No se generó la cédula" : inm.Cedula.EstatusCedula)</td>
+                                    <td>@(Model.Repositorio.Usuario.NombreEmp + " " + Model.Repositorio.Usuario.PaternoEmp + " " + Model.Repositorio.Usuario.MaternoEmp)</td>
+                                    <td class="text-center">
+                                        <a href="~/agua/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/inmueble/@inm.Id"
+                                           data-toggle="tooltip" title="Ver Detalle de la Factura" data-placement="top">
+                                            <i class="fad fa-eye text-success"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                nf += inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Count();
+                                nnc += inm.Facturas.Where(f => f.Tipo.Equals("NC")).Count();
+                                totalFactura += Convert.ToDecimal(inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total));
+                                totalNC += Convert.ToDecimal(inm.Facturas.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Total));
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Total:</th>
+                                <th>@nf Factura(s)</th>
+                                <th>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", totalFactura)</th>
+                                <th></th>
+                                <th>@nnc Nota(s) de Crédito</th>
+                                <th class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", totalNC)</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@* Modal para la captura de los entregables *@
+<div class="modal fade" id="modalEntregables">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white tituloEntregable">Adjuntar Soporte de Pago</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-lg-8">
+                    <label for="elegirArchivo">Seleccionar Archivo TXT: </label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="entregableTXT" accept=".txt, .TXT">
+                        <label class="custom-file-label custom-txt" for="customFile">Seleccionar Archivo</label>
+                    </div>
+                    <div class="col-sm-12" id="error_entregableTXT">
+                        <small id="dateHelp" class="text-danger">
+                            No ha seleccionado el archivo TXT o ha subido un archivo diferente a TXT
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="guardarSoporte">Adjuntar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la captura de los entregables *@
+
+@* Modal para la captura de los entregables *@
+<div class="modal fade" id="modalActualizarSoporte">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white tituloEntregable">Actualizar Soporte de Pago</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-lg-8">
+                    <label for="elegirArchivo">Seleccionar Archivo TXT: </label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="entregableATXT" accept=".txt, .TXT">
+                        <label class="custom-file-label custom-txt-a" for="customFile">Seleccionar Archivo</label>
+                    </div>
+                    <div class="col-sm-12" id="error_entregableATXT">
+                        <small id="dateHelp" class="text-danger">
+                            No ha seleccionado el archivo TXT o ha subido un archivo diferente a TXT
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="actualizarSoporte">Adjuntar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la captura de los entregables *@
+
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            const facturacion = @Html.Raw(Json.Serialize(@Model.Repositorio));
+            const usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+
+            $('#tblInmuebles').DataTable({
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $('#error_entregableTXT').css('display', 'none');
+            $('#error_entregableATXT').css('display', 'none');
+
+            $("#entregableTXT").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "txt" || ext == "TXT") {
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Formato Incorrecto',
+                        'text': 'El archivo que intentas adjuntar no es válido. Favor de solo seleccionar archivos "TXT"'
+                    });
+                    $(".custom-file-label").text("Seleccionar Archivo");
+                    document.getElementById('customFile').value = '';
+                    if ($('#entregableTXT').hasClass('is-valid')) {
+                        $('#entregableTXT').removeClass('is-valid');
+                    }
+                    $('#entregableTXT').addClass('is-invalid');
+                    $('#error_entregableTXT').css('display', 'block');
+                }
+            });
+
+            $("#entregableATXT").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "txt" || ext == "TXT") {
+                    $(this).siblings(".custom-txt-a").addClass("selected").html(fileName);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Formato Incorrecto',
+                        'text': 'El archivo que intentas adjuntar no es válido. Favor de solo seleccionar archivos "TXT"'
+                    });
+                    $(".custom-txt-a").text("Seleccionar Archivo");
+                    document.getElementById('entregableATXT').value = '';
+                    if ($('#entregableATXT').hasClass('is-valid')) {
+                        $('#entregableATXT').removeClass('is-valid');
+                    }
+                    $('#entregableATXT').addClass('is-invalid');
+                    $('#error_entregableATXT').css('display', 'block');
+                }
+            });
+
+            $(".btnSoportePago").click(function () {
+                $("#modalEntregables").modal('show');
+            });
+
+            $(".btnASoportePago").click(function () {
+                $("#modalActualizarSoporte").modal('show');
+            });
+
+            $("#guardarSoporte").click(function () {
+                var formData = new FormData();
+                var fileTXT = document.getElementById('entregableTXT').files[0];
+
+                formData.append("UsuarioId", usuario);
+                formData.append("MesId", facturacion.mesId);
+                formData.append("TXT", fileTXT);
+                formData.append("Anio", parseInt(facturacion.anio));
+                formData.append("Mes", facturacion.mes.nombre);
+                formData.append("Folio", facturacion.contrato.noContrato);
+
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: "Servicio de Mensajería Acelerada",
+                    html: "Cargando <b>Soporte de Pago</b>, espere por favor."
+                });
+                Swal.showLoading();
+                axios.post('/agua/facturas/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/' + @Model.Repositorio.Id+'/' + @Model.Repositorio.MesId+'?handler=CargarSoporte', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(response => {
+                    if (response.status == 200) {
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Servicio de Mensajería Acelerada',
+                            html: 'El <b>Soporte de Pago</b> se cargó correctamente.',
+                            confirmButtonText: 'Cerrar'
+                        }).then(function () {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Servicio de Mensajería Acelerada',
+                                html: "Actualizando las cédulas de evaluación, espere por favor."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        });
+                    }
+                });
+            });
+
+            $("#actualizarSoporte").click(function () {
+                var formData = new FormData();
+                var fileTXT = document.getElementById('entregableATXT').files[0];
+
+                formData.append("UsuarioId", usuario);
+                formData.append("MesId", facturacion.mesId);
+                formData.append("TXT", fileTXT);
+                formData.append("Anio", parseInt(facturacion.anio));
+                formData.append("Mes", facturacion.mes.nombre);
+                formData.append("Folio", facturacion.contrato.noContrato);
+
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: "Servicio de Mensajería Acelerada",
+                    html: "Cargando <b>Soporte de Pago</b>, espere por favor."
+                });
+                Swal.showLoading();
+                axios.post('/agua/facturas/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/' + @Model.Repositorio.Id+'/' + @Model.Repositorio.MesId+'?handler=ActualizarSoporte', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(response => {
+                    if (response.status == 200) {
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Servicio de Mensajería Acelerada',
+                            html: 'El <b>Soporte de Pago</b> se actualizó correctamente.',
+                            confirmButtonText: 'Cerrar'
+                        }).then(function () {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Servicio de Mensajería Acelerada',
+                                html: "Actualizando las cédulas de evaluación, espere por favor."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,260 @@
+﻿@page "/aeelectrica/solicitudesPago/{moduloId}/{submoduloId}/index"
+@model Clients.WebClient.Pages.AEElectrica.IndexModel
+@{
+    ViewData["Title"] = "Servicio de Energía Eléctrica AXA";
+    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
+    ViewData["Action"] = "Inicio";
+    var s = 0;
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <form method="get" id="getAnio" asp-page-handler="GetAnio">
+            <div class="row col-lg-9">
+                <label class="label">Consultar Información del Año: </label>
+                <div class="input-group mb-3">
+                    <select class="form-control" id="anioActual" asp-for="Anio">
+                        <option value="">Seleccione el Año</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                    <div class="row">
+                        <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar Información</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        @if (Model.Anio != 0)
+        {
+            <div class="col-lg-8 mt-4">
+                <a href="javascript:" class="btn btn-sm btn-primary float-right mr-2 CreateRepositorio"
+                   data-toggle="tooltip" title="Crear nueva facturación" data-placement="top">
+                    <i class="fal fa-plus"></i>
+                </a>
+            </div>
+        }
+    </div>
+    @if (Model.SolicitudesPago != null && Model.SolicitudesPago.Count() > 0)
+    {
+        <div class="row col-lg-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <section class="col-xl-12 connectedSortable">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Solicitudes de pago del servicio de @Model.Servicio.Descripcion.ToLower()
+                                </h3>
+                            </div>
+                            <div class="card-body" style="font-size: 14px;">
+                                <table class="table solicitudesPago">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Año</th>
+                                            <th>Mes</th>
+                                            <th>Inmueble</th>
+                                            <th>Estatus</th>
+                                            <th>Fecha de Creación</th>
+                                            <th>Última actualización</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.SolicitudesPago.Where(sp => Model.Inmuebles.Select(i => i.Id).Contains(sp.InmuebleId)).Count() > 0)
+                                        {
+                                            @foreach (var sp in Model.SolicitudesPago.Where(sp => Model.Inmuebles.Select(i => i.Id).Contains(sp.InmuebleId)))
+                                            {
+                                                s++;
+                                                <tr>
+                                                    <td>@s</td>
+                                                    <td>@sp.Anio</td>
+                                                    <td>@sp.Mes.Nombre</td>
+                                                    <td>@sp.Inmueble.Nombre</td>
+                                                    <td class="@(sp.Estatus.Fondo.Replace("bg","text")) font-weight-bold">@sp.Estatus.Nombre</td>
+                                                    <td>@Convert.ToDateTime(sp.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt")</td>
+                                                    <td>@(Convert.ToDateTime(sp.FechaActualizacion).ToString("dd/MM/yyyy").Equals("01/01/0001") ?
+                                                          Convert.ToDateTime(sp.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt") :
+                                                          Convert.ToDateTime(sp.FechaActualizacion).ToString("dd/MM/yyyy hh:mm tt"))</td>
+                                                    <td class="text-center">
+                                                        <a href="~/aeelectrica/solicitudesPago/@Model.Modulo.Id/@Model.Submodulo.Id/detalleSP/@sp.Id">
+                                                            <i class="fad fa-eye text-success"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td class="text-center" colspan="8">No cuentas con inmuebles asignados a este servicio</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@* Modal para editar el contrato *@
+<div class="modal fade" id="modal-facturacion">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white">Capturar Contrato</h4>
+                <button type="button" class="close close-incidencias text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Detalle de la Facturación</h4>
+                        <div class="row col-lg-12" id="divDetallesContrato">
+                            <div class="form-row col-lg-12">
+                                <div class="col-lg-3">
+                                    <label for="tipoIncidencia">Año:</label>
+                                    <input class="form-control" id="campoAnio" value="@Model.Anio" disabled />
+                                </div>
+                                <div class="form-group col-md-3" id="divFechaIncio">
+                                    <label for="fechaIncidencia">Mes: </label>
+                                    <select id="campoMes" class="form-control">
+                                        <option value="">Seleccione el mes</option>
+                                        @foreach (var ms in Model.Meses)
+                                        {
+                                            <option value="@ms.Id">@ms.Nombre</option>
+                                        }
+                                    </select>
+                                    <div class="col-sm-12" id="error_campoMes">
+                                        <small id="dateHelp" class="text-danger">
+                                            Seleccione el mes
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3" id="divFechaIncio">
+                                    <label for="fechaIncidencia">Inmueble: </label>
+                                    <select id="campoInmueble" class="form-control">
+                                        <option value="">Seleccione el mes</option>
+                                        @foreach (var ms in Model.Inmuebles)
+                                        {
+                                            <option value="@ms.Id">@ms.Nombre</option>
+                                        }
+                                    </select>
+                                    <div class="col-sm-12" id="error_campoInmueble">
+                                        <small id="dateHelp" class="text-danger">
+                                            Seleccione el inmueble
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardarFacturacion">Generar Facturación</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@* Modal para editar el contrato *@
+
+@section Scripts{
+    <script>
+    $(function () {
+        var anio = @Html.Raw(Json.Serialize(Model.Anio));
+        var servicio = @Html.Raw(Json.Serialize(Model.Servicio));
+
+        $("#anioActual").val(anio != 0 ? anio : '');
+
+        var table = $('.solicitudesPago').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: 'Listado de Solicitudes de Pago',
+                    className: "bg-cjf mr-1",
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Listado de Solicitudes de Pago',
+                    className: "bg-cjf mr-1",
+                    orientation: "landscape"
+                },
+                {
+                    extend: 'print',
+                    title: 'Listado de Solicitudes de Pago',
+                    text: 'Imprimir',
+                    className: "bg-cjf mr-1"
+                }
+            ],
+            lengthMenu: [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+            responsive: true,
+            stateSave: true,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
+        });
+
+        $("#error_campoMes").css("display", "none");
+        $("#error_campoInmueble").css("display", "none");
+
+        $(".CreateRepositorio").click(function () {
+            $("#modal-facturacion").modal("show");
+        });
+
+        function validaCampos() {
+            if ($("#campoMes").val() != "" && $("#campoInmueble").val()) {
+                return true;
+            }
+
+            if ($("#campoInmueble").val() == "")
+            {
+                $('#campoInmueble').removeClass('is-valid');
+                $('#campoInmueble').addClass('is-invalid');
+            }
+
+            if ($("#campoMes").val() != "") {
+                $('#campoMes').removeClass('is-valid');
+                $('#campoMes').addClass('is-invalid');
+            }
+        }
+
+        $("#guardarFacturacion").click(function () {
+            var mes = $("#campoMes").val();
+            var inmueble = $("#campoInmueble").val();
+            if (validaCampos()) {
+                alert(1);
+                axios.post('/aeelectrica/solicitudesPago/'+@Model.Modulo.Id+'/'+@Model.Submodulo.Id+'/index?Handler=CreateRepositorio', {
+                    MesId: parseInt(mes), InmuebleId: parseInt(inmueble), Anio: @Model.Anio, ServicioId: parseInt(servicio.id) }).then(response => {
+                        if (response.status == 200) {
+                            Swal.fire({
+                                'icon': "success",
+                                'title': 'Servicio de '+servicio.descripcion,
+                                'html': "La facturación se generó correctamente.",
+                                'confirmButtonText': 'Cerrar'
+                            }).then(function () {
+                                $("#modal-facturacion").modal("hide");
+                                window.location.reload();
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            'icon': "error",
+                            'title': 'Servicio de ' + servicio.descripcion,
+                            'html': "Hubo un error al generar la facturacion. Contacte a su administrador del sistema.",
+                            'confirmButtonText': 'Cerrar'
+                        });
+                     });
+            }
+        });
+    })
+    </script>
+} 

@@ -1,0 +1,292 @@
+﻿@page "/mensajeria/firmantes/{moduloId}/{submoduloId}/index"
+@model Clients.WebClient.Pages.Mensajeria.Firmantes.IndexModel
+@{
+    ViewData["Titulo"] = "Servicio de Mensajería Acelerada";
+    ViewData["Title"] = "Firmantes de la Cédula de Evaluación";
+    var c = 0;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header h5">
+                    <i class="fad fa-list mr-2"></i>Listado de Firmantes
+                </div>
+                <div class="card-body">
+                    <div row col-lg-12>
+                        <table class="table dataTable tableFirmantes" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Inmueble</th>
+                                    <th>Usuario</th>
+                                    <th>Escolaridad</th>
+                                    <th>Rubro</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var fr in Model.Firmantes)
+                                {
+                                    c++;
+                                    var user = fr.Usuario.NombreEmp + " " + fr.Usuario.PaternoEmp + " " + fr.Usuario.MaternoEmp;
+                                    <tr>
+                                        <td>@c</td>
+                                        <td>@fr.Inmueble.Nombre</td>
+                                        <td>@(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(user.ToLower()))</td>
+                                        <td>@fr.Escolaridad</td>
+                                        <td>@fr.Tipo</td>
+                                        <td class="text-center">
+                                            <a href="javascript:" class="editFirmante" data-id="@fr.Id" data-eactual="@fr.Escolaridad" 
+                                               data-factual="@fr.UsuarioId" data-inmueble="@fr.InmuebleId">
+                                                <i class="fad fa-pencil text-primary"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal para actualizar firmantes*@
+<div class="modal fade" id="modal-firmante">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white">Actualizar Firmante</h4>
+                <button type="button" class="close close-incidencias text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="idFirmante" />
+                    <div class="row col-lg-12 font-weight-bold">
+                        <h4>Firmante Actual: </h4>
+                        <br />
+                    </div>
+                    <div class="form-row col-md-4" id="divEscolaridadA">
+                        <label for="firmanteActual">Inmueble:</label>
+                        <select class="form-control inmueble" disabled>
+                            <option value="">Seleccione un Inmueble</option>
+                            @foreach (var inm in Model.Inmuebles)
+                            {
+                                <option value="@inm.Id">@inm.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-row col-md-3" id="divEscolaridadA">
+                        <label for="firmanteActual">Escolaridad:</label>
+                        <select class="form-control" id="escolaridadActual" disabled>
+                            <option value="">Seleccione una escolaridad</option>
+                            <option value="C.">Ciudadano</option>
+                            <option value="Lic.">Licenciatura</option>
+                            <option value="Ing.">Ingeniería</option>
+                            <option value="C.P.">Contaduría</option>
+                            <option value="Arq.">Arquitectura</option>
+                            <option value="Act.">Actuaría</option>
+                            <option value="Mtro.">Maestro</option>
+                            <option value="Mtra.">Maestra</option>
+                            <option value="Dr.">Doctor</option>
+                            <option value="Dra.">Doctora</option>
+                        </select>
+                    </div>
+                    <div class="form-row col-md-4" id="divFirmante">
+                        <label for="firmanteActual">Firmante Actual:</label>
+                        <select class="form-control" id="firmanteActual" disabled>
+                            @foreach (var us in Model.Usuarios)
+                            { 
+                                <option value="@us.Id">@us.NombreEmp @us.PaternoEmp @us.MaternoEmp</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="row col-lg-12 font-weight-bold">
+                        <h4>Nuevo Firmante: </h4>
+                        <br />
+                    </div>
+                    <div class="form-row col-md-4" id="divEscolaridadA">
+                        <label for="firmanteActual">Inmueble:</label>
+                        <select class="form-control inmueble" disabled>
+                            <option value="">Seleccione un Inmueble</option>
+                            @foreach (var inm in Model.Inmuebles)
+                            {
+                                <option value="@inm.Id">@inm.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-row col-md-3" id="divEscolaridadN">
+                        <label for="firmanteActual">Escolaridad:</label>
+                        <select class="form-control" id="escolaridadNueva">
+                            <option value="">Seleccione una escolaridad</option>
+                            <option value="C.">Ciudadano</option>
+                            <option value="Lic.">Licenciatura</option>
+                            <option value="Ing.">Ingeniería</option>
+                            <option value="C.P.">Contaduría</option>
+                            <option value="Arq.">Arquitectura</option>
+                            <option value="Act.">Actuaría</option>
+                            <option value="Mtro.">Maestro</option>
+                            <option value="Mtra.">Maestra</option>
+                            <option value="Dr.">Doctor</option>
+                            <option value="Dra.">Doctora</option>
+                        </select>
+                        <div class="col-sm-12" id="error_escolaridad">
+                            <small id="dateHelp" class="text-danger">
+                                Por favor seleccione la escolaridad del firmante.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row col-md-4" id="divFirmante">
+                        <div class="select2-purple col-lg-12">
+                            <label for="firmanteActual">Nuevo Firmante:</label>
+                            <select class="form-control select2bs4" data-dropdown-css-class="select2-purple" id="nuevoFirmante">
+                                <option value="">Seleccione un servidor público</option>
+                                @foreach (var us in Model.Usuarios)
+                                {
+                                    <option value="@us.Id">@us.NombreEmp @us.PaternoEmp @us.MaternoEmp</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-sm-12" id="error_nuevoFirmante">
+                            <small id="dateHelp" class="text-danger">
+                                Por favor seleccione el nuevo firmante.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-primary" id="actualizarFirmante">Actualizar Firmante</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin del Modal para Capturar Oficios*@
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.tableFirmantes').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Firmantes',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Listado de Firmantes',
+                        className: "bg-cjf mr-1"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Listado de Firmantes',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            /******************************** Modificar Firmantes **************************************/
+            $("#divTipoServicio").css("display", "none");
+            $("#error_escolaridad").css("display", "none");
+            $("#error_nuevoFirmante").css("display", "none");
+            $(".error_selectServicio").css("display", "none");
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $(".select2").select2();
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            $(".editFirmante").click(function () {
+                $("#idFirmante").val('');
+                $("#escolaridadNueva").val('');
+                $("#nuevoFirmante").val('');
+                $("#idFirmante").val($(this).data('id'));
+                $("#escolaridadActual").val($(this).data('eactual'));
+                $(".inmueble").val($(this).data('inmueble'));
+                $("#firmanteActual").val($(this).data('factual')).change();
+
+                $("#modal-firmante").modal("show");
+            });
+
+            $("#actualizarFirmante").click(function () {
+                var id = $("#idFirmante").val();
+                var firmante = $("#nuevoFirmante").val();
+                var escolaridad = $("#escolaridadNueva").val();
+
+                if (escolaridad == "") {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': 'Firmantes',
+                        'html': 'Por favor seleccione la escolaridad del firmante.',
+                    });
+
+                    $("#error_escolaridad").css("display", "block");
+
+                    return false;
+                }
+
+                if (firmante == "") {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': 'Firmantes',
+                        'html': 'Por favor seleccione al nuevo firmante.',
+                    });
+                    $("#error_nuevoFirmante").css("display", "block");
+                    return false;
+                }
+
+                axios.put('/mensajeria/firmantes/' +@Model.Modulo.Id+'/' +@Model.Submodulo.Id+'/index?Handler=UpdateFirmante', {
+                    Id: parseInt(id), UsuarioId: firmante, Escolaridad: escolaridad
+                }).then(response => {
+                    if (response.status)
+                    {
+                        Swal.fire({
+                            'icon': 'success',
+                            'title': 'Actualización de Firmantes',
+                            'html': 'Se actualizó el firmante del inmueble.'
+                        }).then(function () {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Servicio de Mensajería Acelerada',
+                                html: "Aplicando cambios al firmante, espere por favor."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        });
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': 'Actualización de Firmantes',
+                        'html': 'Hubo un error al actualizar el firmante del inmueble. Contacte al administrador del sistema.'
+                    });
+                });
+            });
+
+            /******************************** Capturar Nuevo Contrato **************************************/
+        })
+    </script>
+}

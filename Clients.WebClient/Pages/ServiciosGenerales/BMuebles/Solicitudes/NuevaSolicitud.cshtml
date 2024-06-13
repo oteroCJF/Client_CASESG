@@ -1,0 +1,587 @@
+﻿@page "/bmuebles/solicitudes/{moduloId}/{submoduloId}/solicitud/create/{anio}"
+@model Clients.WebClient.Pages.ServiciosGenerales.BMuebles.Solicitudes.NuevaSolicitudModel
+@{
+    ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
+    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
+    ViewData["Action"] = "Inicio";
+}
+
+<div class="row col-lg-12">
+    <div class="col-lg-12">
+        <a href="/bmuebles/solicitudes/@Model.Modulo.Id/@Model.Submodulo.Id/index" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar" data-toggle="tooltip" title="Regresar" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row col-lg-12 mt-3">
+    <div class="row col-lg-12">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header cabeceraContrato">
+                    <i class="fa-sharp fa-light fa-file-contract mr-2"></i> Contrato
+                </div>
+                <div class="card-body" id="cuerpoContrato" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="ml-4 mb-0 fa-ul">
+                                <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-info"></i></span> <b># de Contrato: </b> @Model.Contrato.NoContrato</li>
+                                <li class="small mt-3"><span class="fa-li"><i class="fad fa-calendar"></i></span> <b>Vigencia: </b> Del @Model.Contrato.InicioVigencia.ToString("dd/MM/yyyy") al @Model.Contrato.FinVigencia.ToString("dd/MM/yyyy")</li>
+                                <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-building-user"></i></span> <b>Empresa: </b> @Model.Contrato.Empresa <br /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row col-lg-12 mt-3" id="divSolicitud">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header cabeceraSolicitud">
+                <i class="fa-sharp fa-light fa-money-bill-1-wave mr-2"></i> Solicitud
+            </div>
+            <div class="card-body cuerpoFacturacion">
+                <div class="row col-lg-12 mt-3">
+                    <h5>Datos de la solicitud</h5>
+                    <div class="col-lg-12 mt-3 ml-2">
+                        <div class="form-row col-lg-12">
+                            <div class="col-lg-2">
+                                <label for="fechaSol"><i class="text-danger mr-1">*</i>Fecha de la Solicitud:</label>
+                                <input type="date" class="form-control" id="campoFechaSolicitud" />
+                                <div class="col-sm-12" id="error_campoFechaSolicitud">
+                                    <small id="dateHelp" class="text-danger">
+                                        Capture la fecha de solicitud
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="fechaSer"><i class="text-danger mr-1">*</i>Fecha del Servicio:</label>
+                                <input type="date" class="form-control" id="campoFechaServicio" />
+                                <div class="col-sm-12" id="error_campoFechaServicio">
+                                    <small id="dateHelp" class="text-danger">
+                                        Capture la fecha del servicio
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="fechaSer"><i class="text-danger mr-1">*</i>Hora del Servicio:</label>
+                                <input type="time" class="form-control" id="campoHoraServicio" />
+                                <div class="col-sm-12" id="error_campoHoraServicio">
+                                    <small id="dateHelp" class="text-danger">
+                                        Capture la hora del servicio
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="selPartida"><i class="text-danger mr-1">*</i>Concepto:</label>
+                                <select class="form-control" id="campoConcepto">
+                                    <option value="0">Seleccione una partida</option>
+                                    @foreach (var pt in Model.ServiciosContrato)
+                                    {
+                                        <option value="@pt.Id">@pt.Nombre</option>
+                                    }
+                                </select>
+                                <div class="col-sm-12" id="error_campoConcepto">
+                                    <small id="dateHelp" class="text-danger">
+                                        Capture el concepto
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="selPartida"><i class="text-danger mr-1">*</i>Unidad Solicitante:</label>
+                                <select class="form-control" id="campoUSolicitante" disabled>
+                                    <option value="@Model.Sede.Id">@Model.Sede.Nombre</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 mt-3">
+                    <h5>Domicilio</h5>
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <span class="font-weight-bold">
+                                En el caso de que no exista una dirección favor de capturarla seleccionando la siguiente opción:
+                            </span>
+                            <a href="javascript:" class="btn crearDireccion">
+                                <span class="badge bg-success m-1">Nueva Dirección</span>
+                            </a>
+                        </div>
+                        <div class="form-row col-lg-12">
+                            <div class="col-lg-3">
+                                <label for="selPartida" class="control-label"><i class="text-danger mr-1">*</i>Origen:</label>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <select class="form-control select2bs4" id="campoOrigen">
+                                            <option value="0">Seleccione el Origen</option>
+                                            @foreach (var dr in Model.Direcciones)
+                                            {
+                                                <option value="@dr.Id">@dr.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="input-group-addon input-group-button ml-3 mt-1">
+                                            <a href="javascript:" class="updateDireccionOrigen"><i class="fas fa-pencil text-primary"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" id="error_campoOrigen">
+                                    <small id="dateHelp" class="text-danger">
+                                        Seleccione el origen
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="selPartida"><i class="text-danger mr-1">*</i>Destino:</label>
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <select class="form-control select2bs4" id="campoDestino">
+                                            <option value="0">Seleccione el Destino</option>
+                                            @foreach (var dr in Model.Direcciones)
+                                            {
+                                                <option value="@dr.Id">@dr.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="input-group-addon input-group-button ml-3 mt-1">
+                                            <a href="javascript:" class="updateDireccionDestino">
+                                                <i class="fas fa-pencil text-primary"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" id="error_campoDestino">
+                                    <small id="dateHelp" class="text-danger">
+                                        Seleccione el destino
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="col-lg-12 text-primary font-weight-bold divDireccionOrigen">
+                                    <h5>Dirección de Origen</h5>
+                                    <div class="col-lg-12" id="divDireccionOrigen">
+                                        <ul class="ml-4 mb-0 fa-ul">
+                                            <li class="small mt-3" id="dtDONombre"></li>
+                                            <li class="small mt-3" id="dtDODireccion"></li>
+                                            <li class="small mt-3" id="dtDOEstado"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="col-lg-12 text-primary font-weight-bold divDireccionOrigen">
+                                    <div class="col-lg-12 text-success font-weight-bold divDireccionDestino">
+                                        <h5>Dirección de Destino</h5>
+                                        <div class="col-lg-12" id="divDireccionDestino">
+                                            <ul class="ml-4 mb-0 fa-ul">
+                                                <li class="small mt-3" id="dtDDNombre"></li>
+                                                <li class="small mt-3" id="dtDDDireccion"></li>
+                                                <li class="small mt-3" id="dtDDEstado"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 mt-3">
+                    <h5>Detalle de la Solicitud</h5>
+                    <div class="col-lg-12 mt-3 ml-2">
+                        <div class="form-row col-lg-12">
+                            <div class="col col-lg-2">
+                                <label>Unidades (m³): </label>
+                                <div class="col-xs-2 col-xs-offset-3">
+                                    <div class="input-group number-spinner">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-dir="dwn"><span class="fas fa-minus"></span></button>
+                                        </span>
+                                        <input type="number" class="form-control text-center" value="0" id="campoUnidades">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-dir="up"><span class="fas fa-plus"></span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" id="error_campoUnidades">
+                                    <small id="dateHelp" class="text-danger">
+                                        Capture las unidades en m³
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col col-lg-2">
+                                <label>Tipo de Camión: </label>
+                                <select class="form-control" id="campoCamion">
+                                    <option value="0">Seleccione un camión</option>
+                                    @foreach (var pt in Model.Camiones)
+                                    {
+                                        <option value="@pt.Id">@pt.Nombre</option>
+                                    }
+                                </select>
+                                <div class="col-sm-12" id="error_campoCamion">
+                                    <small id="dateHelp" class="text-danger">
+                                        Seleccione el tipo de camión
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col col-lg-2">
+                                <label>Estibadores: </label>
+                                <div class="col-xs-2 col-xs-offset-3">
+                                    <div class="input-group number-spinner">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-dir="dwn"><span class="fas fa-minus"></span></button>
+                                        </span>
+                                        <input type="number" class="form-control text-center" value="2" id="campoEstibadores">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-dir="up"><span class="fas fa-plus"></span></button>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-12" id="error_campoEstibadores">
+                                        <small id="dateHelp" class="text-danger">
+                                            Capture el número de estibadores
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-lg-2">
+                                <label>Estibadores Adicionales: </label>
+                                <div class="col-xs-2 col-xs-offset-3">
+                                    <div class="input-group number-spinner">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-dir="dwn"><span class="fas fa-minus"></span></button>
+                                        </span>
+                                        <input type="number" class="form-control text-center" value="0" id="campoEstibadoresAdicionales">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-dir="up"><span class="fas fa-plus"></span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="lblUsrRecibe">Personal que entrega:</label>
+                                <select id="campoUsrEntrega" class="form-control select2bs4">
+                                    <option value="0">Seleccione al servidor público</option>
+                                    @foreach (var usr in Model.Usuarios)
+                                    {
+                                        <option value="@usr.Id">@usr.NombreEmp @usr.PaternoEmp @usr.MaternoEmp</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row col-lg-12 mt-3">
+                            <div class="col-lg-4">
+                                <label for="lblUsrRecibe">Personal que recibe:</label>
+                                <select id="campoUsrRecibe" class="form-control select2bs4">
+                                    <option value="0">Seleccione al servidor público</option>
+                                    @foreach (var usr in Model.Usuarios)
+                                    {
+                                        <option value="@usr.Id">@usr.NombreEmp @usr.PaternoEmp @usr.MaternoEmp</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-8">
+                                <label for="lblUsrRecibe">Observaciones:</label>
+                                <textarea height="200" id="campoObservaciones" style="resize: none;" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="javascript:" class="btn btn-sm btn-primary float-right" id="guardarSolicitud">Guardar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal para la captura de la Direccion *@
+<div class="modal fade" id="modal-direccion">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white titleModal"></h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-lg-12">
+                    <input type="hidden" class="form-control" id="campoIdOD"/>
+                    <div class="form-row col-lg-4">
+                        <label>Nombre: </label>
+                        <input type="text" class="form-control" id="campoNombreDireccion">
+                        <div class="col-sm-12" id="error_campoNombreDireccion">
+                            <small id="dateHelp" class="text-danger">
+                                Capture un nombre para la dirección
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row col-lg-8">
+                        <label>Dirección: </label>
+                        <input type="text" class="form-control" id="campoDireccionDireccion">
+                        <div class="col-sm-12" id="error_campoDireccionDireccion">
+                            <small id="dateHelp" class="text-danger">
+                                Capture la dirección
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row col-lg-4 mt-2">
+                        <label>Estado: </label>
+                        <input type="text" class="form-control" id="campoEstadoDireccion">
+                        <div class="col-sm-12" id="error_campoEstadoDireccion">
+                            <small id="dateHelp" class="text-danger">
+                                Capture el estado de la dirección
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="guardarDireccion">Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la captura de la Factura*@
+
+<style>
+    .cabeceraInformacion{
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .cabeceraContrato{
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            const anio = @Html.Raw(Json.Serialize(@Model.Anio));
+            const modulo = @Html.Raw(Json.Serialize(@Model.Modulo));
+            const submodulo = @Html.Raw(Json.Serialize(@Model.Submodulo));
+            const servicio = @Html.Raw(Json.Serialize(@Model.Servicio));
+
+            $(".cabeceraInformacion").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraContrato").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $('.select2').select2()
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            ocultaCampos();
+
+            function ocultaCampos() {
+                $("#error_campoFechaSolicitud").css("display", "none");
+                $("#error_campoFechaServicio").css("display", "none");
+                $("#error_campoHoraServicio").css("display", "none");
+                $("#error_campoConcepto").css("display", "none");
+                $(".updateDireccionOrigen").css("display", "none");
+                $("#error_campoOrigen").css("display", "none");
+                $("#error_campoDestino").css("display", "none");
+                $("#error_campoUnidades").css("display", "none");
+                $(".updateDireccionDestino").css("display", "none");
+                $(".divDireccionOrigen").css("display", "none");
+                $(".divDireccionDestino").css("display", "none");
+            }
+
+            $(document).on('click', '.number-spinner button', function () {
+                var btn = $(this),
+                    oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+                    newVal = 0;
+
+                if (btn.attr('data-dir') == 'up') {
+                    newVal = parseInt(oldValue) + 1;
+                } else {
+                    if (oldValue > 0) {
+                        newVal = parseInt(oldValue) - 1;
+                    } else {
+                        newVal = 0;
+                    }
+                }
+                btn.closest('.number-spinner').find('input').val(newVal);
+            });
+
+
+            $("#campoUnidades").change(function () {
+                if ($(this).val() < 0) {
+                    $(this).val(0);
+                }
+            });
+
+            $(".crearDireccion").click(function () {
+                $(".titleModal").text('Nueva Dirección');
+                $("#campoIdOD").val('');
+                $("#campoNombreDireccion").val('');
+                $("#campoDireccionDireccion").val('');
+                $("#campoEstadoDireccion").val('');
+                $("#modal-direccion").modal('show');
+            });
+
+            $("#guardarDireccion").click(function () {
+                var id = $("#campoIdOD").val();
+                var nombreDir = $("#campoNombreDireccion").val();
+                var direccion = $("#campoDireccionDireccion").val();
+                var estado = $("#campoEstadoDireccion").val();
+
+                if (id == 0) {
+                    axios.post("/bmuebles/solicitudes/" + modulo.id + "/" + submodulo.id + "/solicitud/create/" + anio + "?Handler=CreateDireccion", {
+                        Nombre: nombreDir, Domicilio: direccion, Estado: estado
+                    }).then(response => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Servicio de ' + servicio.descripcion,
+                            html: 'Se guardó la dirección correctamente.'
+                        }).then(function () {
+                            window.location.reload();
+                        });
+                    });
+                }
+                else {
+                    axios.put("/bmuebles/solicitudes/" + modulo.id + "/" + submodulo.id + "/solicitud/create/" + anio + "?Handler=UpdateDireccion", {
+                       Id: parseInt(id), Nombre: nombreDir, Domicilio: direccion, Estado: estado
+                    }).then(response => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Servicio de ' + servicio.descripcion,
+                            html: 'Se actualizó la dirección correctamente.'
+                        }).then(function () {
+                            window.location.reload();
+                        });
+                    });
+                }
+            });
+
+            $(".updateDireccionOrigen").click(function () {
+                $(".titleModal").text('Actualizar Dirección');
+                var id = $("#campoOrigen").val();
+
+                if (id == 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: 'Debe seleccionar un <b>Origen</b>.'
+                    });
+
+                    return false;
+                }
+
+                axios.get("/bmuebles/solicitudes/" + modulo.id + "/" + submodulo.id + "/solicitud/create/" + anio + "?Id="+id+"&Handler=DireccionId").then(response => {
+                    response = response.data;
+                    $("#campoIdOD").val(response.id);
+                    $("#campoNombreDireccion").val(response.nombre);
+                    $("#campoDireccionDireccion").val(response.domicilio);
+                    $("#campoEstadoDireccion").val(response.estado);
+                    $("#modal-direccion").modal('show');
+                });
+            });
+
+            $("#campoOrigen").change(function () {
+                if ($(this).val() != 0) {
+                    $(".updateDireccionOrigen").css("display", "block");
+                    axios.get("/bmuebles/solicitudes/" + modulo.id + "/" + submodulo.id + "/solicitud/create/" + anio + "?Id=" + $(this).val() + "&Handler=DireccionId").then(response => {
+                        response = response.data;
+                        $("#dtDONombre").html('<span class="fa-li"><i class="fas fa-lg fa-info"></i></span> <b>Origen: </b>' + response.nombre);
+                        $("#dtDODireccion").html('<span class="fa-li"><i class="fas fa-lg fa-truck"></i></span> <b>Domicilio: </b>' + response.domicilio);
+                        $("#dtDOEstado").html('<span class="fa-li"><i class="fa-duotone fa-mountain-sun"></i></span> <b>Estado: </b>' + response.estado);
+                        $(".divDireccionOrigen").css("display","block");
+                    });
+                }
+                else {
+                    $(".updateDireccionOrigen").css("display", "none");
+                }
+            });
+
+            $(".updateDireccionDestino").click(function () {
+                $(".titleModal").text('Actualizar Dirección');
+                var id = $("#campoDestino").val();
+
+                if (id == 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: 'Debe seleccionar un <b>Destino</b>.'
+                    });
+                    return false;
+                }
+
+                axios.get("/bmuebles/solicitudes/" + modulo.id + "/" + submodulo.id + "/solicitud/create/" + anio + "?Id=" + id + "&Handler=DireccionId").then(response => {
+                    response = response.data;
+                    $("#campoIdOD").val(response.id);
+                    $("#campoNombreDireccion").val(response.nombre);
+                    $("#campoDireccionDireccion").val(response.domicilio);
+                    $("#campoEstadoDireccion").val(response.estado);
+                    $("#modal-direccion").modal('show');
+                });
+
+            });
+
+            $("#campoDestino").change(function () {
+                if ($(this).val() != 0) {
+                    $(".updateDireccionDestino").css("display", "block");
+                    axios.get("/bmuebles/solicitudes/" + modulo.id + "/" + submodulo.id + "/solicitud/create/" + anio + "?Id=" + $(this).val() + "&Handler=DireccionId").then(response => {
+                        response = response.data;
+                        $("#dtDDNombre").html('<span class="fa-li"><i class="fas fa-lg fa-info"></i></span> <b>Origen: </b>' + response.nombre);
+                        $("#dtDDDireccion").html('<span class="fa-li"><i class="fas fa-lg fa-truck"></i></span> <b>Domicilio: </b>' + response.domicilio);
+                        $("#dtDDEstado").html('<span class="fa-li"><i class="fa-duotone fa-mountain-sun"></i></span> <b>Estado: </b>' + response.estado);
+                        $(".divDireccionDestino").css("display", "block");
+                    });
+                } else {
+                    $(".updateDireccionOrigen").css("display", "none");
+                }
+            });
+
+            function validaCampos()
+            {
+                if ($("#campoFechaSolicitud").val() != "" && $("#campoFechaServicio").val() != "" && $("#campoHoraServicio").val() != "" &&
+                    $("#campoConcepto").val() != 0 && $("#campoUSolicitante").val() != "" && $("#campoOrigen").val() != 0 &&
+                    $("#campoDestino").val() != 0 && $("#campoUnidades").val() != 0 && $("#campoCamion").val() != 0 &&
+                    $("#campoEstibadores").val() != "" && $("#campoUsrEntrega").val() != 0 && $("#campoUsrRecibe").val() != 0) {
+                    return true;
+                }
+
+                if ($("#campoFechaSolicitud").val() == "") { $("#error_campoFechaSolicitud").css("display", "block"); }
+                if ($("#campoFechaServicio").val() == "") { $("#error_campoFechaServicio").css("display", "block"); }
+                if ($("#campoHoraServicio").val() == "") { $("#error_campoHoraServicio").css("display", "block"); }
+                if ($("#campoConcepto").val() == 0) { $("#error_campoConcepto").css("display", "block"); }
+                if ($("#campoOrigen").val() == 0) { $("#error_campoOrigen").css("display", "block"); }
+                if ($("#campoDestino").val() == 0) { $("#error_campoDestino").css("display", "block"); }
+                if ($("#campoUnidades").val() == 0) { $("#error_campoUnidades").css("display", "block"); }
+                if ($("#campoCamion").val() == "") { $("#error_campoUnidades").css("display", "block"); }
+                if ($("#campoEstibadores").val() == "") { $("#error_campoEstibadores").css("display", "block"); }
+                if ($("#campoUsrEntrega").val() !== "") { $("#error_campoUsrEntrega").css("display", "block"); }
+                if ($("#campoUsrRecibe").val() == "") { $("#error_campoUsrRecibe").css("display", "block"); }
+
+                return false;
+            }
+
+            $("#guardarSolicitud").click(function () {
+                if (validaCampos()) {
+                    alert(1);
+                }
+            });
+        })
+    </script>
+}

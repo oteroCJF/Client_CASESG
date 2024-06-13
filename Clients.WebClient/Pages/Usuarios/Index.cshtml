@@ -1,0 +1,77 @@
+﻿@page "/usuarios/{moduloId}/index"
+@model Clients.WebClient.Pages.Usuarios.IndexModel
+@{
+    ViewData["Title"] = "Usuarios del Sistema";
+    ViewData["Titulo"] = "Usuarios del Sistema";
+    ViewData["Action"] = "Inicio";
+    int c = 0;
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <section class="col-xl-12 connectedSortable">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Usuarios registrados en el sistema CASESG
+                    </h3>
+                </div>
+                <div class="card-body" style="font-size: 14px;">
+                    <table class="table listadoUsuarios">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Expediente</th>
+                                <th>Nombre</th>
+                                <th>Correo Electrónico</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var u in Model.Usuarios)
+                            {
+                                c++;
+                                <tr>
+                                    <td>@c</td>
+                                    <td>@u.Expediente</td>
+                                    <td>@u.NombreEmp @u.PaternoEmp @u.MaternoEmp</td>
+                                    <td>@u.Email</td>
+                                    <td class="text-center">
+                                        <a href="/usuarios/@Model.Modulo.Id/detalle/@u.Id" class="verUsuario">
+                                            <i class="fad fa-eye text-success"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.listadoUsuarios').DataTable({
+                lengthMenu: [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+                responsive: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $(".verUsuario").click(function () {
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: 'Usuario',
+                    html: "Obteniendo la información del usuario, por favor espere."
+                })
+                Swal.showLoading();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,848 @@
+﻿@page "/financieros/fumigacion/{moduloId}/detalle/{servicioId}/{anio}"
+@model Clients.WebClient.Pages.Financieros.Fumigacion.DetalleServicioModel
+@{
+    ViewData["Titulo"] = "Detalle del Servicio - " + Model.Servicio.Nombre;
+    ViewData["Title"] = "Detalle del Servicio - " + Model.Servicio.Nombre;
+    ViewData["Action"] = "Detalle del Servicio";
+    var i = 0;
+}
+
+<div class="container-fluid">
+    <div class="row col-lg-12">
+        <div class="col-lg-12">
+            <a href="#" type='button' class="btn btn-sm btn-primary float-right ml-2 btnOficio" data-toggle="tooltip" title="Nuevo Oficio" data-placement="top">
+                <i class="fal fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#oficios" role="tab" aria-controls="home" aria-selected="true">Oficios de Pago</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#entregables" role="tab" aria-controls="profile" aria-selected="false">Descarga de Entregables</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                @* Oficios de Financieros *@
+                <div class="tab-pane fade mt-2 ml-3 show active" id="oficios" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row col-lg-12 mt-2">
+                        <div class="col-lg-12">
+                            <table class="table tblOficios">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Numero de oficio</th>
+                                        <th>Estatus</th>
+                                        <th>Fecha de trámite</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var of in Model.Oficios)
+                                    {
+                                        <tr>
+                                            <td>@of.Id</td>
+                                            <td>@of.NumeroOficio</td>
+                                            <td>@of.Estatus.Nombre</td>
+                                            <td>@Convert.ToDateTime(of.FechaTramitado).ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                <a href="/financieros/@Model.Servicio.Abreviacion.ToLower()/@Model.Modulo.Id/detalle/@Model.Servicio.Id/@Model.Anio/oficio/@of.Id">
+                                                    <i class="fas fa-eye text-success"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 mt-3">
+                        @if (Model.Detalle.Where(d => d.AreaEjecutora.Equals("Administración")).Count() != 0)
+                        {
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-cjf text-white">
+                                        <h5>Cédulas en la Administración</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row col-lg-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        @{
+                                                            var estatus = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Administración"))
+                                                               .Select(d => d.Estatus).Distinct().ToList();
+                                                        }
+                                                        @foreach (var col in estatus)
+                                                        {
+                                                            <th>@col</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var filas = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Administración")).ToList();
+                                                        var meses = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Administración")).Select(d => d.Mes).Distinct().ToList();
+                                                    }
+                                                    @for (var m = 0; m < meses.Count(); m++)
+                                                    {
+                                                        <tr>
+                                                            <th>@meses[m]</th>
+                                                            @for (var e = 0; e < estatus.Count(); e++)
+                                                            {
+                                                                if (filas.Where(c => c.Mes.Equals(meses[m]) &&
+                                                                                    c.Estatus.Equals(estatus[e])).Count() != 0)
+                                                                {
+                                                                    <td>
+                                                                        <div class="col-lg-12 text-center">
+                                                                            <span class="mb-2 badge @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo">
+                                                                                @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Total Cédula(s)
+                                                                            </span>
+                                                                            <div class='progress'>
+                                                                                <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo" role="progressbar"
+                                                                                     style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
+                                                                                     aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
+                                                                                    <span class="font-weight-bold @(filas.Single(c => c.Mes.Equals(meses[m]) &&
+                                                                                                                    c.Estatus.Equals(estatus[e])).Fondo.Contains("dark") ? "text-white":"")">
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td></td>
+                                                                }
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.Detalle.Where(d => d.AreaEjecutora.Equals("Operación")).Count() != 0)
+                        {
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-cjf text-white">
+                                        <h5>Cédulas en Operación</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row col-lg-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        @{
+                                                            var estatus = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Operación"))
+                                                               .Select(d => d.Estatus).Distinct().ToList();
+                                                        }
+                                                        @foreach (var col in estatus)
+                                                        {
+                                                            <th>@col</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var filas = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Operación")).ToList();
+                                                        var meses = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Operación")).Select(d => d.Mes).Distinct().ToList();
+                                                    }
+                                                    @for (var m = 0; m < meses.Count(); m++)
+                                                    {
+                                                        <tr>
+                                                            <th>@meses[m]</th>
+                                                            @for (var e = 0; e < estatus.Count(); e++)
+                                                            {
+                                                                if (filas.Where(c => c.Mes.Equals(meses[m]) &&
+                                                                                    c.Estatus.Equals(estatus[e])).Count() != 0)
+                                                                {
+                                                                    <td>
+                                                                        <div class="col-lg-12 text-center">
+                                                                            <span class="mb-2 badge @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo">
+                                                                                @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Total Cédula(s)
+                                                                            </span>
+                                                                            <div class='progress'>
+                                                                                <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo" role="progressbar"
+                                                                                     style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
+                                                                                     aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
+                                                                                    <span class="font-weight-bold">
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td></td>
+                                                                }
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.Detalle.Where(d => d.AreaEjecutora.Equals("CAE")).Count() != 0)
+                        {
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header bg-cjf text-white">
+                                        <h5>Cédulas en la CAE</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row col-lg-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        @{
+                                                            var estatus = Model.Detalle.Where(d => d.AreaEjecutora.Equals("CAE"))
+                                                               .Select(d => d.Estatus).Distinct().ToList();
+                                                        }
+                                                        @foreach (var col in estatus)
+                                                        {
+                                                            <th>@col</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var filas = Model.Detalle.Where(d => d.AreaEjecutora.Equals("CAE")).ToList();
+                                                        var meses = Model.Detalle.Where(d => d.AreaEjecutora.Equals("CAE")).Select(d => d.Mes).Distinct().ToList();
+                                                    }
+                                                    @for (var m = 0; m < meses.Count(); m++)
+                                                    {
+                                                        <tr>
+                                                            <th>@meses[m]</th>
+                                                            @for (var e = 0; e < estatus.Count(); e++)
+                                                            {
+                                                                if (filas.Where(c => c.Mes.Equals(meses[m]) &&
+                                                                                    c.Estatus.Equals(estatus[e])).Count() != 0)
+                                                                {
+                                                                    <td>
+                                                                        <div class="col-lg-12 text-center">
+                                                                            <span class="mb-2 badge @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo">
+                                                                                @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Total Cédula(s)
+                                                                            </span>
+                                                                            <div class='progress'>
+                                                                                <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo" role="progressbar"
+                                                                                     style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
+                                                                                     aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
+                                                                                    <span class="font-weight-bold">
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td></td>
+                                                                }
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.Detalle.Where(d => d.AreaEjecutora.Equals("Financieros")).Count() != 0)
+                        {
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-header bg-cjf text-white">
+                                        <h5>Cédulas en Financieros</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row col-lg-12">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        @{
+                                                            var estatus = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Financieros")).Select(d => d.Estatus).Distinct().ToList();
+                                                        }
+                                                        @foreach (var col in estatus)
+                                                        {
+                                                            <th>@col</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var filas = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Financieros")).ToList();
+                                                        var meses = Model.Detalle.Where(d => d.AreaEjecutora.Equals("Financieros")).Select(d => d.Mes).Distinct().ToList();
+                                                    }
+                                                    @for (var m = 0; m < meses.Count(); m++)
+                                                    {
+                                                        <tr>
+                                                            <th>@meses[m]</th>
+                                                            @for (var e = 0; e < estatus.Count(); e++)
+                                                            {
+                                                                if (filas.Where(c => c.Mes.Equals(meses[m]) &&
+                                                                                    c.Estatus.Equals(estatus[e])).Count() != 0)
+                                                                {
+                                                                    <td>
+                                                                        <div class="col-lg-12 text-center">
+                                                                            <span class="mb-2 badge @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo">
+                                                                                @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Total Cédula(s)
+                                                                            </span>
+                                                                            <div class='progress'>
+                                                                                <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Fondo" role="progressbar"
+                                                                                     style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
+                                                                                     aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
+                                                                                    <b class="text-center">
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
+                                                                                    </b>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td></td>
+                                                                }
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @* Fin Oficios de Financieros *@
+                @* Descarga de Entregables *@
+                <div class="tab-pane fade mt-2 ml-3" id="entregables" role="tabpanel" aria-labelledby="profile-tab">
+                    <h4 class="mt-2">Descarga de Entregables</h4>
+                    <div class="row col-lg-12 mt-2">
+                        <div class="form-group col-md-4" id="divInmueble">
+                            <label for="lblMes">Inmueble(s): </label>
+                            <select class="form-control select2bs4 selectInmueble" multiple="multiple">
+                                <option value="-1">Seleccione el inmueble</option>
+                                <option value="0">Todos</option>
+                                @foreach (var inm in Model.Inmuebles)
+                                {
+                                    <option value="@inm.Id">@inm.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_inmueble">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el inmueble
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2" id="divMes">
+                            <label for="lblMes">Mes(es): </label>
+                            <select class="form-control select2bs4 selectMes" multiple="multiple">
+                                <option value="-1">Seleccione el mes</option>
+                                <option value="0">Todos</option>
+                                @foreach (var ms in Model.Meses)
+                                {
+                                    <option value="@ms.Id">@ms.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_mes">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el mes
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2" id="divMes">
+                            <label for="lblMes">Estatus: </label>
+                            <select class="form-control select2bs4 selectEstatus" multiple="multiple">
+                                <option value="">Seleccione un estatus</option>
+                                <option value="0">Todos</option>
+                                @foreach (var es in Model.CTEstatus)
+                                {
+                                    <option value="@es.Id">@es.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_estatus">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el estatus del entregable
+                                </small>
+                            </div>
+                        </div>
+                        <div class="input-form mt-4">
+                            <button class="btn btn-primary ml-2 mt-2" type="submit" id="downloadFiles"><i class="fas fa-download mr-2"></i>Descargar Entregable(s)</button>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        @foreach (var en in Model.CTEntregables)
+                        {
+                            <div class="form-group mr-3 ml-1" id="divEntregables">
+                                <div class="form-check-inline i-checks mt-3">
+                                    <strong class="text-black mr-2">@en.Nombre</strong>
+                                    <input class="selectEntregable" name="listaEntregables[]" type="checkbox" data-toggle="toggle"
+                                           data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
+                                           data-onstyle="success" data-offstyle="danger" data-id="@en.Id"
+                                           data-abreviacion="@en.Abreviacion" data-style="ios" value="@en.Id">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @* Fin de descarga de entregables*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal para la captura deL oficio *@
+<div class="modal fade" id="modalOficio">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white tituloEntregable">Adjuntar Oficio de Pago</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-lg-12">
+                    <div class="form-group col-md-3" id="divNumeroOficio">
+                        <label for="numeroOficio">Número de oficio: </label>
+                        <input type="text" class="form-control" id="campoNumeroOficio" name="numeroOficio">
+                        <div class="col-sm-12" id="error_campoNumeroOficio">
+                            <small id="dateHelp" class="text-danger">
+                                Capture el número de oficio
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3" id="divNumeroOficio">
+                        <label for="numeroOficio">Contrato: </label>
+                        <select class="form-control" id="campoContrato" name="campoContrato">
+                            <option value="0">Seleccione un contrato</option>
+                            @foreach (var cn in Model.Contratos)
+                            {
+                                <option value="@cn.Id">@cn.NoContrato</option>
+                            }
+                        </select>
+                        <div class="col-sm-12" id="error_campoContrato">
+                            <small id="dateHelp" class="text-danger">
+                                Seleccione el contrato
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3" id="divFechaIncidencia">
+                        <label for="fechaIncidencia">Fecha de trámite: </label>
+                        <input type="date" class="form-control" id="campoFechaTramite" name="fechaTramite">
+                        <div class="col-sm-12" id="error_campoFechaTramite">
+                            <small id="dateHelp" class="text-danger">
+                                Capture la Fecha de Trámite
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-8">
+                        <label for="elegirArchivo">Seleccionar Archivo XLSX: </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="entregableXLS" accept=".XLSX, .xlsx">
+                            <label class="custom-file-label custom-excel" for="customFile">Seleccionar Archivo</label>
+                        </div>
+                        <div class="col-sm-12" id="error_excel">
+                            <small id="dateHelp" class="text-danger">
+                                No ha seleccionado el archivo XLSX o ha subido un archivo diferente a XLSX
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="guardarOficio">Adjuntar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la del oficio*@
+
+@section Scripts{
+    <script>
+        $(function () {
+            const usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+            const servicio = @Html.Raw(Json.Serialize(Model.Servicio));
+            const modulo = @Html.Raw(Json.Serialize(Model.Modulo));
+            const anio = @Html.Raw(Json.Serialize(Model.Anio));
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#error_estatus").css("display","none");
+            $("#error_mes").css("display","none");
+            $("#error_inmueble").css("display","none");
+            $("#error_campoFechaTramite").css("display","none");
+            $("#error_campoContrato").css("display","none");
+            $("#error_campoNumeroOficio").css("display","none");
+            $("#error_excel").css("display","none");
+
+            /*Inicialización del Select2*/
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+
+            $('.tblOficios').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Cédulas de Evaluación',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Listado de Cédulas de Evaluación',
+                        className: "bg-cjf mr-1",
+                        orientation: "landscape"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Listado de Cédulas de Evaluación',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+                responsive: true,
+                stateSave: true,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $(".btnOficio").click(function () {
+                $("#modalOficio").modal('show');
+            });
+
+            $("#entregableXLS").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "XLS" || ext == "XLSX" || ext == "xls" || ext == "xlsx") {
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Formato Incorrecto',
+                        'text': 'El archivo que intentas adjuntar no es válido. Favor de solo seleccionar archivos de "Excel"'
+                    });
+                    $(".custom-file-label").text("Seleccionar Archivo");
+                    document.getElementById('customFile').value = '';
+                    if ($('#entregableXLS').hasClass('is-valid')) {
+                        $('#entregableXLS').removeClass('is-valid');
+                    }
+                    $('#entregableXLS').addClass('is-invalid');
+                    $('#error_entregableXLS').css('display', 'block');
+                }
+            });
+
+            $("#guardarOficio").click(function () {
+                var formData = new FormData();
+                var numeroOficio = $("#campoNumeroOficio").val();
+                var fechaTramite = $("#campoFechaTramite").val();
+                var contratoId = $("#campoContrato").val();
+                var oficio = document.getElementById('entregableXLS').files[0];
+
+                formData.append("UsuarioId", usuario);
+                formData.append("FechaTramitado", fechaTramite);
+                formData.append("ContratoId", parseInt(contratoId));
+                formData.append("ServicioId", parseInt(servicio.id));
+                formData.append("Anio", parseInt(anio));
+                formData.append("NumeroOficio", numeroOficio);
+                formData.append("Oficio", oficio);
+
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: 'Oficios de ' + servicio.descripcion,
+                    html: "Creando el oficio de pago y asignando las facturas que serán pagadas."
+                });
+                Swal.showLoading();
+                if (validaCamposOficio()) {
+                    axios.post('/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=CreateOficio', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                        .then(response => {
+                            console.log(response);
+                            if (response.status == 200) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Servicio de ' + servicio.descripcion,
+                                    html: 'El oficio se creó correctamente.'
+                                }).then(function () {
+                                    Swal.fire({
+                                        allowOutsideClick: false,
+                                        icon: "info",
+                                        title: 'Oficios de ' + servicio.descripcion,
+                                        html: "Redireccionando al detalle del oficio de pago, espere por favor."
+                                    });
+                                    window.location.href = '/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '/oficio/' + response.data.id;
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Servicio de ' + servicio.descripcion,
+                                    html: 'Hubo un error al crear el oficio. Contacte al administrador del sistema.'
+                                });
+                            }
+                        });
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: 'Aún faltan campos por seleccionar.'
+                    })
+                }
+            });
+
+            function validaCamposOficio()
+            {
+                var numeroOficio = $("#campoNumeroOficio").val();
+                var fechaTramite = $("#campoFechaTramite").val();
+                var contrato = $("#campoContrato").val();
+                var oficio = document.getElementById('entregableXLS').files[0];
+
+                if (numeroOficio != "" && fechaTramite != "" && contrato != "" && contrato != 0 && oficio != null)
+                {
+                    return true;
+                }
+
+                if (oficio == undefined) {
+                    $("#error_excel").css("display", "block");
+                }
+
+                if (numeroOficio == "") {
+                    $("#error_campoNumeroOficio").css("display", "block");
+                }
+
+                if (fechaTramite == "") {
+                    $("#error_campoFechaTramite").css("display", "block");
+                }
+
+                if (contrato == "" || contrato == 0) {
+                    $("#error_campoContrato").css("display", "block");
+                }
+
+                return false;
+            }
+
+            $(".custom-excel").change(function (e) {
+                var archivo = e.target.files[0];
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "xlsx" || ext == "XLSX") {
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    if ($('.custom-excel').hasClass('is-invalid')) {
+                        $('.custom-excel').removeClass('is-invalid');
+                        $('.custom-excel').addClass('is-valid');
+                        $('#error_excel').css('display', 'none')
+                    } else {
+                        $('.custom-excel').addClass('is-valid');
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de '+servicio.descripcion,
+                        'text': 'El archivo que intentas adjuntar no es válido. Favor de solo seleccionar archivos "Excel"'
+                    });
+                    $(".custom-file-label").text("Seleccionar Archivo");
+                    document.getElementById('entregableXLS').value = '';
+                    if ($('.custom-excel').hasClass('is-valid')) {
+                        $('.custom-excel').removeClass('is-valid');
+                        $('.custom-excel').addClass('is-invalid');
+                    }
+                    $('.custom-excel').addClass('is-invalid');
+                    $('#error_excel').css('display', 'block');
+                }
+            });
+
+            $("#campoNumeroOficio").change(function () {
+                if ($('#campoNumeroOficio').hasClass('is-invalid')) {
+                    $('#campoNumeroOficio').removeClass('is-invalid');
+                    $('#campoNumeroOficio').addClass('is-valid');
+                    $('#error_campoNumeroOficio').css('display', 'none');
+                }
+            });
+
+            $("#campoFechaTramite").change(function () {
+                if ($('#campoFechaTramite').hasClass('is-invalid')) {
+                    $('#campoFechaTramite').removeClass('is-invalid');
+                    $('#campoFechaTramite').addClass('is-valid');
+                    $('#error_campoFechaTramite').css('display', 'none');
+                }
+            });
+
+            $("#campoContrato").change(function () {
+                if ($('#campoContrato').hasClass('is-invalid')) {
+                    $('#campoContrato').removeClass('is-invalid');
+                    $('#campoContrato').addClass('is-valid');
+                    $('#error_campoContrato').css('display', 'none');
+                }
+            });
+
+            function validaCampos()
+            {
+                var archivos = new Array();
+                var inmuebles = $(".selectInmueble").val();
+                var meses = $(".selectMes").val();
+                var estatus = $(".selectEstatus").val();
+
+                $('.selectEntregable').each(function () {
+                    if ($(this).prop('checked') == true) {
+                        archivos.push($(this).data('id'));
+                    }
+                });
+
+                if (inmuebles.length != 0 && meses.length != 0 && estatus.length != 0 && archivos.length != 0)
+                {
+                    return true;
+                }
+
+                if (inmuebles.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) inmuebles de los cuales se descargarán los entregables.</p>'
+                    });
+                }
+
+                if (meses.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) meses de los cuales se descargarán los entregables.</p>'
+                    });
+                }
+
+                if (estatus.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) estatus de los cuales se descargarán los entregables.</p>'
+                    });
+                }
+
+                if (estatus.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) estatus de los cuales se descargarán los entregables.</p>'
+                    });
+                }
+
+                if (archivos.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) entregables a descargar.</p>'
+                    });
+                }
+
+                return false;
+            }
+
+            $("#downloadFiles").click(function () {
+                var dentregables = [];
+
+                var archivos = new Array();
+                var inmuebles = [];
+                var meses = [];
+                var estatus = [];
+
+                $('.selectEntregable').each(function () {
+                    if ($(this).prop('checked') == true) {
+                        archivos.push($(this).data('id'));
+                    }
+                });
+
+                for (var ms of $(".selectMes").val())
+                {
+                    meses.push(parseInt(ms));
+                }
+
+                for (var ms of $(".selectInmueble").val())
+                {
+                    inmuebles.push(parseInt(ms));
+                }
+
+                for (var ms of $(".selectEstatus").val())
+                {
+                    estatus.push(parseInt(ms));
+                }
+
+                if (validaCampos()) {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: 'Servicio de '+servicio.descripcion,
+                        html: "Obteniendo los entregables para su descarga, espere por favor."
+                    });
+                    Swal.showLoading();
+                    $.ajax({
+                        url: '/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=DescargarEntregables',
+                        type: "post",
+                        contentType: 'application/json; charset=utf-8',
+                        xhrFields: {
+                            responseType: 'blob'
+                        },
+                        data: JSON.stringify({
+                            "Anio": parseInt(anio), "Meses": meses, "InmueblesId": inmuebles, "EntregablesId": archivos,
+                            "Estatus": estatus
+                        }),
+                        success: function (response) {
+                            console.log(response);
+                            const href = URL.createObjectURL(response);
+                            const link = document.createElement('a');
+                            link.href = href;
+                            link.setAttribute('download', 'Entregables_fumigacion.zip');
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(href);
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Servicio de '+servicio.descripcion,
+                                html: "Se descargó el archivo con los entregables seleccionados.",
+                                confirmButtonText: 'Cerrar'
+                            });
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+}

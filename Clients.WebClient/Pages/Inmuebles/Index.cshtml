@@ -1,0 +1,51 @@
+﻿@page
+@model Clients.WebClient.Pages.Inmuebles.IndexModel
+@{
+    ViewData["Title"] = "Inmuebles";
+    ViewData["Titulo"] = "Relación de Inmuebles del Consejo de la Judicatura Federal";
+    ViewData["Action"] = "Inicio";
+    var i = 0;
+}
+
+<div class="container-fluid">
+    <a href="/inmuebles/nuevaAdministracion" type='button' class='btn-sm btn-primary float-right mr-2 mb-3' data-toggle="tooltip"
+       title="Crear nueva Administración" data-placement="top">
+        <i class="fal fa-plus"></i> Nueva Administración
+    </a>
+    <div class="row col-lg-12">
+        <div class="col-lg-12">
+            <table class="table" id="dt_inmuebles">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Clave</th>
+                        <th>Inmueble</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Inmuebles)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>@Html.DisplayFor(modelItem => item.Clave)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td>
+                                <a href="/inmuebles/detalleAdministracion/@item.Id" class="text-center ver_admin">
+                                    <i class="fad fa-eye text-success mr-2"></i>
+                                </a>
+                                <a href="/inmuebles/editar/administracion/@item.Id" class="text-center editar_admin">
+                                    <i class="fad fa-pencil text-primary mr-2"></i>
+                                </a>
+                                <a href="#" class="text-center delete_admin" data-id="@item.Id">
+                                    <i class="fad fa-times text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

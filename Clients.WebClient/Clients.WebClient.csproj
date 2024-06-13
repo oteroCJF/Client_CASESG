@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FreeSpire.Office" Version="8.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.16" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="YUICompressor.NET" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Api.Gateway.Models">
+      <HintPath>..\..\Gateways\Api.Gateway.WebClient.Proxy\bin\Debug\netcoreapp3.1\Api.Gateway.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Api.Gateway.WebClient.Proxy">
+      <HintPath>..\..\Gateways\Api.Gateway.WebClient.Proxy\bin\Debug\netcoreapp3.1\Api.Gateway.WebClient.Proxy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Financieros\Agua\" />
+    <Folder Include="Proxies\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Clients.Services\Clients.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="GeneracionCedulas.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GeneracionCedulas.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CedulasEvaluacion\CedulaAgua.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaComedor%28respaldo%29 - Copia.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaComedor2 - Copia.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaLimpieza.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaFumigacion.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaComedor2.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaComedor.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\CedulaMensajeria.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CedulasEvaluacion\ReportePAT.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GeneracionCedulas.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GeneracionCedulas.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+
+
+</Project>

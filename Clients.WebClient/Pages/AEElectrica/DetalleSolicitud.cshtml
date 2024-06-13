@@ -1,0 +1,1282 @@
+﻿@page "/aeelectrica/solicitudesPago/{moduloId}/{submoduloId}/detalleSP/{solicitud}"
+@model Clients.WebClient.Pages.AEElectrica.DetalleSolicitudModel
+@{
+    ViewData["Title"] = "Detalle de la Solicitud de Pago - " + Model.SolicitudesPago.Anio + " - " + Model.SolicitudesPago.Mes.Nombre;
+    ViewData["Titulo"] = "Servicio de "+@Model.Servicio.Descripcion;
+    ViewData["Action"] = "Facturación / Detalle de Facturación";
+    var e = 0;
+    var ls = 0;
+    var le = 0;
+    var i = 0;
+    var cf = 0;
+}
+
+<div class="row col-lg-12">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3 text-center mt-4">
+                        <img src="~/img/@String.Concat("edificio", ".png")" alt="" class="img-fluid" width="100" height="100">
+                    </div>
+                    <div class="col-9">
+                        <h2 class="lead"><b>Datos del Edificio</b></h2>
+                        <b>Estatus de la Solicitud de Pago: </b> <b class="@(Model.SolicitudesPago.Estatus.Fondo.Replace("bg","text"))">@Model.SolicitudesPago.Estatus.Nombre</b><br />
+                        <b>Inmueble: </b> @Model.SolicitudesPago.Inmueble.Nombre<br />
+                        <b>Administración: </b> @Model.SolicitudesPago.Inmueble.Descripcion<br />
+                        <b>Dirección: </b> @Model.SolicitudesPago.Inmueble.Direccion<br />
+                        <b>Administrador: </b> @Model.SolicitudesPago.Inmueble.Administrador <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <a href="/aeelectrica/solicitudesPago/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.SolicitudesPago.Anio" type='button'
+           class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+        @if (Model.SolicitudesPago.Estatus.Nombre.Equals("Sin Iniciar") || Model.SolicitudesPago.Estatus.Nombre.Equals("En Proceso") || Model.SolicitudesPago.Estatus.Nombre.Equals("Rechazada"))
+        {
+            <a href="javascript:" class="btn btn-sm btn-primary text-white float-right btnXML">
+                <i class="fas fa-plus"></i>
+            </a>
+        }
+    </div>
+</div>
+
+<div class="row col-lg-12 mt-3" id="divFacturacion">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header cabeceraFacturas">
+                <i class="fa-sharp fa-light fa-money-bill-1-wave mr-2"></i> Facturación
+            </div>
+            <div class="card-body cuerpoFactura" style="display: none">
+                <div class="row col-lg-12 mt-3">
+                    <h5> Factura(s)</h5>
+                    <div class="col-lg-12 mt-3 ml-2">
+                        <table class="table tblIncidencias tablaFacturas" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tipo</th>
+                                    <th>Empresa</th>
+                                    <th>Folio Fiscal</th>
+                                    <th>Número Factura</th>
+                                    <th>Subtotal Factura</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AA">
+                                @foreach (var fac in Model.SolicitudesPago.CFDIs)
+                                {
+                                    @if (fac.Tipo.Equals("Factura"))
+                                    {
+                                        i++;
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@fac.Tipo</td>
+                                            <td>@fac.Nombre</td>
+                                            <td>
+                                                @fac.UUID
+                                            </td>
+                                            <td>@fac.Folio</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)</td>
+                                            <td class="text-center">
+                                                <a href="javascript:" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id">
+                                                    <i class="fas fa-eye text-success"></i>
+                                                </a>
+                                                <a href="javascript:" class="verEntregable" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
+                                                   data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
+                                                   data-iva="@fac.IVA">
+                                                    <i class='fa-solid fa-file-pdf text-danger'></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12 mt-3 ml-2 mb-3">
+                        @foreach (var fac in Model.SolicitudesPago.CFDIs)
+                        {
+                            <div class="conceptosFactura" id="conceptoFactura_@fac.Id">
+                                <h3>Conceptos de la factura con folio: @fac.Folio</h3>
+                                <table id="@fac.Folio" style="width: 90%" class="table tableConceptos mt-3 float-right">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad</th>
+                                            <th>Descripción</th>
+                                            <th>Precio Unitario</th>
+                                            <th>SubTotal</th>
+                                            <th>IVA</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var con in fac.Conceptos)
+                                        {
+                                            if (@fac.Id == con.FacturaId)
+                                            {
+                                                cf++;
+                                                <tr>
+                                                    <td>@cf</td>
+                                                    <td class="text-right">@con.Cantidad</td>
+                                                    <td>@con.Unidad</td>
+                                                    <td>@con.Descripcion</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.PrecioUnitario)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.Subtotal)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.IVA)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", con.Subtotal + con.IVA)</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                @foreach (var bt in Model.SolicitudesPago.Flujo)
+                {
+                    if (bt.EstatusId == Model.SolicitudesPago.EstatusId && Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals(bt.Permiso)).Count() > 0)
+                    {
+                        @Html.Raw(bt.Boton)
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.SolicitudesPago.CFDIs.Count() > 0)
+{
+    <div class="row col-lg-12 mt-3" id="divEntregables">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header cabeceraEntregables">
+                    <i class="fa-sharp fa-light fa-files mr-2"></i> Entregables de la Evaluación
+                </div>
+                <div class="card-body cuerpoEntregables" style="display: none">
+                    <table class="table row-border dataTable" width="100%" id="tblEntregables">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Entregable</th>
+                                <th>Archivo</th>
+                                <th>Estatus</th>
+                                <th>Observaciones</th>
+                                <th>Fecha de Creación</th>
+                                <th>Última actualización</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var en in Model.SolicitudesPago.Entregables)
+                            {
+                                e++;
+                                <tr>
+                                    <td>@e</td>
+                                    <td>@en.Entregable.Nombre</td>
+                                    <td class="font-weight-bold @(en.Archivo != null && !en.Archivo.Equals("") ? "text-success" : "text-danger")">@(en.Archivo != null && !en.Archivo.Equals("") ? en.Archivo : "Sin Adjuntar")</td>
+                                    <td style="color: @en.Estatus.FondoHexadecimal; font-weight: bold;">
+                                        @Html.Raw(en.Estatus.Nombre+" ")
+                                        @if(Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count()>0 
+                                            && Model.SolicitudesPago.Estatus.Nombre.Equals("Enviada") && !en.Estatus.Nombre.Equals("Autorizado"))
+                                        {
+                                            <a class="autorizarEntregable ml-1" href="javascript:" data-toggle="tooltip" title="Autorizar @en.Entregable.Nombre"
+                                               data-placement="top" data-tipo="@en.Entregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
+                                                <i class="fas fa-check text-success mr-2"></i>
+                                            </a>
+                                        }
+
+                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() > 0
+                                            && Model.SolicitudesPago.Estatus.Nombre.Equals("Enviada") && !en.Estatus.Nombre.Equals("Rechazado"))
+                                        {
+                                            <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar @en.Entregable.Nombre"
+                                               data-placement="top" data-tipo="@en.Entregable.Abreviacion" data-id="@en.Id" data-entregableid="@en.EntregableId">
+                                                <i class="fas fa-times text-danger"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>@en.Observaciones</td>
+                                    <td>@Convert.ToDateTime(en.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt")</td>
+                                    <td>@(Convert.ToDateTime(en.FechaActualizacion).ToString("dd/MM/yyyy").Equals("01/01/0001") ? "-" : Convert.ToDateTime(en.FechaActualizacion).ToString("dd/MM/yyyy HH:mm tt"))</td>
+                                    <td>
+                                        @if (en.Archivo != null && !en.Archivo.Equals(""))
+                                        {
+                                            <a class="verEntregable" href="javascript:" data-toggle="tooltip" title="Ver @en.Entregable.Nombre"
+                                               data-placement="top" data-tipo="@en.Entregable.Nombre" data-id="@en.Id" data-archivo="@en.Archivo"
+                                               data-fcreacion="@Convert.ToDateTime(@en.FechaCreacion).ToString("dd/MM/yyyy")" data-estatus="@en.Estatus.Nombre" 
+                                               data-factualizacion="@Convert.ToDateTime(@en.FechaActualizacion).ToString("dd/MM/yyyy")" data-observaciones="@en.Observaciones">
+                                                <i class="fas fa-eye text-success mr-2"></i>
+                                            </a>
+                                        }
+                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() > 0)
+                                        {
+                                            @if((Model.SolicitudesPago.Estatus.Nombre.Equals("En Proceso") || Model.SolicitudesPago.Estatus.Nombre.Equals("Rechazada"))
+                                                && (!en.Estatus.Nombre.Equals("Autorizado") && !en.Estatus.Nombre.Equals("En Revisión")))
+                                            {
+                                                <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Editar @en.Entregable.Nombre"
+                                                   data-placement="top" data-tipo="@en.Entregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
+                                                    <i class="fas fa-pencil text-primary mr-2"></i>
+                                                </a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if(Model.SolicitudesPago.LogS.Count() > 0)
+{
+    <div class="row col-lg-12 mt-3" id="divHistorialCedula">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header cabeceraSegSolicitud">
+                    <i class="fal fa-timeline-arrow mr-2"></i> Seguimiento a la Solicitud
+                </div>
+                <div class="card-body cuerpoSegCedula" style="display: none">
+                    <table class="table dataTable" width="100%" id="tblHSolicitudes">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Usuario</th>
+                                <th>Estatus</th>
+                                <th>Observaciones</th>
+                                <th>Fecha de Creación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var lg in Model.SolicitudesPago.LogS)
+                            {
+                                ls++;
+                                <tr>
+                                    <td>@ls</td>
+                                    <td>@(lg.Usuario.NombreEmp + " " + lg.Usuario.PaternoEmp + " " + lg.Usuario.MaternoEmp)</td>
+                                    <td style="color: @(lg.Estatus.FondoHexadecimal); font-weight: bold;">@lg.Estatus.Nombre</td>
+                                    <td>@Html.Raw(lg.Observaciones)</td>
+                                    <td>@Convert.ToDateTime(lg.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.SolicitudesPago.LogE.Count() > 0)
+{
+    <div class="row col-lg-12 mt-3" id="divHistorialEntregables">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header cabeceraSegEntregables">
+                    <i class="fa-light fa-timeline mr-2"></i> Seguimiento a Entregables
+                </div>
+                <div class="card-body cuerpoSegEntregables" style="display: none">
+                    <table class="table dataTable" width="100%" id="tblHEntregables">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Usuario</th>
+                                <th>Entregable</th>
+                                <th>Estatus</th>
+                                <th>Observaciones</th>
+                                <th>Fecha de Creación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var lg in Model.SolicitudesPago.LogE)
+                            {
+                                le++;
+                                <tr>
+                                    <td>@le</td>
+                                    <td>@(lg.Usuario.NombreEmp + " " + lg.Usuario.PaternoEmp + " " + lg.Usuario.MaternoEmp)</td>
+                                    <td>@lg.Entregable.Nombre</td>
+                                    <td style="color: @(lg.Estatus.FondoHexadecimal); font-weight: bold;">@lg.Estatus.Nombre</td>
+                                    <td>@Html.Raw(lg.Observaciones)</td>
+                                    <td>@Convert.ToDateTime(lg.FechaCreacion).ToString("dd/MM/yyyy HH:mm tt")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+}
+
+@* Modal para la captura de la Factura *@
+<div class="modal fade" id="modalXML">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white">Adjuntar Factura</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="elegirArchivo">Seleccionar Archivo XML: </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fileXML" accept=".xml, .XML">
+                            <label class="custom-file-label" for="customFile">Seleccionar Archivo</label>
+                        </div>
+                        <div class="col-sm-12" id="error_fileXML">
+                            <small id="dateHelp" class="text-danger">
+                                No ha seleccionado el archivo XML o ha subido un archivo diferente a XML
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="elegirArchivo">Seleccionar Archivo PDF: </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="filePDF" accept=".pdf, .PDF">
+                            <label class="custom-file-label custom-pdf" for="customFile">Seleccionar Archivo</label>
+                        </div>
+                        <div class="col-sm-12" id="error_filePDF">
+                            <small id="dateHelp" class="text-danger">
+                                No ha seleccionado el archivo PDF o ha subido un archivo diferente a PDF
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="adjuntarArchivo">Subir</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la captura de la Factura*@
+
+@* Modal para la captura de los entregables *@
+<div class="modal fade" id="modalEntregables">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white tituloEntregable"></h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="campoIdEntregable" />
+                <input type="hidden" id="campoTipoEntregable" />
+                <div class="form-group col-lg-6">
+                    <label for="elegirArchivo">Seleccionar Archivo PDF: </label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="entregablePDF" accept=".pdf, .PDF">
+                        <label class="custom-file-label custom-pdf" for="customFile">Seleccionar Archivo</label>
+                    </div>
+                    <div class="col-sm-12" id="error_entregablePDF">
+                        <small id="dateHelp" class="text-danger">
+                            No ha seleccionado el archivo PDF o ha subido un archivo diferente a PDF
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="submit" class="btn btn-primary" id="guardarEntregable">Adjuntar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para la captura de los entregables *@
+
+@*Modal para ver los Entregables*@
+<div class="modal fade" id="modalVerEntregables">
+    <div class="modal-dialog modal-xl-view">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white" id="titleVerEntregables"></h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body-view">
+                <div class="row col-lg-12" id="detalleEntregable"></div>
+                <div class="table-responsive">
+                    <div class="row mb-2 col-lg-12" id="objectPdf">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@*Fin Modal para ver los Entregables*@
+
+<style>
+    .cabeceraFacturacion {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraEntregables {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraSegSolicitud{
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraSegEntregables {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cabeceraFacturas {
+        background-color: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
+
+@section Scripts{
+    <script>
+        $(function () {
+            const sPago = @Html.Raw(Json.Serialize(Model.SolicitudesPago));
+            const entregables = @Html.Raw(Json.Serialize(Model.SolicitudesPago.Entregables));
+            const eRechazados = @Html.Raw(Json.Serialize(@Model.SolicitudesPago.Entregables.Where(e => e.Estatus.Nombre.Equals("Rechazado")).Count()));
+
+            $(".conceptosFactura").css("display", "none");
+            $(".conceptosNC").css("display", "none");
+
+            $(".cabeceraFacturas").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $('#error_fileXML').css('display', 'none');
+            $('#error_filePDF').css('display', 'none');
+            $('#error_entregablePDF').css('display', 'none');
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $(".cabeceraFacturacion").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraEntregables").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraSegSolicitud").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            $(".cabeceraSegEntregables").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500, function () {
+                });
+            });
+
+            /*********************************** Eliminado de Elementos ***************************************/
+            if(eRechazados == 0)
+            {
+                $(".rechazarSP").remove();
+            }
+            else {
+                $(".tramitarSP").remove();
+            }
+            /*********************************** Eliminar Elementos ***************************************/
+
+            /*********************************** DataTables ***************************************/
+            $('#tblEntregables').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Entregables',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Listado de Entregables',
+                        className: "bg-cjf mr-1"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Listado de Entregables',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $('#tblHSolicitudes').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Historial de Solicitudes',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Historial de Solicitudes',
+                        className: "bg-cjf mr-1"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Historial de Solicitudes',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            $('#tblHEntregables').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Historial de Entregables',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Historial de Entregables',
+                        className: "bg-cjf mr-1"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Historial de Entregables',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+            });
+
+            /*********************************** DataTables***************************************/
+
+            /*********************************** Carga de factura ***************************************/
+            function validaCamposArchivo() {
+                var fileXML = $('#fileXML').val().split("\\").pop();
+                var extXML = fileXML.split('.').pop();
+                var filePDF = $('#filePDF').val().split("\\").pop();
+                var extPDF = filePDF.split('.').pop();
+
+                if ($('#fileXML').val() == "" && $('#filePDF').val() == "") {
+                    $('#fileXML').addClass('is-invalid');
+                    $('#error_fileXML').css('display', 'block');
+                    $('#filePDF').addClass('is-invalid');
+                    $('#error_filePDF').css('display', 'block');
+
+                    return false;
+                }
+
+                if (extPDF != "pdf" && extPDF != "PDF") {
+                    $('#filePDF').addClass('is-invalid');
+                    $('#error_filePDF').css('display', 'block');
+                    return false;
+                }
+
+                if (extXML != "xml" && extXML != "XML") {
+                    $('#fileXML').addClass('is-invalid');
+                    $('#error_fileXML').css('display', 'block');
+                    return false;
+                }
+
+                return true;
+            }
+
+            $("#fileXML").change(function (e) {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "xml" || ext == "XML") {
+                    $('#fileXML').removeClass('is-invalid');
+                    $('#fileXML').addClass('is-valid');
+                    $('#error_fileXML').css('display', 'none');
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                } else {
+                    $('#fileXML').removeClass('is-valid');
+                    $('#fileXML').addClass('is-invalid');
+                    $('#error_fileXML').css('display', 'block');
+                    Swal.fire({
+                        'icon': 'error',
+                        title: "Servicio de Energía Eléctrica (AXA)",
+                        'text': 'El archivo que intenta adjuntar no es válido. Favor de solo seleccionar archivos "XML"'
+                    });
+                    $(".custom-file-label").text("Seleccionar Archivo");
+                    document.getElementById('fileXML').value = '';
+                }
+            });
+
+            $("#filePDF").change(function (e) {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "pdf" || ext == "PDF") {
+                    $('#filePDF').removeClass('is-invalid');
+                    $('#filePDF').addClass('is-valid');
+                    $('#error_filePDF').css('display', 'none');
+                    $(this).siblings(".custom-pdf").addClass("selected").html(fileName);
+                } else {
+                    $('#filePDF').removeClass('is-valid');
+                    $('#filePDF').addClass('is-invalid');
+                    $('#error_filePDF').css('display', 'block');
+                    Swal.fire({
+                        'icon': 'error',
+                        title: "Servicio de Limpieza en Áreas Comunes y Oficinas",
+                        'text': 'El archivo que intenta adjuntar no es válido. Favor de solo seleccionar archivos "PDF"'
+                    });
+                    $(".custom-pdf").text("Seleccionar Archivo");
+                    document.getElementById('filePDF').value = '';
+                }
+            });
+
+            $("#adjuntarArchivo").click(function () {
+                if (validaCamposArchivo()) {
+                    var formData = new FormData();
+                    var fileXML = document.getElementById('fileXML').files[0];
+                    var filePDF = document.getElementById('filePDF').files[0];
+
+                    formData.append("SolicitudId", sPago.id);
+                    formData.append("Anio", sPago.anio);
+                    formData.append("Mes", sPago.mes.nombre);
+                    formData.append("FileXML", fileXML);
+                    formData.append("FilePDF", filePDF);
+
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: "Servicio de Energía Eléctrica (AXA)",
+                        html: "Cargando la factura de la solicitud de pago <b>" + sPago.mes.nombre +" - "+ sPago.anio + "</b>.",
+                        'confirmButtonText': 'Cerrar'
+                    })
+                    Swal.showLoading();
+
+                    axios.post('/aeelectrica/solicitudesPago/'+@Model.Modulo.Id+'/'+@Model.Submodulo.Id+'/detalleSP/'+@Model.SolicitudesPago.Id+'?Handler=CargarFactura', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(response => {
+                        if (response.status == 201  ) {
+                            Swal.fire({
+                                'icon': "success",
+                                'title': "Servicio de Energía Eléctrica (AXA)",
+                                'text': 'Se adjuntó la factura correctamente.',
+                                'confirmButtonText': 'Cerrar'
+                            }).then(function () {
+                                Swal.fire({
+                                    allowOutsideClick: false,
+                                    icon: "info",
+                                    title: "Servicio de Energía Eléctrica (AXA)",
+                                    html: "Actualizando la solicitud de pago <b>" + sPago.mes.nombre + " - " + sPago.anio + "</b>.",
+                                    'confirmButtonText': 'Cerrar'
+                                })
+                                Swal.showLoading();
+                                window.location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+
+            $(".eliminarFactura").click(function () {
+                Swal.fire({
+                    'icon': 'warning',
+                    title: "Servicio de Energía Eléctrica (AXA)",
+                    'html': '¿Está seguro que desea <b>Eliminar la Factura</b>?',
+                    'confirmButtonColor': '#3085d6',
+                    'cancelButtonColor': '#d33',
+                    'confirmButtonText': 'Si, eliminar',
+                    'cancelButtonText': 'Cancelar',
+                    'showCancelButton': true
+                }).then(confirm => {
+                    if (confirm.isConfirmed) {
+                        Swal.fire({
+                            allowOutsideClick: false,
+                            icon: "info",
+                            title: "Servicio de Energía Eléctrica (AXA)",
+                            html: "Eliminando la factura de la solicitud de pago <b>" + sPago.mes.nombre + " - " + sPago.anio + "</b>.",
+                            'confirmButtonText': 'Cerrar'
+                        })
+                        Swal.showLoading();
+
+                        axios.put('/aeelectrica/solicitudesPago/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalleSP/' + @Model.SolicitudesPago.Id+'?Handler=EliminarFactura', {
+                            Id: parseInt($(this).data('facturaid'))
+                        }).then(response => {
+                            if (response.data == 201) {
+                                Swal.fire({
+                                    'icon': "success",
+                                    'title': "Servicio de Energía Eléctrica (AXA)",
+                                    'text': 'Se eliminó la factura correctamente.',
+                                    'confirmButtonText': 'Cerrar'
+                                }).then(function () {
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            $(".btnXML").click(function () {
+                $("#modalXML").modal('show');
+            });
+
+             $('.viewConceptosF').click(function () {
+                let factura = $(this).data('factura');
+                if ($("#conceptoFactura_" + factura).css('display') == 'none') {
+                    $("#conceptoFactura_" + factura).css("display", "block");
+                }
+                else {
+                    $("#conceptoFactura_" + factura).css("display", "none");
+                }
+            });
+
+            $(".viewConceptosF").click(function () {
+                if ($("#viewConceptos_" + $(this).data('factura') + " > i").hasClass("text-success")) {
+                    $("#viewConceptos_" + $(this).data('factura') + " > i").removeClass("text-success");
+                    $("#viewConceptos_" + $(this).data('factura') + "> i").addClass("text-danger");
+                } else {
+                    $("#viewConceptos_" + $(this).data('factura') + " > i").removeClass("text-danger");
+                    $("#viewConceptos_" + $(this).data('factura') + " > i").addClass("text-success");
+                }
+            });
+
+            $('.viewConceptosNC').click(function () {
+                let factura = $(this).data('factura');
+                if ($("#conceptoNC_" + factura).css('display') == 'none') {
+                    $("#conceptoNC_" + factura).css("display", "block");
+                }
+                else {
+                    $("#conceptoNC" + factura).css("display", "none");
+                }
+            });
+
+            $(".viewConceptosNC").click(function () {
+                if ($("#viewNC_" + $(this).data('factura') + " > i").hasClass("text-success")) {
+                    $("#viewNC_" + $(this).data('factura') + " > i").removeClass("text-success");
+                    $("#viewNC_" + $(this).data('factura') + "> i").addClass("text-danger");
+                } else {
+                    $("#viewNC_" + $(this).data('factura') + " > i").removeClass("text-danger");
+                    $("#viewNC_" + $(this).data('factura') + " > i").addClass("text-success");
+                }
+            });
+
+            $(".descargaXML").click(function () {
+                var folio = $(this).data("folio");
+                var archivo = $(this).data("archivo");
+                var tipo = $(this).data("tipo");
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: 'Servicio de Mensajería Acelerada',
+                    html: "Obteniendo el <b>XML</b> de la solicitud, espere por favor."
+                });
+                Swal.showLoading();
+                axios.get('/aeelectrica/solicitudesPago/'+@Model.Modulo.Id+'/'+@Model.Submodulo.Id+'/detalleSP/'+@Model.SolicitudesPago.Id+'?cAnio=' + facturacion.anio + '&cMes=' + facturacion.mes.nombre + '&cFolio=' + folio + '&tipo=' + tipo + '&cInmueble=' + inmueble.nombre + '&cArchivo=' + archivo + '&handler=DescargarXML',
+                    { responseType: 'blob'}).then(response => {
+                    if (response.status == 200) {
+                            const href = URL.createObjectURL(response.data);
+
+                            // create "a" HTML element with href to file & click
+                            const link = document.createElement('a');
+                            link.href = href;
+                            link.setAttribute('download', archivo); //or any other extension
+                            document.body.appendChild(link);
+                            link.click();
+
+                            // clean up "a" element & remove ObjectURL
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(href);
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: 'Servicio de Mensajería Acelerada',
+                                html: "El <b>Archivo XML</b> se descargó correctamente.",
+                                confirmButtonText: 'Cerrar'
+
+                            });
+                            Swal.hideLoading();
+                    }
+                });
+            });
+
+            function formatMoney(number) {
+                return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            }
+            /*********************************** Carga de factura ***************************************/
+
+            /*********************************** Apartado de Entregables **********************************/
+
+            $(".editarEntregable").click(function () {
+                $(".tituloEntregable").html('<h4 class="modal-title text-white">Editar entregable - ' + $(this).data("tipo") + '</h4>');
+                $("#campoIdEntregable").val($(this).data("id"));
+                $("#campoTipoEntregable").val($(this).data("tipo"));
+                $("#modalEntregables").modal('show');
+            });
+
+            $("#entregablePDF").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                var ext = fileName.split('.').pop();
+                if (ext == "pdf" || ext == "PDF") {
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                } else {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': 'Formato Incorrecto',
+                        'text': 'El archivo que intentas adjuntar no es válido. Favor de solo seleccionar archivos "PDF"'
+                    });
+                    $(".custom-file-label").text("Seleccionar Archivo");
+                    document.getElementById('customFile').value = '';
+                    if ($('#entregablePDF').hasClass('is-valid')) {
+                        $('#entregablePDF').removeClass('is-valid');
+                    }
+                    $('#entregablePDF').addClass('is-invalid');
+                    $('#error_entregablePDF').css('display', 'block');
+                }
+            });
+
+            $("#guardarEntregable").click(function () {
+                var formData = new FormData();
+                var usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+                var tipoEntregable = $("#campoTipoEntregable").val();
+                var filePDF = document.getElementById('entregablePDF').files[0];
+                var observaciones = "Se actualizó el entregable: " + $("#campoTipoEntregable").val() + ".";
+
+                if (filePDF == null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Servicio de Energía Eléctrica (AXA)",
+                        html: "Debe adjuntar el archivo PDF."
+                    });
+                    return false;
+                }
+
+                formData.append("Id", $("#campoIdEntregable").val());
+                formData.append("SolicitudId", sPago.id);
+                formData.append("UsuarioId", usuario);
+                formData.append("Archivo", filePDF);
+                formData.append("Anio", parseInt(sPago.anio));
+                formData.append("Mes", sPago.mes.nombre);
+                formData.append("Archivo", filePDF);
+                formData.append("TipoEntregable", tipoEntregable);
+                formData.append("Observaciones", observaciones);
+
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: "Servicio de Energía Eléctrica (AXA)",
+                    html: "Guardando entregable, espere por favor."
+                });
+                Swal.showLoading();
+                axios.put('/aeelectrica/solicitudesPago/'+@Model.Modulo.Id+'/'+@Model.Submodulo.Id+'/detalleSP/'+@Model.SolicitudesPago.Id+'?Handler=ActualizarEntregable', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(response => {
+                    if (response.status == 201) {
+                        Swal.fire({
+                            'icon': "success",
+                            title: "Servicio de Energía Eléctrica (AXA)",
+                            'html': 'Se actualizó el entregable <b>' + $("#campoTipoEntregable").val() + '</b> correctamente.',
+                            'confirmButtonText': 'Cerrar'
+                        }).then(function () {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: "Servicio de Energía Eléctrica (AXA)",
+                                html: "Actualizando el listado de entregables, espere por favor."
+                            });
+                            Swal.showLoading();
+                            window.location.reload();
+                        });
+                    }
+                });
+            });
+
+            $(".verEntregable").click(function () {
+                var abreviacion = $(this).data("tipo");
+                var fcreacion = $(this).data("fcreacion");
+                var factualizacion = $(this).data("factualizacion");
+                var observaciones = $(this).data("observaciones");
+                var estatus = $(this).data("estatus");
+                var archivo = $(this).data("archivo");
+
+                let url = '/aeelectrica/solicitudesPago/'+@Model.Modulo.Id+'/'+@Model.Submodulo.Id+'/detalleSP/'+@Model.SolicitudesPago.Id+'?tipo='+abreviacion+'&archivo='+archivo+'&Handler=VisualizarEntregable';
+                let data = '<object class="vistaPdf" embedded=True data="' + url + '"></object>';
+                let detail = '<table class="table">' +
+                    '<tr>' +
+                        '<td><label>Tipo de Entregable: </label> ' + abreviacion + '</td>' +
+                        '<td><label>Estatus: </label> ' + estatus + '</td>' +
+                        '<td><label>Fecha de Creración: </label> ' + fcreacion + '</td>' +
+                        '<td><label>Fecha de Actualización: </label> ' + factualizacion + '</td>' +
+                    '</tr>'+
+                    '<tr><td><label>Observaciones: </label> ' + observaciones + '</td><td></td><td></td><td></td></tr>' +
+                    '</table>';
+                $("#titleVerEntregables").text("Vista del entregable - " + abreviacion);
+                $('#detalleEntregable').html(detail);
+                $('#objectPdf').html(data);
+                $("#modalVerEntregables").modal("show");
+            });
+
+            $(".autorizarEntregable").click(function () {
+                var id = $(this).data('id')
+                var usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+                var entregableId = $(this).data('entregableid')
+                var estatus = "Autorizado";
+                var tipo = $(this).data('tipo');
+
+                Swal.fire({
+                    'icon': 'warning',
+                    title: "Servicio de Energía Eléctrica (AXA)",
+                    'html': '¿Está seguro que desea <b>Autorizar</b> el entregable <b>' + $(this).data('tipo') + '</b?',
+                    'confirmButtonColor': '#3085d6',
+                    'cancelButtonColor': '#d33',
+                    'confirmButtonText': 'Si, Autorizar',
+                    'cancelButtonText': 'Cancelar',
+                    'showCancelButton': true
+                }).then(confirm => {
+                    if (confirm.isConfirmed) {
+                        axios.put('/aeelectrica/solicitudesPago/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalleSP/' + @Model.SolicitudesPago.Id+'?Handler=SeguimientoEntregable', {
+                            Id: parseInt(id), EntregableId: parseInt(entregableId), SolicitudId: parseInt(sPago.id), UsuarioId: usuario,
+                            Estatus: estatus, Observaciones: "El entregable <b>"+tipo+"</b> se autorizó correctamente."
+                        }).then(response => {
+                            if (response.status == 201) {
+                                Swal.fire({
+                                    'icon': "success",
+                                    title: "Servicio de Energía Eléctrica (AXA)",
+                                    'html': "El entregable <b>" + $(this).data('tipo') + "</b> se autorizó correctamente.",
+                                    'confirmButtonText': 'Cerrar'
+                                }).then(function () {
+                                    Swal.fire({
+                                        allowOutsideClick: false,
+                                        icon: "info",
+                                        title: "Servicio de Energía Eléctrica (AXA)",
+                                        html: "Actualizando la solicitud de pago, espere por favor."
+                                    });
+                                    Swal.showLoading();
+                                    window.location.reload();
+                                });
+                            }
+                        }).catch(error => {
+                            Swal.fire({
+                                'icon': "error",
+                                title: "Servicio de Energía Eléctrica (AXA)",
+                                'html': "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
+                                'confirmButtonText': 'Cerrar'
+                            });
+                        });;
+                    }
+                });
+            });
+
+            $(".rechazarEntregable").click(function () {
+                var id = $(this).data('id')
+                var usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
+                var entregableId = $(this).data('entregableid')
+                var estatus = "Rechazado";
+                var tipo = $(this).data('tipo');
+
+                Swal.fire({
+                    'icon': 'warning',
+                    title: "Servicio de Energía Eléctrica (AXA)",
+                    'html': '¿Está seguro que desea <b>Rechazar</b> el entregable <b>' + $(this).data('tipo') + '</b?',
+                    'confirmButtonColor': '#3085d6',
+                    'cancelButtonColor': '#d33',
+                    'confirmButtonText': 'Si, Rechazar',
+                    'cancelButtonText': 'Cancelar',
+                    'showCancelButton': true
+                }).then(confirm => {
+                    if (confirm.isConfirmed) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: "Servicio de Energía Eléctrica (AXA)",
+                            html: 'Por favor captura el motivo por el cual se rechaza el(la) <b>' + $(this).data('tipo') + '</b>.',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonText: 'Rechazar',
+                            input: 'textarea',
+                            inputPlaceholder: 'Escribe los comentarios correspondientes'
+                        }).then(coments => {
+                            if (coments.value.length > 0) {
+                                axios.put('/aeelectrica/solicitudesPago/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalleSP/' + @Model.SolicitudesPago.Id+'?Handler=SeguimientoEntregable', {
+                                    Id: parseInt(id), EntregableId: parseInt(entregableId), SolicitudId: parseInt(sPago.id), UsuarioId: usuario,
+                                    Estatus: estatus, Observaciones: "El entregable <b>" + tipo + "</b> se rechazó correctamente."
+                                }).then(response => {
+                                    if (response.status == 201) {
+                                        Swal.fire({
+                                            'icon': "success",
+                                            title: "Servicio de Energía Eléctrica (AXA)",
+                                            'html': "El entregable <b>" + $(this).data('tipo') + "</b> se rechazó correctamente.",
+                                            'confirmButtonText': 'Cerrar'
+                                        }).then(function () {
+                                            Swal.fire({
+                                                allowOutsideClick: false,
+                                                icon: "info",
+                                                title: "Servicio de Energía Eléctrica (AXA)",
+                                                html: "Actualizando la solicitud de pago, espere por favor."
+                                            });
+                                            Swal.showLoading();
+                                            window.location.reload();
+                                        });
+                                    }
+                                }).catch(error => {
+                                    Swal.fire({
+                                        'icon': "error",
+                                        title: "Servicio de Energía Eléctrica (AXA)",
+                                        'html': "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
+                                        'confirmButtonText': 'Cerrar'
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            /*********************************** Apartado de Entregables **********************************/
+
+            /*********************************** Envíos de Solicitudes **********************************/
+            function validarDocumentos() {
+                var e = "";
+                for (var i = 0; i < entregables.length; i++) {
+                    if (entregables[i].archivo == null || entregables[i].archivo == "" || entregables[i].estatus.nombre == "Rechazado") {
+                        e += "<b>- " + entregables[i].entregable.nombre + "</b><br>";
+                    }
+                }
+
+                if (e != "") {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': "Servicio de Energía Eléctrica (AXA)",
+                        'html': 'Debe actualizar los siguientes entregables: <br><br>' + e,
+                        'confirmButtonText': 'Cerrar'
+                    });
+
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            function validarDocumentosR() {
+                var e = "";
+                for (var i = 0; i < entregables.length; i++) {
+                    if (entregables[i].estatus.nombre == "En Revisión") {
+                        e += "<b>- " + entregables[i].entregable.nombre + "</b><br>";
+                    }
+                }
+
+                if (e != "") {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': "Servicio de Energía Eléctrica (AXA)",
+                        'html': 'Los siguientes entregables están pendientes de  <b>Autorizar ó Rechazar </b>: <br><br>' + e,
+                        'confirmButtonText': 'Cerrar'
+                    });
+
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            function validarDocumentosTP() {
+                var e = "";
+                for (var i = 0; i < entregables.length; i++) {
+                    if (entregables[i].estatus.nombre == "En Revisión") {
+                        e += "<b>- " + entregables[i].entregable.nombre + "</b><br>";
+                    }
+                }
+
+                if (e != "") {
+                    Swal.fire({
+                        'icon': 'error',
+                        'title': "Servicio de Energía Eléctrica (AXA)",
+                        'html': 'Los siguientes entregables están pendientes de  <b>Autorizar ó Rechazar </b>: <br><br>' + e,
+                        'confirmButtonText': 'Cerrar'
+                    });
+
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            $(document).on("click", ".enviarSP", function () {
+                if(validarDocumentos()){
+                    Swal.fire({
+                        'icon': 'warning',
+                        title: "Servicio de Energía Eléctrica (AXA)",
+                        'html': '¿Está seguro que desea <b>' + $(this).data("estatus") + '</b> la solicitud de pago?',
+                        'confirmButtonColor': '#3085d6',
+                        'cancelButtonColor': '#d33',
+                        'confirmButtonText': 'Si, ' + $(this).data("estatus"),
+                        'cancelButtonText': 'Cancelar',
+                        'showCancelButton': true
+                    }).then(confirm => {
+                        if (confirm.isConfirmed) {
+                            axios.put('/aeelectrica/solicitudesPago/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalleSP/' + @Model.SolicitudesPago.Id+'?Handler=UpdateCedula', {
+                                Id: parseInt(sPago.id), EstatusId: $(this).data("estatusid")
+                            }).then(response => {
+                                if (response.status == 200) {
+                                    Swal.fire({
+                                        'icon': "success",
+                                        'title': "Servicio de Energía Eléctrica (AXA)",
+                                        'html': "La solicitud de pago fue enviada correctamente.",
+                                        'confirmButtonText': 'Cerrar'
+                                    }).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }).catch(error => {
+                                Swal.fire({
+                                    'icon': "error",
+                                    'title': "Servicio de Energía Eléctrica (AXA)",
+                                    'html': "Hubo un error al enviar la solicitud de pago. Contacte a su administrador del sistema.",
+                                    'confirmButtonText': 'Cerrar'
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", ".rechazarSP", function () {
+                if (validarDocumentosTP()) {
+                    Swal.fire({
+                        'icon': 'warning',
+                        title: "Servicio de Energía Eléctrica (AXA)",
+                        'html': '¿Está seguro que desea <b>' + $(this).data("estatus") + '</b> la solicitud de pago?',
+                        'confirmButtonColor': '#3085d6',
+                        'cancelButtonColor': '#d33',
+                        'confirmButtonText': 'Si, ' + $(this).data("estatus"),
+                        'cancelButtonText': 'Cancelar',
+                        'showCancelButton': true
+                    }).then(confirm => {
+                        if (confirm.isConfirmed) {
+                            axios.put('/aeelectrica/solicitudesPago/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalleSP/' + @Model.SolicitudesPago.Id+'?Handler=UpdateCedula', {
+                                Id: parseInt(sPago.id), EstatusId: $(this).data("estatusid")
+                            }).then(response => {
+                                if (response.status == 200) {
+                                    Swal.fire({
+                                        'icon': "success",
+                                        'title': "Servicio de Energía Eléctrica (AXA)",
+                                        'html': "La solicitud de pago fue rechazada correctamente.",
+                                        'confirmButtonText': 'Cerrar'
+                                    }).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }).catch(error => {
+                                Swal.fire({
+                                    'icon': "error",
+                                    'title': "Servicio de Energía Eléctrica (AXA)",
+                                    'html': "Hubo un error al rechazar la solicitud. Contacte a su administrador del sistema.",
+                                    'confirmButtonText': 'Cerrar'
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", ".tramitarSP", function () {
+                if (validarDocumentosTP()) {
+                    Swal.fire({
+                        'icon': 'warning',
+                        title: "Servicio de Energía Eléctrica (AXA)",
+                        'html': '¿Está seguro que desea <b>' + $(this).data("estatus") + '</b> la solicitud de pago?',
+                        'confirmButtonColor': '#3085d6',
+                        'cancelButtonColor': '#d33',
+                        'confirmButtonText': 'Si, ' + $(this).data("estatus"),
+                        'cancelButtonText': 'Cancelar',
+                        'showCancelButton': true
+                    }).then(confirm => {
+                        if (confirm.isConfirmed) {
+                            axios.put('/aeelectrica/solicitudesPago/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalleSP/' + @Model.SolicitudesPago.Id+'?Handler=UpdateCedula', {
+                                Id: parseInt(sPago.id), EstatusId: $(this).data("estatusid")
+                            }).then(response => {
+                                if (response.status == 200) {
+                                    Swal.fire({
+                                        'icon': "success",
+                                        'title': "Servicio de Energía Eléctrica (AXA)",
+                                        'html': "La solicitud de pago fue tramitada correctamente.",
+                                        'confirmButtonText': 'Cerrar'
+                                    }).then(function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }).catch(error => {
+                                Swal.fire({
+                                    'icon': "error",
+                                    'title': "Servicio de Energía Eléctrica (AXA)",
+                                    'html': "Hubo un error al tramitar a pago la solicitud. Contacte a su administrador del sistema.",
+                                    'confirmButtonText': 'Cerrar'
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+            /*********************************** Envíos de Solicitudes **********************************/
+        });
+    </script>
+}

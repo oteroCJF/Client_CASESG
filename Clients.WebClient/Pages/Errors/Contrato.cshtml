@@ -1,0 +1,20 @@
+﻿@page "/error/notContract"
+@model Clients.WebClient.Pages.Errors.ContratoModel
+@{
+    ViewData["Titulo"] = "Servicio sin contrato activo";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="row col-lg-12">
+            <div class="col-lg-5">
+                <div class="ibox-content mt-3 text-right">
+                    <img src="~/img/notFound.png" alt="No se encontró" width="250">
+                </div>
+            </div>
+            <div class="col-lg-6 mt-5">
+                <p class="h2 mt-5 text-danger" style="text-align: justify">No se encontró un contrato activo para poder generar la solicitud del <b>Servicio de Bienes Muebles</b>, por favor contacte al administrador del contrato a la extensión #318 2567 o #318 2580.</p>
+            </div>
+        </div>
+    </div>
+</div>

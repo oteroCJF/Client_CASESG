@@ -1,0 +1,78 @@
+﻿@page "/financieros/{moduloId}/index"
+@model Clients.WebClient.Pages.Financieros.IndexModel
+@{
+    ViewData["Titulo"] = "Financieros";
+    ViewData["Title"] = "Financieros";
+    ViewData["Action"] = "Financieros";
+    var i = 0;
+}
+
+<div class="container-fluid">
+    <form method="get" id="getAnio" asp-page-handler="GetAnio">
+        <div class="row col-lg-3">
+            <label class="label">Consultar Información del Año: </label>
+            <div class="input-group mb-3">
+                <select class="form-control" id="anioActual" asp-for="Anio">
+                    <option value="">Seleccione el Año</option>
+                    @for (var i = 2022; i <= DateTime.Now.Year; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <div class="row">
+                    <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar Información</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row col-lg-12">
+    <div class="row col-lg-12">
+        @foreach (var ds in Model.Dashboard)
+        {
+            @if (ds.Facturas != null && ds.Facturas.Cargadas != 0)
+            {
+                <div class="col-lg-3 col-6 font-weight-bold">
+                    <div class="small-box @ds.Servicio.Fondo">
+                        <div class="inner">
+                            <b>@ds.Servicio.Nombre</b>
+                            <h6 class="mt-2">@ds.Facturas.Cargadas - Facturas(s) Cargadas</h6>
+                            <h6 class="mt-2">@ds.Facturas.Pendientes - Facturas(s) Pendientes de Pago</h6>
+                            <div class="icon">
+                                @Html.Raw(ds.Servicio.Icono)<br>
+                            </div>
+                        </div>
+                        <a href="/financieros/@ds.Servicio.Abreviacion.ToLower()/@Model.Modulo.Id/detalle/@ds.Servicio.Id/@Model.Anio" class="small-box-footer">Ver detallles<i class="fas fa-arrow-circle-right ml-2"></i></a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+    $(function () {
+        $('.facturasServicio').knob({
+            max: $(this).data('maximo'),
+            format: function (value) {
+                return value.toFixed(2) + '%';
+            },
+            draw: function () {
+                $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
+            }
+        });
+
+        $('.cedulasServicio').knob({
+            max: $(this).data('maximo'),
+            format: function (value) {
+                return value.toFixed(2) + '%';
+            },
+            draw: function () {
+                $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
+            }
+        });
+    })
+    </script>
+}
