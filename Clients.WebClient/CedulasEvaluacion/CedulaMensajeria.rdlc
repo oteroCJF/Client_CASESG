@@ -1066,7 +1066,8 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Fecha de Recolección</Value>
+                                <!--  <Value>Fecha de Recolección</Value> -->
+                                  <Value>Fecha Programada</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
@@ -1103,7 +1104,8 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Fecha de Entrega</Value>
+                                  <!-- <Value>Fecha de Entrega</Value>-->
+                                  <Value>Fecha de Recolección</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
