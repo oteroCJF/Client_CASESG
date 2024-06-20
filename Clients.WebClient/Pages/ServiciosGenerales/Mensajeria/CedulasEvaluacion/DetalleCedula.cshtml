@@ -3526,6 +3526,8 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario, RepositorioId: parseInt(repositorio),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE AGREGA ENOTACREDITOID 
+                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Observaciones: "Se desbloquea la cédula de evaluación.",
                                     Flujo: supervision, Bloqueada: false, Elimina: true, Flujo: supervision
                                 }).then(response => {
@@ -3575,6 +3577,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE AGREGA ENOTACREDITOID 
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(repositorio), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS.",
                                     Flujo: supervision,
@@ -3735,6 +3738,8 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE AGREGA ENOTACREDITOID 
+                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(repositorio),
                                     ServicioId: parseInt(modulo.servicioId),
                                     Observaciones: coments.value, Flujo: supervision
@@ -3805,6 +3810,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id),
                                     EstatusId: $(this).data("estatusid"),
+                                    //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Observaciones: coments.value,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
@@ -3882,6 +3888,8 @@
                                 UsuarioId: usuario,
                                 RepositorioId: parseInt(repositorio),
                                 EFacturaId: parseInt($(this).data('efacturaid')),
+                                //SE AGREGA ENOTACREDITOID 
+                                ENotaCreditoId: parseInt($(this).data('enotaid')),
                                 ServicioId: parseInt(modulo.servicioId),
                                 Observaciones: "Se envía la cédula a revisión por parte de la CAE.",
                                 Flujo: supervision
@@ -3951,6 +3959,8 @@
                                     UsuarioId: usuario,
                                     RepositorioId: parseInt(repositorio),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE AGREGA ENOTACREDITOID 
+                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     ServicioId: parseInt(modulo.servicioId),
                                     Observaciones: "Se autoriza la cédula por parte de la CAE.",
                                     Flujo: supervision
@@ -4035,6 +4045,8 @@
                                         axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                             Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
                                             EFacturaId: parseInt($(this).data('efacturaid')),
+                                            //SE AGREGA ENOTACREDITOID 
+                                            ENotaCreditoId: parseInt($(this).data('enotaid')),
                                             UsuarioId: usuario,
                                             RepositorioId: parseInt(repositorio),
                                             ServicioId: parseInt(modulo.servicioId),
@@ -4168,6 +4180,8 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    //SE AGREGA ENOTACREDITOID 
+                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     UsuarioId: usuario,
                                     RepositorioId: parseInt(repositorio),
                                     ServicioId: parseInt(modulo.servicioId),
