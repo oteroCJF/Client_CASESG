@@ -3575,6 +3575,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(repositorio), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS.",
                                     Flujo: supervision,
                                     ServicioId: parseInt(modulo.servicioId),
@@ -3804,6 +3805,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id),
                                     EstatusId: $(this).data("estatusid"),
+                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Observaciones: coments.value,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
                                     RepositorioId: parseInt(repositorio),
@@ -4116,6 +4118,8 @@
                             axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                 Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
                                 EFacturaId: parseInt($(this).data('efacturaid')),
+                                //SE DEFINIO ENOTA PARA ESTATUS TRAMITAR
+                                ENotaCreditoId: parseInt($(this).data('enotaid')),
                                 UsuarioId: usuario,
                                 RepositorioId: parseInt(repositorio),
                                 ServicioId: parseInt(modulo.servicioId),
