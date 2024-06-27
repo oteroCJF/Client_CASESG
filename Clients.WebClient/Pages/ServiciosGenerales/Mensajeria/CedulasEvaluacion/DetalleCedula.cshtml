@@ -1771,7 +1771,29 @@
             }
 
             $(".tblIncidencias").DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Listado de Soporte de Pago',
+                        className: "bg-cjf mr-1",
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Listado de Soporte de Pago',
+                        className: "bg-cjf mr-1",
+                        orientation: "landscape"
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Listado de Soporte de Pago',
+                        text: 'Imprimir',
+                        className: "bg-cjf mr-1"
+                    }
+                ],
+                lengthMenu: [[12, 25, 50, -1], [12, 25, 50, "Todos"]],
                 responsive: true,
+                stateSave: true,
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },

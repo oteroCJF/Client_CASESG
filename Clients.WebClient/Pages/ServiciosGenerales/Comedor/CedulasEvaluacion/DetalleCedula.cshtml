@@ -1380,18 +1380,20 @@
                 <div class="row" id="divObservaciones">
                     <div class="col-lg-12">
                         <div class="form-row col-lg-12">
-                            <label for="campoObservaciones">Observaciones:</label>
-                            <textarea type="textarea" id="campoObservaciones" class="form-control" style="resize: none;" maxlength="256"></textarea>
+                            <label for="campoObservaciones">Observaciones: </label>
+                            <!--<label for="campoObservaciones" style="color: rgb(255 0 0)">Observaciones: </label>-->
+                            <!-- <textarea type="textarea" id="campoObservaciones" class="form-control" style="resize: none;" maxlength="256"></textarea> -->
+                             <textarea type="textarea" id="campoObservaciones" class="form-control" style="resize: none;" maxlength="256" required></textarea>
                         </div>
-                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="guardaIncidencia">Guardar Incidencia</button>
-            </div>
         </div>
-        <!-- /.modal-content -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="guardaIncidencia">Guardar Incidencia</button>
+        </div>
     </div>
+    <!-- /.modal-content -->
+                        </div>
     <!-- /.modal-dialog -->
 </div>
 @* Modal para la captura de Incidencias *@
@@ -2618,6 +2620,8 @@
                 var horaReal = $("#campoHoraReal").val() != null && $("#campoHoraReal").val() != "" ? $("#campoHoraReal").val() : "00:00:00";
                 var cantidad = $(".campoCantidad").val() != null && $(".campoCantidad").val() != "" ? $(".campoCantidad").val() : 0;
                 var entregaEnseres = $('input:radio[name="chkEnseres"]:checked').val() != null && $('input:radio[name="chkEnseres"]:checked').val() != "" ? $('input:radio[name="chkEnseres"]:checked').val() : false;
+                //Guardado de la información que se guardo en observaciones
+                // var observaciones = $("#campoObservaciones").val() != null && $("#campoObservaciones").val() != "" ? $("#campoObservaciones").val() : "No se registraron observaciones";
                 var observaciones = $("#campoObservaciones").val() != null && $("#campoObservaciones").val() != "" ? $("#campoObservaciones").val() : "";
                 var ponderacion = $("#campoPonderacion").val() != null && $("#campoPonderacion").val() != "" ? $("#campoPonderacion").val() : 0;
                 var dtIncidencias = new Array();
@@ -3402,6 +3406,7 @@
                         axios.put('/comedor/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                             Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario, RepositorioId: parseInt(repositorio),
                             EFacturaId: parseInt($(this).data('efacturaid')),
+                            ENotaCreditoId: parseInt($(this).data('enotaid')),
                             Observaciones: "Se desbloquea la cédula de evaluación.",
                             Flujo: supervision, Bloqueada: false, Elimina: true, Flujo: supervision
                         }).then(response => {
