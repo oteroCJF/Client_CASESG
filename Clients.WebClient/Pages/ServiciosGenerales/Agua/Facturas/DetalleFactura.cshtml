@@ -535,7 +535,7 @@
                     $('#error_filePDF').css('display', 'block');
                     Swal.fire({
                         'icon': 'error',
-                        title: "Servicio de Mensajería Acelerada",
+                        title: "Servicio de Agua Purificada para Beber",
                         'text': 'El archivo que intenta adjuntar no es válido. Favor de solo seleccionar archivos "PDF"'
                     });
                     $(".custom-pdf").text("Seleccionar Archivo");
@@ -557,7 +557,7 @@
                     $('#error_fileXML').css('display', 'block');
                     Swal.fire({
                         'icon': 'error',
-                        title: "Servicio de Mensajería Acelerada",
+                        title: "Servicio de Agua Purificada para Beber",
                         'text': 'El archivo que intenta adjuntar no es válido. Favor de solo seleccionar archivos "XML"'
                     });
                     $(".custom-file-label").text("Seleccionar Archivo");
@@ -586,7 +586,7 @@
                     Swal.fire({
                         allowOutsideClick: false,
                         icon: "info",
-                        title: "Servicio de Mensajería Acelerada",
+                        title: "Servicio de Agua Purificada para Beber",
                         html: "Cargando la información del repositorio de <b>" + facturacion.mes.nombre +" "+facturacion.anio+"</b>.",
                         'confirmButtonText': 'Cerrar'
                     })
@@ -596,7 +596,7 @@
                         if (response.data.estatusId == 201) {
                             Swal.fire({
                                 'icon': "success",
-                                'title': 'Servicio de Mensajería Acelerada',
+                                'title': 'Servicio de Agua Purificada para Beber',
                                 'text': 'Se adjuntó la documentación correctamente.',
                                 'confirmButtonText': 'Cerrar'
                             }).then(function () {
@@ -607,7 +607,7 @@
                         {
                             Swal.fire({
                                 'icon': "warning",
-                                'title': 'Servicio de Mensajería Acelerada',
+                                'title': 'Servicio de Agua Purificada para Beber',
                                 'text': 'La documentación que intenta adjuntar ya existe.',
                                 'confirmButtonText': 'Cerrar'
                             }).then(function () {
@@ -618,7 +618,7 @@
                         {
                             Swal.fire({
                                 'icon': "error",
-                                'title': 'Servicio de Mensajería Acelerada',
+                                'title': 'Servicio de Agua Purificada para Beber',
                                 'text': 'La documentación que intenta adjuntar no corresponde al servicio.',
                                 'confirmButtonText': 'Cerrar'
                             }).then(function () {
@@ -628,7 +628,7 @@
                         else {
                             Swal.fire({
                                 'icon': "error",
-                                'title': 'Servicio de Mensajería Acelerada',
+                                'title': 'Servicio de Agua Purificada para Beber',
                                 'text': 'No se adjuntó la documentación. Contactar al administrador del sistema',
                                 'confirmButtonText': 'Cerrar'
                             }).then(function () {
@@ -721,7 +721,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de Mensajería Acelerada',
+                    title: 'Servicio de Agua Purificada para Beber',
                     html: "Generando el <b>Acta Entrega - Recepción</b> de la evaluación, espere por favor."
                 });
                 Swal.showLoading();
@@ -743,7 +743,7 @@
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de Mensajería Acelerada',
+                                title: 'Servicio de Agua Purificada para Beber',
                                 html: "El <b>Archivo XML</b> se descargó correctamente.",
                                 confirmButtonText: 'Cerrar'
 

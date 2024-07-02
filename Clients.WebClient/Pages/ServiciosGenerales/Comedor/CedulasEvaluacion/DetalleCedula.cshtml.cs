@@ -666,7 +666,7 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
                     cuentaDiasHabiles++;
                 }
 
-                if (cuentaDiasHabiles == 2)
+                if (cuentaDiasHabiles == 10)
                 {
                     break;
                 }
