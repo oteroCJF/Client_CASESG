@@ -22,8 +22,8 @@
             <i class="fal fa-arrow-left"></i>
         </a>
         @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-        @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-        @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+       @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+       @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
         {
             <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
                title="Solicitar rechazo de la cédula" data-placement="top">
@@ -136,32 +136,32 @@
                                 @foreach (var fac in Model.Facturas)
                                 {
                                     i++;
-                                <tr>
-                                    <td>@i</td>
-                                    <td class="@fac.Estatus.Fondo.Replace("bg","text") font-weight-bold">@fac.Estatus.Nombre</td>
-                                    <td>@(fac.Tipo.Equals("NC") ? "Nota de Crédito" : "Factura")</td>
-                                    <td>@fac.Nombre</td>
-                                    <td>
-                                        @fac.UUID
-                                    </td><!-- SE MODIFICO EL STRING.FORMAT A {0:C4} PARA EL FORMATO DE PESOS, SIN REDONDEO Y CON 4 DECIMALES -->
-                                    <td>@fac.Folio</td>
-                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)</td>
-                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)</td>
-                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)</td>
-                                    <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy")</td>
-                                    <td class="text-center">
-                                        <a href="#" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id" data-toggle="tooltip" title="Mostrar/Ocultar el detalle de la factura" data-placement="top">
-                                            <i class="fas fa-eye text-success mr-2"></i>
-                                        </a>
-                                        <a href="javascript:" class="verFactura" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
-                                           data-folio="@(fac.Serie + fac.Folio)" data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)"
-                                           data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)"
-                                           data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)"
-                                           data-toggle="tooltip" title="Ver y descargar el PDF" data-placement="top">
-                                            <i class='fa-solid fa-file-pdf text-danger'></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>@i</td>
+                                        <td class="@fac.Estatus.Fondo.Replace("bg","text") font-weight-bold">@fac.Estatus.Nombre</td>
+                                        <td>@(fac.Tipo.Equals("NC") ? "Nota de Crédito" : "Factura")</td>
+                                        <td>@fac.Nombre</td>
+                                        <td>
+                                            @fac.UUID
+                                        </td><!-- SE MODIFICO EL STRING.FORMAT A {0:C4} PARA EL FORMATO DE PESOS, SIN REDONDEO Y CON 4 DECIMALES -->
+                                        <td>@fac.Folio</td>
+                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)</td>
+                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)</td>
+                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)</td>
+                                        <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy")</td>
+                                        <td class="text-center">
+                                            <a href="#" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id" data-toggle="tooltip" title="Mostrar/Ocultar el detalle de la factura" data-placement="top">
+                                                <i class="fas fa-eye text-success mr-2"></i>
+                                            </a>
+                                            <a href="javascript:" class="verFactura" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
+                                               data-folio="@(fac.Serie + fac.Folio)" data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Subtotal)"
+                                               data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.Total)"
+                                               data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", fac.IVA)"
+                                               data-toggle="tooltip" title="Ver y descargar el PDF" data-placement="top">
+                                                <i class='fa-solid fa-file-pdf text-danger'></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -283,7 +283,7 @@
                                                                     @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                                     {
                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                         {
                                                                             <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none": "block");">
                                                                                 <div class="icheck-success d-inline">
@@ -355,7 +355,7 @@
                                                                     @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                                     {
                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                         {
                                                                             @if (rs.cuestionario.Incidencias && (rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                             {
@@ -451,7 +451,7 @@
 
                                                                                     @if (@rs.ciComedor.FechaEntrega)
                                                                                     {
-                                                                                        <th>Fecha de entrega</th>
+                                                                                        <th>Fecha de entrega:</th>
                                                                                     }
 
                                                                                     @if (@rs.ciComedor.HoraInicio)
@@ -489,13 +489,13 @@
                                                                                     }
 
                                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                   !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                                     {
                                                                                         <th>Monto Penalizacion</th>
                                                                                     }
 
                                                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                  Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                     {
                                                                                         <th>Acciones</th>
                                                                                     }
@@ -580,7 +580,7 @@
                                                                                                                 <th>Tipo</th>
                                                                                                                 <th>Concepto</th>
                                                                                                                 @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                                                 {
                                                                                                                     <th>Monto de Penalización</th>
                                                                                                                 }
@@ -598,7 +598,7 @@
                                                                                                                     <td>@dtic.DIncidencia.Tipo.Nombre</td>
                                                                                                                     <td>@dtic.DIncidencia.Nombre</td>
                                                                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                                                   !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                                                     {
                                                                                                                         <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", @dtic.MontoPenalizacion)</td>
                                                                                                                     }
@@ -615,13 +615,13 @@
                                                                                         }
 
                                                                                         @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                       !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                                      !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                                         {
                                                                                             <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", @inc.MontoPenalizacion)</td>
                                                                                         }
 
                                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                         {
                                                                                             <td>
                                                                                                 <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
@@ -642,7 +642,7 @@
                                                                                 }
                                                                             </tbody>
                                                                             @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                           !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                          !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                             {
                                                                                 <tfoot>
                                                                                     <tr>
@@ -800,7 +800,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                       (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                   (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -810,7 +810,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 &&
-                                       (fe != null ? fe.Autorizar : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                   (fe != null ? fe.Autorizar : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -819,7 +819,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                       && !en.estatus.Nombre.Equals("Rechazado"))
+                                   && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -828,7 +828,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                       (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                   (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
@@ -836,7 +836,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                       (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                   (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -844,8 +844,10 @@
                                             </a>
                                         }
 
+                                      
+
                                         @if ((fe != null ? fe.Validar : false) &&
-                                       en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
+                                   en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -860,8 +862,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                     {
                         <a href="javascript:" class="btn btn-sm btn-primary guardarCedula float-right">
                             Guardar Respuestas
@@ -885,6 +886,7 @@
                         }
                     }
 
+
                     @if (Model.Cedula.Bloqueada && Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("denegar")).Count() > 0)
                     {
                         <a href="javascript:" class="btn btn-sm bg-correccion denegarRechazo float-right mr-2"
@@ -900,6 +902,14 @@
                             Cancelar Rechazo
                         </a>
                     }
+
+                    @if (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS"))
+                    {
+                        <a href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación" class="btn btn-sm btn-primary generarCedula float-right mr-2">
+                            Generar Cédula 
+                        </a>
+                    }
+
                 </div>
             </div>
         </div>
@@ -1383,17 +1393,17 @@
                             <label for="campoObservaciones">Observaciones: </label>
                             <!--<label for="campoObservaciones" style="color: rgb(255 0 0)">Observaciones: </label>-->
                             <!-- <textarea type="textarea" id="campoObservaciones" class="form-control" style="resize: none;" maxlength="256"></textarea> -->
-                             <textarea type="textarea" id="campoObservaciones" class="form-control" style="resize: none;" maxlength="256" required></textarea>
+                            <textarea type="textarea" id="campoObservaciones" class="form-control" style="resize: none;" maxlength="256"></textarea>
                         </div>
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardaIncidencia">Guardar Incidencia</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="guardaIncidencia">Guardar Incidencia</button>
-        </div>
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
-                        </div>
     <!-- /.modal-dialog -->
 </div>
 @* Modal para la captura de Incidencias *@

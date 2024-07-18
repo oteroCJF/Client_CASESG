@@ -206,6 +206,7 @@
                                     <th>Tipo</th>
                                     <th>Empresa</th>
                                     <th>Folio Fiscal</th>
+                                    <th>CFDI Relacionado</th>
                                     <th>Número Factura</th>
                                     <th>Subtotal Factura</th>
                                     <th>IVA</th>
@@ -220,34 +221,33 @@
                                     @if (fac.Tipo.Equals("NC"))
                                     {
                                         i++;
-                                        <tr>
-                                            <td>@i</td>
-                                            <td>@fac.Tipo</td>
-                                            <td>@fac.Nombre</td>
-                                            <td>
-                                                @fac.UUID
-                                            </td>
-                                            <td>@fac.Folio</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)</td>
-                                            <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))</td>
-                                            <td class="text-center">
-                                                <a href="javascript:" class="viewConceptosNC" id="viewConceptos_@fac.Id" data-factura="@fac.Id">
-                                                    <i class="fas fa-eye text-success"></i>
-                                                </a>
-                                                <a href="javascript:" class="ml-2 descargaXML" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoXML"
-                                                   data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
-                                                   data-iva="@fac.IVA">
-                                                    <i class='fa-solid fa-download text-danger mr-2'></i>
-                                                </a>
-                                                <a href="javascript:" class="verEntregable" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
-                                                   data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
-                                                   data-iva="@fac.IVA">
-                                                    <i class='fa-solid fa-file-pdf text-danger'></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@fac.Tipo</td>
+                                    <td>@fac.Nombre</td>
+                                    <td>@fac.UUID</td>
+                                    <td>@fac.UUIDRelacionado</td>
+                                    <td>@fac.Folio</td>
+                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)</td>
+                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)</td>
+                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)</td>
+                                    <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))</td>
+                                    <td class="text-center">
+                                        <a href="javascript:" class="viewConceptosNC" id="viewConceptos_@fac.Id" data-factura="@fac.Id">
+                                            <i class="fas fa-eye text-success"></i>
+                                        </a>
+                                        <a href="javascript:" class="ml-2 descargaXML" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoXML"
+                                           data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
+                                           data-iva="@fac.IVA">
+                                            <i class='fa-solid fa-download text-danger mr-2'></i>
+                                        </a>
+                                        <a href="javascript:" class="verEntregable" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
+                                           data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@fac.Subtotal" data-total="@fac.Total"
+                                           data-iva="@fac.IVA">
+                                            <i class='fa-solid fa-file-pdf text-danger'></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                     }
                                 }
                             </tbody>
