@@ -218,7 +218,12 @@
 {
     <script>
         $(function () {
+
+            var anio = @Html.Raw(Json.Serialize(DateTime.Now.Year))
             var servicio = @Html.Raw(Json.Serialize(Model.Servicio));
+
+            var filtroInmuebles = @Html.Raw(Json.Serialize(FIAplicados));
+            var filtroEstatus= @Html.Raw(Json.Serialize(FEAplicados));
 
             var estatus = [];
             var inmuebles = [];
@@ -331,6 +336,31 @@
                 Swal.showLoading();
                 window.location.href = "/limpieza/@Model.Modulo.Id/@Model.Submodulo/facturacion/detalle/" + $(this).data('inmueble') + "/@Model.Repositorio.Id/" + $(this).data('cedula') +"?Estatus=" + estatus + "&Inmueble=" + inmuebles;
             });
+
+            if (filtroInmuebles != "") {
+                inmuebles = [];
+                $(".selectInmueble").each(function () {
+                    var activo = $(this).parent().hasClass("off");
+                    if (activo == false) {
+                        inmuebles.push($(this).val());
+                    }
+                });
+                var mergedVal = inmuebles.join('|').replace("&", "\\&").replace(/\s/g, "\\s");
+                table.column(3).search(mergedVal, true).draw();
+            }
+
+            if (filtroEstatus != "") {
+                estatus = [];
+                $(".selectEstatus").each(function () {
+                    var activo = $(this).parent().hasClass("off");
+                    if (activo == false) {
+                        estatus.push($(this).val());
+                    }
+                });
+
+                var mergedVal = estatus.join('|').replace("&", "\\&").replace(/\s/g, "\\s");
+                table.column(5).search(mergedVal, true).draw();
+            }
         });
     </script>
 }

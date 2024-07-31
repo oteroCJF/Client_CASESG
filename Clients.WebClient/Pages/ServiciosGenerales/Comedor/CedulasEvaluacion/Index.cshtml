@@ -1,7 +1,7 @@
 ﻿@page "/comedor/cedulasEvaluacion/{moduloId}/{submoduloId}/index"
 @model Clients.WebClient.Pages.Comedor.CedulasEvaluacion.IndexModel
 @{
-    ViewData["Title"] = "Servicio de "+Model.Servicio.Descripcion;
+    ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
     ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
     ViewData["Action"] = "Inicio";
     var c = 0;
@@ -23,7 +23,7 @@
 }
 
 <div class="container-fluid">
-    <form method="get" id="getAnio" asp-page-handler="GetAnio"> 
+    <form method="get" id="getAnio" asp-page-handler="GetAnio">
         <div class="row col-lg-2">
             <label class="label">Consultar información del año: </label>
             <div class="input-group mb-3">
@@ -42,7 +42,7 @@
     </form>
     @if (Model.Anio != 0 && Model.Cedulas.Items != null)
     {
-        <div class="row mt-3">     
+        <div class="row mt-3">
             <section class="col-xl-10 connectedSortable">
                 <div class="card">
                     <div class="card-header">
@@ -62,7 +62,7 @@
                                     <th>Tipo de Servicio</th>
                                     <th>Estatus</th>
                                     <th class="text-center">Calificación</th>
-                                    @if (Model.Anio >2023)
+                                    @if (Model.Anio > 2023)
                                     {
                                         <th>Factura</th>
                                         <th>Total NC</th>
@@ -78,64 +78,64 @@
                                 @foreach (var cedula in Model.Cedulas.Items)
                                 {
                                     c++;
-                                <tr>
-                                    <td>@c</td>
-                                    <td>@cedula.Anio</td>
-                                    <td>@cedula.Mes</td>
-                                    <td>@cedula.Inmueble</td>
-                                    <td>@cedula.Folio</td>
-                                    <td>@cedula.Servicio</td>
-                                    <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
-                                    <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
-                                    @if (cedula.Anio > 2023)
-                                    {
-                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
-                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
-                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
-                                    }
-                                    <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
-                                    <td>
-                                        @if (cedula.Cedula)
+                                    <tr>
+                                        <td>@c</td>
+                                        <td>@cedula.Anio</td>
+                                        <td>@cedula.Mes</td>
+                                        <td>@cedula.Inmueble</td>
+                                        <td>@cedula.Folio</td>
+                                        <td>@cedula.Servicio</td>
+                                        <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
+                                        <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
+                                        @if (cedula.Anio > 2023)
                                         {
-                                            <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
+                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
                                         }
-                                        else
-                                        {
-                                            <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Cédula pendiente de validar" data-placement="top"></i>
-                                        }
+                                        <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
+                                        <td>
+                                            @if (cedula.Cedula)
+                                            {
+                                                <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Cédula pendiente de validar" data-placement="top"></i>
+                                            }
 
-                                        @if (cedula.Memorandum == true)
-                                        {
-                                            <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Memorándum validado" data-placement="top"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Memorándum pendiente de validar" data-placement="top"></i>
-                                        }
+                                            @if (cedula.Memorandum == true)
+                                            {
+                                                <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Memorándum validado" data-placement="top"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Memorándum pendiente de validar" data-placement="top"></i>
+                                            }
 
-                                        @if (cedula.ActaFirmada)
-                                        {
-                                            <i class="fa-regular fa-file-check text-success" data-toggle="tooltip" title="Acta Entrega - Recepción" data-placement="top"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="fa-regular fa-file-xmark text-danger" data-toggle="tooltip" title="Acta Entrega - Recepción pendiente de validar" data-placement="top"></i>
-                                        }
-                                    </td>
-                                    <td>
-                                        @(
+                                            @if (cedula.ActaFirmada)
+                                            {
+                                                <i class="fa-regular fa-file-check text-success" data-toggle="tooltip" title="Acta Entrega - Recepción" data-placement="top"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-regular fa-file-xmark text-danger" data-toggle="tooltip" title="Acta Entrega - Recepción pendiente de validar" data-placement="top"></i>
+                                            }
+                                        </td>
+                                        <td>
+                                            @(
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy").Equals("01/01/0001") ?
                                             Convert.ToDateTime(cedula.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt") :
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy hh:mm tt")
                                         )
-                                    </td>
-                                    <td class="text-center">
-                                        <a class="btnRevision" href="javascript:" data-cedula="@cedula.Id" data-inmueble="@cedula.InmuebleId"
-                                           data-toggle="tooltip" title="Seguimiento de la Cédula" data-placement="top">
-                                            <i class="fad fa-eye text-success"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="btnRevision" href="javascript:" data-cedula="@cedula.Id" data-inmueble="@cedula.InmuebleId"
+                                               data-toggle="tooltip" title="Seguimiento de la Cédula" data-placement="top">
+                                                <i class="fad fa-eye text-success"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -196,14 +196,14 @@
                                                    data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
                                                    data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
                                                    data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre" checked> @es.Nombre
-                                        }
-                                        else
-                                        {
-                                            <input class="selectEstatus" type="checkbox" data-toggle="toggle"
-                                                   data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                   data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                   data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre"> @es.Nombre
-                                        }
+                                            }
+                                            else
+                                            {
+                                                <input class="selectEstatus" type="checkbox" data-toggle="toggle"
+                                                       data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                       data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                       data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre"> @es.Nombre
+                                                }
                                     </label>
                                 </div>
                             }
@@ -293,10 +293,14 @@
             var mesActual = @Html.Raw(Json.Serialize(mesActual));
 
             var filtroMes = @Html.Raw(Json.Serialize(Model.FiltrosMes));
+            var filtroInmuebles = @Html.Raw(Json.Serialize(FIAplicados));
+            var filtroEstatus= @Html.Raw(Json.Serialize(FEAplicados));
 
             var estatus = [];
             var inmuebles = [];
             var mes = [];
+
+            $('[data-toggle="tooltip"]').tooltip();
 
             var table = $('.cedulasEvaluacion').DataTable({
                 dom: 'lBfrtip',
@@ -469,6 +473,31 @@
                 table.column(2).search(mergedVal, true).draw();
             }
 
+
+            if (filtroInmuebles != "") {
+                inmuebles = [];
+                $(".selectInmueble").each(function () {
+                    var activo = $(this).parent().hasClass("off");
+                    if (activo == false) {
+                        inmuebles.push($(this).val());
+                    }
+                });
+                var mergedVal = inmuebles.join('|').replace("&", "\\&").replace(/\s/g, "\\s");
+                table.column(3).search(mergedVal, true).draw();
+            }
+
+            if (filtroEstatus != "") {
+                estatus = [];
+                $(".selectEstatus").each(function () {
+                    var activo = $(this).parent().hasClass("off");
+                    if (activo == false) {
+                        estatus.push($(this).val());
+                    }
+                });
+
+                var mergedVal = estatus.join('|').replace("&", "\\&").replace(/\s/g, "\\s");
+                table.column(5).search(mergedVal, true).draw();
+            }
             /******************** Filtros *******************/
         });
     </script>
