@@ -1602,6 +1602,7 @@
             const penasDeductivas = @Html.Raw(Json.Serialize(@Model.Cedula.respuestas.Where(r => pDeductivas.Contains(r.Pregunta)).Sum(m => m.MontoPenalizacion)));
             const facturacion = @Html.Raw(Json.Serialize(@Model.Repositorio));
             const facturas = @Html.Raw(Json.Serialize(@Model.Facturas));
+            const repositorio = @Html.Raw(Json.Serialize(@Model.Repositorio.Id));
             const existsNC = @Html.Raw(Json.Serialize(@Model.Facturas.Where(f => f.Tipo.Equals("NC")).Count()));
             const cedula = @Html.Raw(Json.Serialize(@Model.Cedula));
             const configuracion = @Html.Raw(Json.Serialize(@Model.ConfiguracionIncidencias));
@@ -2699,6 +2700,7 @@
                                 axios.put('/limpieza/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
+                                    RepositorioId: parseInt(repositorio),
                                     FacturacionId: parseInt(facturacion.id), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS."
                                 }).then(response => {
                                     if (response.status == 200) {

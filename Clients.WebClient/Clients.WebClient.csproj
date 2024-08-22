@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Financieros\Agua\IFEntregableProxy.cs" />
+    <Compile Remove="Pages\Financieros\Agua\Index.cshtml.cs" />
+    <Compile Remove="Pages\Financieros\Agua\Index1.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Financieros\Agua\Index.cshtml" />
+    <Content Remove="Pages\Financieros\Agua\Index1.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FreeSpire.Office" Version="8.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.1.0" />
@@ -26,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Financieros\Agua\" />
     <Folder Include="Pages\Financieros\Comedor\" />
     <Folder Include="Proxies\" />
   </ItemGroup>

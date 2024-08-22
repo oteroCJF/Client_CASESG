@@ -461,6 +461,22 @@
                 table.column(3).search(mergedVal, true).draw();
             });
 
+            $(".searchToggle").on('keydown', function () {
+                $(".inmuebles").hide();
+                const search = document.getElementById("searchToggle");
+                const labels = document.querySelectorAll("#btnInmueble > label");
+                Array.from(labels).forEach((element) => {
+                    if (element.childNodes[1].childNodes[0].value.toLowerCase().includes(search.value.toLowerCase())) {
+                        $(".inm_" + element.childNodes[1].childNodes[0].getAttribute('data-abreviacion')).show();
+                    }
+                });
+            });
+
+
+
+
+
+
             if (filtroMes != "") {
                 mes = [];
                 $(".selectMes").each(function () {

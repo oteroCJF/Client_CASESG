@@ -1,4 +1,4 @@
-﻿@page "/comedor/{moduloId}/{submoduloId}/detalle/{inmueble}/{cedula}"
+﻿ @page "/comedor/{moduloId}/{submoduloId}/detalle/{inmueble}/{cedula}"
 @model Clients.WebClient.Pages.Comedor.CedulasEvaluacion.DetalleModel;
 @{
     ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
@@ -24,8 +24,8 @@
             <i class="fal fa-arrow-left"></i>
         </a>
         @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-            @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-            @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+           @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+           @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
         {
             <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
                title="Solicitar rechazo de la cédula" data-placement="top">
@@ -285,7 +285,7 @@
                                                                     @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                                     {
                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                     Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                         {
                                                                             <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none": "block");">
                                                                                 <div class="icheck-success d-inline">
@@ -357,7 +357,7 @@
                                                                     @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                                     {
                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                     Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                         {
                                                                             @if (rs.cuestionario.Incidencias && (rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                             {
@@ -441,6 +441,11 @@
                                                                                         <th>Fecha inventario</th>
                                                                                     }
 
+                                                                                    @if (@rs.ciComedor.FechaLimite)
+                                                                                    {
+                                                                                        <th>Fecha Límite:</th>
+                                                                                    }
+
                                                                                     @if (@rs.ciComedor.FechaNotificacion)
                                                                                     {
                                                                                         <th>Fecha notificacion</th>
@@ -491,13 +496,13 @@
                                                                                     }
 
                                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                                     {
                                                                                         <th>Monto Penalizacion</th>
                                                                                     }
 
                                                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                                  Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                               Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                     {
                                                                                         <th>Acciones</th>
                                                                                     }
@@ -507,52 +512,68 @@
                                                                                 @foreach (var inc in rs.iComedor)
                                                                                 {
                                                                                     ci++;
-                                                                                    <tr>
-                                                                                        <td>@ci</td>
-                                                                                        <td>@inc.Incidencia.Valor</td>
-                                                                                        @if (@inc.ciComedor.Ponderacion)
-                                                                                        {
-                                                                                            <td>@inc.Perfil.Nombre</td>
-                                                                                        }
-                                                                                        @if (@rs.ciComedor.FechaIncidencia)
-                                                                                        {
-                                                                                            <td>@inc.FechaIncidencia.ToString("dd/MM/yyyy")</td>
-                                                                                        }
+                                                                                <tr>
+                                                                                    <td>@ci</td>
+                                                                                    <td>@inc.Incidencia.Valor</td>
+                                                                                    @if (@inc.ciComedor.Ponderacion)
+                                                                                    {
+                                                                                        <td>@inc.Perfil.Nombre</td>
+                                                                                    }
+                                                                                    @if (@rs.ciComedor.FechaIncidencia)
+                                                                                    {
+                                                                                        <td>@inc.FechaIncidencia.ToString("dd/MM/yyyy")</td>
+                                                                                    }
 
-                                                                                        @if (@rs.ciComedor.FechaProgramada)
-                                                                                        {
-                                                                                            <td>@inc.FechaProgramada.ToString("dd/MM/yyyy")</td>
-                                                                                        }
+                                                                                    @if (@rs.ciComedor.FechaProgramada)
+                                                                                    {
+                                                                                        <td>@inc.FechaProgramada.ToString("dd/MM/yyyy")</td>
+                                                                                    }
 
-                                                                                        @if (@rs.ciComedor.UltimoDia)
-                                                                                        {
-                                                                                            <td>@inc.UltimoDia.ToString("dd/MM/yyyy")</td>
-                                                                                        }
+                                                                                    @if (@rs.ciComedor.UltimoDia)
+                                                                                    {
+                                                                                        <td>@inc.UltimoDia.ToString("dd/MM/yyyy")</td>
+                                                                                    }
 
-                                                                                        @if (@rs.ciComedor.FechaRealizada)
-                                                                                        {
-                                                                                            <td>@inc.FechaRealizada.ToString("dd/MM/yyyy")</td>
-                                                                                        }
+                                                                                    @if (@rs.ciComedor.FechaRealizada)
+                                                                                    {
+                                                                                        <td>@inc.FechaRealizada.ToString("dd/MM/yyyy")</td>
+                                                                                    }
 
-                                                                                        @if (@rs.ciComedor.FechaInventario)
-                                                                                        {
-                                                                                            <td>@inc.FechaInventario.ToString("dd/MM/yyyy")</td>
-                                                                                        }
+                                                                                    @if (@rs.ciComedor.FechaInventario)
+                                                                                    {
+                                                                                        <td>@inc.FechaInventario.ToString("dd/MM/yyyy")</td>
+                                                                                    }
 
-                                                                                        @if (@rs.ciComedor.FechaNotificacion)
-                                                                                        {
-                                                                                            <td>@inc.FechaNotificacion.ToString("dd/MM/yyyy")</td>
-                                                                                        }
+                                                                                    @if (@rs.ciComedor.FechaLimite)
+                                                                                    {
+                                                                                        <td>@inc.FechaLimite.ToString("dd/MM/yyyy")</td>
+                                                                                    }
 
-                                                                                        @if (@rs.ciComedor.FechaAcordadaAdmin)
-                                                                                        {
-                                                                                            <td>@inc.FechaAcordadaAdmin.ToString("dd/MM/yyyy")</td>
-                                                                                        }
 
-                                                                                        @if (@rs.ciComedor.FechaEntrega)
+                                                                                    @if (@rs.ciComedor.FechaNotificacion)
+                                                                                    {
+                                                                                        <td>@inc.FechaNotificacion.ToString("dd/MM/yyyy")</td>
+                                                                                    }
+
+                                                                                    @if (@rs.ciComedor.FechaAcordadaAdmin)
+                                                                                    {
+                                                                                        <td>@inc.FechaAcordadaAdmin.ToString("dd/MM/yyyy")</td>
+                                                                                    }
+
+                                                                                    @if (@rs.ciComedor.FechaEntrega)
+                                                                                    {
+                                                                                        String date = "01/01/1990";
+                                                                                        DateTime fecha = DateTime.Parse(date);
+
+                                                                                        if (fecha == inc.FechaEntrega)
                                                                                         {
-                                                                                            <td>@inc.FechaEntrega.ToString("dd/MM/yyyy")</td>
+                                                                                           <td> No entregó </td>
                                                                                         }
+                                                                                        else
+                                                                                        {
+                                                                                           <td>@inc.FechaEntrega.ToString("dd/MM/yyy")</td>
+                                                                                        }
+                                                                                    }
 
                                                                                         @if (@rs.ciComedor.HoraInicio)
                                                                                         {
@@ -582,7 +603,7 @@
                                                                                                                 <th>Tipo</th>
                                                                                                                 <th>Concepto</th>
                                                                                                                 @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                                           !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                                                 {
                                                                                                                     <th>Monto de Penalización</th>
                                                                                                                 }
@@ -600,7 +621,7 @@
                                                                                                                     <td>@dtic.DIncidencia.Tipo.Nombre</td>
                                                                                                                     <td>@dtic.DIncidencia.Nombre</td>
                                                                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                                                     {
                                                                                                                         <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", @dtic.MontoPenalizacion)</td>
                                                                                                                     }
@@ -617,13 +638,13 @@
                                                                                         }
 
                                                                                         @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                      !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                                   !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                                         {
                                                                                             <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", @inc.MontoPenalizacion)</td>
                                                                                         }
 
                                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                         {
                                                                                             <td>
                                                                                                 <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
@@ -644,7 +665,7 @@
                                                                                 }
                                                                             </tbody>
                                                                             @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                          !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                         !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                             {
                                                                                 <tfoot>
                                                                                     <tr>
@@ -802,7 +823,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                   (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                  (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -812,7 +833,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 &&
-                                   (fe != null ? fe.Autorizar : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                  (fe != null ? fe.Autorizar : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -821,7 +842,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                   && !en.estatus.Nombre.Equals("Rechazado"))
+                                  && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -830,7 +851,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                   (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                  (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
@@ -838,7 +859,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                   (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                  (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -846,10 +867,10 @@
                                             </a>
                                         }
 
-                                      
+
 
                                         @if ((fe != null ? fe.Validar : false) &&
-                                   en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
+                                  en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -908,7 +929,7 @@
                     @if (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS"))
                     {
                         <a href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación" class="btn btn-sm btn-primary generarCedula float-right mr-2">
-                            Generar Cédula 
+                            Generar Cédula
                         </a>
                     }
 

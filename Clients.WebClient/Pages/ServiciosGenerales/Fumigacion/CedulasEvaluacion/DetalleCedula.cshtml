@@ -1692,6 +1692,7 @@
             const facturacion = @Html.Raw(Json.Serialize(@Model.Repositorio));
             const facturas = @Html.Raw(Json.Serialize(@Model.Facturas));
             const existsNC = @Html.Raw(Json.Serialize(@Model.Facturas.Where(f => f.Tipo.Equals("NC")).Count()));
+            const repositorio = @Html.Raw(Json.Serialize(@Model.Repositorio.Id));
             const cedula = @Html.Raw(Json.Serialize(@Model.Cedula));
             const configuracion = @Html.Raw(Json.Serialize(@Model.ConfiguracionIncidencias));
             const entregables = @Html.Raw(Json.Serialize(@Model.Cedula.entregables));
@@ -1874,7 +1875,7 @@
                             $("#divFechaProgramada").css("display", "block");
                             if (abreviacion == "SUA") {
                                 $("#divFechaProgramada > label").text("Fecha de entrega");
-                            } 
+                            }
                             else if (abreviacion == "FechaCierre") {
                                 $("#divFechaProgramada > label").text("Fecha de cierre");
                             }
@@ -2911,13 +2912,13 @@
                                 axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR 
-
+                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR     
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Elimina: false,
                                     Bloqueada: true,
                                     Flujo: supervision,
-                                    RepositorioId: parseInt(facturacion.id), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS."
+                                    RepositorioId: parseInt(repositorio),
+                                    FacturacionId: parseInt(facturacion.id), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS."
                                 }).then(response => {
                                     if (response.status == 200) {
                                         Swal.fire({
@@ -2929,7 +2930,7 @@
                                             window.location.reload();
                                         });
                                     }
-                                    
+
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
@@ -3101,7 +3102,7 @@
                 });
             });
 
-            //ESTATUS RECHAZAR 
+            //ESTATUS RECHAZAR
 
             $(".rechazar").click(function () {
                 Swal.fire({
@@ -3138,7 +3139,7 @@
                                 axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Observaciones: coments.value,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR 
+                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(facturacion.id),
                                     UsuarioId: usuario,

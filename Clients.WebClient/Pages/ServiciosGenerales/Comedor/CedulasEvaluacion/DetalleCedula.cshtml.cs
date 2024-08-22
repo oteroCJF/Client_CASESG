@@ -651,7 +651,33 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
 
             return new JsonResult(fechaLimite);
         }
-        
+
+        public async Task<JsonResult> CalculaHabilesEntreDosFechas(string fechaLim, string fechaEnt)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fechaLim);
+            var fechaEntrega = Convert.ToDateTime(fechaEnt);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
+
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
+
+                if (fechaLimite == fechaEntrega)
+                {
+                    break;
+                }
+            }
+
+            return new JsonResult(cuentaDiasHabiles);
+        }
+
+
+
         public async Task<JsonResult> OnGetFechaLimiteEnseresB(string fecha)
         {
             int cuentaDiasHabiles = 0;

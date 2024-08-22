@@ -5403,7 +5403,7 @@
                                             <Paragraph>
                                               <TextRuns>
                                                 <TextRun>
-                                                  <Value>=Fields!FechaEntrega.Value</Value>
+                                                  <Value>=IIF(Fields!FechaEntrega.Value = "01/01/1990", "No Entregó", Fields!FechaEntrega.Value)</Value>
                                                   <Style />
                                                 </TextRun>
                                               </TextRuns>
