@@ -1,5 +1,7 @@
 ﻿@page "/financieros/{moduloId}/index"
 @model Clients.WebClient.Pages.Financieros.IndexModel
+
+
 @{
     ViewData["Titulo"] = "Financieros";
     ViewData["Title"] = "Financieros";
@@ -8,71 +10,160 @@
 }
 
 <div class="container-fluid">
-    <form method="get" id="getAnio" asp-page-handler="GetAnio">
-        <div class="row col-lg-3">
-            <label class="label">Consultar Información del Año: </label>
-            <div class="input-group mb-3">
-                <select class="form-control" id="anioActual" asp-for="Anio">
-                    <option value="">Seleccione el Año</option>
-                    @for (var i = 2022; i <= DateTime.Now.Year; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-                <div class="row">
-                    <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar Información</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
 
-<div class="row col-lg-12">
-    <div class="row col-lg-12">
-        @foreach (var ds in Model.Dashboard)
-        {
-            @if (ds.Facturas != null && ds.Facturas.Cargadas != 0)
-            {
-                <div class="col-lg-3 col-6 font-weight-bold">
-                    <div class="small-box @ds.Servicio.Fondo">
-                        <div class="inner">
-                            <b>@ds.Servicio.Nombre</b>
-                            <h6 class="mt-2">@ds.Facturas.Cargadas - Facturas(s) Cargadas</h6>
-                            <h6 class="mt-2">@ds.Facturas.Pendientes - Facturas(s) Pendientes de Pago</h6>
-                            <div class="icon">
-                                @Html.Raw(ds.Servicio.Icono)<br>
+    <div class="row ">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#oficios" role="tab" aria-controls="home" aria-selected="true">Servicios </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#entregables" role="tab" aria-controls="profile" aria-selected="false">Descarga de Entregables</a>
+                </li>
+            </ul>
+
+
+            <div class="tab-pane fade mt-2 ml-3 show active" id="oficios" role="tabpanel" aria-labelledby="home-tab">
+
+                <form method="get" id="getAnio" asp-page-handler="GetAnio">
+                    <div class="row col-lg-3">
+                        <label class="label">Consultar Información del Año: </label>
+                        <div class="input-group mb-3">
+                            <select class="form-control" id="anioActual" asp-for="Anio">
+                                <option value="">Seleccione el Año</option>
+                                @for (var i = 2022; i <= DateTime.Now.Year; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <div class="row">
+                                <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar Información</button>
                             </div>
                         </div>
-                        <a href="/financieros/@ds.Servicio.Abreviacion.ToLower()/@Model.Modulo.Id/detalle/@ds.Servicio.Id/@Model.Anio" class="small-box-footer">Ver detallles<i class="fas fa-arrow-circle-right ml-2"></i></a>
                     </div>
+                </form>
+            </div>
+
+            <div class="row col-lg-12">
+                <div class="row col-lg-12">
+                    @foreach (var ds in Model.Dashboard)
+                    {
+                        @if (ds.Facturas != null && ds.Facturas.Cargadas != 0)
+                        {
+                            <div class="col-lg-3 col-6 font-weight-bold">
+                                <div class="small-box @ds.Servicio.Fondo">
+                                    <div class="inner">
+                                        <b>@ds.Servicio.Nombre</b>
+                                        <h6 class="mt-2">@ds.Facturas.Cargadas - Facturas(s) Cargadas</h6>
+                                        <h6 class="mt-2">@ds.Facturas.Pendientes - Facturas(s) Pendientes de Pago</h6>
+                                        <div class="icon">
+                                            @Html.Raw(ds.Servicio.Icono)<br>
+                                        </div>
+                                    </div>
+                                    <a href="/financieros/@ds.Servicio.Abreviacion.ToLower()/@Model.Modulo.Id/detalle/@ds.Servicio.Id/@Model.Anio" class="small-box-footer">Ver detallles<i class="fas fa-arrow-circle-right ml-2"></i></a>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
-            }
-        }
+            </div>
+
+        </div>
     </div>
 </div>
 @section Scripts
 {
     <script>
-    $(function () {
-        $('.facturasServicio').knob({
-            max: $(this).data('maximo'),
-            format: function (value) {
-                return value.toFixed(2) + '%';
-            },
-            draw: function () {
-                $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
-            }
-        });
+        $(function () {
+            $('.facturasServicio').knob({
+                max: $(this).data('maximo'),
+                format: function (value) {
+                    return value.toFixed(2) + '%';
+                },
+                draw: function () {
+                    $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
+                }
+            });
 
-        $('.cedulasServicio').knob({
-            max: $(this).data('maximo'),
-            format: function (value) {
-                return value.toFixed(2) + '%';
-            },
-            draw: function () {
-                $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
-            }
+            $('.cedulasServicio').knob({
+                max: $(this).data('maximo'),
+                format: function (value) {
+                    return value.toFixed(2) + '%';
+                },
+                draw: function () {
+                    $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
+                }
+            });
+        })
+
+
+        /*Inicialización del Select2*/
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
         });
-    })
+        $("#downloadFiles").click(function () {
+            var dentregables = [];
+
+            var archivos = new Array();
+            var inmuebles = [];
+            var meses = [];
+
+            $('.selectEntregable').each(function () {
+                if ($(this).prop('checked') == true) {
+                    archivos.push($(this).data('id'));
+                }
+            });
+
+            for (var ms of $(".selectMes").val()) {
+                meses.push(parseInt(ms));
+            }
+
+            for (var ms of $(".selectInmueble").val()) {
+                inmuebles.push(parseInt(ms));
+            }
+
+            if (validaCampos()) {
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: 'Servicio de Mensajería Acelerada',
+                    html: "Obteniendo los entregables para su descarga, espere por favor."
+                });
+                Swal.showLoading();
+                $.ajax({
+                    url: '/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=DescargarEntregables',
+                    type: "post",
+                    contentType: 'application/json; charset=utf-8',
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    data: JSON.stringify({
+                        "Anio": parseInt(anio), "Meses": meses, "InmueblesId": inmuebles, "EntregablesId": archivos
+                    }),
+                    success: function (response) {
+                        console.log(response);
+                        const href = URL.createObjectURL(response);
+                        const link = document.createElement('a');
+                        link.href = href;
+                        link.setAttribute('download', 'Entregables_Mensajeria.zip');
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(href);
+                        Swal.fire({
+                            allowOutsideClick: false,
+                            icon: "info",
+                            title: 'Servicio de Mensajería Acelerada',
+                            html: "Se descargó el archivo con los entregables seleccionados.",
+                            confirmButtonText: 'Cerrar'
+                        });
+                    }
+                });
+            }
+
+        });
     </script>
 }

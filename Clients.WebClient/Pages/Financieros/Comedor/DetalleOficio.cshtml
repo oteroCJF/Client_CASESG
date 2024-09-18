@@ -1,10 +1,11 @@
-﻿@page "/financieros/agua/{moduloId}/detalle/{servicioId}/{anio}/oficio/{oficioId}"
-@model Clients.WebClient.Pages.Financieros.Agua.DetalleOficioModel
+﻿@page "/financieros/comedor/{moduloId}/detalle/{servicioId}/{anio}/oficio/{oficioId}"
+@model Clients.WebClient.Pages.Financieros.Comedor.DetalleOficioModel
 @{
     ViewData["Titulo"] = "Detalle del Oficio - " + Model.Oficio.NumeroOficio;
     ViewData["Title"] = "Detalle del Oficio";
     var f = 0;
 }
+
 
 <div class="container-fluid">
     <div class="card">
@@ -334,7 +335,7 @@
                 });
 
                 $.ajax({
-                    url: '/financieros/agua/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id +'?handler=CreateDTOficio',
+                    url: '/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id +'?handler=CreateDTOficio',
                     type: "post",
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(detalle),
@@ -362,7 +363,7 @@
                 var facturaId = $(this).data("facturaid");
                 var cedulaId = $(this).data("cedulaid");
                 var oficioId = $(this).data("oficioid");
-                axios.post('/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=DeleteDTOficio', {
+                axios.post('/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=DeleteDTOficio', {
                     FacturaId: parseInt(facturaId),
                     CedulaId: parseInt(cedulaId),
                     OficioId: parseInt(oficioId),
@@ -419,7 +420,7 @@
                                     html: "Enviando a <b>DGPPT</b> el oficio de pago, espere por favor."
                                 });
                                 Swal.showLoading();
-                                axios.post('/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=EDGPPTOficio', {
+                                axios.post('/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=EDGPPTOficio', {
                                     Id: parseInt(oficio.id),
                                     UsuarioId: usuario,
                                     ESucesivoId: parseInt($(this).data("estatusid")),
@@ -492,7 +493,7 @@
                                     html: "Pagando el oficio de pago, espere por favor."
                                 });
                                 Swal.showLoading();
-                                axios.post('/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=PagarOficio', {
+                                axios.post('/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=PagarOficio', {
                                     Id: parseInt(oficio.id),
                                     UsuarioId: usuario,
                                     FechaPago: fechaPago,
@@ -564,7 +565,7 @@
                                     html: "Enviando la solicitud de corrección del oficio de pago, espere por favor."
                                 });
                                 Swal.showLoading();
-                                axios.post('/financieros/fumigacion/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=CorregirOficio', {
+                                axios.post('/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + oficio.anio + '/oficio/' + oficio.id + '?handler=CorregirOficio', {
                                     Id: parseInt(oficio.id),
                                     UsuarioId: usuario,
                                     ESucesivoId: parseInt($(this).data("estatusid")),

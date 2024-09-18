@@ -167,10 +167,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -223,10 +227,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -279,10 +287,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -335,10 +347,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -391,10 +407,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -447,10 +467,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -503,10 +527,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -559,10 +587,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -615,10 +647,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -671,10 +707,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -727,10 +767,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -783,10 +827,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -839,10 +887,14 @@
           <DataField>Observaciones</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Indemnizacion">
+          <DataField>Indemnizacion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>GeneracionCedulas</rd:DataSetName>
-        <rd:SchemaPath>D:\Proyectos\Client CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\coterog\Documents\Proyectos GITHUB\Client CASESG GIT\Client_CASESG\Clients.WebClient\GeneracionCedulas.xsd</rd:SchemaPath>
         <rd:TableName>IncidenciasMensajeria</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -2588,7 +2640,10 @@
                   <Width>5.11639cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.11639cm</Width>
+                  <Width>3.45493cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.43133cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2691,6 +2746,43 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox54</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Indigo</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox112">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Tipo de Contenido</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox112</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -2810,12 +2902,46 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Indemnizacion">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Indemnizacion.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Indemnizacion</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -2839,7 +2965,7 @@
             <Top>16.33228cm</Top>
             <Left>1.73912cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.34917cm</Width>
+            <Width>17.11904cm</Width>
             <ZIndex>14</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -2928,7 +3054,10 @@
                   <Width>5.11639cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.11639cm</Width>
+                  <Width>3.42318cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.43133cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3031,6 +3160,57 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox54</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Indigo</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox114">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Tipo de Contenido</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox114</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -3150,12 +3330,46 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Indemnizacion1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Indemnizacion.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Indemnizacion1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -3179,7 +3393,7 @@
             <Top>19.01067cm</Top>
             <Left>1.77087cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.34917cm</Width>
+            <Width>17.08729cm</Width>
             <ZIndex>17</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>

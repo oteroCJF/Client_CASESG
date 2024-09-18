@@ -1,5 +1,5 @@
-﻿@page "/financieros/mensajeria/{moduloId}/detalle/{servicioId}/{anio}"
-@model Clients.WebClient.Pages.Financieros.Mensajeria.DetalleServicioModel
+﻿@page "/financieros/comedor/{moduloId}/detalle/{servicioId}/{anio}"
+@model Clients.WebClient.Pages.Financieros.Comedor.DetalleServicioModel
 @{
     ViewData["Titulo"] = "Detalle del Servicio - " + Model.Servicio.Nombre;
     ViewData["Title"] = "Detalle del Servicio - " + Model.Servicio.Nombre;
@@ -7,14 +7,14 @@
     var i = 0;
 }
 
+
+
+
 <div class="container-fluid">
     <div class="row col-lg-12">
         <div class="col-lg-12">
             <a href="#" type='button' class="btn btn-sm btn-primary float-right ml-2 btnOficio" data-toggle="tooltip" title="Nuevo Oficio" data-placement="top">
                 <i class="fal fa-plus"></i>
-            </a>
-            <a href="javascript:" type='button' class="btn btn-sm btn-primary float-right ml-2 btnReportePAT" data-toggle="tooltip" title="Reporte PAT" data-placement="top">
-                <i class="fal fa-file-pdf text-danger"></i>
             </a>
         </div>
     </div>
@@ -49,7 +49,7 @@
                                         <tr>
                                             <td>@of.Id</td>
                                             <td>@of.NumeroOficio</td>
-                                            <td class="@(of.Estatus.Fondo.Replace("bg","text")) font-weight-bold">@of.Estatus.Nombre</td>
+                                            <td>@of.Estatus.Nombre</td>
                                             <td>@Convert.ToDateTime(of.FechaTramitado).ToString("dd/MM/yyyy")</td>
                                             <td>
                                                 <a href="/financieros/@Model.Servicio.Abreviacion.ToLower()/@Model.Modulo.Id/detalle/@Model.Servicio.Id/@Model.Anio/oficio/@of.Id">
@@ -111,7 +111,7 @@
                                                                                      aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
                                                                                     <span class="font-weight-bold @(filas.Single(c => c.Mes.Equals(meses[m]) &&
                                                                                                                     c.Estatus.Equals(estatus[e])).Fondo.Contains("dark") ? "text-white":"")">
-                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje %
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -180,7 +180,7 @@
                                                                                      style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
                                                                                      aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
                                                                                     <span class="font-weight-bold">
-                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje %
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -249,7 +249,7 @@
                                                                                      style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
                                                                                      aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
                                                                                     <span class="font-weight-bold">
-                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje %
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -317,7 +317,7 @@
                                                                                      style="width: @(filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje)%"
                                                                                      aria-valuenow="52" aria-valuemin='0' aria-valuemax='100'>
                                                                                     <b class="text-center">
-                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje %
+                                                                                        Avance de @filas.Single(c => c.Mes.Equals(meses[m]) && c.Estatus.Equals(estatus[e])).Porcentaje.ToString("#.##") %
                                                                                     </b>
                                                                                 </div>
                                                                             </div>
@@ -345,42 +345,57 @@
                 <div class="tab-pane fade mt-2 ml-3" id="entregables" role="tabpanel" aria-labelledby="profile-tab">
                     <h4 class="mt-2">Descarga de Entregables</h4>
                     <div class="row col-lg-12 mt-2">
-
-                            <div class="form-group col-md-4" id="divInmueble">
-                                <label for="lblMes">Inmueble(s): </label>
-                                <select class="form-control select2bs4 selectInmueble" multiple="multiple">    
-                                    <option value="-1">Seleccione el inmueble</option>
-                                    <option value="0">Todos</option>
-                                    @foreach (var inm in Model.Inmuebles)
-                                    {
-                                        <option value="@inm.Id">@inm.Nombre</option>
-                                    }
-                                </select>
-                                <div class="col-sm-12" id="error_inmueble">
-                                    <small id="dateHelp" class="text-danger">
-                                        Seleccione el inmueble
-                                    </small>
-                                </div>
+                        <div class="form-group col-md-4" id="divInmueble">
+                            <label for="lblMes">Inmueble(s): </label>
+                            <select class="form-control select2bs4 selectInmueble" multiple="multiple">
+                                <option value="-1">Seleccione el inmueble</option>
+                                <option value="0">Todos</option>
+                                @foreach (var inm in Model.Inmuebles)
+                                {
+                                    <option value="@inm.Id">@inm.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_inmueble">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el inmueble
+                                </small>
                             </div>
-                            <div class="form-group col-md-2" id="divMes">
-                                <label for="lblMes">Mes(es): </label>
-                                <select class="form-control select2bs4 selectMes" multiple="multiple">
-                                    <option value="-1">Seleccione el mes</option>
-                                    <option value="0">Todos</option>
-                                    @foreach (var ms in Model.Meses)
-                                    {
-                                        <option value="@ms.Id">@ms.Nombre</option>
-                                    }
-                                </select>
-                                <div class="col-sm-12" id="error_mes">
-                                    <small id="dateHelp" class="text-danger">
-                                        Seleccione el mes
-                                    </small>
-                                </div>
+                        </div>
+                        <div class="form-group col-md-2" id="divMes">
+                            <label for="lblMes">Mes(es): </label>
+                            <select class="form-control select2bs4 selectMes" multiple="multiple">
+                                <option value="-1">Seleccione el mes</option>
+                                <option value="0">Todos</option>
+                                @foreach (var ms in Model.Meses)
+                                {
+                                    <option value="@ms.Id">@ms.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_mes">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el mes
+                                </small>
                             </div>
-                            <div class="input-form mt-4">
-                                <button class="btn btn-primary ml-2 mt-2" type="submit" id="downloadFiles"><i class="fas fa-download mr-2"></i>Descargar Entregable(s)</button>
+                        </div>
+                        <div class="form-group col-md-2" id="divMes">
+                            <label for="lblMes">Estatus: </label>
+                            <select class="form-control select2bs4 selectEstatus" multiple="multiple">
+                                <option value="">Seleccione un estatus</option>
+                                <option value="0">Todos</option>
+                                @foreach (var es in Model.CTEstatus)
+                                {
+                                    <option value="@es.Id">@es.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_estatus">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el estatus del entregable
+                                </small>
                             </div>
+                        </div>
+                        <div class="input-form mt-4">
+                            <button class="btn btn-primary ml-2 mt-2" type="submit" id="downloadFiles"><i class="fas fa-download mr-2"></i>Descargar Entregable(s)</button>
+                        </div>
                     </div>
                     <div class="row col-lg-12">
                         @foreach (var en in Model.CTEntregables)
@@ -388,13 +403,13 @@
                             <div class="form-group mr-3 ml-1" id="divEntregables">
                                 <div class="form-check-inline i-checks mt-3">
                                     <strong class="text-black mr-2">@en.Nombre</strong>
-                                    <input class="selectEntregable" name="listaEntregables[]" type="checkbox" data-toggle="toggle" 
+                                    <input class="selectEntregable" name="listaEntregables[]" type="checkbox" data-toggle="toggle"
                                            data-on="<i class='fa fa-check'></i>" data-off="<i class='fa fa-times'></i>"
                                            data-onstyle="success" data-offstyle="danger" data-id="@en.Id"
                                            data-abreviacion="@en.Abreviacion" data-style="ios" value="@en.Id">
                                 </div>
                             </div>
-                         }
+                        }
                     </div>
                 </div>
                 @* Fin de descarga de entregables*@
@@ -479,44 +494,6 @@
             const servicio = @Html.Raw(Json.Serialize(Model.Servicio));
             const modulo = @Html.Raw(Json.Serialize(Model.Modulo));
             const anio = @Html.Raw(Json.Serialize(Model.Anio));
-            const meses = @Html.Raw(Json.Serialize(Model.Meses));
-
-            $(".btnReportePAT").click(function () {
-                var listMes = new Array();
-
-                for (var i = 0; i < meses.length; i++) {
-                    listMes.push(meses[i].nombre);
-                }
-
-                console.log(listMes);
-
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Oficios de ' + servicio.descripcion,
-                    html: '<p style="text-align: justify">Por favor seleccione el mes del cual desea obtener el reporte.</p>',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonText: 'Generar',
-                    input: 'select',
-                    inputOptions: listMes,
-                    inputPlaceholder: 'Seleccione un mes',
-                    inputValidator: function (value) {
-                        return new Promise(function (resolve, reject) {
-                            if (value !== '') {
-                                resolve();
-                            } else {
-                                resolve('Debe seleccionar un mes');
-                            }
-                        });
-                    }
-                }).then(confirm => {
-                    if (confirm.isConfirmed) {
-                        window.open('/financieros/mensajeria/' + modulo + '/detalle/' + servicio.id + '/reporte/' + anio + '/' + (confirm.value+1), '_blank');
-                    }
-                });
-            });
 
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -613,7 +590,7 @@
                 });
                 Swal.showLoading();
                 if (validaCamposOficio()) {
-                    axios.post('/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=CreateOficio', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                    axios.post('/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=CreateOficio', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                         .then(response => {
                             console.log(response);
                             if (response.status == 200) {
@@ -628,7 +605,7 @@
                                         title: 'Oficios de ' + servicio.descripcion,
                                         html: "Redireccionando al detalle del oficio de pago, espere por favor."
                                     });
-                                    window.location.href = '/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '/oficio/' + response.data.id;
+                                    window.location.href = '/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '/oficio/' + response.data.id;
                                 });
                             } else {
                                 Swal.fire({
@@ -695,7 +672,7 @@
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Servicio de Mensajería Acelerada',
+                        title: 'Servicio de '+servicio.descripcion,
                         'text': 'El archivo que intentas adjuntar no es válido. Favor de solo seleccionar archivos "Excel"'
                     });
                     $(".custom-file-label").text("Seleccionar Archivo");
@@ -738,6 +715,7 @@
                 var archivos = new Array();
                 var inmuebles = $(".selectInmueble").val();
                 var meses = $(".selectMes").val();
+                var estatus = $(".selectEstatus").val();
 
                 $('.selectEntregable').each(function () {
                     if ($(this).prop('checked') == true) {
@@ -745,7 +723,7 @@
                     }
                 });
 
-                if (inmuebles.length != 0 && meses.length != 0 && archivos.length != 0)
+                if (inmuebles.length != 0 && meses.length != 0 && estatus.length != 0 && archivos.length != 0)
                 {
                     return true;
                 }
@@ -768,6 +746,24 @@
                     });
                 }
 
+                if (estatus.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) estatus de los cuales se descargarán los entregables.</p>'
+                    });
+                }
+
+                if (estatus.length == 0)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: '<p style="text-align: justify">Aún no selecciona el(los) estatus de los cuales se descargarán los entregables.</p>'
+                    });
+                }
+
                 if (archivos.length == 0)
                 {
                     Swal.fire({
@@ -786,6 +782,7 @@
                 var archivos = new Array();
                 var inmuebles = [];
                 var meses = [];
+                var estatus = [];
 
                 $('.selectEntregable').each(function () {
                     if ($(this).prop('checked') == true) {
@@ -803,30 +800,36 @@
                     inmuebles.push(parseInt(ms));
                 }
 
+                for (var ms of $(".selectEstatus").val())
+                {
+                    estatus.push(parseInt(ms));
+                }
+
                 if (validaCampos()) {
                     Swal.fire({
                         allowOutsideClick: false,
                         icon: "info",
-                        title: 'Servicio de Mensajería Acelerada',
+                        title: 'Servicio de '+servicio.descripcion,
                         html: "Obteniendo los entregables para su descarga, espere por favor."
                     });
                     Swal.showLoading();
                     $.ajax({
-                        url: '/financieros/mensajeria/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=DescargarEntregables',
+                        url: '/financieros/comedor/' + modulo.id + '/detalle/' + servicio.id + '/' + anio + '?Handler=DescargarEntregables',
                         type: "post",
                         contentType: 'application/json; charset=utf-8',
                         xhrFields: {
                             responseType: 'blob'
                         },
                         data: JSON.stringify({
-                            "Anio": parseInt(anio), "Meses": meses, "InmueblesId": inmuebles, "EntregablesId": archivos
+                            "Anio": parseInt(anio), "Meses": meses, "InmueblesId": inmuebles, "EntregablesId": archivos,
+                            "Estatus": estatus
                         }),
                         success: function (response) {
                             console.log(response);
                             const href = URL.createObjectURL(response);
                             const link = document.createElement('a');
                             link.href = href;
-                            link.setAttribute('download', 'Entregables_Mensajeria.zip');
+                            link.setAttribute('download', 'Entregables_comedor.zip');
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
@@ -834,7 +837,7 @@
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de Mensajería Acelerada',
+                                title: 'Servicio de '+servicio.descripcion,
                                 html: "Se descargó el archivo con los entregables seleccionados.",
                                 confirmButtonText: 'Cerrar'
                             });

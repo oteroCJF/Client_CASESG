@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Financieros\Comedor\" />
     <Folder Include="Proxies\" />
   </ItemGroup>
 

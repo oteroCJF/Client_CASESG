@@ -19,17 +19,18 @@ using Api.Gateway.WebClient.Proxy.Catalogos.CTServicios;
 using Api.Gateway.WebClient.Proxy.Dashboards;
 using Api.Gateway.WebClient.Proxy.Estatus;
 using Api.Gateway.WebClient.Proxy.Inmuebles;
-using Api.Gateway.WebClient.Proxy.Mensajeria.Oficios;
 using Api.Gateway.WebClient.Proxy.Meses;
 using Api.Gateway.WebClient.Proxy.Modulos;
 using Api.Gateway.WebClient.Proxy.Permisos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Api.Gateway.WebClient.Proxy.Agua.Contratos.Queries;
+using Api.Gateway.WebClient.Proxy.Agua.Contratos.Commands;
 using Api.Gateway.WebClient.Proxy.Agua.Entregables.Queries;
 using Api.Gateway.WebClient.Proxy.Agua.Entregables.Commands;
 using Api.Gateway.WebClient.Proxy.Agua.Oficios.Queries;
 using Api.Gateway.WebClient.Proxy.Agua.Oficios.Commands;
+
 
 
 namespace Clients.WebClient.Pages.Financieros.Agua
@@ -53,7 +54,8 @@ namespace Clients.WebClient.Pages.Financieros.Agua
         private readonly IQOficioAguaProxy _oficiosQueries;
         private readonly ICOficioAguaProxy _oficiosCommands;
 
-        private readonly IQContratoAguaProxy _contratos;
+        private readonly IQContratoAguaProxy _contratosQueries;
+        private readonly ICContratoAguaProxy _contratosCommands;
 
         public List<DetalleServicioDto> Detalle = new List<DetalleServicioDto>();
 
@@ -74,7 +76,7 @@ namespace Clients.WebClient.Pages.Financieros.Agua
 
         public DetalleServicioModel(ICTServicioProxy servicios, ICTEntregableProxy ctentregables, IEstatusEntregableProxy estatuse,
                                     IFDetalleServicioProxy detalle, IQEntregableAguaProxy entregablesQ, ICEntregableAguaProxy entregablesC, IInmuebleProxy inmuebles, IMesProxy meses,
-                                    IModuloProxy modulos, IPermisoProxy permisos, IQOficioAguaProxy oficiosQ, ICOficioAguaProxy oficiosC , IQContratoAguaProxy contratos)
+                                    IModuloProxy modulos, IPermisoProxy permisos, IQOficioAguaProxy oficiosQ, ICOficioAguaProxy oficiosC , IQContratoAguaProxy contratosQ, ICContratoAguaProxy contratosC)
         {
             _servicios = servicios;
             _ctentregables = ctentregables;
@@ -88,7 +90,8 @@ namespace Clients.WebClient.Pages.Financieros.Agua
             _permisos = permisos;
             _oficiosQueries = oficiosQ;
             _oficiosCommands = oficiosC;
-            _contratos = contratos;
+            _contratosQueries = contratosQ;
+            _contratosCommands = contratosC;
         }
 
         public async Task OnGet(int moduloId, int servicioId, int anio)
@@ -97,7 +100,7 @@ namespace Clients.WebClient.Pages.Financieros.Agua
             Modulo = await _modulos.GetModuloByIdAsync(moduloId);
             Permisos = (await _permisos.GetPermisosByUsuario(usuario)).Select(p => p.ModuloId).ToList();
             Modulos = (await _modulos.GetAllModulosAsync()).Where(m => Permisos.Contains(m.Id)).Select(m => m.ServicioId).ToList();
-            Contratos = await _contratos.GetAllAsync();
+            Contratos = await _contratosQueries.GetAllAsync();
             Servicio = await _servicios.GetServicioByIdAsync(servicioId);
             Anio = Anio == 0 ? DateTime.Now.Year : Anio;
             Oficios = await _oficiosQueries.GetOficiosByAnio(anio);

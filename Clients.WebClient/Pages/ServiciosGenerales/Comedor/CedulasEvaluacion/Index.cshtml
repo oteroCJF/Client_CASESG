@@ -66,7 +66,7 @@
                                     {
                                         <th>Factura</th>
                                         <th>Total NC</th>
-                                        <th>Total Deductivas</th>
+                                        <th>Total Deductivas sin IVA</th>
                                     }
                                     <th class="text-center">Requiere NC</th>
                                     <th>Validación</th>
@@ -149,6 +149,7 @@
                             Filtros de Búsqueda
                         </h3>
                     </div>
+
                     <div class="card-body" style="font-size: 14px;">
                         <div class="row col-lg-12 mt-2">
                             <div class="col-lg-12">
@@ -294,7 +295,7 @@
 
             var filtroMes = @Html.Raw(Json.Serialize(Model.FiltrosMes));
             var filtroInmuebles = @Html.Raw(Json.Serialize(FIAplicados));
-            var filtroEstatus= @Html.Raw(Json.Serialize(FEAplicados));
+            var filtroEstatus = @Html.Raw(Json.Serialize(FEAplicados));
 
             var estatus = [];
             var inmuebles = [];
@@ -337,8 +338,8 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: "Servicio de "+servicio.descripcion,
-                    html: "Obteniendo el listado de cédulas de <b>" +$(this).data('mes')+" - "+ $("#anioActual").val() + "</b>."
+                    title: "Servicio de " + servicio.descripcion,
+                    html: "Obteniendo el listado de cédulas de <b>" + $(this).data('mes') + " - " + $("#anioActual").val() + "</b>."
                 })
                 Swal.showLoading();
             });
@@ -377,7 +378,7 @@
                 }
             });
 
-             $(document).on("click", ".btnRevision", function () {
+            $(document).on("click", ".btnRevision", function () {
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
@@ -385,12 +386,12 @@
                     html: "Obteniendo el detalle de la cédula, espere por favor."
                 });
                 Swal.showLoading();
-                 window.location.href = "/comedor/@Model.Modulo.Id/@Model.Submodulo.Id/detalle/" + $(this).data('inmueble') + "/" + $(this).data('cedula') +
-                     "?Estatus=" + estatus + "&Inmueble=" + inmuebles+"&Mes="+mes;
+                window.location.href = "/comedor/@Model.Modulo.Id/@Model.Submodulo.Id/detalle/" + $(this).data('inmueble') + "/" + $(this).data('cedula') +
+                    "?Estatus=" + estatus + "&Inmueble=" + inmuebles + "&Mes=" + mes;
             });
 
             /******************** Filtros *******************/
-
+     
             $(".btnMes").click(function () {
                 if ($(".btnMes > i").hasClass("fas fa-plus")) {
                     $(".btnMes > i").removeClass("fas fa-plus");

@@ -18,21 +18,23 @@ using Api.Gateway.WebClient.Proxy.Catalogos.CTEntregables;
 using Api.Gateway.WebClient.Proxy.Catalogos.CTServicios;
 using Api.Gateway.WebClient.Proxy.Dashboards;
 using Api.Gateway.WebClient.Proxy.Estatus;
-using Api.Gateway.WebClient.Proxy.Fumigacion.Contratos;
-using Api.Gateway.WebClient.Proxy.Fumigacion.Entregables;
-using Api.Gateway.WebClient.Proxy.Fumigacion.Oficios;
+
+using Api.Gateway.WebClient.Proxy.Comedor.Contratos.Commands;
+using Api.Gateway.WebClient.Proxy.Comedor.Oficios;
+using Api.Gateway.WebClient.Proxy.Comedor.Oficios.Commands;
+
+using Api.Gateway.WebClient.Proxy.Comedor.Contratos.Queries;
+using Api.Gateway.WebClient.Proxy.Comedor.Entregables.Queries;
+using Api.Gateway.WebClient.Proxy.Comedor.Entregables.Commands;
+
 using Api.Gateway.WebClient.Proxy.Inmuebles;
-using Api.Gateway.WebClient.Proxy.Limpieza.Contratos;
-using Api.Gateway.WebClient.Proxy.Limpieza.Entregables;
-using Api.Gateway.WebClient.Proxy.Limpieza.Oficios;
-using Api.Gateway.WebClient.Proxy.Mensajeria.Oficios;
 using Api.Gateway.WebClient.Proxy.Meses;
 using Api.Gateway.WebClient.Proxy.Modulos;
 using Api.Gateway.WebClient.Proxy.Permisos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Clients.WebClient.Pages.Financieros.Limpieza
+namespace Clients.WebClient.Pages.Financieros.Comedor
 {
     public class DetalleServicioModel : PageModel
     {
@@ -40,16 +42,22 @@ namespace Clients.WebClient.Pages.Financieros.Limpieza
         private readonly ICTEntregableProxy _ctentregables;
         private readonly IEstatusEntregableProxy _estatuse;
         private readonly IFDetalleServicioProxy _detalle;
-        private readonly ILEntregableProxy _entregables;
+
+        private readonly ICEntregableComedorProxy _entregablesCommands;
+        private readonly IQEntregableComedorProxy _entregablesQueries;
+
         private readonly IInmuebleProxy _inmuebles;
         private readonly IMesProxy _meses;
         private readonly IModuloProxy _modulos;
         private readonly IPermisoProxy _permisos;
-        private readonly ILOficioProxy _oficios;
-        private readonly ILContratoProxy _contratos;
+
+        private readonly ICOficioProxy _oficiosCommands;
+
+        private readonly ICContratoComedorProxy _contratosCommands;
+        private readonly IQContratoComedorProxy _contratosQueries;
 
         public List<DetalleServicioDto> Detalle = new List<DetalleServicioDto>();
-        
+
         public List<ContratoDto> Contratos = new List<ContratoDto>();
         public CTServicioDto Servicio { get; set; } = new CTServicioDto();
         public List<InmuebleDto> Inmuebles { get; set; } = new List<InmuebleDto>();
@@ -65,21 +73,25 @@ namespace Clients.WebClient.Pages.Financieros.Limpieza
         public List<int?> Modulos { get; set; } = new List<int?>();
         public int Anio { get; set; }
 
-        public DetalleServicioModel(ICTServicioProxy servicios, ICTEntregableProxy ctentregables, IEstatusEntregableProxy estatuse, 
-                                    IFDetalleServicioProxy detalle, ILEntregableProxy entregables, IInmuebleProxy inmuebles, IMesProxy meses, 
-                                    IModuloProxy modulos, IPermisoProxy permisos, ILOficioProxy oficios, ILContratoProxy contratos)
+        public DetalleServicioModel(ICTServicioProxy servicios, ICTEntregableProxy ctentregables, IEstatusEntregableProxy estatuse,
+                                    IFDetalleServicioProxy detalle, ICEntregableComedorProxy entregablesC, IQEntregableComedorProxy entregablesQ, IInmuebleProxy inmuebles, IMesProxy meses,
+                                    IModuloProxy modulos, IPermisoProxy permisos, ICOficioProxy oficiosC,  ICContratoComedorProxy contratosC, IQContratoComedorProxy contratosQ)
         {
             _servicios = servicios;
             _ctentregables = ctentregables;
             _estatuse = estatuse;
             _detalle = detalle;
-            _entregables = entregables;
+            _entregablesQueries = entregablesQ;
+            _entregablesCommands = entregablesC;
             _inmuebles = inmuebles;
             _meses = meses;
             _modulos = modulos;
             _permisos = permisos;
-            _oficios = oficios;
-            _contratos = contratos;
+ 
+            _oficiosCommands = oficiosC;
+
+            _contratosQueries = contratosQ;
+            _contratosCommands = contratosC;
         }
 
         public async Task OnGet(int moduloId, int servicioId, int anio)
@@ -88,10 +100,10 @@ namespace Clients.WebClient.Pages.Financieros.Limpieza
             Modulo = await _modulos.GetModuloByIdAsync(moduloId);
             Permisos = (await _permisos.GetPermisosByUsuario(usuario)).Select(p => p.ModuloId).ToList();
             Modulos = (await _modulos.GetAllModulosAsync()).Where(m => Permisos.Contains(m.Id)).Select(m => m.ServicioId).ToList();
-            Contratos = await _contratos.GetAllAsync();
+            Contratos = await _contratosQueries.GetAllAsync();
             Servicio = await _servicios.GetServicioByIdAsync(servicioId);
-            Anio = anio;
-            Oficios = await _oficios.GetOficiosByAnio(anio);
+            Anio = Anio == 0 ? DateTime.Now.Year : Anio;
+            Oficios = await _oficiosCommands.GetOficiosByAnio(anio);
             Meses = await _meses.GetAllAsync();
             InmueblesServicio = (await _inmuebles.GetInmueblesByServicio(servicioId)).Select(iu => iu.InmuebleId).ToList();
             Inmuebles = (await _inmuebles.GetAllInmueblesAsync()).Where(i => InmueblesServicio.Contains(i.Id)).ToList();
@@ -102,15 +114,15 @@ namespace Clients.WebClient.Pages.Financieros.Limpieza
 
         public async Task<JsonResult> OnPostCreateOficio([FromForm] OficioCreateCommand oficio)
         {
-            var result = await _oficios.CreateOficio(oficio);
+            var result = await _oficiosCommands.CreateOficio(oficio);
             return new JsonResult(result);
         }
 
         public async Task<IActionResult> OnPostDescargarEntregables([FromBody] DEntregablesCommand descarga)
         {
-            var result = await _entregables.DescargarEntregables(descarga);
+            var result = await _entregablesCommands.DescargarEntregables(descarga);
             byte[] fileBytes = System.IO.File.ReadAllBytes(result);
-            string fileName = "Entregables_Limpieza" + DateTime.Now.ToString("dd-MM-yyyy") + ".zip";
+            string fileName = "Entregables_Comedor" + DateTime.Now.ToString("dd-MM-yyyy") + ".zip";
             return File(fileBytes, "application/zip", fileName);
         }
     }

@@ -994,7 +994,7 @@
                                 @if (tdeductivas != 0)
                                 {
                                     <tr class="font-weight-bold text-primary">
-                                        <td class="text-center">Subtototal de deductivas más el I.V.A.</td>
+                                        <td class="text-center">Subtototal de deductivas sin I.V.A.</td>
                                         <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tdeductivas)</td>
                                         <td></td>
                                         <td></td>
@@ -1034,7 +1034,7 @@
                                 @if (tpenalizacion != 0)
                                 {
                                     <tr class="font-weight-bold text-danger">
-                                        <td class="text-center">Subtototal de penalizaciones más el I.V.A.</td>
+                                        <td class="text-center">Subtototal de penalizaciones sin I.V.A.</td>
                                         <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tpenalizacion)</td>
                                         <td></td>
                                         <td></td>
@@ -3314,6 +3314,7 @@
                 formData.append("Id", $(this).data('id'));
                 formData.append("EstatusId", $(this).data('estatusid'));
                 formData.append("Observaciones", "Se valida el entregable por la DAS.");
+                formData.append("Estatus", "Autorizado");
                 formData.append("Validar", true);
                 formData.append("Validado", true);
 

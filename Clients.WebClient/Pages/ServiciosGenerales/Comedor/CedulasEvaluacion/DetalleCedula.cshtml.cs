@@ -701,7 +701,27 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
             return new JsonResult(fechaLimite);
         }
 
-        public async Task<JsonResult> OnPostAutorizarCAE([FromBody] CedulaComedorDto cedula)
+        //METODO ASINCRONO QUE CORROBORA QUE LA FECHA DE INCIDENCIA CORRESPONDA AL MES EVALUADO
+            ////public async Task<JsonResult> OnGetComparaFechaIncidenciaConMesEvaluado([FromBody] CedulaEvaluacionUpdateCommand cedula, string fechaLimite)
+            ////{
+
+            ////string[] nombresMeses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            ////              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+
+            ////var fechaLim = Convert.ToDateTime(fechaLimite);
+            ////var FechaCedula = cedula.Mes;
+            ////DateTime aux = new DateTime(1990,01,01);
+
+            ////if (nombresMeses[fechaLim.Month - 1] != FechaCedula)
+            ////{
+            ////    fechaLim = aux;
+
+            ////}
+
+
+
+            ////}
+            public async Task<JsonResult> OnPostAutorizarCAE([FromBody] CedulaComedorDto cedula)
         {
             List<EntregableDto> entregables = await _entregablesQuery.GetEntregablesByCedula(cedula.Id);
 

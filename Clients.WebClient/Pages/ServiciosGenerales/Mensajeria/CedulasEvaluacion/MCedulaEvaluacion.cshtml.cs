@@ -2,6 +2,7 @@ using Api.Gateway.Models.CedulasEvaluacion.ServiciosGenerales.DTOs.Mensajeria;
 using Api.Gateway.Models.Firmantes.DTOs;
 using Api.Gateway.Models.Incidencias.Mensajeria.DTOs;
 using Api.Gateway.Models.Repositorios.DTOs;
+using Api.Gateway.WebClient.Proxy.Catalogos.CTIndemnizaciones;
 using Api.Gateway.WebClient.Proxy.Mensajeria.CedulasEvaluacion.Queries;
 using Api.Gateway.WebClient.Proxy.Mensajeria.CFDIs.Queries;
 using Api.Gateway.WebClient.Proxy.Mensajeria.Firmantes.Queries;
@@ -27,15 +28,17 @@ namespace Clients.WebClient.Pages.Mensajeria.CedulasEvaluacion
         private readonly IQCFDIMensajeriaProxy _facturas;
         private readonly IQIncidenciaMensajeriaProxy _incidencias;
         private readonly IQFirmanteMensajeriaProxy _firmantes;
+        private readonly ICTIndemnizacionProxy _indemnizacion;
 
         public RepositorioDto Repositorio { get; set; }
         public CedulaMensajeriaDto Cedula { get; set; }
         public List<FirmanteDto> Firmantes { get; set; }
 
-        public MCedulaEvaluacionModel(IQCedulaMensajeriaProxy cedula, IQRepositorioMensajeriaProxy repositorios, IQCFDIMensajeriaProxy facturas,
+        public MCedulaEvaluacionModel(IQCedulaMensajeriaProxy cedula, IQRepositorioMensajeriaProxy repositorios, IQCFDIMensajeriaProxy facturas, ICTIndemnizacionProxy indemnizacion,
                                       IQIncidenciaMensajeriaProxy incidencias, IQFirmanteMensajeriaProxy firmantes)
         {
             _cedula = cedula;
+            _indemnizacion = indemnizacion;
             _repositorios = repositorios;
             _facturas = facturas;
             _incidencias = incidencias;
@@ -58,6 +61,7 @@ namespace Clients.WebClient.Pages.Mensajeria.CedulasEvaluacion
                 if (respuestas[i].ciMensajeria.Respuesta == respuestas[i].Respuesta)
                 {
                     incidencias = await _incidencias.GetIncidenciasByPreguntaAndCedula(Cedula.Id, respuestas[i].Pregunta);
+                    incidencias = await GetIndemnizaciones(incidencias);
 
                     local.SetParameters(new[] { new ReportParameter("pregunta" + respuestas[i].Pregunta, respuestas[i].cuestionario.Pregunta) });
 
@@ -118,6 +122,7 @@ namespace Clients.WebClient.Pages.Mensajeria.CedulasEvaluacion
         {
             DataTable dt = new DataTable();
 
+            dt.Columns.Add("Indemnizacion");
             dt.Columns.Add("Tipo");
             dt.Columns.Add("FechaProgramada");
             dt.Columns.Add("FechaEntrega");
@@ -135,6 +140,7 @@ namespace Clients.WebClient.Pages.Mensajeria.CedulasEvaluacion
             for (var i = 0; i < incidencias.Count(); i++)
             {
                 row = dt.NewRow();
+                row["Indemnizacion"] = incidencias[i].Indemnizacion.Nombre;
                 row["Tipo"] = incidencias[i].Incidencia.Valor;
                 row["FechaProgramada"] = Convert.ToDateTime(incidencias[i].FechaProgramada).ToString("dd/MM/yyyy");
                 row["FechaEntrega"] = Convert.ToDateTime(incidencias[i].FechaEntrega).ToString("dd/MM/yyyy");
@@ -148,6 +154,19 @@ namespace Clients.WebClient.Pages.Mensajeria.CedulasEvaluacion
                 dt.Rows.Add(row);
             }            
             return dt;
+        }
+
+        public async Task<List<MIncidenciaDto>> GetIndemnizaciones(List<MIncidenciaDto> incidencias)
+        {
+            for(int i=0; i < incidencias.Count(); i++)
+            {
+                if (incidencias[i].IndemnizacionId != 0)
+                {
+                    incidencias[i].Indemnizacion = await _indemnizacion.GetIndemnizacionById(incidencias[i].IndemnizacionId);
+                }
+            }
+
+            return incidencias;
         }
         
         public DataTable GeneraFirmantes(List<FirmanteDto> firmantes)
