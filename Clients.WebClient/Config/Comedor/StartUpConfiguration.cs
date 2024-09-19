@@ -28,6 +28,8 @@ using Api.Gateway.WebClient.Proxy.Comedor.ServiciosContrato.Commands;
 using Api.Gateway.WebClient.Proxy.Comedor.Repsuestas.Queries;
 using Api.Gateway.WebClient.Proxy.Comedor.Incidencias.Commands;
 using Api.Gateway.WebClient.Proxy.Comedor.Incidencias.Queries;
+using Api.Gateway.WebClient.Proxy.Comedor.Oficios.Commands;
+using Api.Gateway.WebClient.Proxy.Comedor.Oficios.Queries;
 
 namespace Clients.WebClient.Config.Comedor
 {
@@ -57,6 +59,7 @@ namespace Clients.WebClient.Config.Comedor
             service.AddHttpClient<IQLCedulaComedorProxy, QLCedulaComedorProxy>();
             service.AddHttpClient<IQLEntregableComedorProxy, QLEntregableComedorProxy>();
             service.AddHttpClient<IQFirmanteComedorProxy, QFirmanteComedorProxy>();
+            service.AddHttpClient<IQOficioComedorProxy, QOficioComedorProxy>();
 
             return service;
         }
@@ -79,6 +82,7 @@ namespace Clients.WebClient.Config.Comedor
             service.AddHttpClient<ICLCedulaComedorProxy, CLCedulaComedorProxy>();
             service.AddHttpClient<IQIncidenciaComedorProxy, QIncidenciaComedorProxy>();
             service.AddHttpClient<ICLEntregableComedorProxy, CLEntregableComedorProxy>();
+            service.AddHttpClient<ICOficioComedorProxy, COficioComedorProxy>();
 
             return service;
         }

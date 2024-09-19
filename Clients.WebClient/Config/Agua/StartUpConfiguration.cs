@@ -55,7 +55,7 @@ namespace Clients.WebClient.Config.Agua
             service.AddHttpClient<IQLCedulaAguaProxy, QLCedulaAguaProxy>();
             service.AddHttpClient<IQLEntregableAguaProxy, QLEntregableAguaProxy>();
             service.AddHttpClient<IQFirmanteAguaProxy, QFirmanteAguaProxy>();
-            service.AddHttpClient<IQOficioAguaProxy , QOficioAguaProxy>();
+            //service.AddHttpClient<IQOficioAguaProxy , QOficioAguaProxy>();
 
             return service;
         }
@@ -78,7 +78,7 @@ namespace Clients.WebClient.Config.Agua
             service.AddHttpClient<ICEContratoAguaProxy, CEContratoAguaProxy>();
             service.AddHttpClient<ICLCedulaAguaProxy, CLCedulaAguaProxy>();
             service.AddHttpClient<ICLEntregableAguaProxy, CLEntregableAguaProxy>();
-            service.AddHttpClient<ICOficioAguaProxy, COficioAguaProxy>();
+            //service.AddHttpClient<ICOficioAguaProxy, COficioAguaProxy>();
             return service;
         }
     }

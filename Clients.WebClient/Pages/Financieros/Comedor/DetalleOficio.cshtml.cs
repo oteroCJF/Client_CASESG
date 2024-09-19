@@ -27,7 +27,6 @@ using Api.Gateway.WebClient.Proxy.Modulos;
 using Api.Gateway.WebClient.Proxy.Permisos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ICOficioProxy = Api.Gateway.WebClient.Proxy.Comedor.Oficios.Commands.ICOficioProxy;
 
 namespace Clients.WebClient.Pages.Financieros.Comedor
 {
@@ -39,8 +38,8 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
         private readonly IMesProxy _meses;
         private readonly IModuloProxy _modulos;
         private readonly IPermisoProxy _permisos;
-        private readonly ICOficioProxy _oficiosCommands;
-        ////private readonly IQOficioProxy _oficiosQueries;
+        private readonly ICOficioComedorProxy _oficiosCommands;
+        private readonly IQOficioComedorProxy _oficiosQueries;
         private readonly ICCFDIComedorProxy _cfdis;
         private readonly IEstatusOficioProxy _flujo;
         private readonly IEstatusFacturaProxy _efacturas;
@@ -58,7 +57,7 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
         public int Anio { get; set; }
 
         public DetalleOficioModel(ICTServicioProxy servicios, IFDetalleServicioProxy detalle, IInmuebleProxy inmuebles, 
-                                  IMesProxy meses, IModuloProxy modulos, IPermisoProxy permisos, ICOficioProxy oficiosC, 
+                                  IMesProxy meses, IModuloProxy modulos, IPermisoProxy permisos, ICOficioComedorProxy oficiosC, IQOficioComedorProxy oficiosQueries,
                                   ICCFDIComedorProxy cfdis, IEstatusOficioProxy flujo, IEstatusFacturaProxy efacturas)
         {
             _servicios = servicios;
@@ -68,6 +67,7 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
             _modulos = modulos;
             _permisos = permisos;
             _oficiosCommands = oficiosC;
+            _oficiosQueries = oficiosQueries;
             _cfdis = cfdis;
             _flujo = flujo;
             _efacturas = efacturas;
@@ -81,8 +81,8 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
             Modulo = await _modulos.GetModuloByIdAsync(moduloId);
             Servicio = await _servicios.GetServicioByIdAsync(servicioId);
             Anio = Anio == 0 ? DateTime.Now.Year : Anio;
-            FacturasP = await _oficiosCommands.GetFacturasNCPendientes(oficioId);
-            Oficio = await _oficiosCommands.GetOficioById(oficioId);
+            FacturasP = await _oficiosQueries.GetFacturasNCPendientes(oficioId);
+            Oficio = await _oficiosQueries.GetOficioById(oficioId);
             Flujo = await _flujo.GetFlujoByOficio(servicioId, (int)Oficio.EstatusId);
         }
 
@@ -130,7 +130,7 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
 
         public async Task<int> GetFacturasNoPendientes(int oficio)
         {
-            var facturasP = (await _oficiosCommands.GetOficioById(oficio)).CFDIs;
+            var facturasP = (await _oficiosQueries.GetOficioById(oficio)).CFDIs;
             var estatus = (await _efacturas.GetAllEstatusFacturasAsync()).Single(ef => ef.Abreviacion.Equals("Pendiente")).Id;
             var facturasNP = facturasP.Where(p => p.EstatusId != estatus).ToList();
 

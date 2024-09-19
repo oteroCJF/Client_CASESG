@@ -33,6 +33,7 @@ using Api.Gateway.WebClient.Proxy.Modulos;
 using Api.Gateway.WebClient.Proxy.Permisos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Api.Gateway.WebClient.Proxy.Comedor.Oficios.Queries;
 
 namespace Clients.WebClient.Pages.Financieros.Comedor
 {
@@ -51,7 +52,8 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
         private readonly IModuloProxy _modulos;
         private readonly IPermisoProxy _permisos;
 
-        private readonly ICOficioProxy _oficiosCommands;
+        private readonly ICOficioComedorProxy _oficiosCommands;
+        private readonly IQOficioComedorProxy _oficiosQueries;
 
         private readonly ICContratoComedorProxy _contratosCommands;
         private readonly IQContratoComedorProxy _contratosQueries;
@@ -75,7 +77,8 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
 
         public DetalleServicioModel(ICTServicioProxy servicios, ICTEntregableProxy ctentregables, IEstatusEntregableProxy estatuse,
                                     IFDetalleServicioProxy detalle, ICEntregableComedorProxy entregablesC, IQEntregableComedorProxy entregablesQ, IInmuebleProxy inmuebles, IMesProxy meses,
-                                    IModuloProxy modulos, IPermisoProxy permisos, ICOficioProxy oficiosC,  ICContratoComedorProxy contratosC, IQContratoComedorProxy contratosQ)
+                                    IModuloProxy modulos, IPermisoProxy permisos, ICOficioComedorProxy oficiosC,  ICContratoComedorProxy contratosC, IQContratoComedorProxy contratosQ,
+                                    IQOficioComedorProxy oficiosQueries)
         {
             _servicios = servicios;
             _ctentregables = ctentregables;
@@ -84,6 +87,7 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
             _entregablesQueries = entregablesQ;
             _entregablesCommands = entregablesC;
             _inmuebles = inmuebles;
+            _oficiosQueries = oficiosQueries;
             _meses = meses;
             _modulos = modulos;
             _permisos = permisos;
@@ -103,7 +107,7 @@ namespace Clients.WebClient.Pages.Financieros.Comedor
             Contratos = await _contratosQueries.GetAllAsync();
             Servicio = await _servicios.GetServicioByIdAsync(servicioId);
             Anio = Anio == 0 ? DateTime.Now.Year : Anio;
-            Oficios = await _oficiosCommands.GetOficiosByAnio(anio);
+            Oficios = await _oficiosQueries.GetOficiosByAnio(anio);
             Meses = await _meses.GetAllAsync();
             InmueblesServicio = (await _inmuebles.GetInmueblesByServicio(servicioId)).Select(iu => iu.InmuebleId).ToList();
             Inmuebles = (await _inmuebles.GetAllInmueblesAsync()).Where(i => InmueblesServicio.Contains(i.Id)).ToList();
