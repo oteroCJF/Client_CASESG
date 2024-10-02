@@ -25,37 +25,37 @@
 </div>
 
 <div class="row">
-    <div class="row col-lg-12">
-        @foreach (var ds in Model.Dashboard)
-        {
-            @if (ds.DServicio.Cedulas.Count() > 0)
+        <div class="row col-lg-12">
+            @foreach (var ds in Model.Dashboard)
             {
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Servicio de @ds.DServicio.Servicio.Nombre</h5>
-                        </div>
-                        <div class="card-body">
-                            @if (ds.DServicio.Cedulas.Count() > 0)
-                            {
-                                <h6>Dashboard de servicios</h6>
-                                <div class="row col">
-                                    @foreach (var cd in ds.DServicio.Cedulas)
-                                    {
-                                        <div class="col-6 col-md-3 text-center">
-                                            <input type="text" class="knob" value="@cd.PorcentajeAvance" data-width="90" data-height="90"
-                                                   data-fgColor="@cd.FondoH">
-                                            <div class="knob-label @cd.Fondo.Replace("bg","text") font-weight-bold">@cd.Estatus - @cd.Total cédula(s)</div>
-                                        </div>
-                                    }
-                                </div>
-                            }
+                @if (ds.DServicio.Cedulas.Count() > 0)
+                {
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Servicio de @ds.DServicio.Servicio.Nombre</h5>
+                            </div>
+                            <div class="card-body">
+                                @if (ds.DServicio.Cedulas.Count() > 0)
+                                {
+                                    <h6>Dashboard de servicios</h6>
+                                    <div class="row col">
+                                        @foreach (var cd in ds.DServicio.Cedulas)
+                                        {
+                                            <div class="col-6 col-md-3 text-center">
+                                                <input type="text" class="knob" value="@cd.PorcentajeAvance" data-width="90" data-height="90"
+                                                       data-fgColor="@cd.FondoH">
+                                                <div class="knob-label @cd.Fondo.Replace("bg","text") font-weight-bold">@cd.Estatus - @cd.Total cédula(s)</div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-        }
-    </div>
+        </div>
 </div>
 
 @section Scripts

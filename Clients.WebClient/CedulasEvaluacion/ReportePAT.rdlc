@@ -603,7 +603,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -689,7 +688,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Lic. Anabel Bernal Castillo</Value>
+                    <Value>Ing. Arq. Laura Ivonne Arellano Sandoval</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -702,7 +701,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Jefe de Departamento</Value>
+                    <Value>Jefa de Departamento</Value>
                     <Style>
                       <FontSize>9pt</FontSize>
                     </Style>
@@ -717,88 +716,8 @@
             <Top>1.87133cm</Top>
             <Left>4.48285cm</Left>
             <Height>1.04473cm</Height>
-            <Width>5.62214cm</Width>
+            <Width>7.06147cm</Width>
             <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox81">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value />
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value />
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>____________________________</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Lic. Edgar Alfonso Alvarádo Pineda</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Jefe de Departamento</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox79</rd:DefaultName>
-            <Top>1.87133cm</Top>
-            <Left>10.2461cm</Left>
-            <Height>1.04473cm</Height>
-            <Width>5.62214cm</Width>
-            <ZIndex>2</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -875,10 +794,10 @@
             </Paragraphs>
             <rd:DefaultName>Textbox79</rd:DefaultName>
             <Top>3.57272cm</Top>
-            <Left>7.02476cm</Left>
+            <Left>4.42704cm</Left>
             <Height>0.98961cm</Height>
             <Width>7.11728cm</Width>
-            <ZIndex>3</ZIndex>
+            <ZIndex>2</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -954,11 +873,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox79</rd:DefaultName>
-            <Top>3.608cm</Top>
-            <Left>14.28315cm</Left>
+            <Top>3.57272cm</Top>
+            <Left>16.04463cm</Left>
             <Height>0.98961cm</Height>
             <Width>5.62214cm</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -993,7 +912,7 @@
             <Left>7.58777cm</Left>
             <Height>0.50815cm</Height>
             <Width>12.05146cm</Width>
-            <ZIndex>5</ZIndex>
+            <ZIndex>4</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1028,7 +947,7 @@
             <Left>7.58777cm</Left>
             <Height>0.63677cm</Height>
             <Width>12.05146cm</Width>
-            <ZIndex>6</ZIndex>
+            <ZIndex>5</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1109,7 +1028,7 @@
             <Left>16.04463cm</Left>
             <Height>1.04473cm</Height>
             <Width>5.62214cm</Width>
-            <ZIndex>7</ZIndex>
+            <ZIndex>6</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>

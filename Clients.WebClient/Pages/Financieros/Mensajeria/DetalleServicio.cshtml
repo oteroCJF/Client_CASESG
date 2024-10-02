@@ -480,7 +480,7 @@
             const modulo = @Html.Raw(Json.Serialize(Model.Modulo));
             const anio = @Html.Raw(Json.Serialize(Model.Anio));
             const meses = @Html.Raw(Json.Serialize(Model.Meses));
-
+            
             $(".btnReportePAT").click(function () {
                 var listMes = new Array();
 
@@ -513,7 +513,7 @@
                     }
                 }).then(confirm => {
                     if (confirm.isConfirmed) {
-                        window.open('/financieros/mensajeria/' + modulo + '/detalle/' + servicio.id + '/reporte/' + anio + '/' + (confirm.value+1), '_blank');
+                        window.open('/financieros/mensajeria/' + modulo + '/detalle/' + servicio.id + '/reporte/' + anio + '/' + confirm.value, '_blank');
                     }
                 });
             });
