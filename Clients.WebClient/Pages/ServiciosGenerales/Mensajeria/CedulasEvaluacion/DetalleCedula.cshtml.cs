@@ -479,7 +479,7 @@ namespace Clients.WebClient.Pages.Mensajeria.CedulasEvaluacion
             if(Firmantes != null)
             {
                 reviso = Firmantes.Single(f => f.Tipo.Equals("Reviso")).Usuario.NombreEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Reviso")).Usuario.PaternoEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Reviso")).Usuario.MaternoEmp;
-                superviso = Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.NombreEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Reviso")).Usuario.PaternoEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Reviso")).Usuario.MaternoEmp;
+                superviso = Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.NombreEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.PaternoEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.MaternoEmp;
             }
             Document document = new Document();
             var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción 2022 Mensajeria.docx";
