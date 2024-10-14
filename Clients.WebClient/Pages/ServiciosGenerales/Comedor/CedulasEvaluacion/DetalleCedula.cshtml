@@ -235,6 +235,8 @@
                             <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
                             <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
                             <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
+
+
                             @if (Model.Cedula.Servicio != null && !Model.Cedula.Servicio.Equals(""))
                             {
                                 <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Tipo de Servicio: </strong>@Model.Cedula.Servicio.Nombre</td>
@@ -369,6 +371,7 @@
                                                                                        data-abreviacion="@rs.cuestionario.Abreviacion"
                                                                                        data-titulo="@Model.CTIncidencias.Single(i => i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
                                                                                        data-respuesta="@rs.Respuesta"
+                                                                                       data-mesCedula ="@Model.Cedula.Mes.Nombre"
                                                                                        data-ayuda="@rs.ciComedor.Ayuda"
                                                                                        data-incidenciaid="@Model.CTIncidencias.Single(i => i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
                                                                                        data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
@@ -1219,15 +1222,29 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-joke">
-                <h4 class="modal-title text-white">Registrar Incidencia</h4>
+               <h4 class="modal-title text-white titleAddI"></h4>
+               <h3 class="modal-title text-white titleAddII"></h3>
+                @* <h4 class="modal-title text-white">Registrar Incidencia</h4>*@
                 <button type="button" class="close close-incidencias text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <div align="right">
+                     <style>
+                        h4 {
+                            color: red; /* Cambia el color a azul */
+                        }
+            </style>
+                    <h4>  <b>Mes Evaluado: @Model.Cedula.Mes.Nombre </b> </h4> 
+                </div>
+              
+
                 <div class="row">
                     <div class="col-lg-12">
+
                         <div class="form-row">
+
                             <input type="hidden" id="campoIdIncidencia" />
                             <input type="hidden" id="campoIncidenciaId" />
                             <input type="hidden" id="campoPregunta" />
@@ -1251,9 +1268,10 @@
                             <div class="form-group col-md-3" id="divFechaIncidencia">
                                 <label for="fechaIncidencia">Fecha Incidencia: </label>
                                 <input type="date" class="form-control" id="campoFechaIncidencia" name="fechaIncidencia">
-                                <div class="col-sm-12" id="error_campoFechaIncidencia">
+@*                                 <small class="text-danger"><strong> ⚠️ DEBE CORRESPONDER AL MES EVALUADO</strong></small>
+ *@                                <div class="col-sm-12" id="error_campoFechaIncidencia">
                                     <small id="dateHelp" class="text-danger">
-                                        Capture la fecha incidencia
+                                        Capture la fecha de incidencia
                                     </small>
                                 </div>
                             </div>
@@ -1280,7 +1298,7 @@
                                 <input type="date" class="form-control" id="campoFechaRealizada" name="fechaRealizada">
                                 <div class="col-sm-12" id="error_campoFechaRealizada">
                                     <small id="dateHelp" class="text-danger">
-                                        Capture la fecha programada
+                                        Capture la fecha realizada
                                     </small>
                                 </div>
                             </div>
@@ -1926,8 +1944,12 @@
                         html: 'Por favor seleccione una respuesta antes de capturar incidencias u observaciones.'
                     });
                 }
+
                 else {
-                    $(".titleAddI").text("Registrar Incidencia - " + $(this).data("titulo"));
+
+                    $(".titleAddI").text("Registrar Incidencia - "+$(this).data("titulo"));
+                    // $(".titleAddII").text("Mes Evaluado: - " + $(this).data("mes"));
+
                     ocultaCamposIncidencia();
                     muestraCamposIncidencia($(this).data("preguntaid"), $(this).data("abreviacion"));
                     $(".btnAyudaI").attr('data-ayuda', $(this).data('ayuda'));
@@ -2313,7 +2335,10 @@
             function validaCamposByPregunta(pregunta) {
                 var denegate = false;
                 for (var i = 0; i < configuracion.length; i++) {
+                  
+                    
                     if (configuracion[i].pregunta == pregunta && configuracion[i].obligatorio) {
+
                         if (configuracion[i].observaciones) {
                             if ($("#campoObservaciones").val() == "") {
                                 denegate = true;
@@ -2321,6 +2346,7 @@
                                 Swal.fire({
                                     'icon': 'error',
                                     'title': servicio.descripcion,
+                                       'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
                                     'html': "No se han capturado las <b>Observaciones</b>."
                                 }).then(function () {
                                     return false;
@@ -2425,16 +2451,20 @@
                                             return false;
                                         });
                                     }
-                                    else if ($("#campoFechaEntrega").val() < $("#campoFechaProgramada").val()) {
-                                        denegate = true;
-                                        Swal.fire({
-                                            'icon': 'error',
-                                            'title': servicio.descripcion,
-                                            'html': "La <b>Fecha de Entrega</b> debe ser mayor a la <b>Fecha Programada</b>."
-                                        }).then(function () {
-                                            return false;
-                                        });
-                                    }
+                                //CAMBIOS OCTUBRE 2024
+                              //**************** SE DESHABILITARON LAS VALIDACIONES PARA LA FECHA PROGRAMADA Y FECHA DE ENTREGA PARA EL CASO DE 1950 *********************/
+
+                                    // else if ($("#campoFechaEntrega").val() < $("#campoFechaProgramada").val()) {
+                                    //     denegate = true;
+                                    //     Swal.fire({
+                                    //         'icon': 'error',
+                                    //         'title': servicio.descripcion,
+                                    //         'html': "La <b>Fecha de Entrega</b> debe ser mayor a la <b>Fecha Programada</b>."
+                                    //     }).then(function () {
+                                    //         return false;
+                                    //     });
+                                    // }
+
                                     else if ($("#campoHoraReal").val() <= $("#campoHoraInicio").val()) {
                                         denegate = true;
                                         Swal.fire({
@@ -2446,17 +2476,21 @@
                                         });
                                     }
                                 } else {
-                                    denegate = true;
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        'title': servicio.descripcion,
-                                        'html': "La <b>Fecha de Entrega</b> debe ser mayor a la <b>Fecha Programada</b>."
-                                    }).then(function () {
-                                        return false;
-                                    });
+
+                             //**************** SE DESHABILITARON LAS VALIDACIONES PARA LA FECHA PROGRAMADA Y FECHA DE ENTREGA PARA EL CASO DE 1950 *********************/
+
+                                    // denegate = true;
+                                    // Swal.fire({
+                                    //     'icon': 'error',
+                                    //     'title': servicio.descripcion,
+                                    //     'html': "La <b>Fecha de Entrega</b> debe ser mayor a la <b>Fecha Programada</b>."
+                                    // }).then(function () {
+                                    //     return false;
+                                    // });
                                 }
                             }
                         }
+
 
                         if (configuracion[i].horaInicio) {
                             if ($("#campoHoraInicio").val() == "") {
@@ -2471,6 +2505,7 @@
                                 });
                             }
                         }
+
 
                         if (configuracion[i].horaReal) {
                             if ($("#campoHoraReal").val() == "") {
@@ -2506,6 +2541,7 @@
                                 Swal.fire({
                                     'icon': 'error',
                                     'title': servicio.descripcion,
+                                     'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
                                     'html': "No se han capturado las <b>Cantidad</b>."
                                 }).then(function () {
                                     return false;
@@ -2513,6 +2549,7 @@
                             }
                         }
 
+           //SE AGREGA METODO PARA EVALUAR QUE LA INCIDENCIA CORRESPONDA AL MES EVALUADO
                         if (configuracion[i].fechaIncidencia) {
                             if ($("#campoFechaIncidencia").val() == "") {
                                 denegate = true;
@@ -2520,12 +2557,52 @@
                                 Swal.fire({
                                     'icon': 'error',
                                     'title': servicio.descripcion,
+                                     'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
                                     'html': "No ha capturado la <b>Fecha de la Incidencia/Cierre</b>."
                                 }).then(function () {
                                     return false;
                                 });
+
                             }
                         }
+
+                        if (configuracion[i].fechaIncidencia) {
+                            if ($("#campoFechaIncidencia").val() != "") {
+
+                                const Incidencia = new Date($("#campoFechaIncidencia").val());
+                                const mes = Incidencia.getMonth() + 1;
+                                const dia = Incidencia.getDay() + 1;
+
+                                if (mes != @Model.Cedula.Mes.Id) {
+                                    denegate = true;
+                                    $("#error_campoFechaIncidencia").css("display", "block");
+                                    Swal.fire({
+                                        'icon': 'error',
+                                        'title': servicio.descripcion,
+                                           'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
+
+                                        'html': "<b>El mes de la incidencia no corresponde a @Model.Cedula.Mes.Nombre . </b>"
+ 
+                                    }).then(function () {
+                                        return false;
+                                    });
+                                                     }
+
+                                if(dia == 6 || dia == 7){
+                                    denegate = true;
+                                    $("#error_campoFechaIncidencia").css("display", "block");
+                                    Swal.fire({
+                                        'icon': 'error',
+                                        'title': servicio.descripcion,
+                                         'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
+                                        'html': "<b> No se pueden registrar incidencias en sábado o domingo. </b>"
+                                    }).then(function () {
+                                        return false;
+                                    });
+
+                                }
+                            }
+                        } 
 
                         if (configuracion[i].fechaProgramada) {
                             if ($("#campoFechaProgramada").val() == "") {
@@ -2556,6 +2633,21 @@
                                 }
                             }
                         }
+
+                         if (configuracion[i].ponderacion) {
+                            if ($("#campoPonderacion").val() == null) {
+                                denegate = true;
+                                $("#error_campoPonderacion").css("display", "block");
+                                Swal.fire({
+                                    'icon': 'error',
+                                    'title': servicio.descripcion,
+                                    'html': "No ha capturado el <b>Perfil</b>."
+                                }).then(function () {
+                                    return false;
+                                });
+                            }
+                        }
+
 
                         if (configuracion[i].fechaAcordadaAdmin) {
                             if ($("#campoFechaAcordadaAdmin").val() == "") {
