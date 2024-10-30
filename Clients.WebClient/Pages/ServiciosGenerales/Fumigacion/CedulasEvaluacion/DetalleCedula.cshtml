@@ -22,8 +22,8 @@
                 <i class="fal fa-arrow-left"></i>
             </a>
             @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-          @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-          @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+         @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") || 
+         @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
             {
                 <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
                    title="Solicitar rechazo de la cédula" data-placement="top">
@@ -3137,12 +3137,13 @@
                                 });
                                 Swal.showLoading();
                                 axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
-                                    Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Observaciones: coments.value,
+                                    Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario,
+
                                     EFacturaId: parseInt($(this).data('efacturaid')),
                                     //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR
-                                    ENotaCreditoId: parseInt($(this).data('enotaid')),
+                                   /* ENotaCreditoId: parseInt($(this).data('enotaid')),*/
                                     RepositorioId: parseInt(facturacion.id),
-                                    UsuarioId: usuario,
+                                    Observaciones: coments.value,
                                     Elimina: true,
                                     Flujo: supervision
                                 }).then(response => {

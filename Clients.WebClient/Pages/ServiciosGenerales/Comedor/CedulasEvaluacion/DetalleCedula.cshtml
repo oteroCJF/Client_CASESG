@@ -1231,12 +1231,12 @@
             </div>
             <div class="modal-body">
                 <div align="right">
-                     <style>
-                        h4 {
+                     @*<style>
+                        h5 {
                             color: red; /* Cambia el color a azul */
                         }
-            </style>
-                    <h4>  <b>Mes Evaluado: @Model.Cedula.Mes.Nombre </b> </h4> 
+            </style>*@
+                    <h5>  <b>Mes Evaluado: @Model.Cedula.Mes.Nombre </b> </h5> 
                 </div>
               
 
@@ -2567,7 +2567,9 @@
                         }
 
                         if (configuracion[i].fechaIncidencia) {
-                            if ($("#campoFechaIncidencia").val() != "") {
+                            var pregunta = $("#campoPreguntaId").val();
+
+                            if ($("#campoFechaIncidencia").val() != "" && pregunta != 24) {
 
                                 const Incidencia = new Date($("#campoFechaIncidencia").val());
                                 const mes = Incidencia.getMonth() + 1;
@@ -2581,7 +2583,7 @@
                                         'title': servicio.descripcion,
                                            'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
 
-                                        'html': "<b>El mes de la incidencia no corresponde a @Model.Cedula.Mes.Nombre . </b>"
+                                        'html': "<b>El mes de la incidencia no corresponde a @Model.Cedula.Mes.Nombre </b>"
  
                                     }).then(function () {
                                         return false;
@@ -3808,6 +3810,7 @@
                                 });
                                 Swal.showLoading();
                                 axios.put('/comedor/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
+
                                     Id: parseInt(cedula.id),
                                     EstatusId: $(this).data("estatusid"),
                                     Observaciones: coments.value,
