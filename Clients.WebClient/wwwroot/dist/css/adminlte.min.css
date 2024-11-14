@@ -7015,6 +7015,10 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     background-color: #5c3eca !important
 }
 
+.bg-jokeAviso {
+    background-color: #dc3545 !important
+}
+
 .bg-transporte {
     background-color: #BB6C2B !important;
     color: #ffffff !important;

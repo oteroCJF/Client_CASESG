@@ -21,11 +21,11 @@
         <a href="/mensajeria/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar" data-toggle="tooltip" title="Regresar" data-placement="top">
             <i class="fal fa-arrow-left"></i>
         </a>
-        @if(@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-            @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-            @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+        @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+           @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+           @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
         {
-            <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip" 
+            <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
                title="Solicitar rechazo de la cédula" data-placement="top">
                 <i class="fal fa-times-circle"></i>
             </a>
@@ -150,13 +150,13 @@
                                         <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)</td>
                                         <td>@fac.FechaCreacion.ToString("dd/MMMM/yyyy", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))</td>
                                         <td class="text-center">
-                                            <a href="#" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id"  data-toggle="tooltip" title="Mostrar/Ocultar el detalle de la factura" data-placement="top">
+                                            <a href="#" class="viewConceptosF" id="viewConceptos_@fac.Id" data-factura="@fac.Id" data-toggle="tooltip" title="Mostrar/Ocultar el detalle de la factura" data-placement="top">
                                                 <i class="fas fa-eye text-success mr-2"></i>
                                             </a>
                                             <a href="javascript:" class="verFactura" data-tipo="@fac.Tipo" data-archivo="@fac.ArchivoPDF"
-                                               data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)" 
+                                               data-folio="@(fac.Serie+fac.Folio)" data-subtotal="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Subtotal)"
                                                data-total="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.Total)"
-                                               data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)"  
+                                               data-iva="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", fac.IVA)"
                                                data-toggle="tooltip" title="Ver y descargar el PDF" data-placement="top">
                                                 <i class='fa-solid fa-file-pdf text-danger'></i>
                                             </a>
@@ -270,7 +270,7 @@
                                                 @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                  Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                     {
                                                         <div class="row col-lg-6 mt-2">
                                                             <div class="icheck-success d-inline">
@@ -315,7 +315,7 @@
                                                 @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                  Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                     {
                                                         @if (rs.cuestionario.Incidencias && rs.ciMensajeria.Obligatorio && !rs.Detalles.Equals("N/A"))
                                                         {
@@ -371,7 +371,7 @@
                                                                 {
                                                                     <th>Fecha de entrega</th>
                                                                 }
-                                                               
+
                                                                 @if (@rs.ciMensajeria.NumeroGuia)
                                                                 {
                                                                     <th>Número de guía</th>
@@ -423,13 +423,13 @@
                                                                 }
 
                                                                 @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                             !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
                                                                     <th>Monto Penalizacion</th>
                                                                 }
 
                                                                 @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                              Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                             Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
                                                                     <th>Acciones</th>
                                                                 }
@@ -466,7 +466,7 @@
                                                                     {
                                                                         <td>@inc.Acuse</td>
                                                                     }
-                                                                    
+
                                                                     @if (@rs.ciMensajeria.Sobrepeso)
                                                                     {
                                                                         <td>@inc.Sobrepeso</td>
@@ -476,7 +476,7 @@
                                                                     {
                                                                         <td>@inc.TipoServicio</td>
                                                                     }
-                                                                    
+
                                                                     @if (@rs.ciMensajeria.TipoIndemnizacion)
                                                                     {
                                                                         <td>@inc.Indemnizacion.Nombre</td>
@@ -507,7 +507,7 @@
                                                                             </a> @inc.Escrito
                                                                         </td>
                                                                     }
-                                                                    
+
                                                                     @if (@rs.ciMensajeria.Comprobante)
                                                                     {
                                                                         <td>
@@ -526,13 +526,13 @@
                                                                     }
 
                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                   !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                     {
                                                                         <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
                                                                     }
 
                                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                  Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                     {
                                                                         <td>
                                                                             <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
@@ -552,7 +552,7 @@
                                                             }
                                                         </tbody>
                                                         @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                 !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                         {
                                                             <tfoot>
                                                                 <tr>
@@ -581,7 +581,7 @@
                                                                     {
                                                                         <td></td>
                                                                     }
-                                                                    
+
                                                                     @if (@rs.ciMensajeria.Sobrepeso)
                                                                     {
                                                                         <td></td>
@@ -591,7 +591,7 @@
                                                                     {
                                                                         <td></td>
                                                                     }
-                                                                    
+
                                                                     @if (@rs.ciMensajeria.TipoIndemnizacion)
                                                                     {
                                                                         <td></td>
@@ -695,7 +695,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                    (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                   (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -708,7 +708,7 @@
                                         {
 
                                             @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 && (fe != null ? fe.Autorizar : false)
-                                         && !en.estatus.Nombre.Equals("Autorizado"))
+                                        && !en.estatus.Nombre.Equals("Autorizado"))
                                             {
                                                 <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar @en.tipoEntregable.Nombre"
                                                    data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -717,7 +717,7 @@
                                             }
 
                                             @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                         && !en.estatus.Nombre.Equals("Rechazado"))
+                                        && !en.estatus.Nombre.Equals("Rechazado"))
                                             {
                                                 <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar @en.tipoEntregable.Nombre"
                                                    data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -727,7 +727,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                           (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                          (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
@@ -735,8 +735,8 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                            (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || 
-                                             Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                           (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") ||
+                                            Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -744,8 +744,8 @@
                                             </a>
                                         }
 
-                                        @if ((fe != null ? fe.Validar:false) && 
-                                            en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
+                                        @if ((fe != null ? fe.Validar : false) &&
+                                           en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -761,7 +761,7 @@
                 </div>
                 <div class="card-footer">
                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                 Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                     {
                         <a href="javascript:" class="btn btn-sm btn-primary guardarCedula float-right">
                             Guardar Respuestas
@@ -994,7 +994,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @{  lc = 0;}
+                            @{ lc = 0;}
                             @foreach (var lg in Model.Cedula.logsEntregables)
                             {
                                 lc++;
@@ -1161,20 +1161,26 @@
                         </select>
                         <div class="col-sm-12" id="error_campoTipoServicio">
                             <small id="dateHelp" class="text-danger">
-                                Seleccione el tipo de servicio
+                                Seleccione el tipo de Servicio.
                             </small>
                         </div>
                     </div>
                     <div class="col col-lg-3" id="divTipoIndemnizacion">
-                        <label for="tipoServicio">Tipo de Contenido:</label>
+                        <label for="tipoServicio">Tipo de Contenido: </label>
+                        <a href="javascript:" class="text-primary ml-2 abreInfo" data-toggle="tooltip" title="Ayuda" data-placement="top">
+                            <i class="fa-solid fa-circle-question"></i>
+                        </a>
+
                         <select class="form-control" id="campoTipoIndemnizacion">
                         </select>
+
                         <div class="col-sm-12" id="error_campoTipoIndemnizacion">
                             <small id="dateHelp" class="text-danger">
-                                Seleccione el tipo de servicio
+                                Seleccione el tipo de Contenido.
                             </small>
                         </div>
                     </div>
+
                     <div class="form-group col-lg-2" id="divSobrepeso">
                         <label for="sobrepeso">Peso Real (Kg)</label>
                         <input class="form-control" id="campoSobrepeso" type="number" min="1" max="100" />
@@ -1252,6 +1258,39 @@
     <!-- /.modal-dialog -->
 </div>
 @* Modal para la captura de Incidencias *@
+
+
+@* MODAL COMO NOTA INFORMATIVA PREGUNTA 5 Y 6 TIPO DE CONTENIDO   *@
+<div class="modal fade" id="modal-avisoPreg5y6">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-joke">
+                <h4 class="modal-title text-white"> <b></b>📢 INFORMACIÓN IMPORTANTE - TIPO DE CONTENIDO</h4>
+               
+            </div>
+            <div class="modal-body">
+                <p>
+                    <B>Deberá registrar los detalles de la guía extraviada, asegurando que el "Tipo de Contenido" coincida con los documentos (Acta y Escrito) proporcionados por el prestador de servicios:</B>
+                </p>
+                <p>1. <B>Jurisdiccional</B>: Documentación oficial en donde se manejan tiempos perentorios y plazos en la impartición de justicia, para el trámite de los procesos judiciales. </p>
+                <p>2. <B>Expediente</B>: Cuando el contenido son expedientes.  </p>
+                <p>3. <B>Administrativo</B>: Documentación oficial de tipo administrativo, y que no conlleva tiempos perentorios. </p>
+                <p>4. <B>Bienes</B>: Cuando el contenido son bienes muebles y bienes de consumo.  </p>
+                <p>5. <B>Otros</B>: Cuando el contenido no es ninguno de los anteriores, y/o el área remitente no proporcionó información. </p>
+
+
+                <p>Cabe aclarar que el tipo de contenido se debió verificar con el área que remitió la guía (órgano jurisdiccional, etc.).</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn-danger close-incidencias2 text-white" data-dismiss="modal" aria-label="Close">CERRAR</button>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+
+@* FIN DE MODAL NOTA INFORMATIVA PREGUNTA 5 Y 6 TIPO DE CONTENIDO *@
+
+
 
 @* Modal para la captura de Incidencias Excel *@
 <div class="modal fade" id="modal-incidencias-excel">
@@ -1385,6 +1424,7 @@
 </div>
 @*Fin Modal para ver la factura*@
 
+
 <style>
     .cabeceraInformacion {
         background-color: #ffffff;
@@ -1470,6 +1510,16 @@
 
     .swal-wide {
         width: 800px !important;
+    }
+
+    .close-incidencias2 {
+        transform: translate(-420%, 0%);
+        background-color: #FF0000; /* Cambia el color de fondo a rojo */
+        color: #fff; /* Mantiene el texto blanco */
+        border: none; /* Elimina el borde por defecto */
+        border-radius: 5px; /* Añade esquinas redondeadas */
+        padding: 10px 20px; /* Ajusta el padding para un botón más grande */
+        font-size: 16px; /* Aumenta el tamaño de la fuente */
     }
 </style>
 
@@ -1897,15 +1947,33 @@
                     axios.get('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?Incidencia=' + $(this).data("incidenciaid") +'&handler=IndemnizacionByIncidencia').then(response => {
                                 if (response.status == 200)
                                 {
+                                    //******** SE MODIFICÓ EL ORDEN DE APARICIÓN DE LAS OPCIONES EN TIPO DE CONTENIDO *******
                                     var options = '<option value="0">Seleccione una opción</option>';
-                                    for (var i = 0; i < response.data.length; i++) {
-                                        options += '<option value="' + response.data[i].id + '">' + response.data[i].nombre + '</option>'
-                                    }
+                                    options += '<option value="' + response.data[4].id + '">' + response.data[4].nombre + '</option>'
+                                    options += '<option value="' + response.data[2].id + '">' + response.data[2].nombre + '</option>'
+                                    options += '<option value="' + response.data[1].id + '">' + response.data[1].nombre + '</option>'
+                                    options += '<option value="' + response.data[0].id + '">' + response.data[0].nombre + '</option>'
+                                    options += '<option value="' + response.data[3].id + '">' + response.data[3].nombre + '</option>'
+
                                     $("#campoTipoIndemnizacion").html(options);
+
+                                    //for (var i = 0; i < response.data.length; i++) {
+                                    //    options += '<option value="' + response.data[i].id + '">' + response.data[i].nombre + '</option>'
+                                    //}
+                                    //$("#campoTipoIndemnizacion").html(options);
                                 }
                             });
                     $("#modal-incidencias").modal("show");
                 }
+                if ($(this).data('pregunta') == 5 || $(this).data('pregunta') == 6)
+                {
+                    $("#modal-avisoPreg5y6").modal("show");
+                }
+            });
+
+            $(".abreInfo").click(function () {
+                $("#modal-avisoPreg5y6").modal("show");
+
             });
 
             $(".addIncidenciaExcel").click(function () {
@@ -3548,7 +3616,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario, RepositorioId: parseInt(repositorio),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE AGREGA ENOTACREDITOID 
+                                    //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Observaciones: "Se desbloquea la cédula de evaluación.",
                                     Flujo: supervision, Bloqueada: false, Elimina: true, Flujo: supervision
@@ -3599,7 +3667,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE AGREGA ENOTACREDITOID 
+                                    //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(repositorio), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS.",
                                     Flujo: supervision,
@@ -3760,7 +3828,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE AGREGA ENOTACREDITOID 
+                                    //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(repositorio),
                                     ServicioId: parseInt(modulo.servicioId),
@@ -3910,7 +3978,7 @@
                                 UsuarioId: usuario,
                                 RepositorioId: parseInt(repositorio),
                                 EFacturaId: parseInt($(this).data('efacturaid')),
-                                //SE AGREGA ENOTACREDITOID 
+                                //SE AGREGA ENOTACREDITOID
                                 ENotaCreditoId: parseInt($(this).data('enotaid')),
                                 ServicioId: parseInt(modulo.servicioId),
                                 Observaciones: "Se envía la cédula a revisión por parte de la CAE.",
@@ -3981,7 +4049,7 @@
                                     UsuarioId: usuario,
                                     RepositorioId: parseInt(repositorio),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE AGREGA ENOTACREDITOID 
+                                    //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     ServicioId: parseInt(modulo.servicioId),
                                     Observaciones: "Se autoriza la cédula por parte de la CAE.",
@@ -4067,7 +4135,7 @@
                                         axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                             Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
                                             EFacturaId: parseInt($(this).data('efacturaid')),
-                                            //SE AGREGA ENOTACREDITOID 
+                                            //SE AGREGA ENOTACREDITOID
                                             ENotaCreditoId: parseInt($(this).data('enotaid')),
                                             UsuarioId: usuario,
                                             RepositorioId: parseInt(repositorio),
@@ -4202,7 +4270,7 @@
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE AGREGA ENOTACREDITOID 
+                                    //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     UsuarioId: usuario,
                                     RepositorioId: parseInt(repositorio),
