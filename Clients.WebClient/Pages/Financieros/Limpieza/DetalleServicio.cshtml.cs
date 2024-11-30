@@ -91,7 +91,10 @@ namespace Clients.WebClient.Pages.Financieros.Limpieza
             Contratos = await _contratos.GetAllAsync();
             Servicio = await _servicios.GetServicioByIdAsync(servicioId);
             Anio = anio;
+
             Oficios = await _oficios.GetOficiosByAnio(anio);
+            //EL ERROR ESTÁ AQUÍ
+
             Meses = await _meses.GetAllAsync();
             InmueblesServicio = (await _inmuebles.GetInmueblesByServicio(servicioId)).Select(iu => iu.InmuebleId).ToList();
             Inmuebles = (await _inmuebles.GetAllInmueblesAsync()).Where(i => InmueblesServicio.Contains(i.Id)).ToList();

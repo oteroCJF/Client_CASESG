@@ -754,15 +754,6 @@
                     });
                 }
 
-                if (estatus.length == 0)
-                {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Servicio de ' + servicio.descripcion,
-                        html: '<p style="text-align: justify">Aún no selecciona el(los) estatus de los cuales se descargarán los entregables.</p>'
-                    });
-                }
-
                 if (archivos.length == 0)
                 {
                     Swal.fire({
@@ -828,7 +819,7 @@
                             const href = URL.createObjectURL(response);
                             const link = document.createElement('a');
                             link.href = href;
-                            link.setAttribute('download', 'Entregables_fumigacion.zip');
+                            link.setAttribute('download', 'Entregables_Limpieza.zip');
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);

@@ -380,11 +380,31 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="form-group col-md-2" id="divMes">
+                            <label for="lblMes">Estatus: </label>
+                            <select class="form-control select2bs4 selectEstatus" multiple="multiple">
+                                <option value="">Seleccione un estatus</option>
+                                <option value="0">Todos</option>
+                                @foreach (var es in Model.CTEstatus)
+                                {
+                                    <option value="@es.Id">@es.Nombre</option>
+                                }
+                            </select>
+                            <div class="col-sm-12" id="error_estatus">
+                                <small id="dateHelp" class="text-danger">
+                                    Seleccione el estatus del entregable
+                                </small>
+                            </div>
+                        </div>
+
+
+
                         <div class="input-form mt-4">
                             <button class="btn btn-primary ml-2 mt-2" type="submit" id="downloadFiles"><i class="fas fa-download mr-2"></i>Descargar Entregable(s)</button>
                         </div>
                     </div>
                     <div class="row col-lg-12">
+
                         @foreach (var en in Model.CTEntregables)
                         {
                             <div class="form-group mr-3 ml-1" id="divEntregables">
@@ -396,9 +416,23 @@
                                            data-abreviacion="@en.Abreviacion" data-style="ios" value="@en.Id">
                                 </div>
                             </div>
+
                         }
+
+                        @*<div class="form-group mr-3 ml-1" id="divEntregables">
+
+                            <strong class="text-black mr-2">Todos</strong>
+                            <div class="checkbox-wrapper-55">
+                                <label class="rocker rocker-small" id="seleccionarTodos">
+                                    <input type="checkbox">
+                                    <span class="switch-left"><i class='fa fa-check'></i></span>
+                                    <span class="switch-right"><i class='fa fa-times'></i></span>
+                                </label>
+                            </div>
+                        </div>*@
+
                     </div>
-                </div>
+                    </div>
                 @* Fin de descarga de entregables*@
             </div>
         </div>
@@ -474,14 +508,166 @@
 </div>
 @*Fin Modal para la del oficio*@
 
+  @*<style>
+                                                    .checkbox-wrapper-55 input[type="checkbox"] {
+                                                        visibility: hidden;
+                                                        display: none;
+                                                    }
+
+                                                    .checkbox-wrapper-55 *,
+                                                    .checkbox-wrapper-55 ::after,
+                                                    .checkbox-wrapper-55 ::before {
+                                                        box-sizing: border-box;
+                                                    }
+
+                                                    .checkbox-wrapper-55 .rocker {
+                                                        display: inline-block;
+                                                        position: relative;
+                                                        /*
+                            SIZE OF SWITCH
+                            ==============
+                            All sizes are in em - therefore
+                            changing the font-size here
+                            will change the size of the switch.
+                            See .rocker-small below as example.
+                            */
+                                                        font-size: 2em;
+                                                        font-weight: bold;
+                                                        text-align: center;
+                                                        text-transform: uppercase;
+                                                        color: #888;
+                                                        width: 7em;
+                                                        height: 4em;
+                                                        overflow: hidden;
+                                                        border-bottom: 0.5em solid #eee;
+                                                    }
+
+                                                    .checkbox-wrapper-55 .rocker-small {
+                                                        font-size: 0.75em;
+                                                    }
+
+                                                    .checkbox-wrapper-55 .rocker::before {
+                                                        content: "";
+                                                        position: absolute;
+                                                        top: 0.5em;
+                                                        left: 0;
+                                                        right: 0;
+                                                        bottom: 0;
+                                                        background-color: #999;
+                                                        border: 0.5em solid #eee;
+                                                        border-bottom: 0;
+                                                    }
+
+                                                    .checkbox-wrapper-55 .switch-left,
+                                                    .checkbox-wrapper-55 .switch-right {
+                                                        cursor: pointer;
+                                                        position: absolute;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        height: 2.5em;
+                                                        width: 3em;
+                                                        transition: 0.2s;
+                                                        user-select: none;
+                                                    }
+
+                                                    .checkbox-wrapper-55 .switch-left {
+                                                        height: 2.4em;
+                                                        width: 2.75em;
+                                                        left: 0.85em;
+                                                        bottom: 0.4em;
+                                                        background-color: #ddd;
+                                                        transform: rotate(15deg) skewX(15deg);
+                                                    }
+
+                                                    .checkbox-wrapper-55 .switch-right {
+                                                        right: 0.5em;
+                                                        bottom: 0;
+                                                        background-color: #ff0000;
+                                                        color: #fff;
+                                                    }
+
+                                                        .checkbox-wrapper-55 .switch-left::before,
+                                                        .checkbox-wrapper-55 .switch-right::before {
+                                                            content: "";
+                                                            position: absolute;
+                                                            width: 0.4em;
+                                                            height: 2.45em;
+                                                            bottom: -0.45em;
+                                                            background-color: #ccc;
+                                                            transform: skewY(-65deg);
+                                                        }
+
+                                                    .checkbox-wrapper-55 .switch-left::before {
+                                                        left: -0.4em;
+                                                    }
+
+                                                    .checkbox-wrapper-55 .switch-right::before {
+                                                        right: -0.375em;
+                                                        background-color: transparent;
+                                                        transform: skewY(65deg);
+                                                    }
+
+                                                    .checkbox-wrapper-55 input:checked + .switch-left {
+                                                        background-color: #1dd000;
+                                                        color: #fff;
+                                                        bottom: 0px;
+                                                        left: 0.5em;
+                                                        height: 2.5em;
+                                                        width: 3em;
+                                                        transform: rotate(0deg) skewX(0deg);
+                                                    }
+
+                                                        .checkbox-wrapper-55 input:checked + .switch-left::before {
+                                                            background-color: transparent;
+                                                            width: 3.0833em;
+                                                        }
+
+                                                        .checkbox-wrapper-55 input:checked + .switch-left + .switch-right {
+                                                            background-color: #ddd;
+                                                            color: #888;
+                                                            bottom: 0.4em;
+                                                            right: 0.8em;
+                                                            height: 2.4em;
+                                                            width: 2.75em;
+                                                            transform: rotate(-15deg) skewX(-15deg);
+                                                        }
+
+                                                            .checkbox-wrapper-55 input:checked + .switch-left + .switch-right::before {
+                                                                background-color: #ccc;
+                                                            }
+
+                                                    /* Keyboard Users */
+                                                    .checkbox-wrapper-55 input:focus + .switch-left {
+                                                        color: #333;
+                                                    }
+
+                                                    .checkbox-wrapper-55 input:checked:focus + .switch-left {
+                                                        color: #fff;
+                                                    }
+
+                                                    .checkbox-wrapper-55 input:focus + .switch-left + .switch-right {
+                                                        color: #fff;
+                                                    }
+
+                                                    .checkbox-wrapper-55 input:checked:focus + .switch-left + .switch-right {
+                                                        color: #333;
+                                                    }
+                        </style>*@
+
 @section Scripts{
     <script>
+      
+
         $(function () {
             const usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
             const servicio = @Html.Raw(Json.Serialize(Model.Servicio));
             const modulo = @Html.Raw(Json.Serialize(Model.Modulo));
             const anio = @Html.Raw(Json.Serialize(Model.Anio));
             const meses = @Html.Raw(Json.Serialize(Model.Meses));
+
+
+          
 
             $(".btnReportePAT").click(function () {
                 var listMes = new Array();
@@ -740,12 +926,15 @@
                 var archivos = new Array();
                 var inmuebles = $(".selectInmueble").val();
                 var meses = $(".selectMes").val();
+                var estatus = $(".selectEstatus").val();
+
 
                 $('.selectEntregable').each(function () {
                     if ($(this).prop('checked') == true) {
                         archivos.push($(this).data('id'));
                     }
                 });
+           
 
                 if (inmuebles.length != 0 && meses.length != 0 && estatus.length != 0 && archivos.length != 0)
                 {
@@ -770,8 +959,7 @@
                     });
                 }
 
-                if (estatus.length == 0)
-                {
+                if (estatus.length == 0) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Servicio de ' + servicio.descripcion,
@@ -791,12 +979,15 @@
                 return false;
             }
 
+     
+
             $("#downloadFiles").click(function () {
                 var dentregables = [];
 
                 var archivos = new Array();
                 var inmuebles = [];
                 var meses = [];
+                var estatus = [];
 
                 $('.selectEntregable').each(function () {
                     if ($(this).prop('checked') == true) {
@@ -814,6 +1005,9 @@
                     inmuebles.push(parseInt(ms));
                 }
 
+                for (var ms of $(".selectEstatus").val()) {
+                    estatus.push(parseInt(ms));
+                }
 
                 if (validaCampos()) {
                     Swal.fire({
@@ -832,7 +1026,7 @@
                         },
                         data: JSON.stringify({
                             "Anio": parseInt(anio), "Meses": meses, "InmueblesId": inmuebles, "EntregablesId": archivos,
-                            "Estatus": estatus
+                             "Estatus": estatus
                         }),
                         success: function (response) {
                             console.log(response);
