@@ -3,7 +3,7 @@
     List<Api.Gateway.Models.Modulos.DTOs.ModuloDto> modulos = await smodulos.GetModulosByUsuario(@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
 }
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar elevation-2" style="background-color: #ffffff;">
+<aside class="main-sidebar elevation-2" style="background-image: radial-gradient(circle at center, #fffffF, #e0ffff); ">
     <!-- Brand Logo -->
     <a href="/home" class="brand-link mb-2">
         <img src="~/img/Logo.png" alt="AdminLTE Logo" width="200">
@@ -14,7 +14,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" style="font-size: 15px;">
                 <li class="nav-item has-treeview" id="li_Inicio">
-                    <a class="nav-link font-weight-bold" href="/" style="color: #24135F">
+                    <a class="nav-link font-weight-bold" href="/" style="color: #2f1292">
                         <i class="fad fa-home mr-2"></i>
                         <p>
                             Inicio
@@ -25,8 +25,8 @@
                 {
                     if (mod.ServicioId == null)
                     {
-                        <li class="nav-item has-treeview mt-1 font-weight-bold" style="color: #24135F">
-                            <a href="/@mod.URL/@mod.Id/index" class="nav-link submodulo" style="color: #24135F" data-modulo="@mod.Nombre.Replace("_", " ")"
+                        <li class="nav-item has-treeview mt-1 font-weight-bold" style="color: #2f1292 ">
+                            <a href="/@mod.URL/@mod.Id/index" class="nav-link submodulo" style="color: #2f1292 " data-modulo="@mod.Nombre.Replace("_", " ")"
                                data-submodulo="@mod.Nombre">
                                 @Html.Raw(@mod.Icono)
                                 <p>
@@ -38,7 +38,7 @@
                     else
                     {
                         <li class="nav-item has-treeview li_sub font-weight-bold">
-                            <a href="#" class="nav-link" style="color: #24135F">
+                            <a href="#" class="nav-link" style="color: #2f1292 ">
                                 @Html.Raw(@mod.Icono)
                                 <p>
                                     @mod.Nombre.Replace("_"," ")
