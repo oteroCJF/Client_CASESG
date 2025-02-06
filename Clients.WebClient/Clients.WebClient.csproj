@@ -37,7 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\MarcoJuridico\" />
     <Folder Include="Proxies\" />
+    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>

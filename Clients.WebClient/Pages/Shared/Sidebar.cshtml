@@ -3,7 +3,7 @@
     List<Api.Gateway.Models.Modulos.DTOs.ModuloDto> modulos = await smodulos.GetModulosByUsuario(@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
 }
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar elevation-2" style="background-image: radial-gradient(circle at center, #fffffF, #e0ffff); ">
+<aside class="main-sidebar elevation-2" style="background-image: radial-gradient(circle at center, #fffffF, #fffffF); ">
     <!-- Brand Logo -->
     <a href="/home" class="brand-link mb-2">
         <img src="~/img/Logo.png" alt="AdminLTE Logo" width="200">
@@ -18,6 +18,16 @@
                         <i class="fad fa-home mr-2"></i>
                         <p>
                             Inicio
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview font-weight-bold" id="li_Inicio">
+                    @*<a href="/MarcoJuridico/Index" class="nav-link" style="color: #2f1292">*@
+                    <a href="http://cjfspweb/dgsg/DAS2020/_layouts/15/start.aspx#/SitePages/Marco%20Jur%C3%ADdico.aspx" class="nav-link" target="_blank"  style="color: #2f1292"  >
+
+                        <i class="fad fa-list-check mr-2"></i>
+                        <p>
+                            Marco Normativo
                         </p>
                     </a>
                 </li>
@@ -41,7 +51,7 @@
                             <a href="#" class="nav-link" style="color: #2f1292 ">
                                 @Html.Raw(@mod.Icono)
                                 <p>
-                                    @mod.Nombre.Replace("_"," ")
+                                    @mod.Nombre.Replace("_", " ")
                                     <i class="right fas fa-angle-right"></i>
                                 </p>
                             </a>
@@ -49,8 +59,8 @@
                                 @foreach (var sb in mod.Submodulos)
                                 {
                                     <li class="nav-item font-weight-bold">
-                                        <a href="/@sb.URL/@mod.Id/@sb.Id/index" class="nav-link ml-2 submodulo" style="color: #24135F" 
-                                            data-submodulo="@sb.Nombre" data-modulo="@mod.Nombre.Replace("_", " ")">
+                                        <a href="/@sb.URL/@mod.Id/@sb.Id/index" class="nav-link ml-2 submodulo" style="color: #24135F"
+                                           data-submodulo="@sb.Nombre" data-modulo="@mod.Nombre.Replace("_", " ")">
                                             @Html.Raw(@sb.Icono)
                                             <p>@sb.Nombre</p>
                                         </a>

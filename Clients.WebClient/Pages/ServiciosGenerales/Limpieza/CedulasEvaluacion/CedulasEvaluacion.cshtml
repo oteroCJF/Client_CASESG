@@ -25,7 +25,7 @@
                     </h3>
                 </div>
                 <div class="card-body" style="font-size: 14px;">
-                    <table class="table cedulasEvaluacion">
+                    <table class="table cedulasEvaluacion row-border" width="100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -109,19 +109,22 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         Filtros de Búsqueda
+                        <button id="recargarPagina" class="btn btn-primary" data-toggle="tooltip" title="Reiniciar Filtros">
+                            <i class="fa-regular fa-arrows-rotate"></i>
+                        </button>
                     </h3>
                 </div>
-                <div class="card-body" style="font-size: 14px;">
+                <div class="card-body"  style=" font-size: 15px; color: #24135f;">
                     <div class="row col-lg-12 mt-2">
                         <div class="col-lg-12">
-                            Estatus:
+                            <b>Estatus:</b>
                             <a class="btn-sm bg-primary btnEstatuss float-right" data-target="#btnEstatus" data-toggle="collapse">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus"></i>
                             </a>
                         </div>
                         @foreach (var es in Model.FiltrosEstatus)
                         {
-                            <div class="col-lg-12 collapse ml-3" id="btnEstatus" style="font-size: 12px;">
+                            <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 12px; color: #000000;">
                                 <label class="checkbox-inline">
                                     @if (FEAplicados.Contains(es.Nombre))
                                     {
@@ -136,14 +139,14 @@
                                                    data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
                                                    data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
                                                    data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre"> @es.Nombre
-                                            }
+                                        }
                                 </label>
                             </div>
                         }
                     </div>
                     <div class="row col-lg-12 mt-2" id="divInmuebles">
                         <div class="col-lg-12">
-                            Inmuebles:
+                            <b>Inmuebles:</b>
                             <a class="btn-sm bg-primary btnInmuebles float-right" data-target="#btnInmueble" data-toggle="collapse">
                                 <i class="fas fa-plus"></i>
                             </a>
@@ -157,7 +160,7 @@
                             </div>
                             @foreach (var inm in Model.FiltrosInmueble)
                             {
-                                <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 12px;">
+                                <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 12px; color: #000000;">
                                     <label class="checkbox-inline">
                                         @if (FIAplicados.Contains(inm.Nombre))
                                         {
@@ -191,6 +194,14 @@
         height: 300px;
         display: none;
     }
+
+    #recargarPagina {
+        cursor: pointer;
+        font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+        padding: 3px 6px;
+        transition: background-color 0.3s ease;
+    }
+
 
     .scrollbar-deep-purple::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
@@ -251,12 +262,13 @@
                         className: "bg-cjf mr-1"
                     }
                 ],
-                lengthMenu: [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+                lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
                 responsive: true,
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 },
             });
+
 
             $(".btnEstatuss").click(function () {
                 if ($(".btnEstatuss > i").hasClass("fas fa-plus")) {
@@ -266,6 +278,10 @@
                     $(".btnEstatuss > i").removeClass("fas fa-minus");
                     $(".btnEstatuss > i").addClass("fas fa-plus");
                 }
+            });
+
+            document.getElementById("recargarPagina").addEventListener("click", function () {
+                location.reload();
             });
 
             $('.selectEstatus').on('change', function () {
