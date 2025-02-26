@@ -1,315 +1,342 @@
 ﻿@page "/comedor/cedulasEvaluacion/{moduloId}/{submoduloId}/index"
 @model Clients.WebClient.Pages.Comedor.CedulasEvaluacion.IndexModel
 @{
-    ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
-    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
-    ViewData["Action"] = "Inicio";
-    var c = 0;
-    var mesActual = DateTime.Now.Month;
-    var FEAplicados = HttpContext.Request.Query["Estatus"].ToString()?.Split(",").ToList();
-    var FIAplicados = HttpContext.Request.Query["Inmueble"].ToString().Split(",").ToList();
-    var FMAplicados = new List<string>();
-    string mes = "";
 
-    if (!HttpContext.Request.Query["Mes"].ToString().Equals(""))
-    {
-        FMAplicados = HttpContext.Request.Query["Mes"].ToString().Split(",").ToList();
-    }
-    //else
-    //{
-    //    mes = DateTime.Now.ToString("MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("es")).ToLower();
-    //    FMAplicados.Add(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(mes));
-    //}
-    if (!HttpContext.Request.Query["Inmueble"].ToString().Equals(""))
-    {
-        FIAplicados = HttpContext.Request.Query["Inmueble"].ToString().Split(",").ToList();
-    }
+    <div class="titulo-principal">
+        <b>Servicio de @Model.Servicio.Descripcion</b> <i class="fa-sharp fa-solid fa-fork-knife mr-2"></i>
+    </div>
 
-    if (!HttpContext.Request.Query["Estatus"].ToString().Equals(""))
-    {
-        FEAplicados = HttpContext.Request.Query["Estatus"].ToString().Split(",").ToList();
-    }
-}
+        ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
+        ViewData["Action"] = "Inicio";
+        var c = 0;
+        var mesActual = DateTime.Now.Month;
+        var FEAplicados = HttpContext.Request.Query["Estatus"].ToString()?.Split(",").ToList();
+        var FIAplicados = HttpContext.Request.Query["Inmueble"].ToString().Split(",").ToList();
+        var FMAplicados = new List<string>
+            ();
+            string mes = "";
+
+            if (!HttpContext.Request.Query["Mes"].ToString().Equals(""))
+            {
+            FMAplicados = HttpContext.Request.Query["Mes"].ToString().Split(",").ToList();
+            }
+            //else
+            //{
+            //    mes = DateTime.Now.ToString("MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("es")).ToLower();
+            //    FMAplicados.Add(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(mes));
+            //}
+            if (!HttpContext.Request.Query["Inmueble"].ToString().Equals(""))
+            {
+            FIAplicados = HttpContext.Request.Query["Inmueble"].ToString().Split(",").ToList();
+            }
+
+            if (!HttpContext.Request.Query["Estatus"].ToString().Equals(""))
+            {
+            FEAplicados = HttpContext.Request.Query["Estatus"].ToString().Split(",").ToList();
+            }
+            }
 
 
-<div class="container-fluid">
-    <form method="get" id="getAnio" asp-page-handler="GetAnio">
-        <div class="row col-lg-2">
-            <label class="label">Consultar información del año: </label>
-            <div class="input-group mb-3">
-                <select class="form-control" id="anioActual" asp-for="Anio">
-                    <option value="">Seleccione el Año</option>
-                    @for (var i = 2022; i <= DateTime.Now.Year; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-                <div class="row">
-                    <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar</button>
-                </div>
-            </div>
-        </div>
-    </form>
-    @if (Model.Anio != 0 && Model.Cedulas.Items != null)
-    {
-        <div class="row mt-3">
-            <section class="col-xl-10 connectedSortable">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Cédulas de evaluación del servicio de @Model.Servicio.Descripcion.ToLower()
-                        </h3>
-                    </div>
-                    <div class="card-body" style="font-size: 14px;">
-                        <table class="table cedulasEvaluacion row-border" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Año</th>
-                                    <th>Mes</th>
-                                    <th>Inmueble</th>
-                                    <th>Folio</th>
-                                    <th>Tipo de Servicio</th>
-                                    <th>Estatus</th>
-                                    <th class="text-center">Calificación</th>
-                                    @if (Model.Anio > 2023)
-                                    {
-                                        <th>Factura</th>
-                                        <th>Total NC</th>
-                                        <th>Total Deductivas sin IVA</th>
-                                    }
-                                    <th class="text-center">Requiere NC</th>
-                                    <th>Validación</th>
-                                    <th>Última actualización</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var cedula in Model.Cedulas.Items)
+            <div class="container-fluid">
+                <form method="get" id="getAnio" asp-page-handler="GetAnio">
+                    <div class="row col-3">
+                        <label class="label">Consultar información del año: </label>
+                        <div class="input-group mb-3">
+                            <select class="form-control" id="anioActual" asp-for="Anio">
+                                <option value="">Seleccione el Año</option>
+                                @for (var i = 2022; i <= DateTime.Now.Year; i++)
                                 {
-                                    c++;
-                                    <tr>
-                                        <td>@c</td>
-                                        <td>@cedula.Anio</td>
-                                        <td>@cedula.Mes</td>
-                                        <td>@cedula.Inmueble</td>
-                                        <td>@cedula.Folio</td>
-                                        <td>@cedula.Servicio</td>
-                                        <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
-                                        <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
-                                        @if (cedula.Anio > 2023)
-                                        {
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
-                                        }
-                                        <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
-                                        <td>
-                                            @if (cedula.Cedula)
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <div class="row">
+                                <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                @if (Model.Anio != 0 && Model.Cedulas.Items != null)
+                {
+                    <div class="row mt-3">
+                        <section class="col-xl-10 connectedSortable">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong class="card-title" style="color: #24135f; text-align: center; ">
+                                        <b>Cédulas de Evaluación del Año @Model.Anio</b>
+                                    </strong>
+                                </div>
+                                <div class="card-body" style="font-size: 14px;">
+                                    <table class="table cedulasEvaluacion row-border" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Año</th>
+                                                <th>Mes</th>
+                                                <th>Inmueble</th>
+                                                <th>Folio</th>
+                                                <th>Tipo de Servicio</th>
+                                                <th>Estatus</th>
+                                                <th class="text-center">Calificación</th>
+                                                @if (Model.Anio > 2023)
+                                                {
+                                                    <th>Factura</th>
+                                                    <th>Total NC</th>
+                                                    <th>Total Deductivas sin IVA</th>
+                                                }
+                                                <th class="text-center">Requiere NC</th>
+                                                <th>Validación</th>
+                                                <th>Última actualización</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var cedula in Model.Cedulas.Items)
                                             {
-                                                <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Cédula pendiente de validar" data-placement="top"></i>
-                                            }
+                                                c++;
+                                                <tr>
+                                                    <td>@c</td>
+                                                    <td>@cedula.Anio</td>
+                                                    <td>@cedula.Mes</td>
+                                                    <td>@cedula.Inmueble</td>
+                                                    <td>@cedula.Folio</td>
+                                                    <td>@cedula.Servicio</td>
+                                                    <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
+                                                    <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
+                                                    @if (cedula.Anio > 2023)
+                                                    {
+                                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
+                                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
+                                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
+                                                    }
+                                                    <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
+                                                    <td>
+                                                        @if (cedula.Cedula)
+                                                        {
+                                                            <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Cédula pendiente de validar" data-placement="top"></i>
+                                                        }
 
-                                            @if (cedula.Memorandum == true)
-                                            {
-                                                <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Memorándum validado" data-placement="top"></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Memorándum pendiente de validar" data-placement="top"></i>
-                                            }
+                                                        @if (cedula.Memorandum == true)
+                                                        {
+                                                            <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Memorándum validado" data-placement="top"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Memorándum pendiente de validar" data-placement="top"></i>
+                                                        }
 
-                                            @if (cedula.ActaFirmada)
-                                            {
-                                                <i class="fa-regular fa-file-check text-success" data-toggle="tooltip" title="Acta Entrega - Recepción" data-placement="top"></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa-regular fa-file-xmark text-danger" data-toggle="tooltip" title="Acta Entrega - Recepción pendiente de validar" data-placement="top"></i>
-                                            }
-                                        </td>
-                                        <td>
-                                            @(
+                                                        @if (cedula.ActaFirmada)
+                                                        {
+                                                            <i class="fa-regular fa-file-check text-success" data-toggle="tooltip" title="Acta Entrega - Recepción" data-placement="top"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa-regular fa-file-xmark text-danger" data-toggle="tooltip" title="Acta Entrega - Recepción pendiente de validar" data-placement="top"></i>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @(
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy").Equals("01/01/0001") ?
                                             Convert.ToDateTime(cedula.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt") :
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy hh:mm tt")
                                         )
-                                        </td>
-                                        <td class="text-center">
-                                            <a class="btnRevision" href="javascript:" data-cedula="@cedula.Id" data-inmueble="@cedula.InmuebleId"
-                                               data-toggle="tooltip" title="Seguimiento de la Cédula" data-placement="top">
-                                                <i class="fad fa-eye text-success"></i>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a class="btnRevision" href="javascript:" data-cedula="@cedula.Id" data-inmueble="@cedula.InmuebleId"
+                                                           data-toggle="tooltip" title="Seguimiento de la Cédula" data-placement="top">
+                                                            <i class="fad fa-eye text-success"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="col-xl-2 connectedSortable">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        Filtros de Búsqueda
+                                        <button id="recargarPagina" class="btn btn-primary" data-toggle="tooltip" title="Reiniciar Filtros">
+                                            <i class="fa-regular fa-arrows-rotate"></i>
+                                        </button>
+                                    </h3>
+                                </div>
+
+                                <div class="card-body" style="font-size: 15px; color: #24135f;">
+                                    <div class="row col-lg-12 mt-2">
+                                        <div class="col-lg-12">
+                                            <b>Meses:</b>
+                                            <a class="btn-sm bg-primary btnMes float-right btn-custom-primary" data-target="#btnMes" data-toggle="collapse">
+                                                <i class="fas fa-minus"></i>
                                             </a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            <section class="col-xl-2 connectedSortable">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Filtros de Búsqueda
-                            <button id="recargarPagina" class="btn btn-primary" data-toggle="tooltip" title="Reiniciar Filtros">
-                                <i class="fa-regular fa-arrows-rotate"></i>
-                            </button>
-                        </h3>
-                    </div>
-
-                    <div class="card-body" style="font-size: 15px; color: #24135f;">
-                        <div class="row col-lg-12 mt-2">
-                            <div class="col-lg-12">
-                                <b>Meses:</b>
-                                <a class="btn-sm bg-primary btnMes float-right btn-custom-primary" data-target="#btnMes" data-toggle="collapse" >
-                                    <i class="fas fa-minus"></i>
-                                </a>
-                            </div>
-                            @foreach (var ms in Model.FiltrosMes)
-                            {
-                                <div class="col-lg-12 show ml-3" id="btnMes" style="font-size: 12px; color: #000000;">
-                                    <label class="checkbox-inline">
-                                        @if (FMAplicados.Contains(ms.Nombre))
+                                        </div>
+                                        @foreach (var ms in Model.FiltrosMes)
                                         {
-                                            <input class="selectMes" type="checkbox" data-toggle="toggle"
-                                                   data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                   data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                   data-onstyle="success" data-offstyle="danger" data-style="ios" value="@ms.Nombre" checked> @ms.Nombre
-                                            }
-                                            else
-                                            {
-                                                <input class="selectMes" type="checkbox" data-toggle="toggle"
-                                                       data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                       data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                       data-onstyle="success" data-offstyle="danger" data-style="ios" value="@ms.Nombre"> @ms.Nombre
-                                                }
-                                    </label>
-                                </div>
-                            }
-                        </div>
-                        <div class="row col-lg-12 mt-2">
-                            <div class="col-lg-12">
-                                <b>Estatus:</b>
-                                <a class="btn-sm bg-primary btnEstatuss float-right btn-custom-primary" data-target="#btnEstatus" data-toggle="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </a> 
-                            </div>
-                            @foreach (var es in Model.FiltrosEstatus)
-                            {
-                                <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 12px; color: #000000;">
-                                    <label class="checkbox-inline">
-                                        @if (FEAplicados.Contains(es.Nombre))
+                                            <div class="col-lg-12 show ml-3" id="btnMes" style="font-size: 14x; color: #000000;">
+                                                <label class="checkbox-inline">
+                                                    @if (FMAplicados.Contains(ms.Nombre))
+                                                    {
+                                                        <input class="selectMes" type="checkbox" data-toggle="toggle"
+                                                               data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                               data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                               data-onstyle="success" data-offstyle="danger" data-style="ios" value="@ms.Nombre" checked> @ms.Nombre
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="selectMes" type="checkbox" data-toggle="toggle"
+                                                                   data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                                   data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                                   data-onstyle="success" data-offstyle="danger" data-style="ios" value="@ms.Nombre"> @ms.Nombre
+                                                            }
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row col-lg-12 mt-2">
+                                        <div class="col-lg-12">
+                                            <b>Estatus:</b>
+                                            <a class="btn-sm bg-primary btnEstatuss float-right btn-custom-primary" data-target="#btnEstatus" data-toggle="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </a>
+                                        </div>
+                                        @foreach (var es in Model.FiltrosEstatus)
                                         {
-                                            <input class="selectEstatus" type="checkbox" data-toggle="toggle"
-                                                   data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                   data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                   data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre" checked> @es.Nombre
-                                            }
-                                            else
+                                            <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 14px; color: #000000;">
+                                                <label class="checkbox-inline">
+                                                    @if (FEAplicados.Contains(es.Nombre))
+                                                    {
+                                                        <input class="selectEstatus" type="checkbox" data-toggle="toggle"
+                                                               data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                               data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                               data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre" checked> @es.Nombre
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="selectEstatus" type="checkbox" data-toggle="toggle"
+                                                                   data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                                   data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                                   data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre"> @es.Nombre
+                                                            }
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row col-lg-12 mt-2" id="divInmuebles">
+                                        <div class="col-lg-12">
+                                            <b>Inmuebles:</b>
+                                            <a class="btn-sm bg-primary btnInmuebles float-right btn-custom-primary" data-target="#btnInmueble" data-toggle="collapse">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-12 example-1 scrollbar-deep-purple mt-2">
+                                            <div class="row col-lg-12 mb-2 mt-2">
+                                                <div class="form-group">
+                                                    <label for="inputsm">Buscar: </label>
+                                                    <input class="form-control input-sm searchToggle" id="searchToggle" type="text">
+                                                </div>
+                                            </div>
+                                            @foreach (var inm in Model.FiltrosInmueble)
                                             {
-                                                <input class="selectEstatus" type="checkbox" data-toggle="toggle"
-                                                       data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                       data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                       data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre"> @es.Nombre
-                                                }
-                                    </label>
-                                </div>
-                            }
-                        </div>
-                        <div class="row col-lg-12 mt-2" id="divInmuebles">
-                            <div class="col-lg-12">
-                                <b>Inmuebles:</b>
-                                <a class="btn-sm bg-primary btnInmuebles float-right btn-custom-primary" data-target="#btnInmueble" data-toggle="collapse">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            </div>
-                            <div class="col-lg-12 example-1 scrollbar-deep-purple mt-2">
-                                <div class="row col-lg-12 mb-2 mt-2">
-                                    <div class="form-group">
-                                        <label for="inputsm">Buscar: </label>
-                                        <input class="form-control input-sm searchToggle" id="searchToggle" type="text">
+                                                <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 14px; color: #000000;">
+                                                    <label class="checkbox-inline">
+                                                        @if (FIAplicados.Contains(inm.Nombre))
+                                                        {
+                                                            <input class="selectInmueble" id="inm_@inm.Id" type="checkbox" data-toggle="toggle" data-abreviacion="@inm.Id"
+                                                                   data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                                   data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                                   data-onstyle="success" data-offstyle="danger" data-style="ios" value="@inm.Nombre" checked> @inm.Abreviacion
+                                                            }
+                                                            else
+                                                            {
+                                                                <input class="selectInmueble" id="inm_@inm.Id" type="checkbox" data-toggle="toggle" data-abreviacion="@inm.Id"
+                                                                       data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
+                                                                       data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
+                                                                       data-onstyle="success" data-offstyle="danger" data-style="ios" value="@inm.Nombre"> @inm.Abreviacion
+                                                                }
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                                @foreach (var inm in Model.FiltrosInmueble)
-                                {
-                                    <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 12px; color: #000000;">
-                                        <label class="checkbox-inline">
-                                            @if (FIAplicados.Contains(inm.Nombre))
-                                            {
-                                                <input class="selectInmueble" id="inm_@inm.Id" type="checkbox" data-toggle="toggle" data-abreviacion="@inm.Id"
-                                                       data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                       data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                       data-onstyle="success" data-offstyle="danger" data-style="ios" value="@inm.Nombre" checked> @inm.Abreviacion
-                                                }
-                                                else
-                                                {
-                                                    <input class="selectInmueble" id="inm_@inm.Id" type="checkbox" data-toggle="toggle" data-abreviacion="@inm.Id"
-                                                           data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
-                                                           data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
-                                                           data-onstyle="success" data-offstyle="danger" data-style="ios" value="@inm.Nombre"> @inm.Abreviacion
-                                                    }
-                                        </label>
-                                    </div>
-                                }
                             </div>
-                        </div>
+                        </section>
                     </div>
-                </div>
-            </section>
-        </div>
-    }
-</div>
+                }
+            </div>
 
-<style>
-    .example-1 {
-        position: relative;
-        overflow-y: scroll;
-        height: 300px;
-        display: none;
-    }
+            <style>
+                .titulo-principal {
+                    font-family: Arial, sans-serif;
+                    font-size: 20px;
+                    color: #24135f;
+                    text-align: left;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                    animation: fadeIn 2s ease-in-out;
+                    font-weight: bold;
+                    position: relative; /* Agrega esta línea */
+                    top: -20px; /* Ajusta el valor según sea necesario */
+                    right: -10px;
+                }
 
-    #recargarPagina {
-        cursor: pointer;
-        font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
-        padding: 3px 6px;
-        transition: background-color 0.3s ease;
-    }
+                @@keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                    }
 
-    .btn-custom-primary {
-        background-color: #24135f !important;
-        border-color: #24135f !important;
-    }
+                    to {
+                        opacity: 1;
+                    }
+                }
+                .example-1 {
+                    position: relative;
+                    overflow-y: scroll;
+                    height: 300px;
+                    display: none;
+                }
 
-    .scrollbar-deep-purple::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-    }
+                #recargarPagina {
+                    cursor: pointer;
+                    font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+                    padding: 3px 6px;
+                    transition: background-color 0.3s ease;
+                }
 
-    .scrollbar-deep-purple::-webkit-scrollbar {
-        width: 8px;
-        background-color: #F5F5F5;
-    }
+                .btn-custom-primary {
+                    background-color: #24135f !important;
+                    border-color: #24135f !important;
+                }
 
-    .scrollbar-deep-purple::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
-        background-color: #512da8;
-    }
+                .scrollbar-deep-purple::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+                    background-color: #F5F5F5;
+                    border-radius: 10px;
+                }
 
-    .scrollbar-deep-purple {
-        scrollbar-color: #512da8 #F5F5F5;
-    }
-</style>
+                .scrollbar-deep-purple::-webkit-scrollbar {
+                    width: 8px;
+                    background-color: #F5F5F5;
+                }
 
-@section Scripts{
-    <script>
+                .scrollbar-deep-purple::-webkit-scrollbar-thumb {
+                    border-radius: 10px;
+                    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+                    background-color: #512da8;
+                }
+
+                .scrollbar-deep-purple {
+                    scrollbar-color: #512da8 #F5F5F5;
+                }
+            </style>
+
+            @section Scripts{
+                <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -547,5 +574,5 @@
             }
             /******************** Filtros *******************/
         });
-    </script>
-}
+                </script>
+            }

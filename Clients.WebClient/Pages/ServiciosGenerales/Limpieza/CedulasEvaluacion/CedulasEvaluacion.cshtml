@@ -1,8 +1,17 @@
 ﻿@page "/limpieza/{moduloId}/{submoduloId}/facturacion/{anio}/{mes}/{contrato}"
 @model Clients.WebClient.Pages.Limpieza.CedulasEvaluacion.CedulasEvaluacionModel
 @{
-    ViewData["Titulo"] = "Servicio de "+Model.Servicio.Descripcion;
+    //ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
     ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
+
+    <div class="titulo-principal">
+        <b>Servicio de @Model.Servicio.Descripcion</b> <i class="fad fa-soap mr-2"></i>
+        <a href="/limpieza/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar botonregreso col-1" data-toggle="tooltip" title="Regresar a los meses" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+    </div>
+
+
     var c = 0;
     var FEAplicados = HttpContext.Request.Query["Estatus"].ToString()?.Split(",").ToList();
     var FIAplicados = HttpContext.Request.Query["Inmueble"].ToString().Split(",").ToList();
@@ -11,18 +20,18 @@
 <div class="container-fluid">
     <div class="row col-lg-12">
         <div class="col-lg-12">
-            <a href="/limpieza/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar" data-toggle="tooltip" title="Regresar" data-placement="top">
+            @*<a href="/limpieza/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar" data-toggle="tooltip" title="Regresar" data-placement="top">
                 <i class="fal fa-arrow-left"></i>
-            </a>
+            </a>*@
         </div>
     </div>
     <div class="row mt-3">
         <section class="col-xl-10 connectedSortable">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                        Cédulas de evaluación del servicio de limpieza en áreas comunes y oficinas
-                    </h3>
+                    <strong class="card-title" style="color: #24135f; text-align: center; ">
+                        <b>Cédulas de Evaluación del Año @Model.Repositorio.Anio</b>
+                    </strong>
                 </div>
                 <div class="card-body" style="font-size: 14px;">
                     <table class="table cedulasEvaluacion row-border" width="100%">
@@ -114,7 +123,7 @@
                         </button>
                     </h3>
                 </div>
-                <div class="card-body"  style=" font-size: 15px; color: #24135f;">
+                <div class="card-body" style=" font-size: 15px; color: #24135f;">
                     <div class="row col-lg-12 mt-2">
                         <div class="col-lg-12">
                             <b>Estatus:</b>
@@ -124,7 +133,7 @@
                         </div>
                         @foreach (var es in Model.FiltrosEstatus)
                         {
-                            <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 12px; color: #000000;">
+                            <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 14px; color: #000000;">
                                 <label class="checkbox-inline">
                                     @if (FEAplicados.Contains(es.Nombre))
                                     {
@@ -139,7 +148,7 @@
                                                    data-on="<i class='fa fa-check' style='margin-top: -2px;'></i>"
                                                    data-off="<i class='fa fa-times' style='margin-top: -2px;'></i>" data-size="mini"
                                                    data-onstyle="success" data-offstyle="danger" data-style="ios" value="@es.Nombre"> @es.Nombre
-                                        }
+                                            }
                                 </label>
                             </div>
                         }
@@ -160,7 +169,7 @@
                             </div>
                             @foreach (var inm in Model.FiltrosInmueble)
                             {
-                                <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 12px; color: #000000;">
+                                <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 14px; color: #000000;">
                                     <label class="checkbox-inline">
                                         @if (FIAplicados.Contains(inm.Nombre))
                                         {
@@ -188,6 +197,33 @@
 </div>
 
 <style>
+
+    .titulo-principal {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #24135f;
+        text-align: left;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-in-out;
+        font-weight: bold;
+        position: relative; /* Agrega esta línea */
+        top: 0px; /* Ajusta el valor según sea necesario */
+        right: -10px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+    .botonregreso {
+        position: relative; /* Agrega esta línea */
+        left: -33px;
+    }
     .example-1 {
         position: relative;
         overflow-y: scroll;

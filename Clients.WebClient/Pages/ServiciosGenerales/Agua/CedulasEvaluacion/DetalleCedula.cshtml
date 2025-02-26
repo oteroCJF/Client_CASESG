@@ -1,8 +1,27 @@
 ﻿@page "/agua/{moduloId}/{submoduloId}/detalle/{inmueble}/{cedula}"
 @model Clients.WebClient.Pages.Agua.CedulasEvaluacion.DetalleModel;
 @{
-    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
-    ViewData["Title"] = "Detalle del Inmueble - " + Model.Inmueble.Nombre;
+    //ViewData["Titulo"] = "Adquisición de " + Model.Servicio.Descripcion;
+    <div class="titulo-principal">
+        Adquisición de Garrafones de Agua Purificada   <i class="fa-regular fa-glass-water-droplet"></i>
+        <!-- PRUEBA DE BOTON DE REGRESO, EL LINK DE REGRESO NO CARGA LOS FILTROS-->
+        <a href="/agua/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm  botonregreso btn-warning float-right btnRegresar col-1 ml-2" data-toggle="tooltip" title="Regresar a las cédulas" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+
+        @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+    @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+    @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+        {
+            <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo botonregreso" data-toggle="tooltip"
+               title="Solicitar rechazo de la cédula" data-placement="top">
+                <i class="fal fa-times-circle"></i>
+            </a>
+        }
+    </div>
+    ViewData["Title"] = "Detalle - " + Model.Inmueble.Nombre;
+
+
     ViewData["Action"] = "Facturación / Detalle de Facturación";
     var i = 0;
     var ci = 0;
@@ -16,15 +35,12 @@
     var pPenalizacion = Model.Cedula.respuestas.Where(r => r.cuestionario.Tipo.Equals("Penalizacion")).Select(c => c.cuestionario.Consecutivo);
 }
 
-<div class="row col-lg-12">
+@*<div class="row col-lg-12">
     <div class="col-lg-12">
-        <!-- PRUEBA DE BOTON DE REGRESO, EL LINK DE REGRESO NO CARGA LOS FILTROS-->
-        <a href="/agua/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar" data-toggle="tooltip" title="Regresar" data-placement="top">
-            <i class="fal fa-arrow-left"></i>
-        </a>
+
         @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-      @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-      @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+     @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+     @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
         {
             <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
                title="Solicitar rechazo de la cédula" data-placement="top">
@@ -32,7 +48,7 @@
             </a>
         }
     </div>
-</div>
+</div>*@
 
 <div class="row col-lg-12 mt-3">
     <div class="col-lg-12">
@@ -51,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <ul class="mb-0 fa-ul">
-                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span>Evaluación correspondiente al mes de<b>@Model.Cedula.Mes.Nombre</b> del año <b>@Model.Cedula.Anio</b></li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span>Evaluación correspondiente al mes de <b>@Model.Cedula.Mes.Nombre</b> del año <b>@Model.Cedula.Anio</b></li>
                                             <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span><b class="mr-1 @Model.Cedula.Estatus.Fondo.Replace("bg","text")">Estatus: @Model.Cedula.Estatus.Nombre</b></li>
                                             <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <b>Facturación Total: </b>: @String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", Model.Facturas.Where(f => !f.Tipo.Equals("NC")).Sum(f => f.Total))</li>
                                             <li class="small mt-3"><span class="fa-li"><i class="fad fa-star"></i></span> <b>Calificación: </b> @Model.Cedula.Calificacion</li>
@@ -219,103 +235,118 @@
 
 @if (Model.Cedula.Id != 0)
 {
-<div class="row col-lg-12 mt-3" id="divCedula">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header cabeceraCedula">
-                <i class="fas fa-list-check mr-2"></i> Cédula de Evaluación
-            </div>
-            <div class="card-body cuerpoCedula">
-                <table class="table table-borderless">
-                    <tr>
-                        <td data-toggle="tooltip" title="Folio de evaluación asignado por el sistema" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;"><strong>Folio: </strong> @Model.Cedula.Folio</td>
-                        <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
-                        <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
-                        <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
-                        <td data-toggle="tooltip" title="Estatus de la cédula" data-placement="top">
-                            <strong style="color: @(Model.Cedula.Estatus.FondoHexadecimal)"><b class="mr-1">Estatus:</b> @Html.Raw(Model.Cedula.Estatus.Icono) @Model.Cedula.Estatus.Nombre</strong>
-                        </td>
-                    </tr>
-                </table>
-                <div class="row col-lg-12 mt-3">
-                    <div class="col-md-12">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            @foreach (var rs in Model.Cedula.respuestas)
-                            {
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="pregunta_@rs.cuestionario.Abreviacion" data-toggle="tab" href="#@rs.cuestionario.Abreviacion" role="tab" aria-controls="pregunta" aria-selected="false">
-                                        @if (rs.Respuesta != null)
-                                        {
-                                            if ((rs.cuestionario.Abreviacion.Equals("FechaCierre") ||
-                                                rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
-                                                   rs.cuestionario.Abreviacion.Equals("ListadoPersonal")) && rs.iAgua.Count() == 0)
+    <div class="row col-lg-12 mt-3" id="divCedula">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header cabeceraCedula">
+                    <i class="fas fa-list-check mr-2"></i> Cédula de Evaluación
+                </div>
+                <div class="card-body cuerpoCedula">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td data-toggle="tooltip" title="Folio de evaluación asignado por el sistema" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;"><strong>Folio: </strong> @Model.Cedula.Folio</td>
+                            <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
+                            <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
+                            <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
+                            <td data-toggle="tooltip" title="Estatus de la cédula" data-placement="top">
+                                <strong style="color: @(Model.Cedula.Estatus.FondoHexadecimal)"><b class="mr-1">Estatus:</b> @Html.Raw(Model.Cedula.Estatus.Icono) @Model.Cedula.Estatus.Nombre</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row col-lg-12 mt-3">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @foreach (var rs in Model.Cedula.respuestas)
+                                {
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="pregunta_@rs.cuestionario.Abreviacion" data-toggle="tab" href="#@rs.cuestionario.Abreviacion" role="tab" aria-controls="pregunta" aria-selected="false">
+                                            @if (rs.Respuesta != null)
                                             {
-                                                <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                if ((rs.cuestionario.Abreviacion.Equals("FechaCierre") ||
+                                                    rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
+                                                       rs.cuestionario.Abreviacion.Equals("ListadoPersonal")) && rs.iAgua.Count() == 0)
+                                                {
+                                                    <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                }
+                                                else
+                                                {
+                                                    <i class="fas fa-circle-check mr-2 text-success"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                }
                                             }
                                             else
                                             {
-                                                <i class="fas fa-circle-check mr-2 text-success"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
                                             }
-                                        }
-                                        else
-                                        {
-                                            <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
-                                        }
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            @foreach (var rs in Model.Cedula.respuestas)
-                            {
-                                <div class="tab-pane fade mt-2 ml-3 " id="@rs.cuestionario.Abreviacion" role="tabpanel" aria-labelledby="pregunta-tab">
-                                    <div class="row col-lg-12 h5 mt-3">
-                                        <div class="col-lg-10">
-                                            @rs.Pregunta.- @rs.cuestionario.Pregunta
-                                            <a href="javascript:" class="text-primary ml-2 btnAyuda" data-toggle="tooltip" title="Ayuda" data-placement="top" data-ayuda="@rs.cuestionario.Ayuda">
-                                                <i class="fa-solid fa-circle-question"></i>
-                                            </a>
-                                            @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
-                                            {
-                                                @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                           Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                @foreach (var rs in Model.Cedula.respuestas)
+                                {
+                                    <div class="tab-pane fade mt-2 ml-3 " id="@rs.cuestionario.Abreviacion" role="tabpanel" aria-labelledby="pregunta-tab">
+                                        <div class="row col-lg-12 h5 mt-3">
+                                            <div class="col-lg-10">
+                                                @rs.Pregunta.- @rs.cuestionario.Pregunta
+                                                <a href="javascript:" class="text-primary ml-2 btnAyuda" data-toggle="tooltip" title="Ayuda" data-placement="top" data-ayuda="@rs.cuestionario.Ayuda">
+                                                    <i class="fa-solid fa-circle-question"></i>
+                                                </a>
+                                                @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
-                                                    <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none": "block");">
-                                                        <div class="icheck-success d-inline">
-                                                            <input type="radio" name="@rs.cuestionario.Abreviacion" value="true" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
-                                                                   data-pusuario="@rs.cuestionario.Consecutivo"
-                                                                   data-obligatorio="@rs.ciAgua.Obligatorio"
-                                                                   data-respuesta="@rs.ciAgua.Respuesta"
-                                                                   data-abreviacion="@rs.cuestionario.Abreviacion">
-                                                            <label for="@String.Concat("radioSuccess", @i)">Si</label>
-                                                        </div>
-                                                        @{
-                                                            i++;
-                                                        }
-                                                        <div class="icheck-success d-inline ml-3">
-                                                            <input type="radio" name="@rs.cuestionario.Abreviacion" value="false" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
-                                                                   data-pusuario="@rs.cuestionario.Consecutivo"
-                                                                   data-obligatorio="@rs.ciAgua.Obligatorio"
-                                                                   data-respuesta="@rs.ciAgua.Respuesta"
-                                                                   data-abreviacion="@rs.cuestionario.Abreviacion">
-                                                            <label for="@String.Concat("radioSuccess", @i)">No</label>
-                                                        </div>
-                                                        @{
-                                                            i++;
-                                                        }
-                                                    </div>
-                                                }
-                                            }
-                                        </div>
-                                        <div class="col-lg-12 mt-2">
-                                            @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
-                                            {
-                                                @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                    Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                {
-                                                    @if (rs.cuestionario.Incidencias && rs.cuestionario.Abreviacion.Equals("FechaCierre"))
+                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
+                                              Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                     {
-                                                        if (rs.iAgua.Count() == 0)
+                                                        <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none": "block");">
+                                                            <div class="icheck-success d-inline">
+                                                                <input type="radio" name="@rs.cuestionario.Abreviacion" value="true" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
+                                                                       data-pusuario="@rs.cuestionario.Consecutivo"
+                                                                       data-obligatorio="@rs.ciAgua.Obligatorio"
+                                                                       data-respuesta="@rs.ciAgua.Respuesta"
+                                                                       data-abreviacion="@rs.cuestionario.Abreviacion">
+                                                                <label for="@String.Concat("radioSuccess", @i)">Si</label>
+                                                            </div>
+                                                            @{
+                                                                i++;
+                                                            }
+                                                            <div class="icheck-success d-inline ml-3">
+                                                                <input type="radio" name="@rs.cuestionario.Abreviacion" value="false" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
+                                                                       data-pusuario="@rs.cuestionario.Consecutivo"
+                                                                       data-obligatorio="@rs.ciAgua.Obligatorio"
+                                                                       data-respuesta="@rs.ciAgua.Respuesta"
+                                                                       data-abreviacion="@rs.cuestionario.Abreviacion">
+                                                                <label for="@String.Concat("radioSuccess", @i)">No</label>
+                                                            </div>
+                                                            @{
+                                                                i++;
+                                                            }
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="col-lg-12 mt-2">
+                                                @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
+                                                {
+                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
+                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                    {
+                                                        @if (rs.cuestionario.Incidencias && rs.cuestionario.Abreviacion.Equals("FechaCierre"))
+                                                        {
+                                                            if (rs.iAgua.Count() == 0)
+                                                            {
+                                                                <a href="javascript:" class="addIncidencia btn btn-sm btn-primary" data-pregunta="@rs.cuestionario.Consecutivo"
+                                                                   data-preguntaid="@rs.cuestionario.Id"
+                                                                   data-cedula="@rs.CedulaEvaluacionId"
+                                                                   data-abreviacion="@rs.cuestionario.Abreviacion"
+                                                                   data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
+                                                                   data-respuesta="@rs.Respuesta"
+                                                                   data-ayuda="@rs.ciAgua.Ayuda"
+                                                                   data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
+                                                                   data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
+                                                                    <i class="fas fa-plus mr-1"></i> @(rs.cuestionario.Abreviacion.Contains("FechaCierre") ? "Registrar Fecha de Cierre": "Registrar")
+                                                                </a>
+                                                            }
+                                                        }
+                                                        else if (rs.cuestionario.Incidencias && rs.ciAgua.Obligatorio && !rs.cuestionario.Abreviacion.Contains("FechaCierre"))
                                                         {
                                                             <a href="javascript:" class="addIncidencia btn btn-sm btn-primary" data-pregunta="@rs.cuestionario.Consecutivo"
                                                                data-preguntaid="@rs.cuestionario.Id"
@@ -326,185 +357,170 @@
                                                                data-ayuda="@rs.ciAgua.Ayuda"
                                                                data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
                                                                data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
-                                                                <i class="fas fa-plus mr-1"></i> @(rs.cuestionario.Abreviacion.Contains("FechaCierre") ? "Registrar Fecha de Cierre": "Registrar")
+                                                                <i class="fas fa-plus mr-1"></i> Registrar Incidencia
                                                             </a>
                                                         }
                                                     }
-                                                    else if (rs.cuestionario.Incidencias && rs.ciAgua.Obligatorio && !rs.cuestionario.Abreviacion.Contains("FechaCierre"))
-                                                    {
-                                                        <a href="javascript:" class="addIncidencia btn btn-sm btn-primary" data-pregunta="@rs.cuestionario.Consecutivo"
-                                                           data-preguntaid="@rs.cuestionario.Id"
-                                                           data-cedula="@rs.CedulaEvaluacionId"
-                                                           data-abreviacion="@rs.cuestionario.Abreviacion"
-                                                           data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
-                                                           data-respuesta="@rs.Respuesta"
-                                                           data-ayuda="@rs.ciAgua.Ayuda"
-                                                           data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
-                                                           data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
-                                                            <i class="fas fa-plus mr-1"></i> Registrar Incidencia
-                                                        </a>
-                                                    }
                                                 }
-                                            }
+                                            </div>
                                         </div>
-                                    </div>
-                                    @if (rs.cuestionario.Incidencias && rs.iAgua.Count() != 0)
-                                    {
-                                        ci = 0;
-                                        <div class="row mt-3">
-                                            <div class="col-lg-12">
-                                                <table class="table tblIncidencias" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Tipo</th>
-                                                            @if (@rs.ciAgua.Tipo)
-                                                            {
-                                                                <th>Característica</th>
-                                                            }
-                                                            @if (@rs.ciAgua.FechaProgramada)
-                                                            {
-                                                                <th>Fecha programada</th>
-                                                            }
-
-                                                            @if (@rs.ciAgua.FechaEntrega)
-                                                            {
-                                                                <th>Fecha entrega</th>
-                                                            }
-
-                                                            @if (@rs.ciAgua.Cantidad)
-                                                            {
-                                                                <th>Cantidad</th>
-                                                            }
-
-                                                            @if (@rs.ciAgua.Observaciones)
-                                                            {
-                                                                <th>Observaciones</th>
-                                                            }
-
-                                                            @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                            {
-                                                                <th>Monto Penalizacion</th>
-                                                            }
-
-                                                            @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                        Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                            {
-                                                                <th>Acciones</th>
-                                                            }
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var inc in rs.iAgua)
-                                                        {
-                                                            ci++;
+                                        @if (rs.cuestionario.Incidencias && rs.iAgua.Count() != 0)
+                                        {
+                                            ci = 0;
+                                            <div class="row mt-3">
+                                                <div class="col-lg-12">
+                                                    <table class="table tblIncidencias" width="100%">
+                                                        <thead>
                                                             <tr>
-                                                                <td>@ci</td>
-                                                                <td>@inc.Incidencia.Valor</td>
+                                                                <th>#</th>
+                                                                <th>Tipo</th>
                                                                 @if (@rs.ciAgua.Tipo)
                                                                 {
-                                                                    <td>@inc.DIncidencia.Nombre</td>
+                                                                    <th>Característica</th>
                                                                 }
-                                                                    
-                                                                @if (@rs.ciAgua.FechaProgramada)    
-                                                                {   
-                                                                    <td>@inc.FechaProgramada.ToString("dd/MM/yyyy")</td>
+                                                                @if (@rs.ciAgua.FechaProgramada)
+                                                                {
+                                                                    <th>Fecha programada</th>
                                                                 }
 
                                                                 @if (@rs.ciAgua.FechaEntrega)
                                                                 {
-                                                                    <td>@inc.FechaEntrega.ToString("dd/MM/yyyy")</td>
+                                                                    <th>Fecha entrega</th>
                                                                 }
 
                                                                 @if (@rs.ciAgua.Cantidad)
                                                                 {
-                                                                    <td>@inc.Cantidad</td>
+                                                                    <th>Cantidad</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciAgua.Observaciones)
                                                                 {
-                                                                    <td>@inc.Observaciones</td>
+                                                                    <th>Observaciones</th>
                                                                 }
-                                                            
+
                                                                 @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                           !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
-                                                                    <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
+                                                                    <th>Monto Penalizacion</th>
                                                                 }
 
                                                                 @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                           Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
-                                                                    <td>
-                                                                        <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
-                                                                           data-abreviacion="@rs.cuestionario.Abreviacion" data-incidencia="@inc.Id"
-                                                                           data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
-                                                                           data-fechap="@inc.FechaProgramada"
-                                                                           data-fechae="@inc.FechaEntrega"
-                                                                           data-tipo="@inc.TipoId"
-                                                                           data-cantidad="@inc.Cantidad"
-                                                                           data-observaciones="@inc.Observaciones"
-                                                                           data-incidenciaid="@inc.IncidenciaId" data-preguntaid="@rs.cuestionario.Id">
-                                                                            <i class="fas fa-pencil text-primary"></i>
-                                                                        </a>
-                                                                        <a href="javascript:" class="eliminarIncidencia ml-2"
-                                                                           data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
-                                                                           data-id="@inc.Id">
-                                                                            <i class="fas fa-times text-danger"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                 }
+                                                                    <th>Acciones</th>
+                                                                }
                                                             </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var inc in rs.iAgua)
+                                                            {
+                                                                ci++;
+                                                                <tr>
+                                                                    <td>@ci</td>
+                                                                    <td>@inc.Incidencia.Valor</td>
+                                                                    @if (@rs.ciAgua.Tipo)
+                                                                    {
+                                                                        <td>@inc.DIncidencia.Nombre</td>
+                                                                    }
+
+                                                                    @if (@rs.ciAgua.FechaProgramada)
+                                                                    {
+                                                                        <td>@inc.FechaProgramada.ToString("dd/MM/yyyy")</td>
+                                                                    }
+
+                                                                    @if (@rs.ciAgua.FechaEntrega)
+                                                                    {
+                                                                        <td>@inc.FechaEntrega.ToString("dd/MM/yyyy")</td>
+                                                                    }
+
+                                                                    @if (@rs.ciAgua.Cantidad)
+                                                                    {
+                                                                        <td>@inc.Cantidad</td>
+                                                                    }
+
+                                                                    @if (@rs.ciAgua.Observaciones)
+                                                                    {
+                                                                        <td>@inc.Observaciones</td>
+                                                                    }
+
+                                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
+                                                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                    {
+                                                                        <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
+                                                                    }
+
+                                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
+                                                                   Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                    {
+                                                                        <td>
+                                                                            <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
+                                                                               data-abreviacion="@rs.cuestionario.Abreviacion" data-incidencia="@inc.Id"
+                                                                               data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
+                                                                               data-fechap="@inc.FechaProgramada"
+                                                                               data-fechae="@inc.FechaEntrega"
+                                                                               data-tipo="@inc.TipoId"
+                                                                               data-cantidad="@inc.Cantidad"
+                                                                               data-observaciones="@inc.Observaciones"
+                                                                               data-incidenciaid="@inc.IncidenciaId" data-preguntaid="@rs.cuestionario.Id">
+                                                                                <i class="fas fa-pencil text-primary"></i>
+                                                                            </a>
+                                                                            <a href="javascript:" class="eliminarIncidencia ml-2"
+                                                                               data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
+                                                                               data-id="@inc.Id">
+                                                                                <i class="fas fa-times text-danger"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                        @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
+                                                            !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                        {
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tfoot>
                                                         }
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (rs.cuestionario.Incidencias && rs.iAgua.Count() == 0)
+                                        {
+                                            ci = 0;
+                                            <div class="row col-lg-12 mt-3">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Respuesta</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>@rs.ciAgua.RespuestaCedula</td>
+                                                        </tr>
                                                     </tbody>
-                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                         !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                    {
-                                                        <tfoot>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    }
                                                 </table>
                                             </div>
-                                        </div>
-
-                                    }
-                                    else if (rs.cuestionario.Incidencias && rs.iAgua.Count() == 0)
-                                    {
-                                        ci = 0;
-                                        <div class="row col-lg-12 mt-3">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Respuesta</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>@rs.ciAgua.RespuestaCedula</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    }
-                                </div>
-                            }
+                                        }
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="row col-lg-12 mt-3" id="divEntregables">
         <div class="col-lg-12">
@@ -529,14 +545,14 @@
                             @foreach (var en in Model.Cedula.entregables)
                             {
                                 var fe = Model.FlujoEntregables.SingleOrDefault(fe => fe.EntregableId == en.EntregableId && fe.Flujo.Equals(Model.Supervision));
-                                var nuevoNombreEntregable =  Model.Cedula.Anio >= 2025 && en.tipoEntregable.Nombre == "Acta Entrega - Recepción" ? "Acta Entrega - Recepción de Bienes" : en.tipoEntregable.Nombre;
+                                var nuevoNombreEntregable = Model.Cedula.Anio >= 2025 && en.tipoEntregable.Nombre == "Acta Entrega - Recepción" ? "Acta Entrega - Recepción de Bienes" : en.tipoEntregable.Nombre;
                                 ce++;
                                 <tr>
                                     <td>@ce</td>
                                     @*<td>@en.tipoEntregable.Nombre</td>*@
                                     <td>
-                                            @nuevoNombreEntregable
-                                             @*@(Model.Cedula.Anio == 2024 && en.tipoEntregable.Nombre == "Acta Entrega - Recepción" ? "Acta Entrega - Recepción de Bienes" : en.tipoEntregable.Nombre)*@
+                                        @nuevoNombreEntregable
+                                        @*@(Model.Cedula.Anio == 2024 && en.tipoEntregable.Nombre == "Acta Entrega - Recepción" ? "Acta Entrega - Recepción de Bienes" : en.tipoEntregable.Nombre)*@
                                     </td>
                                     <td>@(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase((en.usuario.NombreEmp + " " + en.usuario.PaternoEmp + " " + en.usuario.MaternoEmp).ToLower()))</td>
                                     <td class="font-weight-bold @(en.Archivo != null && !en.Archivo.Equals("") ? "text-success" : "text-danger")">@(en.Archivo != null && !en.Archivo.Equals("") ? en.Archivo : "Sin Adjuntar")</td>
@@ -555,7 +571,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                  (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -564,8 +580,9 @@
                                             </a>
                                         }
 
+
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 && (fe != null ? fe.Autorizar : false)
-                                   && !en.estatus.Nombre.Equals("Autorizado"))
+                                 && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -574,7 +591,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                   && !en.estatus.Nombre.Equals("Rechazado"))
+                                 && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -583,7 +600,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                              (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                            (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER" data-toggle="tooltip" title="Generar  @nuevoNombreEntregable">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
@@ -591,7 +608,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                              (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                            (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -599,10 +616,10 @@
                                             </a>
                                         }
 
-                                        @if ((en.tipoEntregable.Abreviacion.Equals("Memorandum") || 
-                                            en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") ||
-                                            en.tipoEntregable.Abreviacion.Equals("ActaER")) && !en.Validado
-                                   && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
+                                        @if ((en.tipoEntregable.Abreviacion.Equals("Memorandum") ||
+                                          en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") ||
+                                          en.tipoEntregable.Abreviacion.Equals("ActaER")) && !en.Validado
+                                 && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -618,7 +635,7 @@
                 </div>
                 <div class="card-footer">
                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                         Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                        Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                     {
                         <a href="javascript:" class="btn btn-sm btn-primary guardarCedula float-right">
                             Guardar Respuestas
@@ -1084,6 +1101,33 @@
 @*Fin Modal para ver la factura*@
 
 <style>
+    .titulo-principal {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #24135f;
+        text-align: left;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-in-out;
+        font-weight: bold;
+        position: relative; /* Agrega esta línea */
+        top: -5px; /* Ajusta el valor según sea necesario */
+        right: -10px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .botonregreso {
+        position: relative; /* Agrega esta línea */
+        left: -33px;
+    }
     .cabeceraInformacion {
         background-color: #ffffff;
         padding: 10px;
@@ -1576,7 +1620,7 @@
                     }
                     Swal.fire({
                         icon: 'error',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         html: 'Por favor seleccione una respuesta antes de capturar incidencias u observaciones.'
                     });
                 }
@@ -2062,7 +2106,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: "Guardando la incidencia, espere por favor."
                 });
                 Swal.showLoading();
@@ -2079,7 +2123,7 @@
                                 if (response.status == 200) {
                                     Swal.fire({
                                         icon: "success",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "La incidencia se actualizó correctamente.",
                                         confirmButtonText: 'Cerrar'
                                 }).then(function () {
@@ -2087,7 +2131,7 @@
                                     Swal.fire({
                                         allowOutsideClick: false,
                                         icon: "info",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "Actualizando las incidencias, espere por favor."
                                     });
                                     Swal.showLoading();
@@ -2097,7 +2141,7 @@
                         }).catch(error => {
                             Swal.fire({
                                 icon: "error",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "Hubo un error al insertar la incidencia. Contacte a su administrador del sistema.",
                                 confirmButtonText: 'Cerrar'
                             });
@@ -2113,7 +2157,7 @@
                                 if (response.status == 200) {
                                     Swal.fire({
                                         icon: "success",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "La incidencia se registró correctamente.",
                                         confirmButtonText: 'Cerrar'
                                     }).then(function () {
@@ -2121,7 +2165,7 @@
                                     Swal.fire({
                                         allowOutsideClick: false,
                                         icon: "info",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "Actualizando las incidencias, espere por favor."
                                     });
                                     Swal.showLoading();
@@ -2131,7 +2175,7 @@
                         }).catch(error => {
                             Swal.fire({
                                 icon: "error",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "Hubo un error al insertar la incidencia. Contacte a su administrador del sistema.",
                                 confirmButtonText: 'Cerrar'
                             });
@@ -2147,7 +2191,7 @@
 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Eliminar</b> la incidencia de la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -2161,7 +2205,7 @@
                         if (response.status == 200) {
                             Swal.fire({
                                 icon: "success",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "La incidencia se eliminó correctamente.",
                                 confirmButtonText: 'Cerrar'
                             }).then(function () {
@@ -2169,7 +2213,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de  '+servicio.descripcion,
                                     html: "Actualizando las incidencias, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -2179,7 +2223,7 @@
                     }).catch(error => {
                         Swal.fire({
                             icon: "error",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de  '+servicio.descripcion,
                             html: "Hubo un error al eliminar la incidencia. Contacte a su administrador del sistema.",
                             confirmButtonText: 'Cerrar'
                         });
@@ -2197,7 +2241,7 @@
                 if (obligatorio == "True" && cuentaIncidencias(cedula.id, pusuario) != 0) {
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de  '+servicio.descripcion,
                         html: '<strong>Advertencia:</strong><p>Tiene incidencias capturadas en esta pregunta, al cambiar la respuesta <strong>se eliminarán todas las incidencias. ¿Desea continuar? </strong></p>',
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
@@ -2208,7 +2252,7 @@
                         if (p.isConfirmed) {
                             Swal.fire({
                                 icon: 'warning',
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: 'Escriba la palabra ELIMINAR en para confirmar el cambio de respuesta.',
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
@@ -2225,13 +2269,13 @@
                                         Swal.fire({
                                             allowOutsideClick: false,
                                             icon: "info",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de  '+servicio.descripcion,
                                             html: "Eliminando las incidencias, espere por favor."
                                         });
                                         Swal.showLoading();
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de  '+servicio.descripcion,
                                             html: 'Se eliminaron las incidencias de la pregunta ' + pusuario + '.',
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
@@ -2340,7 +2384,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: "Guardando entregable, espere por favor."
                 });
                 Swal.showLoading();
@@ -2348,14 +2392,14 @@
                     if (response.status == 200) {
                         Swal.fire({
                             icon: "success",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de  '+servicio.descripcion,
                             html: 'El entregable <b>' + $("#campoTipoEntregable").val() + '</b> se actualizó correctamente.',
                             confirmButtonText: 'Cerrar'
                         }).then(function () {
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "Actualizando el listado de entregables, espere por favor."
                             });
                             Swal.showLoading();
@@ -2465,7 +2509,7 @@
 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Autorizar</b> el entregable <b>' + $(this).data('tipo') + '</b>?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -2479,14 +2523,14 @@
                             if (response.status == 200) {
                                 Swal.fire({
                                     icon: "success",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de  '+servicio.descripcion,
                                     html: "El entregable <b>" + $(this).data('tipo') + "</b> se autorizó correctamente.",
                                     confirmButtonText: 'Cerrar'
                                 }).then(function () {
                                     Swal.fire({
                                         allowOutsideClick: false,
                                         icon: "info",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "Actualizando la cédula de evaluación, espere por favor."
                                     });
                                     Swal.showLoading();
@@ -2496,7 +2540,7 @@
                         }).catch(error => {
                             Swal.fire({
                                 icon: "error",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                 confirmButtonText: 'Cerrar'
                             });
@@ -2516,7 +2560,7 @@
 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Rechazar</b> el ' + $(this).data('tipo') + '?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -2527,7 +2571,7 @@
                     if (confirm.isConfirmed) {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de  '+servicio.descripcion,
                             html: 'Por favor captura el motivo por el cual se rechaza el(la) <b>' + $(this).data('tipo') + '</b>.',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -2543,14 +2587,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de  '+servicio.descripcion,
                                             html: "El entregable <b>" + $(this).data('tipo') + "</b> se rechazó correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de  '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -2560,7 +2604,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });
@@ -2583,7 +2627,7 @@
 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: '¿Estas seguro de que deseas <b>Validar</b> el ' + $(this).data('tipo') + '?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -2596,14 +2640,14 @@
                             if (response.status == 200) {
                                 Swal.fire({
                                     icon: "success",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de  '+servicio.descripcion,
                                     html: "El(la) " + $(this).data('tipo') + " se validó correctamente.",
                                     confirmButtonText: 'Cerrar'
                                 }).then(function () {
                                     Swal.fire({
                                         allowOutsideClick: false,
                                         icon: "info",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "Actualizando la cédula de evaluación, espere por favor."
                                     });
                                     Swal.showLoading();
@@ -2613,7 +2657,7 @@
                         }).catch(error => {
                             Swal.fire({
                                 icon: "error",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "Hubo un error al validar el entregable. Contacte a su administrador del sistema.",
                                 confirmButtonText: 'Cerrar'
                             });
@@ -2632,7 +2676,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de  '+servicio.descripcion,
                     html: "Regresando al listado de cédulas, espere por favor."
                 });
                 Swal.showLoading();
@@ -2662,14 +2706,14 @@
                     success: function () {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de  '+servicio.descripcion,
                             html: 'Se guardaron las respuestas de la cédula de evaluación correctamente.',
                             confirmButtonText: 'Cerrar'
                         }).then(function () {
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de  '+servicio.descripcion,
                                 html: "Guardando el cuestionario, espere por favor."
                             });
                             Swal.showLoading();
@@ -2684,7 +2728,7 @@
                     if (validaEntregables()) {
                         Swal.fire({
                             icon: 'warning',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de  '+servicio.descripcion,
                             html: '¿Está seguro que desea <b>Enviar a DAS</b> la cédula de evaluación?',
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
@@ -2696,7 +2740,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de  '+servicio.descripcion,
                                     html: "Enviando la cédula de evaluación, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -2713,7 +2757,7 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: (response.data.bloqueada == true ? "error":"success"),
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de  '+servicio.descripcion,
                                             html: (response.data.bloqueada == true ?
                                                     "La cédula de evaluación fue <b class='text-danger'>Bloqueada</b> debido a que aún existen guías pendientes de dar seguimiento.":
                                                     "La cédula de evaluación fue enviada correctamente."
@@ -2723,7 +2767,7 @@
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de  '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -2733,7 +2777,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de  '+servicio.descripcion,
                                         html: "Hubo un error al enviar la cédula. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });
@@ -2752,7 +2796,7 @@
                         Swal.fire({
                             allowOutsideClick: false,
                             icon: "info",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de  '+servicio.descripcion,
                             html: "Se generó la cédula de evaluación.",
                             confirmButtonText: 'Cerrar'
                         });
@@ -2765,7 +2809,7 @@
                         Swal.fire({
                             allowOutsideClick: false,
                             icon: "error",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: "<p style='text-align: justify'>Error no se puede generar la <b>Cédula de Evaluación</b>, favor de capturar previamente a los servidores públicos que firmarán electrónicamente la cédula de evaluación.</p>",
                             confirmButtonText: 'Capturar'
                         }).then(function () {
@@ -2789,7 +2833,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: "Autorizando los firmantes, espere por favor."
                 });
                 Swal.showLoading();
@@ -2815,7 +2859,7 @@
                         }).catch(error => {
                             Swal.fire({
                                 'icon': 'error',
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 'html': 'Hubo un error al guardar al firmante que <b>Supervisa</b> el servicio. Contacte al administrador del sistema.'
                             });
                         });
@@ -2823,7 +2867,7 @@
                 }).catch(error => {
                     Swal.fire({
                         'icon': 'error',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         'html': 'Hubo un error al guardar al firmante que <b>Revisa</b> el servicio. Contacte al administrador del sistema.'
                     });
                 });
@@ -2832,7 +2876,7 @@
             $(".autorizar").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Autorizar</b> la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -2843,7 +2887,7 @@
                     if (confirm.isConfirmed) {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             text: 'Por favor capture los comentarios.',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -2857,7 +2901,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Autorizando la cédula de evaluación, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -2871,14 +2915,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "La cédula de evaluación se autorizó correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -2888,7 +2932,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });
@@ -2902,7 +2946,7 @@
             $(".rechazar").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Rechazar</b> la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -2913,7 +2957,7 @@
                     if (confirm.isConfirmed) {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             text: 'Por favor capture el motivo por el cual rechaza la cédula.',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -2927,7 +2971,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Rechazando la cédula de evaluación, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -2946,14 +2990,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "La cédula de evaluación se rechazó correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -2963,7 +3007,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });
@@ -2978,7 +3022,7 @@
                 if (!validaNC()) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
                         confirmButtonText: 'Cerrar'
                     });
@@ -2989,7 +3033,7 @@
                 if (validaEntregables()) {
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         html: '¿Está seguro que desea <b>Enviar a revisión por la CAE</b> la cédula de evaluación?',
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
@@ -3001,7 +3045,7 @@
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 html: "Enviando la cédula de evaluación a revisión CAE, espere por favor."
                             });
                             Swal.showLoading();
@@ -3017,14 +3061,14 @@
                                 if (response.status == 200) {
                                     Swal.fire({
                                         icon: "success",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "La cédula de evaluación se envió a revisión de la CAE correctamente.",
                                         confirmButtonText: 'Cerrar'
                                     }).then(function () {
                                         Swal.fire({
                                             allowOutsideClick: false,
                                             icon: "info",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "Actualizando la cédula de evaluación, espere por favor."
                                         });
                                         Swal.showLoading();
@@ -3034,7 +3078,7 @@
                             }).catch(error => {
                                 Swal.fire({
                                     icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                     confirmButtonText: 'Cerrar'
                                 });
@@ -3047,7 +3091,7 @@
             $(".autorizarCAE").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Autorizar por la CAE</b> la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -3059,7 +3103,7 @@
                         Swal.fire({
                             allowOutsideClick: false,
                             icon: "info",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: "Verificando la cédula de evaluación, espere por favor."
                         });
                         Swal.showLoading();
@@ -3070,7 +3114,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Autorizando la cédula de evaluación por la CAE, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -3086,14 +3130,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "La cédula de evaluación se autorizó por la CAE correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -3106,7 +3150,7 @@
                             {
                                 Swal.fire({
                                     icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Existen entregables pendientes de autorizar o rechazar. Favor de revisar.",
                                     confirmButtonText: 'Cerrar'
                                 });
@@ -3119,7 +3163,7 @@
             $(".tramiteRechazado").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Rechazar el trámite</b> de la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -3131,7 +3175,7 @@
                         Swal.fire({
                             allowOutsideClick: false,
                             icon: "info",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: "Verificando la cédula de evaluación, espere por favor."
                         });
                         Swal.showLoading();
@@ -3142,7 +3186,7 @@
                             {
                                 Swal.fire({
                                     icon: 'info',
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: 'Por favor capture el motivo por el cual <b>Rechaza el trámite</b> de la cédula.',
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',
@@ -3156,7 +3200,7 @@
                                         Swal.fire({
                                             allowOutsideClick: false,
                                             icon: "info",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "Rechazando el trámite de la cédula de evaluación, espere por favor."
                                         });
                                         Swal.showLoading();
@@ -3173,14 +3217,14 @@
                                             if (response.status == 200) {
                                                 Swal.fire({
                                                     icon: "success",
-                                                    title: 'Servicio de '+servicio.descripcion,
+                                                    title: 'Adquisición de '+servicio.descripcion,
                                                     html: "El trámite de la cédula de evaluación se rechazó correctamente.",
                                                     confirmButtonText: 'Cerrar'
                                                 }).then(function () {
                                                     Swal.fire({
                                                         allowOutsideClick: false,
                                                         icon: "info",
-                                                        title: 'Servicio de '+servicio.descripcion,
+                                                        title: 'Adquisición de '+servicio.descripcion,
                                                         html: "Actualizando la cédula de evaluación, espere por favor."
                                                     });
                                                     Swal.showLoading();
@@ -3190,7 +3234,7 @@
                                         }).catch(error => {
                                             Swal.fire({
                                                 icon: "error",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                                 confirmButtonText: 'Cerrar'
                                             });
@@ -3202,7 +3246,7 @@
                             {
                                 Swal.fire({
                                     icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Existen entregables pendientes de autorizar o rechazar. Favor de revisar.",
                                     confirmButtonText: 'Cerrar'
                                 });
@@ -3216,7 +3260,7 @@
                  if (!validaNC()) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
                         confirmButtonText: 'Cerrar'
                     });
@@ -3227,7 +3271,7 @@
                 if (validaEntregables()) {
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         html: '¿Está seguro que desea <b>Tramitar</b> la cédula de evaluación?',
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
@@ -3239,7 +3283,7 @@
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 html: "Tramitando la cédula de evaluación, espere por favor."
                             });
                             Swal.showLoading();
@@ -3255,14 +3299,14 @@
                                 if (response.status == 200) {
                                     Swal.fire({
                                         icon: "success",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "La cédula de evaluación se tramitó correctamente.",
                                         confirmButtonText: 'Cerrar'
                                     }).then(function () {
                                         Swal.fire({
                                             allowOutsideClick: false,
                                             icon: "info",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "Actualizando la cédula de evaluación, espere por favor."
                                         });
                                         Swal.showLoading();
@@ -3278,7 +3322,7 @@
             $(".tramitePago").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Tramitar a Pago</b> la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -3303,14 +3347,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "La cédula de evaluación se tramitó a pago correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -3323,7 +3367,7 @@
                             {
                                 Swal.fire({
                                     icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Existen entregables pendientes. Favor de revisar.",
                                     confirmButtonText: 'Cerrar'
                                 });
@@ -3332,7 +3376,7 @@
                             {
                                 Swal.fire({
                                     icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "<p style='text-align: justify'>Verifique que ya fueron validados los siguientes entregables:<br />" +
                                           "- <b>Memorándum</b><br>"+
                                           "- <b>Acta Entrega - Recepción (Firmada)</b><br>" +
@@ -3344,7 +3388,7 @@
                             {
                                 Swal.fire({
                                     icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Aún no se válida el <b>Acuse Memorándum (Firel)</b>.",
                                     confirmButtonText: 'Cerrar'
                                 });
@@ -3373,7 +3417,7 @@
                             if (cuentaIncidencias(cedula.id, respuestas[i].pregunta) == 0) {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: 'Debe registrar la(s) incidencia(s) correspondientes en la <b>Pregunta ' + (i + 1) + '</b>',
                                     confirmButtonText: 'Cerrar'
                                 });
@@ -3384,7 +3428,7 @@
                     else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: 'Debe contestar la <b>Pregunta ' + (i + 1) + '</b>',
                             confirmButtonText: 'Cerrar'
                         });
@@ -3399,7 +3443,7 @@
                     if (respuestas[i].respuesta + "" != respuesta + "" && respuesta != "N/A") {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: 'Debe guardar el cuestionario antes de enviar a revisión por la DAS.',
                             confirmButtonText: 'Cerrar'
                         });
@@ -3433,7 +3477,7 @@
                 if (e != "") {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Servicio de '+servicio.descripcion,
+                        title: 'Adquisición de '+servicio.descripcion,
                         html: 'Se deben adjuntar los siguientes entregables: <br>' + e,
                         confirmButtonText: 'Cerrar'
                     });
@@ -3485,14 +3529,14 @@
                     success: function () {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: 'Se guardaron las respuestas de la cédula de evaluación correctamente.',
                             confirmButtonText: 'Cerrar'
                         }).then(function () {
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 html: "Actualizando el cuestionario, espere por favor."
                             });
                             Swal.showLoading();
@@ -3528,14 +3572,14 @@
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "warning",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 html: "La <b>Pregunta " + pregunta + " requiere</b> captura de incidencias.",
                                 confirmButtonText: 'Cerrar'
                             }).then(function () {
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Cargando información para la captura de incidencias, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -3546,7 +3590,7 @@
                             Swal.fire({
                                 allowOutsideClick: false,
                                 icon: "info",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 html: "Guardando información, espere por favor."
                             });
                             Swal.showLoading();
@@ -3563,7 +3607,7 @@
                         Swal.fire({
                             allowOutsideClick: false,
                             icon: "info",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: "Generando el <b>Acta Entrega</b>, espere por favor."
                         });
                         Swal.showLoading();
@@ -3573,7 +3617,7 @@
                                     const href = URL.createObjectURL(response.data);
                                     const link = document.createElement('a');
                                     link.href = href;
-                                    link.setAttribute('download', 'Acta_Entrega_Recepcion_Agua_Recepcion.docx');
+                                    link.setAttribute('download', 'Acta_Entrega_Recepcion_Agua.docx');
                                     document.body.appendChild(link);
                                     link.click();
                                     document.body.removeChild(link);
@@ -3581,7 +3625,7 @@
                                     Swal.fire({
                                         allowOutsideClick: false,
                                         icon: "info",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "El <b>Acta Entrega - Recepción</b> se descargó correctamente. <p class='text-justify mt-3'>" +
                                                "<b class='text-danger'>Sugerencia:</b> En caso de que se generé una hoja en blanco favor de eliminarla.</p>",
                                         confirmButtonText: 'Cerrar'
@@ -3594,7 +3638,7 @@
                         {
                             Swal.fire({
                                 icon: "error",
-                                title: 'Servicio de '+servicio.descripcion,
+                                title: 'Adquisición de '+servicio.descripcion,
                                 html: "No es posible generar el <b>Acta Entrega - Recepción</b> ya que aún no se adjunta el XML de la <b>Nota de Crédito</b>.",
                                 confirmButtonText: 'Cerrar'
                             });
@@ -3605,7 +3649,7 @@
                         Swal.fire({
                             allowOutsideClick: false,
                             icon: "error",
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: "<p style='text-align: justify'>Error no se puede generar el <b>Acta Entrega - Recepción</b>, favor de capturar previamente a los servidores públicos que firmarán electrónicamente la cédula de evaluación.</p>",
                             confirmButtonText: 'Capturar'
                         }).then(function () {
@@ -3647,7 +3691,7 @@
             $(".solicitudRechazo").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Soliciar el Rechazo</b> de la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -3658,7 +3702,7 @@
                     if (confirm.isConfirmed) {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             html: '<p style = "text-align: justify">Por favor capture el motivo por el cual solicita el rechazo de la cédula. <br/><br/>' +
                                    '<b class= "text-danger" >Advertencia: </b> En caso de que se autorice el <b>Rechazo de la cédula</b> todos los entregables '+
                                    'a <b>excepción de la "Factura" y la "Validación del SAT"</b> serán eliminados.<br/><br/>'+
@@ -3675,7 +3719,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Solicitando el rechazo de la cédula de evaluación, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -3693,14 +3737,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "Se envió la solicitud del rechazó correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -3710,7 +3754,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });
@@ -3724,7 +3768,7 @@
             $(".denegarRechazo").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Denegar el Rechazo</b> de la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -3735,7 +3779,7 @@
                     if (confirm.isConfirmed) {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             text: 'Por favor capture el motivo por el cual solicita el deniega el rechazo de la cédula.',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -3749,7 +3793,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Denegando el rechazo de la cédula de evaluación, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -3765,14 +3809,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "Se denegó la solicitud del rechazó correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -3782,7 +3826,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });
@@ -3796,7 +3840,7 @@
             $(".cancelarRechazo").click(function () {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: '¿Está seguro que desea <b>Cancelar el Rechazo</b> de la cédula de evaluación?',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -3807,7 +3851,7 @@
                     if (confirm.isConfirmed) {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Servicio de '+servicio.descripcion,
+                            title: 'Adquisición de '+servicio.descripcion,
                             text: 'Por favor capture el motivo por el cual cancela el rechazo de la cédula.',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -3821,7 +3865,7 @@
                                 Swal.fire({
                                     allowOutsideClick: false,
                                     icon: "info",
-                                    title: 'Servicio de '+servicio.descripcion,
+                                    title: 'Adquisición de '+servicio.descripcion,
                                     html: "Cancelando la solicitud de rechazo de la cédula de evaluación, espere por favor."
                                 });
                                 Swal.showLoading();
@@ -3837,14 +3881,14 @@
                                     if (response.status == 200) {
                                         Swal.fire({
                                             icon: "success",
-                                            title: 'Servicio de '+servicio.descripcion,
+                                            title: 'Adquisición de '+servicio.descripcion,
                                             html: "Se canceló la solicitud del rechazo correctamente.",
                                             confirmButtonText: 'Cerrar'
                                         }).then(function () {
                                             Swal.fire({
                                                 allowOutsideClick: false,
                                                 icon: "info",
-                                                title: 'Servicio de '+servicio.descripcion,
+                                                title: 'Adquisición de '+servicio.descripcion,
                                                 html: "Actualizando la cédula de evaluación, espere por favor."
                                             });
                                             Swal.showLoading();
@@ -3854,7 +3898,7 @@
                                 }).catch(error => {
                                     Swal.fire({
                                         icon: "error",
-                                        title: 'Servicio de '+servicio.descripcion,
+                                        title: 'Adquisición de '+servicio.descripcion,
                                         html: "Hubo un error al cancelar la solicitud de la cédula de evaluación. Contacte a su administrador del sistema.",
                                         confirmButtonText: 'Cerrar'
                                     });

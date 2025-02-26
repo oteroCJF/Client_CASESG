@@ -1,8 +1,31 @@
 ﻿@page "/agua/cedulasEvaluacion/{moduloId}/{submoduloId}/index"
 @model Clients.WebClient.Pages.Agua.CedulasEvaluacion.IndexModel
 @{
-    ViewData["Titulo"] = Model.Servicio.Descripcion;
-    ViewData["Title"] = Model.Servicio.Descripcion;
+    //TÍTULO EN LA CÉDULA Y LA PESTAÑA DEL NAVEGADOR - CAMBIA A PARTIR DE 2025
+    if (Model.Anio == 0)
+    {
+        <div class="titulo-principal">
+            Adquisición de Garrafones de Agua Purificada   <i class="fa-regular fa-glass-water-droplet"></i>
+        </div>
+
+        ViewData["Title"] = "Adquisición de Garrafones de Agua Purificada";
+    }
+    else if (Model.Anio > 2024)
+    {
+        <div class="titulo-principal">
+            Adquisición de Garrafones de Agua Purificada    <i class="fa-regular fa-glass-water-droplet"></i>
+        </div>
+
+        ViewData["Title"] = "Adquisición de Garrafones de Agua Purificada";
+    }
+    else if (Model.Anio <= 2024)
+    {
+        ViewData["Titulo"] = "Servicio de Suministro de Agua Purificada";
+        ViewData["Title"] = "Servicio de Suministro de Agua Purificada";
+    }
+    //FIN TÍTULO EN LA CÉDULA Y LA PESTAÑA DEL NAVEGADOR - CAMBIA A PARTIR DE 2025
+
+
     var c = 0;
     var mesActual = DateTime.Now.Month;
     var FEAplicados = HttpContext.Request.Query["Estatus"].ToString()?.Split(",").ToList();
@@ -33,11 +56,12 @@
 
 <div class="container-fluid">
     <form method="get" id="getAnio" asp-page-handler="GetAnio">
-        <div class="row col-lg-2">
+        <div class="row  col-3">
             <label class="label">Consultar información del año: </label>
-            <div class="input-group mb-3">
+            <div class="input-group mb-4">
                 <select class="form-control" id="anioActual" asp-for="Anio" onchange="submitForm()">
                     <option value="">Seleccione el Año</option>
+
                     @for (var i = 2022; i <= DateTime.Now.Year; i++)
                     {
                         <option value="@i">@i</option>
@@ -54,10 +78,10 @@
         <div class="row mt-3">
             <section class="col-xl-10 connectedSortable">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Cédulas de evaluación del servicio de Agua para Beber
-                        </h3>
+                    <div class="card-header">                    
+                            <strong class="card-title" style="color: #24135f; text-align: center; ">
+                                <b>Cédulas de Evaluación del Año @Model.Anio</b> 
+                            </strong>
                     </div>
                     <div class="card-body" style="font-size: 14px;">
                         <table class="table cedulasEvaluacion row-border" width="100%">
@@ -159,7 +183,7 @@
                             </div>
                             @foreach (var ms in Model.FiltrosMes)
                             {
-                                <div class="col-lg-12 show ml-3" id="btnMes" style="font-size: 12px; color: #000000;">
+                                <div class="col-lg-12 show ml-3" id="btnMes" style="font-size: 14px; color: #000000;">
                                     <label class="checkbox-inline">
                                         @if (FMAplicados.Contains(ms.Nombre))
                                         {
@@ -188,7 +212,7 @@
                             </div>
                             @foreach (var es in Model.FiltrosEstatus)
                             {
-                                <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 12px; color: #000000;">
+                                <div class="col-lg-12 show ml-3" id="btnEstatus" style="font-size: 14px; color: #000000;">
                                     <label class="checkbox-inline">
                                         @if (FEAplicados.Contains(es.Nombre))
                                         {
@@ -224,7 +248,7 @@
                                 </div>
                                 @foreach (var inm in Model.FiltrosInmueble)
                                 {
-                                    <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 12px; color: #000000;">
+                                    <div class="col-lg-12 collapse inmuebles inm_@inm.AdministracionId inmu_@inm.Nombre ml-3" id="btnInmueble" style="font-size: 14px; color: #000000;">
                                         <label class="checkbox-inline">
                                             @if (FIAplicados.Contains(inm.Nombre))
                                             {
@@ -253,6 +277,30 @@
 </div>
 
 <style>
+
+    .titulo-principal {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #24135f;
+        text-align: left;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-in-out;
+        font-weight: bold;
+        position: relative; /* Agrega esta línea */
+        top: -20px; /* Ajusta el valor según sea necesario */
+        right: -10px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
     .example-1 {
         position: relative;
         overflow-y: scroll;
@@ -432,7 +480,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: "Obteniendo las cédulas del año <b>" + $("#anioActual").val()+"</b>, espere por favor."
                 });
                 Swal.showLoading();
@@ -443,7 +491,7 @@
                 Swal.fire({
                     allowOutsideClick: false,
                     icon: "info",
-                    title: 'Servicio de '+servicio.descripcion,
+                    title: 'Adquisición de '+servicio.descripcion,
                     html: "Obteniendo el detalle de la cédula, espere por favor."
                 });
                 Swal.showLoading();

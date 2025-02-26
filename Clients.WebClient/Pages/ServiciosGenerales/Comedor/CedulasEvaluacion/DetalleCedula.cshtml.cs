@@ -130,6 +130,8 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
         public List<CFDIDto> Facturas { get; set; } = new List<CFDIDto>();
         public List<CConfiguracionIncidenciaDto> ConfiguracionIncidencias { get; set; } = new List<CConfiguracionIncidenciaDto>();
         public CedulaComedorDto Cedula { get; set; } = new CedulaComedorDto();
+
+
         public List<PermisoUsuarioDto> Permisos { get; set; } = new List<PermisoUsuarioDto>();
         public List<CTIncidenciaDto> CTIncidencias { get; set; } = new List<CTIncidenciaDto>();
         public List<EntregableEstatusDto> EntregablesEstatus { get; set; } = new List<EntregableEstatusDto>();

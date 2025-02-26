@@ -225,7 +225,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Cédula Automatizada para la Supervisión y Evaluación del Servicio de Suministro de Agua Purificada para Beber</Value>
+                    <Value>Cédula Automatizada para la Supervisión y Evaluación de la Adquisición de Garrafones de Agua Purificada en Presentación de 20 litros</Value>
                     <Style>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -259,7 +259,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Evaluación del Servicio</Value>
+                    <Value>EVALUACIÓN</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -272,7 +272,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox36</rd:DefaultName>
             <Top>3.9499cm</Top>
-            <Left>7.24641cm</Left>
+            <Left>7.23021cm</Left>
             <Height>0.6cm</Height>
             <Width>6.38938cm</Width>
             <ZIndex>1</ZIndex>
@@ -367,7 +367,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>15.1975cm</Top>
+            <Top>15.40813cm</Top>
             <Left>2.43132cm</Left>
             <Height>0.6cm</Height>
             <Width>16.10474cm</Width>
@@ -383,22 +383,22 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.32021cm</Width>
+                  <Width>2.9634cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.71482cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.97083cm</Width>
+                  <Width>2.18565cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.96063cm</Width>
+                  <Width>5.17545cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.71482cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.71482cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -794,10 +794,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>2.08268cm</Top>
-            <Left>1.48737cm</Left>
+            <Top>1.97351cm</Top>
+            <Left>1.02391cm</Left>
             <Height>1.8cm</Height>
-            <Width>17.75167cm</Width>
+            <Width>18.46898cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -901,13 +901,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>5.27834cm</Width>
+                  <Width>5.82335cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.17966cm</Width>
+                  <Width>5.86891cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.7918cm</Width>
+                  <Width>6.11744cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -923,7 +923,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Revisó</Value>
+                                  <Value>REVISÓ</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -959,7 +959,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Supervisó</Value>
+                                  <Value>SUPERVISÓ</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -995,7 +995,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Autorizó</Value>
+                                  <Value>AUTORIZÓ</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1053,7 +1053,6 @@
                                   <Value>(Firmado electrónicamente)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1099,10 +1098,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PuestoReviso.Value</Value>
+                                  <Value>=UCase(Fields!PuestoReviso.Value)</Value>
                                   <Style>
                                     <FontSize>7pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1165,7 +1163,6 @@
                                   <Value>(Firmado electrónicamente)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1204,10 +1201,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PuestoSuperviso.Value</Value>
+                                  <Value>=UCase(Fields!PuestoSuperviso.Value)</Value>
                                   <Style>
                                     <FontSize>7pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1256,7 +1252,6 @@
                                   <Value>(Firmado electrónicamente)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1295,10 +1290,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PuestoAutoriza.Value</Value>
+                                  <Value>=UCase(Fields!PuestoAutoriza.Value)</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
+                                    <FontSize>7pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1344,10 +1338,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>10.40542cm</Top>
-            <Left>1.74125cm</Left>
+            <Top>10.54548cm</Top>
+            <Left>1.07867cm</Left>
             <Height>2.32549cm</Height>
-            <Width>16.2498cm</Width>
+            <Width>17.8097cm</Width>
             <ZIndex>5</ZIndex>
             <Visibility>
               <Hidden>=IIF(Fields!Reviso.Value.Equals(Fields!Superviso.Value), True, False)</Hidden>
@@ -1382,7 +1376,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Revisó y Supervisó</Value>
+                                  <Value>REVISÓ Y SUPERVISÓ</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1418,7 +1412,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Autorizó</Value>
+                                  <Value>AUTORIZÓ</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1508,10 +1502,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PuestoReviso.Value</Value>
+                                  <Value>=UCase(Fields!PuestoReviso.Value)</Value>
                                   <Style>
                                     <FontSize>7pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1599,10 +1592,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PuestoAutoriza.Value</Value>
+                                  <Value>=UCase(Fields!PuestoAutoriza.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1647,8 +1639,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>12.80146cm</Top>
-            <Left>4.64989cm</Left>
+            <Top>12.94152cm</Top>
+            <Left>3.98731cm</Left>
             <Height>2.32549cm</Height>
             <Width>10.88723cm</Width>
             <ZIndex>6</ZIndex>
@@ -1806,8 +1798,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>1.34157cm</Top>
-            <Left>1.50047cm</Left>
+            <Top>1.2324cm</Top>
+            <Left>1.69793cm</Left>
             <Height>0.6cm</Height>
             <Width>17.73858cm</Width>
             <ZIndex>7</ZIndex>
@@ -2038,6 +2030,13 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
+                                            <Value xml:space="preserve">
+</Value>
+                                            <Style>
+                                              <FontWeight>Bold</FontWeight>
+                                            </Style>
+                                          </TextRun>
+                                          <TextRun>
                                             <Value>=Fields!Consecutivo.Value</Value>
                                             <Style>
                                               <FontWeight>Bold</FontWeight>
@@ -2117,16 +2116,16 @@
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.34076cm</Width>
+                                  <Width>4.59132cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.52312cm</Width>
+                                  <Width>3.45555cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.13112cm</Width>
+                                  <Width>3.74266cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>7.63484cm</Width>
+                                  <Width>6.84031cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -2314,6 +2313,7 @@
                                               <TextRuns>
                                                 <TextRun>
                                                   <Value>=Fields!FechaProgramada.Value</Value>
+                                                  <MarkupType>HTML</MarkupType>
                                                   <Style />
                                                 </TextRun>
                                               </TextRuns>
@@ -2457,13 +2457,13 @@
                                   <Width>4.59132cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>3.45555cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>3.74266cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.8559cm</Width>
+                                  <Width>6.84033cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -2784,13 +2784,13 @@
                                   <Width>4.59132cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>3.45555cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>3.74266cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.8559cm</Width>
+                                  <Width>6.84033cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -3105,8 +3105,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Cuestionario</DataSetName>
-            <Top>4.77898cm</Top>
-            <Left>0.30913cm</Left>
+            <Top>4.12773cm</Top>
+            <Left>0.9814cm</Left>
             <Height>5.51355cm</Height>
             <Width>18.70923cm</Width>
             <ZIndex>8</ZIndex>
@@ -3117,7 +3117,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>6.28008in</Height>
+        <Height>6.36908in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3133,7 +3133,7 @@
           </RightBorder>
         </Style>
       </Body>
-      <Width>7.60925in</Width>
+      <Width>8.06029in</Width>
       <Page>
         <PageHeader>
           <Height>2.54cm</Height>
@@ -3165,7 +3165,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -3174,7 +3176,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -3183,12 +3187,14 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.52599cm</Top>
-              <Left>2.44933cm</Left>
+              <Left>4.32425cm</Left>
               <Height>1.83762cm</Height>
               <Width>12.9775cm</Width>
               <ZIndex>1</ZIndex>
@@ -3251,8 +3257,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>0.21764cm</Top>
-              <Left>14.12938cm</Left>
+              <Top>1.60133cm</Top>
+              <Left>14.22285cm</Left>
               <Height>0.6cm</Height>
               <Width>5cm</Width>
               <Style>
@@ -3291,8 +3297,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.21764cm</Top>
-              <Left>0.42016cm</Left>
+              <Top>1.60133cm</Top>
+              <Left>0.51363cm</Left>
               <Height>0.6cm</Height>
               <Width>7.65938cm</Width>
               <ZIndex>1</ZIndex>

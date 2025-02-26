@@ -447,7 +447,8 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
                 superviso = Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.NombreEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.PaternoEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.MaternoEmp;
             }
             Document document = new Document();
-            var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción 2022 Agua.docx";
+            //var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción 2022 Agua.docx";
+            var path = @"C:\Users\coterog\Desktop\Acta Entrega - Recepción 2022 Agua.docx";
             var cedula = await _cedulaQuery.GetCedulaById(cedulaId);
             document.LoadFromFile(path);
 
@@ -472,9 +473,10 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
             document.Replace("|Puesto|", cedula.Inmueble.DescripcionAdministrador, false, true);
             document.Replace("|DomicilioInmueble|", cedula.Inmueble.Direccion, false, true);
             document.Replace("|Administrador|", cedula.Inmueble.Administrador, false, true);
-            document.Replace("|Reviso|", (!reviso.Equals("") ? Firmantes.Single(f => f.Tipo.Equals("Reviso")).Escolaridad + " " + reviso : "Sin Firmante"), false, true);
+            //document.Replace("|Reviso|", (!reviso.Equals("") ? Firmantes.Single(f => f.Tipo.Equals("Reviso")).Escolaridad + " " + reviso : "Sin Firmante"), false, true);
+            document.Replace("|Reviso|", (!reviso.Equals("") ? Firmantes.Single(f => f.Tipo.Equals("Reviso")).Escolaridad + " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reviso.ToLower()) :" Sin Firmante"), false, true);
             document.Replace("|Superviso|", (!superviso.Equals("") ? Firmantes.Single(f => f.Tipo.Equals("Superviso")).Escolaridad + " " + superviso : "Sin Firmante"), false, true);
-            document.Replace("|PuestoFirma|", cedula.Inmueble.DescripcionAdministrador, false, true);
+            document.Replace("|PuestoFirma|", cedula.Inmueble.DescripcionAdministrador.ToUpper(), false, true);
             string usuario = cedula.Usuario.NombreEmp + " " + cedula.Usuario.PaternoEmp + " " + cedula.Usuario.MaternoEmp;
             document.Replace("|Usuario|", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(usuario.ToLower()), false, true);
 
@@ -499,13 +501,13 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
 
             if (Incidencias.Count() > 0)
             {
-                document.Replace("|Declaraciones|", "\nSe hace constar que los servicios fueron recibidos por el Consejo de la Judicatura " +
+                document.Replace("|Declaraciones|", "Se hace constar que los bienes solicitados fueron recibidos por el Consejo de la Judicatura " +
                     "Federal, presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
                     "evaluación de servicios generales.", false, true);
             }
             else
             {
-                document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del " +
+                document.Replace("|Declaraciones|", "Se hace constar que los bienes solicitados fueron recibidos a entera satisfacción del " +
                     "Consejo de la Judicatura Federal conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios " +
                     "generales.", false, true);
             }

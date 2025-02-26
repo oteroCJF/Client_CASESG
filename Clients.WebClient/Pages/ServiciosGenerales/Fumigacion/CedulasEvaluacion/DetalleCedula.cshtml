@@ -1,7 +1,38 @@
 ﻿@page "/fumigacion/{moduloId}/{submoduloId}/facturacion/detalle/{inmueble}/{facturacion}/{cedula}"
 @model Clients.WebClient.Pages.Fumigacion.CedulasEvaluacion.DetalleModel;
 @{
-    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
+    <div class="titulo-principal">
+        <b>@Model.Servicio.Descripcion </b> <i class="fad fa-bug mr-2"></i>
+        <a href="/fumigacion/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Anio/@Model.Repositorio.MesId/@Model.Cedula.ContratoId/@Request.QueryString.Value" type='button' class="btn btn-sm btn-warning botonregreso float-right ml-2 btnRegresar col-1" data-toggle="tooltip" title="Regresar a las cédulas" data-placement="top">
+            <i class="fal fa-arrow-left"></i>
+        </a>
+
+        @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+ @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+ @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+        {
+            <a href="#" type='button' class="btn btn-sm btn-danger botonregreso float-right ml-2 solicitudRechazo" data-toggle="tooltip"
+               title="Solicitar rechazo de la cédula" data-placement="top">
+                <i class="fal fa-times-circle"></i>
+            </a>
+        }
+    </div>
+
+    @*<div class="row col-lg-12">
+        <div class="col-lg-12">
+
+            @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+      @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+      @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+            {
+                <a href="#" type='button' class="btn btn-sm btn-danger botonregreso float-right ml-2 solicitudRechazo" data-toggle="tooltip"
+                   title="Solicitar rechazo de la cédula" data-placement="top">
+                    <i class="fal fa-times-circle"></i>
+                </a>
+            }
+        </div>
+    </div>*@
+
     ViewData["Title"] = "Detalle del Inmueble - " + Model.Inmueble.Nombre;
     ViewData["Action"] = "Facturación / Detalle de Facturación";
     var i = 0;
@@ -16,22 +47,7 @@
     var pPenalizacion = Model.Cedula.respuestas.Where(r => r.cuestionario.Tipo.Equals("Penalizacion")).Select(c => c.cuestionario.Consecutivo);
 }
 
-<div class="row col-lg-12">
-    <div class="col-lg-12">
-        <a href="/fumigacion/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Anio/@Model.Repositorio.MesId/@Model.Cedula.ContratoId/@Request.QueryString.Value" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar" data-toggle="tooltip" title="Regresar" data-placement="top">
-                <i class="fal fa-arrow-left"></i>
-            </a>
-            @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-         @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") || 
-         @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
-            {
-                <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
-                   title="Solicitar rechazo de la cédula" data-placement="top">
-                    <i class="fal fa-times-circle"></i>
-                </a>
-            }
-</div>
-</div>
+
 
 <div class="row col-lg-12 mt-3">
     <div class="col-lg-12">
@@ -218,107 +234,124 @@
 
 @if (Model.Cedula.Id != 0)
 {
-<div class="row col-lg-12 mt-3" id="divCedula">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header cabeceraCedula">
-                <i class="fas fa-list-check mr-2"></i> Cédula de Evaluación
-            </div>
-            <div class="card-body cuerpoCedula">
-                <table class="table table-borderless">
-                    <tr>
-                        <td data-toggle="tooltip" title="Folio de evaluación asignado por el sistema" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;"><strong>Folio: </strong> @Model.Cedula.Folio</td>
-                        <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
-                        <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
-                        <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
-                        <td data-toggle="tooltip" title="Estatus de la cédula" data-placement="top">
-                            <strong style="color: @(Model.Cedula.Estatus.FondoHexadecimal)"><b class="mr-1">Estatus:</b> @Html.Raw(Model.Cedula.Estatus.Icono) @Model.Cedula.Estatus.Nombre</strong>
-                        </td>
-                    </tr>
-                </table>
-                <div class="row col-lg-12 mt-3">
-                    <div class="col-md-12">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            @foreach (var rs in Model.Cedula.respuestas)
-                            {
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="pregunta_@rs.cuestionario.Abreviacion" data-toggle="tab" href="#@rs.cuestionario.Abreviacion" role="tab" aria-controls="pregunta" aria-selected="false">
-                                        @if (rs.Respuesta != null)
-                                        {
-                                            if ((rs.cuestionario.Abreviacion.Equals("FechaCierre") ||
-                                                rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
-                                                   rs.cuestionario.Abreviacion.Equals("ListadoPersonal")) && rs.iFumigacion.Count() == 0)
+    <div class="row col-lg-12 mt-3" id="divCedula">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header cabeceraCedula">
+                    <i class="fas fa-list-check mr-2"></i> Cédula de Evaluación
+                </div>
+                <div class="card-body cuerpoCedula">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td data-toggle="tooltip" title="Folio de evaluación asignado por el sistema" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;"><strong>Folio: </strong> @Model.Cedula.Folio</td>
+                            <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
+                            <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
+                            <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
+                            <td data-toggle="tooltip" title="Estatus de la cédula" data-placement="top">
+                                <strong style="color: @(Model.Cedula.Estatus.FondoHexadecimal)"><b class="mr-1">Estatus:</b> @Html.Raw(Model.Cedula.Estatus.Icono) @Model.Cedula.Estatus.Nombre</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row col-lg-12 mt-3">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @foreach (var rs in Model.Cedula.respuestas)
+                                {
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="pregunta_@rs.cuestionario.Abreviacion" data-toggle="tab" href="#@rs.cuestionario.Abreviacion" role="tab" aria-controls="pregunta" aria-selected="false">
+                                            @if (rs.Respuesta != null)
                                             {
-                                                <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                if ((rs.cuestionario.Abreviacion.Equals("FechaCierre") ||
+                                                    rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
+                                                       rs.cuestionario.Abreviacion.Equals("ListadoPersonal")) && rs.iFumigacion.Count() == 0)
+                                                {
+                                                    <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                }
+                                                else
+                                                {
+                                                    <i class="fas fa-circle-check mr-2 text-success"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                }
                                             }
                                             else
                                             {
-                                                <i class="fas fa-circle-check mr-2 text-success"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
+                                                <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
                                             }
-                                        }
-                                        else
-                                        {
-                                            <i class="fas fa-circle-xmark mr-2 text-danger"></i> @Html.Raw("<b style='color: black;'>Pregunta " + @rs.Pregunta + "</b>")
-                                        }
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            @foreach (var rs in Model.Cedula.respuestas)
-                            {
-                                <div class="tab-pane fade mt-2 ml-3 " id="@rs.cuestionario.Abreviacion" role="tabpanel" aria-labelledby="pregunta-tab">
-                                    <div class="row col-lg-12 h5 mt-3">
-                                        <div class="col-lg-10">
-                                            @rs.Pregunta.- @rs.cuestionario.Pregunta
-                                            <a href="javascript:" class="text-primary ml-2 btnAyuda" data-toggle="tooltip" title="Ayuda" data-placement="top" data-ayuda="@rs.cuestionario.Ayuda">
-                                                <i class="fa-solid fa-circle-question"></i>
-                                            </a>
-                                            @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
-                                            {
-                                                @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                           Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                @foreach (var rs in Model.Cedula.respuestas)
+                                {
+                                    <div class="tab-pane fade mt-2 ml-3 " id="@rs.cuestionario.Abreviacion" role="tabpanel" aria-labelledby="pregunta-tab">
+                                        <div class="row col-lg-12 h5 mt-3">
+                                            <div class="col-lg-10">
+                                                @rs.Pregunta.- @rs.cuestionario.Pregunta
+                                                <a href="javascript:" class="text-primary ml-2 btnAyuda" data-toggle="tooltip" title="Ayuda" data-placement="top" data-ayuda="@rs.cuestionario.Ayuda">
+                                                    <i class="fa-solid fa-circle-question"></i>
+                                                </a>
+                                                @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
-                                                    <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("FechaCierre") ||
+                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
+                                            Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                    {
+                                                        <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("FechaCierre") ||
                                                                                                 rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
                                                                                                 rs.cuestionario.Abreviacion.Equals("ListadoPersonal") ? "none": "block");">
-                                                        <div class="icheck-success d-inline">
-                                                            <input type="radio" name="@rs.cuestionario.Abreviacion" value="true" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
-                                                                   data-pusuario="@rs.cuestionario.Consecutivo"
-                                                                   data-obligatorio="@rs.ciFumigacion.Obligatorio"
-                                                                   data-respuesta="@rs.ciFumigacion.Respuesta"
-                                                                   data-abreviacion="@rs.cuestionario.Abreviacion">
-                                                            <label for="@String.Concat("radioSuccess", @i)">Si</label>
+                                                            <div class="icheck-success d-inline">
+                                                                <input type="radio" name="@rs.cuestionario.Abreviacion" value="true" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
+                                                                       data-pusuario="@rs.cuestionario.Consecutivo"
+                                                                       data-obligatorio="@rs.ciFumigacion.Obligatorio"
+                                                                       data-respuesta="@rs.ciFumigacion.Respuesta"
+                                                                       data-abreviacion="@rs.cuestionario.Abreviacion">
+                                                                <label for="@String.Concat("radioSuccess", @i)">Si</label>
+                                                            </div>
+                                                            @{
+                                                                i++;
+                                                            }
+                                                            <div class="icheck-success d-inline ml-3">
+                                                                <input type="radio" name="@rs.cuestionario.Abreviacion" value="false" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
+                                                                       data-pusuario="@rs.cuestionario.Consecutivo"
+                                                                       data-obligatorio="@rs.ciFumigacion.Obligatorio"
+                                                                       data-respuesta="@rs.ciFumigacion.Respuesta"
+                                                                       data-abreviacion="@rs.cuestionario.Abreviacion">
+                                                                <label for="@String.Concat("radioSuccess", @i)">No</label>
+                                                            </div>
+                                                            @{
+                                                                i++;
+                                                            }
                                                         </div>
-                                                        @{
-                                                            i++;
-                                                        }
-                                                        <div class="icheck-success d-inline ml-3">
-                                                            <input type="radio" name="@rs.cuestionario.Abreviacion" value="false" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
-                                                                   data-pusuario="@rs.cuestionario.Consecutivo"
-                                                                   data-obligatorio="@rs.ciFumigacion.Obligatorio"
-                                                                   data-respuesta="@rs.ciFumigacion.Respuesta"
-                                                                   data-abreviacion="@rs.cuestionario.Abreviacion">
-                                                            <label for="@String.Concat("radioSuccess", @i)">No</label>
-                                                        </div>
-                                                        @{
-                                                            i++;
-                                                        }
-                                                    </div>
+                                                    }
                                                 }
-                                            }
-                                        </div>
-                                        <div class="col-lg-12 mt-2">
-                                            @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
-                                            {
-                                                @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                    Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                            </div>
+                                            <div class="col-lg-12 mt-2">
+                                                @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
-                                                    @if (rs.cuestionario.Incidencias &&
-                                                   (rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
-                                                   rs.cuestionario.Abreviacion.Equals("ListadoPersonal") || rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
+                                                     Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                     {
-                                                        if (rs.iFumigacion.Count() == 0)
+                                                        @if (rs.cuestionario.Incidencias &&
+                                                    (rs.cuestionario.Abreviacion.Equals("ReporteServicios") ||
+                                                    rs.cuestionario.Abreviacion.Equals("ListadoPersonal") || rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                        {
+                                                            if (rs.iFumigacion.Count() == 0)
+                                                            {
+                                                                <a href="javascript:" class="addIncidencia btn btn-sm btn-primary" data-pregunta="@rs.cuestionario.Consecutivo"
+                                                                   data-preguntaid="@rs.cuestionario.Id"
+                                                                   data-cedula="@rs.CedulaEvaluacionId"
+                                                                   data-abreviacion="@rs.cuestionario.Abreviacion"
+                                                                   data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
+                                                                   data-respuesta="@rs.Respuesta"
+                                                                   data-ayuda="@rs.ciFumigacion.Ayuda"
+                                                                   data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
+                                                                   data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
+                                                                    <i class="fas fa-plus mr-1"></i> @(rs.cuestionario.Abreviacion.Contains("FechaCierre") ? "Registrar Fecha de Cierre": "Registrar")
+                                                                </a>
+                                                            }
+                                                        }
+                                                        else if (rs.cuestionario.Incidencias && rs.ciFumigacion.Obligatorio &&
+                                                           (!rs.cuestionario.Abreviacion.Equals("ReporteServicios") &&
+                                                            !rs.cuestionario.Abreviacion.Equals("ListadoPersonal") && !rs.cuestionario.Abreviacion.Contains("FechaCierre")))
                                                         {
                                                             <a href="javascript:" class="addIncidencia btn btn-sm btn-primary" data-pregunta="@rs.cuestionario.Consecutivo"
                                                                data-preguntaid="@rs.cuestionario.Id"
@@ -329,250 +362,235 @@
                                                                data-ayuda="@rs.ciFumigacion.Ayuda"
                                                                data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
                                                                data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
-                                                                <i class="fas fa-plus mr-1"></i> @(rs.cuestionario.Abreviacion.Contains("FechaCierre") ? "Registrar Fecha de Cierre": "Registrar")
+                                                                <i class="fas fa-plus mr-1"></i> Registrar Incidencia
                                                             </a>
                                                         }
                                                     }
-                                                    else if (rs.cuestionario.Incidencias && rs.ciFumigacion.Obligatorio &&
-                                                       (!rs.cuestionario.Abreviacion.Equals("ReporteServicios") &&
-                                                        !rs.cuestionario.Abreviacion.Equals("ListadoPersonal") && !rs.cuestionario.Abreviacion.Contains("FechaCierre")))
-                                                    {
-                                                        <a href="javascript:" class="addIncidencia btn btn-sm btn-primary" data-pregunta="@rs.cuestionario.Consecutivo"
-                                                           data-preguntaid="@rs.cuestionario.Id"
-                                                           data-cedula="@rs.CedulaEvaluacionId"
-                                                           data-abreviacion="@rs.cuestionario.Abreviacion"
-                                                           data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
-                                                           data-respuesta="@rs.Respuesta"
-                                                           data-ayuda="@rs.ciFumigacion.Ayuda"
-                                                           data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
-                                                           data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
-                                                            <i class="fas fa-plus mr-1"></i> Registrar Incidencia
-                                                        </a>
-                                                    }
                                                 }
-                                            }
+                                            </div>
                                         </div>
-                                    </div>
-                                    @if (rs.cuestionario.Incidencias && rs.iFumigacion.Count() != 0)
-                                    {
-                                        ci = 0;
-                                        <div class="row mt-3">
-                                            <div class="col-lg-12">
-                                                <table class="table tblIncidencias" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Tipo</th>
-                                                            @if (@rs.ciFumigacion.FaunaNociva)
-                                                            {
-                                                                <th>Tipo de fauna</th>
-                                                                <th>Fauna nociva</th>
-                                                            }
-                                                            
-                                                            @if (@rs.ciFumigacion.Detalles)
-                                                            {
-                                                                <th>Servicio de fumigación</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.FechaProgramada)
-                                                            {
-                                                                <th>@(@rs.ciFumigacion.MesSua ? "Fecha de entrega": 
-                                                                      rs.ciFumigacion.Pregunta == 1 ? "Fecha de cierre":"Fecha programada")</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.FechaRealizada)
-                                                            {
-                                                                <th>@(@rs.ciFumigacion.FaunaNociva ? "Fecha de fumigación": "Fecha realizada")</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.FechaRealizada && @rs.ciFumigacion.FechaProgramada)
-                                                            {
-                                                                <th>Días de atraso</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.HoraProgramada)
-                                                            {
-                                                                <th>Hora programada</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.HoraRealizada)
-                                                            {
-                                                                <th>Hora realizada</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.HoraProgramada && @rs.ciFumigacion.HoraRealizada)
-                                                            {
-                                                                <th>Horas de atraso</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.FechaReaparicion)
-                                                            {
-                                                                <th>Fecha de reaparicion</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.MesSua)
-                                                            {
-                                                                <th>Mes Correspondiente</th>
-                                                            }
-
-                                                            @if (@rs.ciFumigacion.Observaciones)
-                                                            {
-                                                                <th>Observaciones</th>
-                                                            }
-
-                                                            @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                            {
-                                                                <th>Monto penalización</th>
-                                                            }
-
-                                                            @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                            {
-                                                                <th>Acciones</th>
-                                                            }
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var inc in rs.iFumigacion)
-                                                        {
-                                                            ci++;
+                                        @if (rs.cuestionario.Incidencias && rs.iFumigacion.Count() != 0)
+                                        {
+                                            ci = 0;
+                                            <div class="row mt-3">
+                                                <div class="col-lg-12">
+                                                    <table class="table tblIncidencias" width="100%">
+                                                        <thead>
                                                             <tr>
-                                                                <td>@ci</td>
-                                                                <td>@rs.cuestionario.Concepto</td>
+                                                                <th>#</th>
+                                                                <th>Tipo</th>
                                                                 @if (@rs.ciFumigacion.FaunaNociva)
                                                                 {
-                                                                    <td>@inc.DIncidencia.Tipo</td>
-                                                                    <td>@inc.DIncidencia.Nombre</td>
+                                                                    <th>Tipo de fauna</th>
+                                                                    <th>Fauna nociva</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciFumigacion.Detalles)
                                                                 {
-                                                                    <td>@inc.DIncidencia.Nombre</td>
+                                                                    <th>Servicio de fumigación</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciFumigacion.FechaProgramada)
                                                                 {
-                                                                    <td>@Convert.ToDateTime(inc.FechaProgramada).ToString("dd/MM/yyyy")</td>
+                                                                    <th>
+                                                                        @(@rs.ciFumigacion.MesSua ? "Fecha de entrega":
+                                                                      rs.ciFumigacion.Pregunta == 1 ? "Fecha de cierre":"Fecha programada")
+                                                                    </th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciFumigacion.FechaRealizada)
                                                                 {
-                                                                    <td>@Convert.ToDateTime(inc.FechaRealizada).ToString("dd/MM/yyyy")</td>
+                                                                    <th>@(@rs.ciFumigacion.FaunaNociva ? "Fecha de fumigación": "Fecha realizada")</th>
                                                                 }
-                                                                
-                                                                @if (@rs.ciFumigacion.FechaReaparicion)
+
+                                                                @if (@rs.ciFumigacion.FechaRealizada && @rs.ciFumigacion.FechaProgramada)
                                                                 {
-                                                                    <td>@Convert.ToDateTime(inc.FechaReaparicion).ToString("dd/MM/yyyy")</td>
+                                                                    <th>Días de atraso</th>
                                                                 }
-                                                                
-                                                                @if (@rs.ciFumigacion.FechaProgramada && @rs.ciFumigacion.FechaRealizada)
-                                                                {
-                                                                    <td>@inc.DiasAtraso</td>
-                                                                }
-                                                                
+
                                                                 @if (@rs.ciFumigacion.HoraProgramada)
                                                                 {
-                                                                    <td>@(Convert.ToDateTime(inc.HoraProgramada).ToString("HH:mm tt"))</td>
+                                                                    <th>Hora programada</th>
                                                                 }
 
                                                                 @if (@rs.ciFumigacion.HoraRealizada)
                                                                 {
-                                                                    <td>@(Convert.ToDateTime(inc.HoraRealizada).ToString("HH:mm tt"))</td>
+                                                                    <th>Hora realizada</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciFumigacion.HoraProgramada && @rs.ciFumigacion.HoraRealizada)
                                                                 {
-                                                                    <td>@inc.HorasAtraso</td>
+                                                                    <th>Horas de atraso</th>
                                                                 }
-                                                                
+
+                                                                @if (@rs.ciFumigacion.FechaReaparicion)
+                                                                {
+                                                                    <th>Fecha de reaparicion</th>
+                                                                }
+
                                                                 @if (@rs.ciFumigacion.MesSua)
                                                                 {
-                                                                    <td>@inc.Mes.Nombre</td>
+                                                                    <th>Mes Correspondiente</th>
                                                                 }
-                                                                
+
                                                                 @if (@rs.ciFumigacion.Observaciones)
                                                                 {
-                                                                    <td>@inc.Observaciones</td>
+                                                                    <th>Observaciones</th>
                                                                 }
 
                                                                 @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
-                                                                    <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
+                                                                    <th>Monto penalización</th>
                                                                 }
 
                                                                 @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                    Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                 Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
-                                                                    <td>
-                                                                        <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
-                                                                           data-abreviacion="@rs.cuestionario.Abreviacion" data-incidencia="@inc.Id"
-                                                                           data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
-                                                                           data-incidenciaid="@inc.IncidenciaId" 
-                                                                           data-tipofauna="@inc.DIncidencia.Id" 
-                                                                           data-fechap="@inc.FechaProgramada" 
-                                                                           data-fechar="@inc.FechaRealizada" 
-                                                                           data-fecharp="@inc.FechaReaparicion" 
-                                                                           data-horap="@inc.HoraProgramada"
-                                                                           data-horar="@inc.HoraRealizada"
-                                                                           data-preguntaid="@rs.cuestionario.Id" data-mesid="@inc.MesId"
-                                                                           data-observaciones="@inc.Observaciones">
-                                                                            <i class="fas fa-pencil text-primary"></i>
-                                                                        </a>
-                                                                        <a href="javascript:" class="eliminarIncidencia ml-2"
-                                                                           data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
-                                                                           data-abreviacion="@rs.cuestionario.Abreviacion"
-                                                                           data-respuesta="@rs.Respuesta"
-                                                                           data-id="@inc.Id">
-                                                                            <i class="fas fa-times text-danger"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                 }
+                                                                    <th>Acciones</th>
+                                                                }
                                                             </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var inc in rs.iFumigacion)
+                                                            {
+                                                                ci++;
+                                                                <tr>
+                                                                    <td>@ci</td>
+                                                                    <td>@rs.cuestionario.Concepto</td>
+                                                                    @if (@rs.ciFumigacion.FaunaNociva)
+                                                                    {
+                                                                        <td>@inc.DIncidencia.Tipo</td>
+                                                                        <td>@inc.DIncidencia.Nombre</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.Detalles)
+                                                                    {
+                                                                        <td>@inc.DIncidencia.Nombre</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.FechaProgramada)
+                                                                    {
+                                                                        <td>@Convert.ToDateTime(inc.FechaProgramada).ToString("dd/MM/yyyy")</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.FechaRealizada)
+                                                                    {
+                                                                        <td>@Convert.ToDateTime(inc.FechaRealizada).ToString("dd/MM/yyyy")</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.FechaReaparicion)
+                                                                    {
+                                                                        <td>@Convert.ToDateTime(inc.FechaReaparicion).ToString("dd/MM/yyyy")</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.FechaProgramada && @rs.ciFumigacion.FechaRealizada)
+                                                                    {
+                                                                        <td>@inc.DiasAtraso</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.HoraProgramada)
+                                                                    {
+                                                                        <td>@(Convert.ToDateTime(inc.HoraProgramada).ToString("HH:mm tt"))</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.HoraRealizada)
+                                                                    {
+                                                                        <td>@(Convert.ToDateTime(inc.HoraRealizada).ToString("HH:mm tt"))</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.HoraProgramada && @rs.ciFumigacion.HoraRealizada)
+                                                                    {
+                                                                        <td>@inc.HorasAtraso</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.MesSua)
+                                                                    {
+                                                                        <td>@inc.Mes.Nombre</td>
+                                                                    }
+
+                                                                    @if (@rs.ciFumigacion.Observaciones)
+                                                                    {
+                                                                        <td>@inc.Observaciones</td>
+                                                                    }
+
+                                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
+                                                                 !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                    {
+                                                                        <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
+                                                                    }
+
+                                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
+                                                                     Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                    {
+                                                                        <td>
+                                                                            <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
+                                                                               data-abreviacion="@rs.cuestionario.Abreviacion" data-incidencia="@inc.Id"
+                                                                               data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
+                                                                               data-incidenciaid="@inc.IncidenciaId"
+                                                                               data-tipofauna="@inc.DIncidencia.Id"
+                                                                               data-fechap="@inc.FechaProgramada"
+                                                                               data-fechar="@inc.FechaRealizada"
+                                                                               data-fecharp="@inc.FechaReaparicion"
+                                                                               data-horap="@inc.HoraProgramada"
+                                                                               data-horar="@inc.HoraRealizada"
+                                                                               data-preguntaid="@rs.cuestionario.Id" data-mesid="@inc.MesId"
+                                                                               data-observaciones="@inc.Observaciones">
+                                                                                <i class="fas fa-pencil text-primary"></i>
+                                                                            </a>
+                                                                            <a href="javascript:" class="eliminarIncidencia ml-2"
+                                                                               data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
+                                                                               data-abreviacion="@rs.cuestionario.Abreviacion"
+                                                                               data-respuesta="@rs.Respuesta"
+                                                                               data-id="@inc.Id">
+                                                                                <i class="fas fa-times text-danger"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                        @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
+                                                          !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                        {
+                                                            <tfoot>
+
+                                                            </tfoot>
                                                         }
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (rs.cuestionario.Incidencias && rs.iFumigacion.Count() == 0)
+                                        {
+                                            ci = 0;
+                                            <div class="row col-lg-12 mt-3">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Respuesta</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>@rs.ciFumigacion.RespuestaCedula</td>
+                                                        </tr>
                                                     </tbody>
-                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                         !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
-                                                    {
-                                                        <tfoot>
-                                                            
-                                                        </tfoot>
-                                                    }
                                                 </table>
                                             </div>
-                                        </div>
-
-                                    }
-                                    else if (rs.cuestionario.Incidencias && rs.iFumigacion.Count() == 0)
-                                    {
-                                        ci = 0;
-                                        <div class="row col-lg-12 mt-3">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Respuesta</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>@rs.ciFumigacion.RespuestaCedula</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    }
-                                </div>
-                            }
+                                        }
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="row col-lg-12 mt-3" id="divEntregables">
         <div class="col-lg-12">
@@ -615,11 +633,11 @@
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-archivo="@en.Archivo"
                                                data-observaciones="@en.Observaciones">
                                                 <i class="fas fa-eye text-success mr-2"></i>
-                                            </a>
+                                            </a>       
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                  (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                              (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -629,7 +647,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 && (fe != null ? fe.Autorizar : false)
-                                   && !en.estatus.Nombre.Equals("Autorizado"))
+                               && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -638,7 +656,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                   && !en.estatus.Nombre.Equals("Rechazado"))
+                               && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -647,7 +665,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                              (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                          (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
@@ -655,7 +673,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                              (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                          (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -663,10 +681,10 @@
                                             </a>
                                         }
 
-                                        @if ((en.tipoEntregable.Abreviacion.Equals("Memorandum") || 
-                                            en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") ||
-                                            en.tipoEntregable.Abreviacion.Equals("ActaER")) && !en.Validado
-                                   && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
+                                        @if ((en.tipoEntregable.Abreviacion.Equals("Memorandum") ||
+                                        en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") ||
+                                        en.tipoEntregable.Abreviacion.Equals("ActaER")) && !en.Validado
+                               && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -682,7 +700,7 @@
                 </div>
                 <div class="card-footer">
                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                         Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                     {
                         <a href="javascript:" class="btn btn-sm btn-primary guardarCedula float-right">
                             Guardar Respuestas
@@ -1195,6 +1213,34 @@
 @*Fin Modal para ver la factura*@
 
 <style>
+    .titulo-principal {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #24135f;
+        text-align: left;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-in-out;
+        font-weight: bold;
+        position: relative; /* Agrega esta línea */
+        top: -5px; /* Ajusta el valor según sea necesario */
+        right: -10px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .botonregreso {
+        position: relative; /* Agrega esta línea */
+        left: -33px;
+    }
+
     .cabeceraInformacion {
         background-color: #ffffff;
         padding: 10px;
@@ -2912,7 +2958,7 @@
                                 axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                     Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
-                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR     
+                                    //SE DEFINIO ENOTA PARA ESTATUS RECHAZAR
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     Elimina: false,
                                     Bloqueada: true,
@@ -3778,7 +3824,7 @@
                                     const href = URL.createObjectURL(response.data);
                                     const link = document.createElement('a');
                                     link.href = href;
-                                    link.setAttribute('download', 'Acta_Entrega_Recepcion_Limpieza_Recepcion.docx');
+                                    link.setAttribute('download', 'Acta_Entrega_Recepcion_Fumigacion.docx');
                                     document.body.appendChild(link);
                                     link.click();
                                     document.body.removeChild(link);

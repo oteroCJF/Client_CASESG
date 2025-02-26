@@ -2,13 +2,17 @@
 @model Clients.WebClient.Pages.Limpieza.CedulasEvaluacion.IndexModel
 @{
     ViewData["Title"] = "Servicio de Limpieza en Áreas Comunes y Oficinas";
-    ViewData["Titulo"] = "Servicio de " + Model.Servicio.Descripcion;
+
+    <div class="titulo-principal">
+        <b>Servicio de @Model.Servicio.Descripcion</b> <i class="fad fa-soap mr-2"></i>
+    </div>
+
     ViewData["Action"] = "Inicio";
 }
 
 <div class="container-fluid">
     <form method="get" id="getAnio" asp-page-handler="GetAnio">
-        <div class="row col-lg-2">
+        <div class="row col-3">
             <label class="label">Consultar información del año: </label>
             <div class="input-group mb-3">
                 <select class="form-control" id="anioActual" asp-for="Anio">
@@ -52,6 +56,31 @@
         </div>
     }
 </div>
+
+<style>
+    .titulo-principal {
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        color: #24135f;
+        text-align: left;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 2s ease-in-out;
+        font-weight: bold;
+        position: relative; /* Agrega esta línea */
+        top: -20px; /* Ajusta el valor según sea necesario */
+        right: -10px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+</style>
 @section Scripts{
     <script>
         $(function () {
