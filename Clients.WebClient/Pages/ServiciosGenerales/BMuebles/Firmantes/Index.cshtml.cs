@@ -8,8 +8,8 @@ using Api.Gateway.Models.Permisos.DTOs;
 using Api.Gateway.Models.Usuarios.DTOs;
 using Api.Gateway.WebClient.Proxy.Catalogos.CTServicios;
 using Api.Gateway.WebClient.Proxy.Inmuebles;
-using Api.Gateway.WebClient.Proxy.Comedor.Firmantes.Commands;
-using Api.Gateway.WebClient.Proxy.Comedor.Firmantes.Queries;
+using Api.Gateway.WebClient.Proxy.BMuebles.Firmantes.Commands;
+using Api.Gateway.WebClient.Proxy.BMuebles.Firmantes.Queries;
 using Api.Gateway.WebClient.Proxy.Modulos;
 using Api.Gateway.WebClient.Proxy.Permisos;
 using Api.Gateway.WebClient.Proxy.Usuarios;
@@ -20,14 +20,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Clients.WebClient.Pages.Comedor.Firmantes
+
+namespace Clients.WebClient.Pages.BMuebles.Firmantes
 {
     public class IndexModel : PageModel
     {
         private readonly IModuloProxy _modulo;
         private readonly ICTServicioProxy _servicios;
-        private readonly IQFirmanteComedorProxy _firmantesQuery;
-        private readonly ICFirmanteComedorProxy _firmantesCommand;
+        private readonly IQFirmanteBMueblesProxy _firmantesQuery;
+        private readonly ICFirmanteBMueblesProxy _firmantesCommand;
         private readonly IInmuebleProxy _inmuebles;
         private readonly IUsuarioProxy _usuarios;
         private readonly IPermisoProxy _permisos;
@@ -42,7 +43,7 @@ namespace Clients.WebClient.Pages.Comedor.Firmantes
         public List<InmuebleDto> Inmuebles { get; set; } = new List<InmuebleDto>();
         public List<UsuarioDto> Usuarios { get; set; } = new List<UsuarioDto>();
 
-        public IndexModel(IModuloProxy modulo, ICTServicioProxy servicios, IQFirmanteComedorProxy firmantesQuery, ICFirmanteComedorProxy firmantesCommand, 
+        public IndexModel(IModuloProxy modulo, ICTServicioProxy servicios, IQFirmanteBMueblesProxy firmantesQuery, ICFirmanteBMueblesProxy firmantesCommand,
                           IPermisoProxy permisos, IInmuebleProxy inmuebles, IUsuarioProxy usuarios)
         {
             _modulo = modulo;

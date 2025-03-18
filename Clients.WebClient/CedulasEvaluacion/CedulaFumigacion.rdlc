@@ -3116,10 +3116,10 @@
                   <Width>5.48761cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.02642cm</Width>
+                  <Width>5.69709cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.00107cm</Width>
+                  <Width>6.40323cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3509,7 +3509,7 @@
                                 <TextRun>
                                   <Value>=Fields!PuestoAutoriza.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -3556,10 +3556,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>26.91737cm</Top>
+            <Top>27.86987cm</Top>
             <Left>0.86898cm</Left>
             <Height>2.32549cm</Height>
-            <Width>16.5151cm</Width>
+            <Width>17.58793cm</Width>
             <ZIndex>20</ZIndex>
             <Visibility>
               <Hidden>=IIF(Fields!Reviso.Value.Equals(Fields!Superviso.Value), True, False)</Hidden>
@@ -3859,7 +3859,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>29.28166cm</Top>
+            <Top>30.23416cm</Top>
             <Left>3.27491cm</Left>
             <Height>2.32549cm</Height>
             <Width>12.74476cm</Width>
@@ -5025,7 +5025,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>12.66876in</Height>
+        <Height>13.02709in</Height>
         <Style />
       </Body>
       <Width>7.52481in</Width>
@@ -5105,7 +5105,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>1.4064cm</Height>
+          <Height>4.19462cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -5146,7 +5146,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>0.41962cm</Top>
+              <Top>3.59462cm</Top>
               <Left>13.80868cm</Left>
               <Height>0.6cm</Height>
               <Width>5cm</Width>
@@ -5168,7 +5168,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Elaboró: </Value>
+                      <Value>ELABORÓ: </Value>
                       <Style>
                         <FontSize>8pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -5186,8 +5186,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
-              <Top>0.40319cm</Top>
-              <Left>1.36135cm</Left>
+              <Top>3.57819cm</Top>
+              <Left>0.635cm</Left>
               <Height>0.6cm</Height>
               <Width>6.61935cm</Width>
               <ZIndex>1</ZIndex>

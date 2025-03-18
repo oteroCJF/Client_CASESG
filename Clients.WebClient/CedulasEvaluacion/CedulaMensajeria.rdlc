@@ -4155,10 +4155,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>5.27834cm</Width>
+                  <Width>6.16734cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.17966cm</Width>
+                  <Width>6.07469cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>5.7918cm</Width>
@@ -4551,7 +4551,7 @@
                                 <TextRun>
                                   <Value>=Fields!PuestoAutoriza.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -4601,7 +4601,7 @@
             <Top>39.13176cm</Top>
             <Left>1.39376cm</Left>
             <Height>2.32549cm</Height>
-            <Width>16.2498cm</Width>
+            <Width>18.03383cm</Width>
             <ZIndex>25</ZIndex>
             <Visibility>
               <Hidden>=IIF(Fields!Reviso.Value.Equals(Fields!Superviso.Value), True, False)</Hidden>
@@ -4741,21 +4741,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>_____________________________</Value>
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value xml:space="preserve"> 
+                                  <Value>_____________________________
 </Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
@@ -4870,7 +4856,7 @@
                                 <TextRun>
                                   <Value>=Fields!PuestoAutoriza.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -7533,7 +7519,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>0.21764cm</Top>
+              <Top>1.6225cm</Top>
               <Left>14.12938cm</Left>
               <Height>0.6cm</Height>
               <Width>5cm</Width>
@@ -7573,10 +7559,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.21764cm</Top>
+              <Top>1.6225cm</Top>
               <Left>0.42016cm</Left>
               <Height>0.6cm</Height>
-              <Width>7.65938cm</Width>
+              <Width>10.79205cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
