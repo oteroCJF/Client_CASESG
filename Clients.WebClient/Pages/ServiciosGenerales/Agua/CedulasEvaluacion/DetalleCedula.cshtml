@@ -5,6 +5,20 @@
     {
         <div class="titulo-principal">
             Adquisición de Garrafones de Agua Purificada   <i class="fa-regular fa-glass-water-droplet"></i>
+
+                <a href="/agua/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm  botonregreso btn-warning float-right btnRegresar col-1 ml-2" data-toggle="tooltip" title="Regresar a las cédulas" data-placement="top">
+                    <i class="fal fa-arrow-left"></i>
+                  </a>
+
+                  @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+                    @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+                    @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+                    {
+                        <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo botonregreso" data-toggle="tooltip"
+                           title="Solicitar rechazo de la cédula" data-placement="top">
+                            <i class="fal fa-times-circle"></i>
+                        </a>
+                      }
         </div>
 
         ViewData["Title"] = "Adquisición de Garrafones de Agua Purificada";
@@ -13,6 +27,21 @@
     {
         <div class="titulo-principal">
             Adquisición de Garrafones de Agua Purificada    <i class="fa-regular fa-glass-water-droplet"></i>
+
+                <a href="/agua/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm  botonregreso btn-warning float-right btnRegresar col-1 ml-2" data-toggle="tooltip" title="Regresar a las cédulas" data-placement="top">
+                    <i class="fal fa-arrow-left"></i>
+                  </a>
+
+                  @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+                    @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+                    @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+                    {
+                        <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo botonregreso" data-toggle="tooltip"
+                           title="Solicitar rechazo de la cédula" data-placement="top">
+                            <i class="fal fa-times-circle"></i>
+                        </a>
+                      }
+
         </div>
 
         ViewData["Title"] = "Adquisición de Garrafones de Agua Purificada";
@@ -20,18 +49,13 @@
     else if (Model.Cedula.Anio <= 2024)
     {
         <div class="titulo-principal">
-            Servicio de Suministro de Agua Purificada
-        </div>
-    }
-    //ViewData["Titulo"] = "Adquisición de " + Model.Servicio.Descripcion;
-    <div class="titulo-principal">
+            Servicio de Suministro de Agua Purificada  <i class="fa-regular fa-glass-water-droplet"></i>
 
-        <!-- PRUEBA DE BOTON DE REGRESO, EL LINK DE REGRESO NO CARGA LOS FILTROS-->
-        <a href="/agua/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm  botonregreso btn-warning float-right btnRegresar col-1 ml-2" data-toggle="tooltip" title="Regresar a las cédulas" data-placement="top">
+            <a href="/agua/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Cedula.Anio&@Request.QueryString.Value" type='button' class="btn btn-sm  botonregreso btn-warning float-right btnRegresar col-1 ml-2" data-toggle="tooltip" title="Regresar a las cédulas" data-placement="top">
             <i class="fal fa-arrow-left"></i>
         </a>
 
-        @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+                  @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
 @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
 @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
         {
@@ -40,7 +64,19 @@
                 <i class="fal fa-times-circle"></i>
             </a>
         }
-    </div>
+        </div>
+        ViewData["Title"] = " Servicio de Suministro de Agua Purificada";
+
+        
+
+    }
+
+
+        <!-- PRUEBA DE BOTON DE REGRESO, EL LINK DE REGRESO NO CARGA LOS FILTROS-->
+
+
+  
+  
     ViewData["Title"] = "Detalle - " + Model.Inmueble.Nombre;
 
 
@@ -316,7 +352,7 @@
                                                 @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                        Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                     {
                                                         <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none" : "block");">
                                                             <div class="icheck-success d-inline">
@@ -349,7 +385,7 @@
                                                 @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                 {
                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                        Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                     {
                                                         @if (rs.cuestionario.Incidencias && rs.cuestionario.Abreviacion.Equals("FechaCierre"))
                                                         {
@@ -517,13 +553,13 @@
                                                                     }
 
                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                       !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                      !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                     {
                                                                         <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
                                                                     }
 
                                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                      Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                     {
                                                                         <td>
                                                                             <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
@@ -550,7 +586,7 @@
                                                             }
                                                         </tbody>
                                                         @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                           !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                          !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                         {
                                                             <tfoot>
                                                                 <tr>
@@ -644,14 +680,10 @@
                                                 <i class="fas fa-eye text-success mr-2"></i>
                                             </a>
 
-                                            <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
-                                               data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
-                                                <i class="fal fa-file-pdf text-success mr-2"></i>
-                                            </a>
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                            (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                           (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -659,15 +691,10 @@
                                                 <i class="fas fa-pencil text-primary mr-2"></i>
                                             </a>
 
-                                            <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
-                                               data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
-                                                <i class="fal fa-file-pdf text-success mr-2"></i>
-                                            </a>
                                         }
 
-
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 && (fe != null ? fe.Autorizar : false)
-                                            && !en.estatus.Nombre.Equals("Autorizado"))
+                                           && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -676,7 +703,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                            && !en.estatus.Nombre.Equals("Rechazado"))
+                                           && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -685,7 +712,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                            (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                           (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER" data-toggle="tooltip" title="Generar  @nuevoNombreEntregable">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
@@ -693,7 +720,7 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                            (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                           (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -702,7 +729,7 @@
                                         }
 
                                         @if ((en.tipoEntregable.Abreviacion.Equals("Memorandum") || en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") || en.tipoEntregable.Abreviacion.Equals("ActaER")) && !en.Validado
-                                            && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
+                                           && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -718,7 +745,7 @@
                 </div>
                 <div class="card-footer">
                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                        Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                       Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                     {
                         <a href="javascript:" class="btn btn-sm btn-primary guardarCedula float-right">
                             Guardar Respuestas
@@ -768,7 +795,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header cabeceraPenalizaciones">
-                        <i class="fa-regular fa-messages-dollar mr-2"></i> Penalizaciones y deductivas
+                        <i class="fa-regular fa-messages-dollar mr-2"></i> Penalizaciones y Deductivas
                     </div>
                     <div class="card-body cuerpoPenalizaciones" style="display: none">
                         <p class="text-justify text-primary font-weight-bold h5">Únicamente solicitar al prestador de servicios la nota de crédito por el(los) concepto(s) del total de deductivas, en caso de que aplique.</p>
@@ -780,6 +807,7 @@
                         <table class="table row-border dataTable" width="100%">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-center">Pregunta</th>
                                     <th>Tipo</th>
                                     <th>Concepto</th>
@@ -792,6 +820,7 @@
                                     if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo.Equals("Deductiva"))
                                     {
                                         <tr>
+                                            <td></td>
                                             <td class="text-center">@rs.Pregunta</td>
                                             <td>Deductiva</td>
                                             <td>@Html.Raw(rs.cuestionario.Icono) @rs.cuestionario.Concepto</td>
@@ -804,6 +833,7 @@
                                 @if (Model.Cedula.Penalizacion != 0)
                                 {
                                     <tr>
+                                        <td></td>
                                         <td class="text-center">-</td>
                                         <td>Deductiva</td>
                                         <td><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
@@ -814,11 +844,14 @@
                             <tfoot>
                                 @if (tdeductivas != 0)
                                 {
+     
                                     <tr class="font-weight-bold text-primary">
-                                        <td class="text-center">Total de deductivas</td>
-                                        <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tdeductivas)</td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
+                                        <td class="text-right-lg">Total de deductivas</td>
+                                        <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tdeductivas)</td>
+                                        
                                     </tr>
                                 }
                             </tfoot>
@@ -827,6 +860,7 @@
                         <table class="table row-border dataTable" width="100%">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-center">Pregunta</th>
                                     <th>Tipo</th>
                                     <th>Concepto</th>
@@ -839,6 +873,7 @@
                                     if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo.Equals("Penalizacion"))
                                     {
                                         <tr>
+                                            <td></td>                                           
                                             <td class="text-center">@rs.Pregunta</td>
                                             <td>Penalización</td>
                                             <td>@Html.Raw(rs.cuestionario.Icono) @rs.cuestionario.Concepto</td>
@@ -852,10 +887,11 @@
                                 @if (tpenalizacion != 0)
                                 {
                                     <tr class="font-weight-bold text-danger">
-                                        <td class="text-center">Total de penalizaciones</td>
-                                        <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tpenalizacion)</td>
+                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td class="text-right-lg">Total de penalizaciones</td>
+                                        <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tpenalizacion)</td>                                       
                                     </tr>
                                 }
                             </tfoot>
@@ -1026,6 +1062,7 @@
                             <input type="hidden" id="campoIncidenciaId" />
                             <input type="hidden" id="campoPregunta" />
                             <input type="hidden" id="campoPreguntaId" />
+                                <p id="notaIncidencia"></p>
                             <div class="form-group col-md-3" id="divFechaProgramada">
                                 <label for="fechaIncidencia">Fecha Programada: </label>
                                 <input type="date" class="form-control" id="campoFechaProgramada" name="fechaProgramada">
@@ -1090,7 +1127,7 @@
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" data-dir="dwn"><span class="fas fa-minus"></span></button>
                                         </span>
-                                        <input type="number" class="form-control text-center campoCantidad" value="1">
+                                        <input type="number" id ="campoCantidad" class="form-control text-center campoCantidad" value="1">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" data-dir="up"><span class="fas fa-plus"></span></button>
                                         </span>
@@ -1209,6 +1246,12 @@
 @*Fin Modal para ver la factura*@
 
 <style>
+
+    .text-right-lg {
+        text-align: right;
+        font-size: 1.3em;
+    }
+
     .titulo-principal {
         font-family: Arial, sans-serif;
         font-size: 20px;
@@ -1321,6 +1364,21 @@
 
     .swal-wide {
         width: 800px !important;
+    }
+
+    .close-incidencias2 {
+        transform: translate(-420%, 0%);
+        background-color: #FF0000; /* Cambia el color de fondo a rojo */
+        color: #fff; /* Mantiene el texto blanco */
+        border: none; /* Elimina el borde por defecto */
+        border-radius: 5px; /* Añade esquinas redondeadas */
+        padding: 10px 20px; /* Ajusta el padding para un botón más grande */
+        font-size: 16px; /* Aumenta el tamaño de la fuente */
+    }
+
+    #modal-avisoPreg4 {
+        position: fixed;
+        top: 150px; /* Ajusta la posición vertical */
     }
 </style>
 
@@ -1454,6 +1512,32 @@
 @*Fin del Modal para Capturar Oficios*@
 
 
+ @* MODAL COMO NOTA INFORMATIVA PREGUNTA 4 - RECORDATORIO *@
+        <div class="modal fade" id="modal-avisoPreg4">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-joke">
+                        <h4 class="modal-title text-white"> <b></b>📢 INFORMACIÓN IMPORTANTE - Entregable Análisis Microbiológicos</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <p style="text-align: center; font-size: 1.3em;">
+                            <B>El archivo deberá contener el <u>Nombre del inmueble</u> y la <u>Fecha de entrega</u> en el Punto 2</B>
+                        </p>
+                    
+                        <div class="modal-footer">
+                            <button type="button" class="btn-danger close-incidencias2 text-white" data-dismiss="modal" aria-label="Close">CERRAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ @* FIN MODAL COMO NOTA INFORMATIVA PREGUNTA 4 - RECORDATORIO *@
+
+
+
+
 @section Scripts{
     <script>
         $(function () {
@@ -1482,6 +1566,11 @@
             });
 
             localStorage.getItem('activeTab')
+
+            $(".abreInfo4").click(function () {
+                $("#modal-avisoPreg4").modal("show");
+
+            });
 
             if (localStorage.getItem('activeTab')) {
                 var idTab = localStorage.getItem('activeTab').replace("#", "");
@@ -1722,10 +1811,12 @@
             /*********************************** Apartado de Incidencias **********************************/
             $(".addIncidencia").click(function () {
                 limpiaCampos();
+                $("#notaIncidencia").html('');
                 if ($(this).data('respuesta') == null || $(this).data('respuesta') == "")
                 {
                     if ($(this).data("abreviacion") == "FechaCierre") {
                         $(".titleAddI").text("Registrar fecha de cierre");
+                        $("#notaIncidencia").html('<b>Nota: La fecha de cierre debe corresponder a la conclusión de la adquisición, ya sea los últimos días del mes evaluado o los primeros días del mes siguiente.</b> ');
                     }
                     Swal.fire({
                         icon: 'error',
@@ -1737,6 +1828,8 @@
                 {
                     if ($(this).data("abreviacion") == "FechaCierre") {
                         $(".titleAddI").text("Registrar fecha de cierre");
+                        $("#notaIncidencia").html('<b>Nota: La fecha de cierre debe corresponder a la conclusión de la adquisición, ya sea los últimos días del mes evaluado o los primeros días del mes siguiente.</b> ');
+
                     }
                     else {
                         $(".titleAddI").text("Registrar Incidencia - " + $(this).data("titulo"));
@@ -1772,6 +1865,8 @@
                 $("#campoFechaEntrega").val("");
                 $("#campoHoraProgramada").val("");
                 $("#campoHoraRealizada").val("");
+                $("#notaIncidencia").val("");
+
             }
 
             function ocultaCamposIncidencia() {
@@ -1840,6 +1935,8 @@
                 editarIncidencia($(this).data("pregunta"), $(this).data("incidencia"), $(this).data("abreviacion"));
                 if ($(this).data("abreviacion") == "FechaCierre") {
                     $(".titleAddI").text("Registrar fecha de cierre");
+                    $("#notaIncidencia").html('<b>Nota: La fecha de cierre debe corresponder a la conclusión de la adquisición, ya sea los últimos días del mes evaluado o los primeros días del mes siguiente.</b> ');
+
                 }
                 else {
                     $(".titleAddI").text("Editar Incidencia - " + $(this).data("titulo"));
@@ -1848,7 +1945,9 @@
                 $("#campoIncidenciaId").val($(this).data("incidenciaid"));
                 $("#campoPregunta").val($(this).data("pregunta"));
                 $("#campoPreguntaId").val($(this).data("preguntaid"));
+
                 $("#modal-incidencias").modal("show");
+
             });
 
             function editarIncidencia(pregunta, id, abreviacion) {
@@ -1883,6 +1982,16 @@
                             $("#divObservaciones").css("display", "block");
                         }
 
+                        if (respuestas[pregunta - 1].iAgua[i].ciAgua.horaProgramada) {
+                            $("#campoHoraProgramada").val(respuestas[pregunta - 1].iAgua[i].horaProgramada);
+                            $("#divHoraProgramada").css("display", "block");
+                        }
+
+                        if (respuestas[pregunta - 1].iAgua[i].ciAgua.horaRealizada) {
+                            $("#campoHoraRealizada").val(respuestas[pregunta - 1].iAgua[i].horaRealizada);
+                            $("#divHoraRealizada").css("display", "block");
+                        }
+
                         return;
                     }
                 }
@@ -1898,7 +2007,7 @@
                                 $("#error_campoFechaProgramada").css("display", "block");
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' +servicio.descripcion,
                                     'html': "No ha capturado la <b>Fecha Programada</b>."
                                 }).then(function () {
                                     return false;
@@ -1912,7 +2021,7 @@
                                 $("#error_campoFechaEntrega").css("display", "block");
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' +servicio.descripcion,
                                     'html': "No ha capturado la <b>Fecha de Entrega</b>."
                                 }).then(function () {
                                     return false;
@@ -1955,7 +2064,7 @@
                                 denegate = true;
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' +servicio.descripcion,
                                     'html': "La <b>Fecha de Entrega</b> debe ser mayor a la <b>Fecha Programada</b>."
                                 }).then(function () {
                                     return false;
@@ -1969,7 +2078,7 @@
                                 $("#error_campoNumeroGuia").css("display", "block");
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' + servicio.descripcion,
                                     'html': "El <b>Número de Guía</b> no se ha capturado."
                                 }).then(function () {
                                     return false;
@@ -1979,7 +2088,7 @@
                                 denegate = true;
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' + servicio.descripcion,
                                     'html': "Asegurese de haber capturado un <b>Número de Guía</b> válido."
                                 }).then(function () {
                                     return false;
@@ -1993,7 +2102,7 @@
                                 $("#error_campoCodigoRastreo").css("display", "block");
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' + servicio.descripcion,
                                     'html': "El <b>Código de Rastreo</b> no se ha capturado."
                                 }).then(function () {
                                     return false;
@@ -2003,7 +2112,7 @@
                                 denegate = true;
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' + servicio.descripcion,
                                     'html': "Asegurese de haber capturado un <b>Código de Rastreo</b> válido."
                                 }).then(function () {
                                     return false;
@@ -2039,154 +2148,6 @@
                             }
                         }
 
-                        if (configuracion[i].tipoServicio) {
-                            if ($("#campoTipoServicio").val() == "") {
-                                denegate = true;
-                                $("#error_campoTipoServicio").css("display", "block");
-                                Swal.fire({
-                                    'icon': 'error',
-                                    title: servicio.descripcion,
-                                    'html': "No se ha seleccionado el <b>Tipo de Servicio</b>."
-                                }).then(function () {
-                                    return false;
-                                });
-                            }
-                            else
-                            {
-                                if ($("#campoTipoServicio").val() == "Nacional Sobrepeso" && ($("#campoSobrepeso").val() == "" || $("#campoSobrepeso").val() == 0)) {
-                                    denegate = true;
-                                    $("#error_campoSobrepeso").css("display", "block");
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        title: servicio.descripcion,
-                                        'html': "No se ha capturado el <b>sobrepeso</b>."
-                                    }).then(function () {
-                                        return false;
-                                    });
-                                }
-
-                                if ($("#campoTipoServicio").val() == "Internacional Sobrepeso" && ($("#campoSobrepeso").val() == "" || $("#campoSobrepeso").val() == 0)) {
-                                    denegate = true;
-                                    $("#error_campoSobrepeso").css("display", "block");
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        title: servicio.descripcion,
-                                        'html': "No se ha capturado el <b>sobrepeso</b>."
-                                    }).then(function () {
-                                        return false;
-                                    });
-                                }
-
-                                if ($("#campoSobrepeso").val() != 0 && $("#campoSobrepeso").val() != "" && $("#campoSobrepeso").val() > 100) {
-                                    denegate = true;
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        title: servicio.descripcion,
-                                        'html': "El <b>Sobrepeso</b> no puede exceder los 70Kg."
-                                    }).then(function () {
-                                        return false;
-                                    });
-                                }
-                            }
-                        }
-
-                        if (configuracion[i].tipoIndemnizacion) {
-                            var sel = document.getElementById("campoTipoIndemnizacion");
-                            var text = sel.options[sel.selectedIndex].text;
-                            if ($("#campoTipoIndemnizacion").val() == "" || $("#campoTipoIndemnizacion").val() == 0) {
-                                denegate = true;
-                                $("#error_campoTipoIndemnizacion").css("display", "block");
-                                Swal.fire({
-                                    'icon': 'error',
-                                    title: servicio.descripcion,
-                                    'html': "No se ha seleccionado el <b>Tipo de Indemnización</b>."
-                                }).then(function () {
-                                    return false;
-                                });
-                            }
-                            else
-                            {
-                                if (text == "Expediente" && ($("#campoSobrepeso").val() == "" || $("#campoSobrepeso").val() == 0)) {
-                                    denegate = true;
-                                    $("#error_campoSobrepeso").css("display", "block");
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        title: servicio.descripcion,
-                                        'html': "No se ha capturado el <b>sobrepeso</b>."
-                                    }).then(function () {
-                                        return false;
-                                    });
-                                }
-
-                                if (text == "Bienes" && ($("#campoSobrepeso").val() == "" || $("#campoSobrepeso").val() == 0)) {
-                                    denegate = true;
-                                    $("#error_campoSobrepeso").css("display", "block");
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        title: servicio.descripcion,
-                                        'html': "No se ha capturado el <b>sobrepeso</b>."
-                                    }).then(function () {
-                                        return false;
-                                    });
-                                }
-
-                                if ($("#campoSobrepeso").val() != 0 && $("#campoSobrepeso").val() != "" && $("#campoSobrepeso").val() > 100) {
-                                    denegate = true;
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        title: servicio.descripcion,
-                                        'html': "El <b>Sobrepeso</b> no puede exceder los 200Kg."
-                                    }).then(function () {
-                                        return false;
-                                    });
-                                }
-                            }
-                        }
-
-                        if (configuracion[i].acta) {
-                            var acta = document.getElementById('fileActa').files[0];
-                            if (acta == null && $(".nameActaRE").text() == "Seleccionar Archivo") {
-                                denegate = true;
-                                $("#error_archivoActa").css("display", "block");
-                                Swal.fire({
-                                    'icon': 'error',
-                                    title: servicio.descripcion,
-                                    'html': "Asegurese de haber cargado una <b>Acta del MP</b> válido."
-                                }).then(function () {
-                                    return false;
-                                });
-                            }
-                        }
-
-                        if (configuracion[i].escrito) {
-                            var escrito = document.getElementById('fileEscrito').files[0];
-                            if (escrito == null && $(".archivoEscrito").text() == "Seleccionar Archivo") {
-                                denegate = true;
-                                $("#error_archivoEscrito").css("display", "block");
-                                Swal.fire({
-                                    'icon': 'error',
-                                    title: servicio.descripcion,
-                                    'html': "Asegurese de haber cargado un <b>Escrito de robo/extravío</b> válido."
-                                }).then(function () {
-                                    return false;
-                                });
-                            }
-                        }
-
-                        if (configuracion[i].comprobante) {
-                            var escrito = document.getElementById('fileComprobante').files[0];
-                            if (escrito == null && $(".archivoComprobante").text() == "Seleccionar Archivo") {
-                                denegate = true;
-                                $("#error_archivoComprobante").css("display", "block");
-                                Swal.fire({
-                                    'icon': 'error',
-                                    title: servicio.descripcion,
-                                    'html': "Asegurese de haber cargado un <b>Comprobante</b> válido."
-                                }).then(function () {
-                                    return false;
-                                });
-                            }
-                        }
 
                         if (configuracion[i].observaciones) {
                             if ($("#campoObservaciones").val() == "") {
@@ -2194,13 +2155,70 @@
                                 $("#error_observaciones").css("display", "block");
                                 Swal.fire({
                                     'icon': 'error',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' +servicio.descripcion,
                                     'html': "No se han capturado las <b>Observaciones</b>."
                                 }).then(function () {
                                     return false;
                                 });
                             }
                         }
+
+                        if (configuracion[i].tipo) {
+                            if ($("#campoTipoCarac").val() == "") {
+                                denegate = true;
+                                $("#error_campoTipoCarac").css("display", "block");
+                                Swal.fire({
+                                    'icon': 'error',
+                                    title: 'Adquisición de ' + servicio.descripcion,
+                                    'html': "No ha capturado la <b>Característica del Garrafón.</b>"
+                                }).then(function () {
+                                    return false;
+                                });
+                            }
+                        }
+
+                        if (configuracion[i].cantidad) {
+                            if ($("#campoCantidad").val() == 0) {
+                                denegate = true;
+                                $("#error_campoCantidad").css("display", "block");
+                                Swal.fire({
+                                    'icon': 'error',
+                                    title: 'Adquisición de ' + servicio.descripcion,
+                                    'html': "La <b>Cantidad</b> no puede ser 0."
+                                }).then(function () {
+                                    return false;
+                                });
+                            }
+                        }
+
+                        if (configuracion[i].horaProgramada) {
+                            if ($("#campoHoraProgramada").val() == '') {
+                                denegate = true;
+                                $("#error_campoHoraProgramada").css("display", "block");
+                                Swal.fire({
+                                    'icon': 'error',
+                                    title: 'Adquisición de ' + servicio.descripcion,
+                                    'html': "No ha capturado la <b>Hora Programada</b>."
+                                }).then(function () {
+                                    return false;
+                                });
+                            }
+                        }
+                        if (configuracion[i].horaRealizada) {
+                            if ($("#campoHoraRealizada").val() == '') {
+                                denegate = true;
+                                $("#error_campoHoraRealizada").css("display", "block");
+                                Swal.fire({
+                                    'icon': 'error',
+                                    title: 'Adquisición de ' + servicio.descripcion,
+                                    'html': "No ha capturado la <b>Hora Realizada</b>."
+                                }).then(function () {
+                                    return false;
+                                });
+                            }
+                        }
+
+
                     }
                 }
 
@@ -2483,8 +2501,10 @@
 
             /*********************************** Apartado de Entregables **********************************/
             $(".editarEntregable").click(function () {
+                $("#notaEntregable").html(''); // Limpia el contenido de #notaEntregable
+
                 $(".tituloEntregable").html('<h4 class="modal-title text-white">Cargar entregable - ' + $(this).data("tipo") + '</h4>');
-                if ($(this).data("tipo") == "Factura" || $(this).data("tipo").includes("SAT"))
+                if ($(this).data("tipo") == "Factura" || $(this).data("tipo").includes("Validación del SAT") || $(this).data("tipo").includes("Nota de Crédito") || $(this).data("tipo").includes("Validación del SAT (NC)"))
                 {
                     $("#notaEntregable").html('<b>Nota:</b> Recuerde que la <b>Factura, Nota de Crédito, Validación del SAT y Validación del SAT (NC)</b> <b class="text-danger">deben ir firmadas y selladas</b> por la administración del inmueble.');
                 }
@@ -2493,6 +2513,11 @@
                 $("#campoentregableid").val($(this).data("entregableid"));
                 $(".custom-pdf").text($(this).data("file"));
                 $("#modalEntregables").modal('show');
+
+                if ($(this).data("tipo") == "Resultado de análisis microbiológicos del agua" ) {
+                    $("#notaEntregable").html('<b>Nota: El archivo deberá contener el <u>Nombre del inmueble</u> y la <u>Fecha de entrega</u> en el Punto 2</b>.');
+                    $("#modal-avisoPreg4").modal('show');
+                }
             });
 
             $("#entregablePDF").on("change", function () {
@@ -3001,7 +3026,7 @@
                             {
                                 Swal.fire({
                                     'icon': 'success',
-                                    title: servicio.descripcion,
+                                    title: 'Adquisición de ' +servicio.descripcion,
                                     'html': '<p class="text-justify">Los firmantes se guardaron correctamente. Por favor, nuevamente intente generar su entregable.',
                                     confirmButtonText: 'Cerrar'
                                 }).then(function () {
@@ -3819,7 +3844,7 @@
                 Swal.fire({
                     'customClass': 'swal-wide',
                     'icon': "info",
-                    title: servicio.descripcion,
+                    title: 'Adquisición de ' + servicio.descripcion,
                     'confirmButtonText': 'Cerrar',
                     'html': msg
                 });
