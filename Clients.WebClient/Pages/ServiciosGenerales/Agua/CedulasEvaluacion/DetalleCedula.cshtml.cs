@@ -447,8 +447,8 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
                 superviso = Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.NombreEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.PaternoEmp + " " + Firmantes.Single(f => f.Tipo.Equals("Superviso")).Usuario.MaternoEmp;
             }
             Document document = new Document();
-            //var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción 2022 Agua.docx";
-            var path = @"C:\Users\coterog\Desktop\Acta Entrega - Recepción 2022 Agua.docx";
+            var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción 2022 Agua.docx";
+            //var path = @"C:\Users\coterog\Desktop\Acta Entrega - Recepción 2022 Agua.docx";
             var cedula = await _cedulaQuery.GetCedulaById(cedulaId);
             document.LoadFromFile(path);
 

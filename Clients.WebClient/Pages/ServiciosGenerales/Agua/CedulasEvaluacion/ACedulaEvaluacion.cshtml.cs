@@ -55,7 +55,15 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
             Parametros = await _ctParametro.GetParametroByTipo("Categoria");
 
             LocalReport local = new LocalReport();
-            var path = Directory.GetCurrentDirectory() + "\\CedulasEvaluacion\\CedulaAgua.rdlc";
+            //if (Cedula.Penalizacion == Convert.ToDecimal(0.00) && Cedula.Calificacion == Convert.ToDecimal(10.0))
+            //{
+            //    path = Directory.GetCurrentDirectory() + "\\CedulasEvaluacion\\CedulaAgua.rdlc";
+            //}
+            //else
+            //{
+            //    path = Directory.GetCurrentDirectory() + "\\CedulasEvaluacion\\CedulaAgua_SinIncidencia.rdlc";
+            //}
+            var path = Directory.GetCurrentDirectory() + "\\CedulasEvaluacion\\CedulaEvaluacionAgua.rdlc";
             local.ReportPath = path;
             local.DataSources.Add(new ReportDataSource("Cuestionario", GeneraCuestionario(Cedula, Parametros)));
 

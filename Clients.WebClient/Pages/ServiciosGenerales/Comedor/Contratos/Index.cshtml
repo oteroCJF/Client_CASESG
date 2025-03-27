@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        @if (Model.Contratos.Where(c => c.Activo).Count() != 0)
+        @*@if (Model.Contratos.Where(c => c.Activo).Count() != 0)
         {
             <div class="col-lg-5">
                 <div class="card">
@@ -32,24 +32,49 @@
                     </div>
                 </div>
             </div>
-        }
-        else
+        }*@
+        @foreach (var contrato in Model.Contratos.Where(c => c.Activo))
         {
-            <div class="col-lg-5"></div>
-        }
-        <div class="col-lg-7">
-            <a href="javascript:" class="btn btn-sm btn-primary float-right mr-2 createContrato"
-               data-toggle="tooltip" title="Capturar nuevo contrato" data-placement="top">
-                <i class="fal fa-plus"></i>
-            </a>
-        </div>
+            <div class="col-lg-5">
+              
+                <div class="card @(contrato.NoContrato.Contains("2025") ? "bg-warning" : "")">
+                    <div class="card-body">
+           
+                        <div class="row">
+                            <div class="col-3 text-center mt-3">
+                                <img src="~/img/servicios/@String.Concat(@Model.Servicio.Id, ".png")" alt="" class="img-fluid" width="100" height="100">
+                            </div>
+
+                            <div class="col-7 ml-3">
+                                <h2 class="lead"><b>Servicio de @Model.Servicio.Nombre</b></h2>
+                                <p class="text-sm"><b>Contrato activo: </b> @contrato.NoContrato</p>
+                                <p class="text-sm">
+                                    <b>Vigencia: </b> Del @contrato.InicioVigencia.ToString("dd") de @contrato.InicioVigencia.ToString("MMMM", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))
+                                    @contrato.InicioVigencia.ToString("yyyy") al @contrato.FinVigencia.ToString("dd") de @contrato.FinVigencia.ToString("MMMM", @System.Globalization.CultureInfo.CreateSpecificCulture("es"))
+                                    @contrato.FinVigencia.ToString("yyyy")
+                                </p>
+                                <p class="text-sm"><b>Prestador de servicios: </b> @contrato.Empresa </p>
+                                <p class="text-sm"><b>Representante legal: </b> @contrato.Representante</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         }
+
     </div>
     <div class="row mt-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header h5">
                     <i class="fad fa-list mr-2"></i>Listado de Contratos
+
+                    <a href="javascript:" class="btn btn-sm btn-primary float-right mr-2 createContrato"
+                       data-toggle="tooltip" title="Capturar nuevo contrato" data-placement="top">
+                        <i class="fal fa-plus"></i>
+                    </a>
                 </div>
+               
                 <div class="card-body">
                     <div row col-lg-12>
                         <table class="table dataTable tableContratos" width="100%">
@@ -60,8 +85,8 @@
                                     <th>Empresa</th>
                                     <th>Monto mínimo</th>
                                     <th>Monto máximo</th>
-                                    <th >Volumetría mínima</th>
-                                    <th >Volumetria máxima</th>
+                                    <th>Volumetría mínima</th>
+                                    <th>Volumetria máxima</th>
                                     <th class="text-center">Vigente</th>
                                     <th class="text-center">Acciones</th>
                                 </tr>
@@ -86,7 +111,7 @@
                                                 </div>
                                             }
                                             else
-                                            {   
+                                            {
                                                 <div class="icon">
                                                     <i class="fad fa-times-circle text-danger"></i>
                                                 </div>

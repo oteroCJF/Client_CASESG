@@ -225,7 +225,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Cédula Automatizada para la Supervisión y Evaluación del Servicio de Suministro de Agua Purificada para Beber</Value>
+                    <Value>Cédula Automatizada para la Supervisión y Evaluación de la Adquisición de Garrafones de Agua Purificada en Presentación de 20 litros.</Value>
                     <Style>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -238,7 +238,6 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>0.07056cm</Top>
             <Left>2.76683cm</Left>
             <Height>0.6cm</Height>
             <Width>15.00667cm</Width>
@@ -259,7 +258,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Evaluación del Servicio</Value>
+                    <Value>EVALUACIÓN</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -272,9 +271,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox36</rd:DefaultName>
             <Top>3.9499cm</Top>
-            <Left>7.24641cm</Left>
+            <Left>7.01959cm</Left>
             <Height>0.6cm</Height>
-            <Width>6.38938cm</Width>
+            <Width>6.6162cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -383,22 +382,22 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.32021cm</Width>
+                  <Width>3.17411cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.57459cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.97083cm</Width>
+                  <Width>2.04542cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.96063cm</Width>
+                  <Width>5.03522cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.57459cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.57459cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -794,10 +793,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>2.08268cm</Top>
-            <Left>1.48737cm</Left>
+            <Top>1.76518cm</Top>
+            <Left>1.26055cm</Left>
             <Height>1.8cm</Height>
-            <Width>17.75167cm</Width>
+            <Width>17.97852cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -1806,7 +1805,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>1.34157cm</Top>
+            <Top>1.02407cm</Top>
             <Left>1.50047cm</Left>
             <Height>0.6cm</Height>
             <Width>17.73858cm</Width>
@@ -2029,7 +2028,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>18.62985cm</Size>
+                                <Size>17.89805cm</Size>
                                 <CellContents>
                                   <Textbox Name="Pregunta">
                                     <CanGrow>true</CanGrow>
@@ -2051,6 +2050,7 @@
                                           </TextRun>
                                           <TextRun>
                                             <Value>=Fields!Pregunta.Value</Value>
+                                            <MarkupType>HTML</MarkupType>
                                             <Style>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
@@ -2075,7 +2075,7 @@
                             </TablixMember>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>18.62985cm</Size>
+                                <Size>17.89805cm</Size>
                                 <CellContents>
                                   <Textbox Name="Respuesta">
                                     <CanGrow>true</CanGrow>
@@ -2111,22 +2111,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>18.62985cm</Size>
+                        <Size>17.89805cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix2">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.34076cm</Width>
+                                  <Width>4.15781cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.52312cm</Width>
+                                  <Width>3.34017cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.13112cm</Width>
+                                  <Width>2.94817cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>7.63484cm</Width>
+                                  <Width>7.45189cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -2448,22 +2448,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>18.62985cm</Size>
+                        <Size>17.89805cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix19">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>4.40837cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>4.40837cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>4.40837cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.8559cm</Width>
+                                  <Width>4.67295cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -2775,22 +2775,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>18.62985cm</Size>
+                        <Size>17.89805cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix20">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>4.40837cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>4.40837cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.59132cm</Width>
+                                  <Width>4.40837cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.8559cm</Width>
+                                  <Width>4.67295cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -3106,9 +3106,9 @@
             </TablixRowHierarchy>
             <DataSetName>Cuestionario</DataSetName>
             <Top>4.77898cm</Top>
-            <Left>0.30913cm</Left>
+            <Left>1.26163cm</Left>
             <Height>5.51355cm</Height>
-            <Width>18.70923cm</Width>
+            <Width>17.97743cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -3133,7 +3133,7 @@
           </RightBorder>
         </Style>
       </Body>
-      <Width>7.60925in</Width>
+      <Width>7.86254in</Width>
       <Page>
         <PageHeader>
           <Height>2.54cm</Height>
@@ -3145,7 +3145,7 @@
               <Value>Imagen1</Value>
               <Sizing>FitProportional</Sizing>
               <Top>0.25507cm</Top>
-              <Left>0.42016cm</Left>
+              <Left>1.05516cm</Left>
               <Height>2.10854cm</Height>
               <Width>2.02917cm</Width>
               <Style>
@@ -3165,7 +3165,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -3174,7 +3176,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -3183,14 +3187,16 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.52599cm</Top>
-              <Left>2.44933cm</Left>
-              <Height>1.83762cm</Height>
-              <Width>12.9775cm</Width>
+              <Top>0.54716cm</Top>
+              <Left>0.30913cm</Left>
+              <Height>1.47779cm</Height>
+              <Width>19.23905cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -3210,7 +3216,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>2.54cm</Height>
+          <Height>2.08764cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3251,7 +3257,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>0.21764cm</Top>
+              <Top>1.48764cm</Top>
               <Left>14.12938cm</Left>
               <Height>0.6cm</Height>
               <Width>5cm</Width>
@@ -3291,7 +3297,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>0.21764cm</Top>
+              <Top>1.48764cm</Top>
               <Left>0.42016cm</Left>
               <Height>0.6cm</Height>
               <Width>7.65938cm</Width>
