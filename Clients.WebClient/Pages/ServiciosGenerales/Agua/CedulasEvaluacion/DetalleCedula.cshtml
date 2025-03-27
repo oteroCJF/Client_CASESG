@@ -802,7 +802,8 @@
                             <li class="medium mt-3"><span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span>Evaluación correspondiente al mes de <b>@Model.Cedula.Mes.Nombre</b> del año <b>@Model.Cedula.Anio</b></li>
                             <li class="medium mt-3"><span class="fa-li"><i class="fas fa-lg fa-building-circle-check"></i></span><b>Inmueble:</b> @Model.Inmueble.Nombre</li>
                         </ul>
-                        <h5 class="mt-3">Deductivas</h5>
+                        <p></p>
+                        <strong style="font-size: 19px; color:dodgerblue">Deductivas</strong>
                         <table class="table row-border dataTable" width="100%">
                             <thead>
                                 <tr>
@@ -843,19 +844,20 @@
                             <tfoot>
                                 @if (tdeductivas != 0)
                                 {
-     
-                                    <tr class="font-weight-bold text-primary">
+
+                                    <tr class="font-weight-bold text-primary" style="background-color: #f3f3f3;">
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right-lg">Total de deductivas</td>
+                                        <td class="text-right-lg">Total de Deductivas:</td>
                                         <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tdeductivas)</td>
-                                        
+
                                     </tr>
                                 }
                             </tfoot>
                         </table>
-                        <h5>Penalizaciones</h5>
+                        <p></p>
+                        <strong style="font-size: 19px; color:red">Penalizaciones</strong>
                         <table class="table row-border dataTable" width="100%">
                             <thead>
                                 <tr>
@@ -872,7 +874,7 @@
                                     if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo.Equals("Penalizacion"))
                                     {
                                         <tr>
-                                            <td></td>                                           
+                                            <td></td>
                                             <td class="text-center">@rs.Pregunta</td>
                                             <td>Penalización</td>
                                             <td>@Html.Raw(rs.cuestionario.Icono) @rs.cuestionario.Concepto</td>
@@ -885,12 +887,12 @@
                             <tfoot>
                                 @if (tpenalizacion != 0)
                                 {
-                                    <tr class="font-weight-bold text-danger">
-                                         <td></td>
+                                    <tr class="font-weight-bold text-danger" style="background-color: #f3f3f3;">
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right-lg">Total de penalizaciones</td>
-                                        <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tpenalizacion)</td>                                       
+                                        <td></td>
+                                        <td class="text-right-lg">Total de Penalizaciones:</td>
+                                        <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", tpenalizacion)</td>
                                     </tr>
                                 }
                             </tfoot>
