@@ -968,10 +968,12 @@
                             <li class="medium mt-3"><span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span>Evaluación correspondiente al mes de <b>@Model.Cedula.Mes.Nombre</b> del año <b>@Model.Cedula.Anio</b></li>
                             <li class="medium mt-3"><span class="fa-li"><i class="fas fa-lg fa-building-circle-check"></i></span><b>Inmueble:</b> @Model.Inmueble.Nombre</li>
                         </ul>
-                        <h5 class="mt-3">Deductivas</h5>
+                        <p></p>
+                        <strong style="font-size: 22px; color:dodgerblue">Deductivas</strong>
                         <table class="table row-border dataTable" width="100%">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-center">Pregunta</th>
                                     <th>Tipo</th>
                                     <th>Concepto</th>
@@ -986,6 +988,7 @@
                                         if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo.Equals("Deductiva"))
                                         {
                                             <tr>
+                                                <td></td>
                                                 <td class="text-center">@rs.Pregunta</td>
                                                 <td>Deductiva</td>
                                                 <td>@Html.Raw(rs.cuestionario.Icono) @rs.cuestionario.Concepto</td>
@@ -998,30 +1001,35 @@
 
                                 @if (Model.Cedula.Penalizacion != 0)
                                 {
-                                    <tr>
-                                        <td class="text-center">-</td>
-                                        <td>Deductiva</td>
-                                        <td><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
-                                        <td class="text-right text-primary font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", Model.Cedula.Penalizacion)</td>
-                                    </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-center">-</td>
+                                <td>Deductiva</td>
+                                <td><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
+                                <td class="text-right text-primary font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", Model.Cedula.Penalizacion)</td>
+                            </tr>
                                 }
                             </tbody>
                             <tfoot>
                                 @if (tdeductivas != 0)
                                 {
-                                    <tr class="font-weight-bold text-primary">
-                                        <td class="text-center">Subtototal de deductivas sin I.V.A.</td>
-                                        <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tdeductivas)</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                <tr class="font-weight-bold text-primary" style="background-color: #f3f3f3;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right-lg">Subtototal de deductivas sin I.V.A.</td>
+                                    <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tdeductivas)</td>
+
+                                </tr>
                                 }
                             </tfoot>
                         </table>
-                        <h5>Penalizaciones</h5>
+                        <p></p>
+                        <strong style="font-size: 19px; color:red">Penalizaciones</strong>
                         <table class="table row-border dataTable" width="100%">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-center">Pregunta</th>
                                     <th>Tipo</th>
                                     <th>Concepto</th>
@@ -1036,6 +1044,7 @@
                                         if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo.Equals("Penalizacion"))
                                         {
                                             <tr>
+                                                <td></td>
                                                 <td class="text-center">@rs.Pregunta</td>
                                                 <td>Penalización</td>
                                                 <td>@Html.Raw(rs.cuestionario.Icono) @rs.cuestionario.Concepto</td>
@@ -1049,12 +1058,14 @@
                             <tfoot>
                                 @if (tpenalizacion != 0)
                                 {
-                                    <tr class="font-weight-bold text-danger">
-                                        <td class="text-center">Subtototal de penalizaciones sin I.V.A.</td>
-                                        <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tpenalizacion)</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                <tr class="font-weight-bold text-danger" style="background-color: #f3f3f3;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right-lg">Subtototal de penalizaciones sin I.V.A.</td>
+                                    <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tpenalizacion)</td>
+
+                                </tr>
                                 }
                             </tfoot>
                         </table>
@@ -1463,6 +1474,11 @@
 @* Modal para la captura de Incidencias *@
 
 <style>
+    .text-right-lg {
+        text-align: right;
+        font-size: 1.3em;
+    }
+
     .botonregreso {
         position: relative; /* Agrega esta línea */
         left: -33px;

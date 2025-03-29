@@ -229,7 +229,7 @@
                                         <td>@Convert.ToDateTime(cont.FechaActualizacion).ToString("dd/MM/yyyy hh:mm tt")</td>
                                         <td class="text-center">
                                             <a href="javascript:" class="viewEntregable" data-fprogramada="@Convert.ToDateTime(cont.FechaProgramada).ToString("dd/MM/yyyy")"
-                                               data-fentrega="@Convert.ToDateTime(cont.FechaProgramada).ToString("dd/MM/yyyy")" data-tipo="@cont.TipoEntregable.Nombre"
+                                               data-fentrega="@Convert.ToDateTime(cont.FechaEntrega).ToString("dd/MM/yyyy")" data-tipo="@cont.TipoEntregable.Nombre"
                                                data-contrato="@Model.Contratos.NoContrato" data-observaciones="@cont.Observaciones" data-archivo="@cont.Archivo"
                                                data-convenio="" data-mgarantia="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", cont.MontoGarantia)"
                                                data-mpenalizacion="@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", cont.MontoPenalizacion)"
@@ -238,7 +238,7 @@
                                                 <i class="fad fa-eye text-success mr-2"></i>
                                             </a>
                                             <a href="javascript:" class="updateEntregable" data-id="@cont.Id" data-fprogramada="@Convert.ToDateTime(cont.FechaProgramada).ToString("yyyy-MM-dd")"
-                                               data-fentrega="@Convert.ToDateTime(cont.FechaProgramada).ToString("yyyy-MM-dd")" data-tipo="@cont.TipoEntregable.Nombre"
+                                               data-fentrega="@Convert.ToDateTime(cont.FechaEntrega).ToString("yyyy-MM-dd")" data-tipo="@cont.TipoEntregable.Nombre"
                                                data-variable="@cont.EntregableId" data-convenio="@cont.ConvenioId" data-observaciones="@cont.Observaciones"
                                                data-montop="@cont.MontoPenalizacion" data-montog="@cont.MontoGarantia" data-penalizable="@cont.Penalizable"
                                                data-ivigencia="@Convert.ToDateTime(cont.InicioVigencia).ToString("yyyy-MM-dd")"

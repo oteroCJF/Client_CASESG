@@ -8,11 +8,12 @@
     decimal totalNC = 0;
     int nf = 0;
     int nnc = 0;
+    int i = 0;
 }
 
 <div class="container-fluid">
     <div class="row col-lg-12">
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -30,17 +31,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7">
-            <a href="/mensajeria/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar a Facturaciones" data-placement="top">
+        <div class="col-lg-6">
+            <a href="/mensajeria/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2" data-toggle="tooltip" title="Regresar a Facturaciones" data-placement="top" style="padding: 6px 72px; font-size: 18px;">
                 <i class="fal fa-arrow-left"></i>
             </a>
-            <a href="#" type='button' class="btn btn-sm btn-primary float-right btnASoportePago" data-toggle="tooltip" title="Actualizar Soporte de Pago" data-placement="top">
+            <a href="#" type='button' class="btn btn-sm btn-primary float-right btnASoportePago" data-toggle="tooltip" title="Actualizar Soporte de Pago" data-placement="top" style="padding: 6px 12px; font-size: 18px;">
                 <i class="fal fa-file-text"></i>
             </a>
-            <a href="#" type='button' class="btn btn-sm btn-success float-right btnSoportePago mr-2" data-toggle="tooltip" title="Cargar Soporte de Pago" data-placement="top">
+            <a href="#" type='button' class="btn btn-sm btn-success float-right btnSoportePago mr-2" data-toggle="tooltip" title="Cargar Soporte de Pago" data-placement="top" style="padding: 6px 12px; font-size: 18px;">
                 <i class="fal fa-file-text"></i>
             </a>
-            <a href="/mensajeria/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/cargaFacturas" type='button' class="btn btn-sm btn-primary mr-2 float-right" data-toggle="tooltip" title="Realizar Carga Masiva de Archivos" data-placement="top">
+            <a href="/mensajeria/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/cargaFacturas" type='button' class="btn btn-sm btn-primary mr-2 float-right" data-toggle="tooltip" title="Realizar Carga Masiva de Archivos" data-placement="top" style="padding: 6px 12px; font-size: 18px;">
                 <i class="fal fa-plus"></i>
             </a>
         </div>
@@ -49,12 +50,12 @@
         <section class="col-xl-12 connectedSortable">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                        Facturas y Notas de Crédito del repositorio
+                    <h3 class="card-title" style="color: #24135f; text-align: center;">
+                        <strong style="font-size: 20px; color: black;">Facturas y Notas de Crédito del repositorio @Model.Mes.Nombre @Model.Repositorio.Anio</strong>
                     </h3>
                 </div>
-                <div class="card-body" style="font-size: 14px;">
-                    <table class="table" id="tblInmuebles">
+                <div class="card-body" style="font-size: 16px;">
+                    <table class="table" id="tblInmuebles" row-border" width="100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -64,20 +65,25 @@
                                 <th>Monto total factura</th>
                                 <th>Notas de crédito</th>
                                 <th class="text-center">Monto total NC</th>
-                                <th>Estatus cédula</th>
-                                <th>Fecha de Carga</th>
+                                @*<th>Estatus cédula</th>*@
+                                <th>Fecha de Carga Factura</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var inm in Model.Inmuebles)
                             {
+                                i++;
                                 <tr>
-                                    <td>@inm.Id</td>
-                                    <td>@inm.Nombre</td>
-                                    <td>@inm.ClienteEstafeta</td>
-                                    <td>@inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Count() - Factura(s)</td>
-                                    <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total))</td>
+                                    <td><strong>@inm.Id </strong></td>
+                                    <td><strong>@inm.Nombre </strong></td>
+                                    <td><strong>@inm.ClienteEstafeta </strong></td>
+                                    <td><strong class="text-primary">@inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Count() - Factura(s) </strong></td>
+                                    <td>
+                                        <strong class="text-purple">
+                                              @String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Sum(f => f.Total))
+                                        </strong>
+                                    </td>
                                     @if (@inm.Cedula.EstatusCedula.Equals("En Proceso") || @inm.Cedula.EstatusCedula.Equals("Sin Iniciar"))
                                     {
                                         <td class="text-center"><b>Sin definir</b></td>
@@ -100,8 +106,18 @@
                                             @String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", inm.Facturas.Where(f => f.Tipo.Equals("NC")).Sum(f => f.Total))
                                         </td>
                                     }
-                                    <td>@(inm.Cedula.EstatusCedula.Equals("") ? "No se generó la cédula" : inm.Cedula.EstatusCedula)</td>
-                                    <td>@(Model.Repositorio.Usuario.NombreEmp + " " + Model.Repositorio.Usuario.PaternoEmp + " " + Model.Repositorio.Usuario.MaternoEmp)</td>
+                                    @*<td>@(inm.Cedula.EstatusCedula.Equals("") ? "No se generó la cédula" : inm.Cedula.EstatusCedula)</td>*@
+                                    <td>
+                                        <strong>
+                                            @if (inm.Facturas.Where(f => f.Tipo.Equals("Factura")).Any())
+                                            {@inm.Facturas.Where(f => f.Tipo.Equals("Factura")).OrderByDescending(f => f.FechaCreacion).FirstOrDefault().FechaCreacion.ToString("dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.CurrentCulture)
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                        </strong>
+                                    </td>
                                     <td class="text-center">
                                         <a href="~/mensajeria/facturas/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Id/inmueble/@inm.Id"
                                            data-toggle="tooltip" title="Ver Detalle de la Factura" data-placement="top">
@@ -116,14 +132,14 @@
                             }
                         </tbody>
                         <tfoot>
-                            <tr>
+                            <tr style="background-color: #f0f0f0; font-size: 16px;">
                                 <th colspan="3">Total:</th>
                                 <th>@nf Factura(s)</th>
                                 <th>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", totalFactura)</th>
-                                <th></th>
                                 <th>@nnc Nota(s) de Crédito</th>
                                 <th class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", totalNC)</th>
                                 <th colspan="2"></th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -212,7 +228,7 @@
             const usuario = @Html.Raw(Json.Serialize(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value));
 
             $('#tblInmuebles').DataTable({
-                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                lengthMenu: [[100, 150, 200, -1], [100, 150, 200, "Todos"]],
                 responsive: true,
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
