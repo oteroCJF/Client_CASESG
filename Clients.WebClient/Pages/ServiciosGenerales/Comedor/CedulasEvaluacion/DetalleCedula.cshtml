@@ -10,8 +10,8 @@
         </a>
 
         @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-        @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-        @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+@Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+@Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
         {
             <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo botonregreso" data-toggle="tooltip"
                title="Solicitar rechazo de la cédula" data-placement="top">
@@ -34,19 +34,19 @@
 }
 
 @*<div class="row col-lg-12">
-    <div class="col-lg-12">
-       
-        @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
-         @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
-         @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
-        {
-            <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
-               title="Solicitar rechazo de la cédula" data-placement="top">
-                <i class="fal fa-times-circle"></i>
-            </a>
-        }
-    </div>
-</div>*@
+        <div class="col-lg-12">
+
+            @if (@Model.Cedula.Estatus.Nombre.Equals("Autorizada") || @Model.Cedula.Estatus.Nombre.Equals("Autorizado CAE") ||
+             @Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado") || @Model.Cedula.Estatus.Nombre.Equals("En Trámite") ||
+             @Model.Cedula.Estatus.Nombre.Equals("Trámite de Pago"))
+            {
+                <a href="#" type='button' class="btn btn-sm btn-danger float-right ml-2 solicitudRechazo" data-toggle="tooltip"
+                   title="Solicitar rechazo de la cédula" data-placement="top">
+                    <i class="fal fa-times-circle"></i>
+                </a>
+            }
+        </div>
+    </div>*@
 
 <div class="row col-lg-12 mt-3">
     <div class="col-lg-12">
@@ -66,7 +66,7 @@
                                     <div class="col-lg-12">
                                         <ul class="mb-0 fa-ul">
                                             <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span>Evaluación correspondiente al mes de <b>@Model.Cedula.Mes.Nombre</b> del año <b>@Model.Cedula.Anio</b></li>
-                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span><b class="mr-1 @Model.Cedula.Estatus.Fondo.Replace("bg","text")">Estatus: @Model.Cedula.Estatus.Nombre</b></li>
+                                            <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span><b class="mr-1 @Model.Cedula.Estatus.Fondo.Replace("bg", "text")">Estatus: @Model.Cedula.Estatus.Nombre</b></li>
                                             <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-dollar-sign"></i></span> <b>Facturación Total: </b>: @String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", Model.Facturas.Sum(f => f.Total))</li>
                                             <li class="small mt-3"><span class="fa-li"><i class="fad fa-star"></i></span> <b>Calificación: </b> @Model.Cedula.Calificacion</li>
                                             <li class="small mt-3"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> <b>Elaboró: </b> @Model.Cedula.Usuario.NombreEmp @Model.Cedula.Usuario.PaternoEmp @Model.Cedula.Usuario.MaternoEmp</li>
@@ -153,7 +153,7 @@
                                     i++;
                                     <tr>
                                         <td>@i</td>
-                                        <td class="@fac.Estatus.Fondo.Replace("bg","text") font-weight-bold">@fac.Estatus.Nombre</td>
+                                        <td class="@fac.Estatus.Fondo.Replace("bg", "text") font-weight-bold">@fac.Estatus.Nombre</td>
                                         <td>@(fac.Tipo.Equals("NC") ? "Nota de Crédito" : "Factura")</td>
                                         <td>@fac.Nombre</td>
                                         <td>
@@ -247,6 +247,18 @@
                             <td data-toggle="tooltip" title="Folio de evaluación asignado por el sistema" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;"><strong>Folio: </strong> @Model.Cedula.Folio</td>
                             <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
                             <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
+                            @*<td data-toggle="tooltip" title="Contrato Actual" data-placement="top"><strong>Contrato: </strong>@Model.Cedula.Contrato.NoContrato</td>*@
+                            <td data-toggle="tooltip" title="Contrato Actual" data-placement="top">
+                                <strong>Contrato: </strong>
+                                @if (@Model.Cedula.ContratoId <= 2)
+                                {
+                                    <strong style="color: black;">CON/DGRM/DCS/036/2024</strong>
+                                }
+                                else
+                                {
+                                    <strong style="color: red;">CON/DGRM/DCS/023/2025</strong>
+                                }
+                            </td>
                             <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
 
 
@@ -299,10 +311,9 @@
                                                                     </a>
                                                                     @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                                     {
-                                                                        @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                    Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                        @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                         {
-                                                                            <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none": "block");">
+                                                                            <div class="row col-lg-6 mt-2" style="display: @(rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre") ? "none" : "block");">
                                                                                 <div class="icheck-success d-inline">
                                                                                     <input type="radio" name="@rs.cuestionario.Abreviacion" value="true" id="@String.Concat("radioSuccess", @i)" class="pregunta" data-pregunta="@rs.cuestionario.NoPregunta"
                                                                                            data-pusuario="@rs.cuestionario.Consecutivo"
@@ -372,7 +383,7 @@
                                                                     @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("actualizar")).Count() != 0)
                                                                     {
                                                                         @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Bloqueada") ||
-                                                                    Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                         {
                                                                             @if (rs.cuestionario.Incidencias && (rs.cuestionario.Abreviacion.Equals("Cierre") || rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                             {
@@ -511,14 +522,12 @@
                                                                                         }
                                                                                     }
 
-                                                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") && !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                                     {
                                                                                         <th>Monto Penalizacion</th>
                                                                                     }
 
-                                                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                              Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                    @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                     {
                                                                                         <th>Acciones</th>
                                                                                     }
@@ -618,8 +627,7 @@
                                                                                                                 <th>#</th>
                                                                                                                 <th>Tipo</th>
                                                                                                                 <th>Concepto</th>
-                                                                                                                @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                                          !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                                                @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") && !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                                                 {
                                                                                                                     <th>Monto de Penalización</th>
                                                                                                                 }
@@ -636,8 +644,7 @@
                                                                                                                     <td>@cti</td>
                                                                                                                     <td>@dtic.DIncidencia.Tipo.Nombre</td>
                                                                                                                     <td>@dtic.DIncidencia.Nombre</td>
-                                                                                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                                              !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                                                    @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") && !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                                                     {
                                                                                                                         <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", @dtic.MontoPenalizacion)</td>
                                                                                                                     }
@@ -653,14 +660,12 @@
                                                                                             }
                                                                                         }
 
-                                                                                        @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                                  !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                                        @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") && !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                                         {
                                                                                             <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", @inc.MontoPenalizacion)</td>
                                                                                         }
 
-                                                                                        @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                                                  Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                                        @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") || Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                                         {
                                                                                             <td>
                                                                                                 <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
@@ -680,8 +685,7 @@
                                                                                     </tr>
                                                                                 }
                                                                             </tbody>
-                                                                            @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                                        !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
+                                                                            @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") && !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar") && (!rs.cuestionario.Abreviacion.Equals("Cierre") && !rs.cuestionario.Abreviacion.Equals("FechaCierre")))
                                                                             {
                                                                                 <tfoot>
                                                                                     <tr>
@@ -838,8 +842,7 @@
                                             </a>
                                         }
 
-                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 && (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -848,8 +851,7 @@
                                             </a>
                                         }
 
-                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 &&
-                                (fe != null ? fe.Autorizar : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 && (fe != null ? fe.Autorizar : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -857,8 +859,7 @@
                                             </a>
                                         }
 
-                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                && !en.estatus.Nombre.Equals("Rechazado"))
+                                        @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false) && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -866,16 +867,14 @@
                                             </a>
                                         }
 
-                                        @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                        @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") && (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
                                             </a>
                                         }
 
-                                        @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                        @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") && (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -883,10 +882,7 @@
                                             </a>
                                         }
 
-
-
-                                        @if ((fe != null ? fe.Validar : false) &&
-                                en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
+                                        @if ((fe != null ? fe.Validar : false) && en.estatus.Nombre.Equals("Autorizado") && !en.Validado)
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar @en.tipoEntregable.Nombre"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -1001,26 +997,26 @@
 
                                 @if (Model.Cedula.Penalizacion != 0)
                                 {
-                            <tr>
-                                <td></td>
-                                <td class="text-center">-</td>
-                                <td>Deductiva</td>
-                                <td><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
-                                <td class="text-right text-primary font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", Model.Cedula.Penalizacion)</td>
-                            </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-center">-</td>
+                                        <td>Deductiva</td>
+                                        <td><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
+                                        <td class="text-right text-primary font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", Model.Cedula.Penalizacion)</td>
+                                    </tr>
                                 }
                             </tbody>
                             <tfoot>
                                 @if (tdeductivas != 0)
                                 {
-                                <tr class="font-weight-bold text-primary" style="background-color: #f3f3f3;">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-right-lg">Subtototal de deductivas sin I.V.A.</td>
-                                    <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tdeductivas)</td>
+                                    <tr class="font-weight-bold text-primary" style="background-color: #f3f3f3;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right-lg">Subtototal de deductivas sin I.V.A.</td>
+                                        <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tdeductivas)</td>
 
-                                </tr>
+                                    </tr>
                                 }
                             </tfoot>
                         </table>
@@ -1058,14 +1054,14 @@
                             <tfoot>
                                 @if (tpenalizacion != 0)
                                 {
-                                <tr class="font-weight-bold text-danger" style="background-color: #f3f3f3;">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-right-lg">Subtototal de penalizaciones sin I.V.A.</td>
-                                    <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tpenalizacion)</td>
+                                    <tr class="font-weight-bold text-danger" style="background-color: #f3f3f3;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right-lg">Subtototal de penalizaciones sin I.V.A.</td>
+                                        <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tpenalizacion)</td>
 
-                                </tr>
+                                    </tr>
                                 }
                             </tfoot>
                         </table>
@@ -1483,6 +1479,7 @@
         position: relative; /* Agrega esta línea */
         left: -33px;
     }
+
     .titulo-principal {
         font-family: Arial, sans-serif;
         font-size: 20px;
@@ -1505,6 +1502,7 @@
             opacity: 1;
         }
     }
+
     .cabeceraInformacion {
         background-color: #ffffff;
         padding: 10px;
@@ -2113,27 +2111,122 @@
                 }
             });
 
+            //SE ACTUALIZA PARA TOMAR EN CUENTA LAS FECHAS DE NOTIFICACION DE LA PREGUNTA 20
             $("#campoFechaNotificacion").change(function () {
-                Swal.fire({
-                    allowOutsideClick: false,
-                    icon: "info",
-                    title: servicio.descripcion,
-                    html: "Obteniendo la fecha limite para la entrega de los enseres, espere por favor."
-                });
-                Swal.showLoading();
-                axios.get('/comedor/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?Fecha=' + $(this).val() + '&handler=FechaLimiteEnseresB')
-                    .then(response => {
-                        Swal.fire({
-                            allowOutsideClick: false,
-                            icon: "info",
-                            title: servicio.descripcion,
-                            html: "La fecha limite para la entrega de los enseres es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
-                            confirmButtonText: 'Cerrar'
-                        });
-                        Swal.hideLoading();
-                        $("#campoFechaLimite").val(response.data.slice(0, 10));
+                if ($("#campoAbreviacion").val() == "ReposicionEquipoMenor") {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: servicio.descripcion,
+                        html: "Obteniendo la fecha limite para la reposición de equipo menor, espere por favor."
                     });
+                    Swal.showLoading();
+                    axios.get('/comedor/' + @Model.Modulo.Id + '/' + @Model.Submodulo.Id + '/detalle/' + @Model.Inmueble.Id + '/' + @Model.Cedula.Id + '?Fecha=' + $(this).val() + '&handler=FechaLimiteReposicionPregunta20')
+                        .then(response => {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: servicio.descripcion,
+                                html: "La fecha límite para la reposición de equipo menor (7 días hábiles) es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
+                                confirmButtonText: 'Cerrar'
+
+                            });
+                            Swal.hideLoading();
+                            $("#campoFechaLimite").val(response.data.slice(0, 10));
+                        });
+                } else if
+                    ($("#campoAbreviacion").val() == "EnseresTipoB"){
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: servicio.descripcion,
+                        html: "Obteniendo la fecha limite para la entrega de los enseres, espere por favor."
+                    });
+                    Swal.showLoading();
+                    axios.get('/comedor/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?Fecha=' + $(this).val() + '&handler=FechaLimiteEnseresB')
+                        .then(response => {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: servicio.descripcion,
+                                html: "La fecha limite para la entrega de los enseres es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
+                                confirmButtonText: 'Cerrar'
+                            });
+                            Swal.hideLoading();
+                            $("#campoFechaLimite").val(response.data.slice(0, 10));
+                        });
+                } else if
+                     ($("#campoAbreviacion").val() == "ReposicionEquipoMayor") {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: servicio.descripcion,
+                        html: "Obteniendo la fecha limite para la reposición de equipo mayor, espere por favor."
+                    });
+                    Swal.showLoading();
+                    axios.get('/comedor/' + @Model.Modulo.Id + '/' + @Model.Submodulo.Id + '/detalle/' + @Model.Inmueble.Id + '/' + @Model.Cedula.Id + '?Fecha=' + $(this).val() + '&handler=FechaLimiteReposicionPregunta21')
+                        .then(response => {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: servicio.descripcion,
+                                html: "La fecha límite para la reposición de equipo mayor (10 días hábiles) es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
+                                confirmButtonText: 'Cerrar'
+
+                            });
+                            Swal.hideLoading();
+                            $("#campoFechaLimite").val(response.data.slice(0, 10));
+                        });
+            } else if
+                     ($("#campoAbreviacion").val() == "ReposicionEquipoCocina") {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: servicio.descripcion,
+                        html: "Obteniendo la fecha limite para la aclaración sobre la reposición de equipo de cocina propiedad del Consejo, espere por favor."
+                    });
+                    Swal.showLoading();
+                    axios.get('/comedor/' + @Model.Modulo.Id + '/' + @Model.Submodulo.Id + '/detalle/' + @Model.Inmueble.Id + '/' + @Model.Cedula.Id + '?Fecha=' + $(this).val() + '&handler=FechaLimiteReposicionPregunta22')
+                        .then(response => {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: servicio.descripcion,
+                                html: "La fecha límite para la aclaración sobre la reposición de equipo de cocina propiedad del Consejo (5 días hábiles) es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
+                                confirmButtonText: 'Cerrar'
+
+                            });
+                            Swal.hideLoading();
+                            $("#campoFechaLimite").val(response.data.slice(0, 10));
+                        });
+                }else if
+                     ($("#campoAbreviacion").val() == "EntregaUniformes") {
+                    Swal.fire({
+                        allowOutsideClick: false,
+                        icon: "info",
+                        title: servicio.descripcion,
+                        html: "Obteniendo la fecha limite para la entrega de uniformes al personal, espere por favor."
+                    });
+                    Swal.showLoading();
+                    axios.get('/comedor/' + @Model.Modulo.Id + '/' + @Model.Submodulo.Id + '/detalle/' + @Model.Inmueble.Id + '/' + @Model.Cedula.Id + '?Fecha=' + $(this).val() + '&handler=EntregaUniformes')
+                        .then(response => {
+                            Swal.fire({
+                                allowOutsideClick: false,
+                                icon: "info",
+                                title: servicio.descripcion,
+                                html: "La fecha límite para la entrega de uniformes al personal (10 días hábiles) es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
+                                confirmButtonText: 'Cerrar'
+
+                            });
+                            Swal.hideLoading();
+                            $("#campoFechaLimite").val(response.data.slice(0, 10));
+                        });
+                }
             });
+
+            $("#campoFechaNotificacion").change(function() {
+
+                            });
 
             $(document).on("click", ".editIncidencia", function () {
                 limpiaCampos();
@@ -2172,6 +2265,21 @@
                             }
                         }
 
+                        if (configuracion[i].fechaInventario) {
+                            $("#divFechaInventario").css("display", "block");
+                        }
+
+                        if (configuracion[i].fechaNotificacion) {
+                            $("#divFechaNotificacion").css("display", "block");
+                        }
+
+                        if (configuracion[i].fechaLimite) {
+                            $("#divFechaLimite").css("display", "block");
+                        }
+
+                        if (configuracion[i].fechaAcordadaAdmin) {
+                            $("#divFechaAcordadaAdmin").css("display", "block");
+                        }
 
                         if (configuracion[i].materiaPrima) {
                             $("#divIncidenciasMP").css("display", "block");
@@ -2604,7 +2712,6 @@
                             }
                         }
 
-           //SE AGREGA METODO PARA EVALUAR QUE LA INCIDENCIA CORRESPONDA AL MES EVALUADO
                         if (configuracion[i].fechaIncidencia) {
                             if ($("#campoFechaIncidencia").val() == "") {
                                 denegate = true;
@@ -2620,11 +2727,32 @@
 
                             }
                         }
-
+                     //SE AGREGA METODO PARA EVALUAR QUE LA INCIDENCIA CORRESPONDA AL MES EVALUADO
                         if (configuracion[i].fechaIncidencia) {
                             var pregunta = $("#campoPreguntaId").val();
 
-                            if ($("#campoFechaIncidencia").val() != "" && pregunta != 24) {
+                            if ($("#campoFechaIncidencia").val() != "") {
+                                const Incidencia = new Date($("#campoFechaIncidencia").val());
+                                const mes = Incidencia.getMonth() + 1;
+                                const dia = Incidencia.getDay() + 1;
+
+                                if (dia == 6 || dia == 7) {
+                                    denegate = true;
+                                    $("#error_campoFechaIncidencia").css("display", "block");
+                                    Swal.fire({
+                                        'icon': 'error',
+                                        'title': servicio.descripcion,
+                                        'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
+                                        'html': "<b> No se pueden registrar incidencias en sábado o domingo. </b>"
+                                    }).then(function () {
+                                        return false;
+                                    });
+
+                                }
+
+                            }
+
+                            if ($("#campoFechaIncidencia").val() != "" && pregunta != 24 && pregunta != 63) {
 
                                 const Incidencia = new Date($("#campoFechaIncidencia").val());
                                 const mes = Incidencia.getMonth() + 1;
@@ -2643,21 +2771,9 @@
                                     }).then(function () {
                                         return false;
                                     });
-                                                     }
-
-                                if(dia == 6 || dia == 7){
-                                    denegate = true;
-                                    $("#error_campoFechaIncidencia").css("display", "block");
-                                    Swal.fire({
-                                        'icon': 'error',
-                                        'title': servicio.descripcion,
-                                         'backdrop': 'rgba(255,0,0,0.2)', // Fondo semitransparente rojo
-                                        'html': "<b> No se pueden registrar incidencias en sábado o domingo. </b>"
-                                    }).then(function () {
-                                        return false;
-                                    });
-
                                 }
+
+
                             }
                         }
 
@@ -4436,6 +4552,8 @@
             }
 
             function guardarCedulaCP(obligatorio, pregunta, respuesta) {
+                console.log("guardarCedulaCP llamada con:", obligatorio, pregunta, respuesta);
+
                 var cRespuestas = new Array();
 
                 for (var i = 0; i < respuestas.length; i++) {

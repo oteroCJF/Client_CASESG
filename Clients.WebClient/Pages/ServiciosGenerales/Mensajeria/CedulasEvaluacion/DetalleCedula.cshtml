@@ -3793,7 +3793,7 @@
                                     RepositorioId: parseInt(repositorio), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS.",
                                     Flujo: supervision,
                                     ServicioId: parseInt(modulo.servicioId),
-                                    Bloqueada: true
+                                    Bloqueada: false
                                 }).then(response => {
                                     if (response.status == 200) {
                                         Swal.fire({

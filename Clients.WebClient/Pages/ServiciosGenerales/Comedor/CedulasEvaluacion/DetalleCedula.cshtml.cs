@@ -702,28 +702,117 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
 
             return new JsonResult(fechaLimite);
         }
+        public async Task<JsonResult> OnGetFechaLimiteReposicionPregunta20(string fecha)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fecha);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
+
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
+
+                if (cuentaDiasHabiles == 7)
+                {
+                    break;
+                }
+            }
+
+            return new JsonResult(fechaLimite);
+        }
+
+        public async Task<JsonResult> OnGetFechaLimiteReposicionPregunta21(string fecha)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fecha);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
+
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
+
+                if (cuentaDiasHabiles == 10)
+                {
+                    break;
+                }
+            }
+
+            return new JsonResult(fechaLimite);
+        }
+        public async Task<JsonResult> OnGetFechaLimiteReposicionPregunta22(string fecha)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fecha);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
+
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
+
+                if (cuentaDiasHabiles == 5)
+                {
+                    break;
+                }
+            }
+
+            return new JsonResult(fechaLimite);
+        }
+        public async Task<JsonResult> OnGetEntregaUniformes(string fecha)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fecha);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
+
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
+
+                if (cuentaDiasHabiles == 10)
+                {
+                    break;
+                }
+            }
+
+            return new JsonResult(fechaLimite);
+        }
 
         //METODO ASINCRONO QUE CORROBORA QUE LA FECHA DE INCIDENCIA CORRESPONDA AL MES EVALUADO
-            ////public async Task<JsonResult> OnGetComparaFechaIncidenciaConMesEvaluado([FromBody] CedulaEvaluacionUpdateCommand cedula, string fechaLimite)
-            ////{
+        ////public async Task<JsonResult> OnGetComparaFechaIncidenciaConMesEvaluado([FromBody] CedulaEvaluacionUpdateCommand cedula, string fechaLimite)
+        ////{
 
-            ////string[] nombresMeses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            ////              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+        ////string[] nombresMeses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        ////              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
 
-            ////var fechaLim = Convert.ToDateTime(fechaLimite);
-            ////var FechaCedula = cedula.Mes;
-            ////DateTime aux = new DateTime(1990,01,01);
+        ////var fechaLim = Convert.ToDateTime(fechaLimite);
+        ////var FechaCedula = cedula.Mes;
+        ////DateTime aux = new DateTime(1990,01,01);
 
-            ////if (nombresMeses[fechaLim.Month - 1] != FechaCedula)
-            ////{
-            ////    fechaLim = aux;
+        ////if (nombresMeses[fechaLim.Month - 1] != FechaCedula)
+        ////{
+        ////    fechaLim = aux;
 
-            ////}
+        ////}
 
 
 
-            ////}
-            public async Task<JsonResult> OnPostAutorizarCAE([FromBody] CedulaComedorDto cedula)
+        ////}
+        public async Task<JsonResult> OnPostAutorizarCAE([FromBody] CedulaComedorDto cedula)
         {
             List<EntregableDto> entregables = await _entregablesQuery.GetEntregablesByCedula(cedula.Id);
 
@@ -740,3 +829,4 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
 
     }
 }
+ 
