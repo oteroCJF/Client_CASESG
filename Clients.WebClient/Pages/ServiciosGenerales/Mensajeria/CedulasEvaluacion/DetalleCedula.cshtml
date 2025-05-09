@@ -3735,7 +3735,10 @@
                                 });
                                 Swal.showLoading();
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
-                                    Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), UsuarioId: usuario, RepositorioId: parseInt(repositorio),
+                                    Id: parseInt(cedula.id),
+                                    EstatusId: $(this).data("estatusid"),
+                                    UsuarioId: usuario, 
+                                    RepositorioId: parseInt(repositorio),
                                     EFacturaId: parseInt($(this).data('efacturaid')),
                                     //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
@@ -3786,7 +3789,10 @@
                                 });
                                 Swal.showLoading();
                                 axios.put('/mensajeria/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
-                                    Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
+                                    Id: parseInt(cedula.id),
+                                    EstatusId: $(this).data("estatusid"),
+                                    Calcula: true,
+                                    UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
                                     //SE AGREGA ENOTACREDITOID
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),

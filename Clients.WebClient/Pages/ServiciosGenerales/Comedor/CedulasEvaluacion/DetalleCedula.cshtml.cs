@@ -354,6 +354,7 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
             }
             Document document = new Document();
             var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción Comedor.docx";
+            //var path = @"C:\Users\coterog\Desktop\Acta Entrega - Recepción Comedor.docx";
             var cedula = await _cedulaQuery.GetCedulaById(cedulaId);
             document.LoadFromFile(path);
 
@@ -448,12 +449,12 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
                     foreach (var cn in fc.ConceptosFactura)
                     {
                         cf = cf + 1;
-                        fCantidad += cf + ".- " +(int)cn.Cantidad + " " + cn.Descripcion + "\n";
+                        fCantidad += cf + ".- " + (int)cn.Cantidad + " " + cn.Descripcion + "\n";
                         totalServicios += cn.Cantidad;
                     }
                 }
             }
-            
+
             foreach (var fc in Facturas)
             {
                 if (!fc.Tipo.Equals("Factura"))
@@ -478,10 +479,22 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
             document.Replace("|FolioFactura|", fFolios, false, true);
 
             //Notas de Cr�dito
-            document.Replace("|ImporteNota|", ncTotal, false, true);
-            document.Replace("|CantidadNota|", ncCantidad, false, true);
-            document.Replace("|TimbradoNota|", ncTimbrado, false, true);
-            document.Replace("|FolioNota|", ncFolios, false, true);
+            //document.Replace("|ImporteNota|", ncTotal, false, true);
+            //document.Replace("|CantidadNota|", ncCantidad, false, true);
+            //document.Replace("|TimbradoNota|", ncTimbrado, false, true);
+            //document.Replace("|FolioNota|", ncFolios, false, true);
+
+            string importeNotaTexto = !string.IsNullOrEmpty(ncTotal) ? ncTotal : "No Aplica";
+            document.Replace("|ImporteNota|", importeNotaTexto, false, true);
+
+            string cantidadNotaTexto = !string.IsNullOrEmpty(ncCantidad) ? ncCantidad : "No Aplica";
+            document.Replace("|CantidadNota|", cantidadNotaTexto, false, true);
+
+            string timbradoNotaTexto = !string.IsNullOrEmpty(ncTimbrado) ? ncTimbrado : "No Aplica";
+            document.Replace("|TimbradoNota|", timbradoNotaTexto, false, true);
+
+            string folioNotaTexto = !string.IsNullOrEmpty(ncFolios) ? ncFolios : "No Aplica";
+            document.Replace("|FolioNota|", folioNotaTexto, false, true);
 
             byte[] toArray = null;
             using (MemoryStream ms1 = new MemoryStream())
@@ -490,7 +503,7 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
                 toArray = ms1.ToArray();
             }
 
-            return File(toArray, "application/ms-word", "Acta_Entrega_Recepcion_"+cedula.Mes.Nombre+"_"+cedula.Anio+".docx");
+            return File(toArray, "application/ms-word", "Acta_Entrega_Recepcion_" + cedula.Mes.Nombre + "_" + cedula.Anio + ".docx");
         }
 
         public async Task<IActionResult> OnGetVisualizarFactura(int cAnio, string cMes, string cFolio, string tipo, string cInmueble, string cArchivo)
@@ -627,7 +640,7 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
         public async Task<JsonResult> OnGetFechaIncidencia(int anio, string fecha)
         {
             var esHabil = await _dias.EsDiaInhabil(anio, fecha);
-            
+
             return new JsonResult(esHabil);
         }
 
@@ -635,7 +648,7 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
         {
             int cuentaDiasHabiles = 0;
             var fechaLimite = Convert.ToDateTime(fecha);
-            for (;true;)
+            for (; true;)
             {
                 fechaLimite = fechaLimite.AddDays(1);
                 DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
@@ -684,7 +697,7 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
         {
             int cuentaDiasHabiles = 0;
             var fechaLimite = Convert.ToDateTime(fecha);
-            for (;true;)
+            for (; true;)
             {
                 fechaLimite = fechaLimite.AddDays(1);
                 DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
@@ -792,26 +805,54 @@ namespace Clients.WebClient.Pages.Comedor.CedulasEvaluacion
             return new JsonResult(fechaLimite);
         }
 
-        //METODO ASINCRONO QUE CORROBORA QUE LA FECHA DE INCIDENCIA CORRESPONDA AL MES EVALUADO
-        ////public async Task<JsonResult> OnGetComparaFechaIncidenciaConMesEvaluado([FromBody] CedulaEvaluacionUpdateCommand cedula, string fechaLimite)
-        ////{
+        public async Task<JsonResult> OnGetBitacoraDiaria(string fecha)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fecha);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
 
-        ////string[] nombresMeses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        ////              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
 
-        ////var fechaLim = Convert.ToDateTime(fechaLimite);
-        ////var FechaCedula = cedula.Mes;
-        ////DateTime aux = new DateTime(1990,01,01);
+                if (cuentaDiasHabiles == 1)
+                {
+                    break;
+                }
+            }
 
-        ////if (nombresMeses[fechaLim.Month - 1] != FechaCedula)
-        ////{
-        ////    fechaLim = aux;
+            return new JsonResult(fechaLimite);
+        }
 
-        ////}
+        public async Task<JsonResult> OnGetEntregaAnilisisClinicos(string fecha)
+        {
+            int cuentaDiasHabiles = 0;
+            var fechaLimite = Convert.ToDateTime(fecha);
+            for (; true;)
+            {
+                fechaLimite = fechaLimite.AddDays(1);
+                DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(fechaLimite);
+
+                if (!await _dias.EsDiaInhabil(fechaLimite.Year, fechaLimite.ToString("yyyy-MM-ddTHH:mm:ss")) && day != DayOfWeek.Saturday && DayOfWeek.Sunday != day)
+                {
+                    cuentaDiasHabiles++;
+                }
+
+                if (cuentaDiasHabiles == 10)
+                {
+                    break;
+                }
+            }
+
+            return new JsonResult(fechaLimite);
+        }
 
 
 
-        ////}
         public async Task<JsonResult> OnPostAutorizarCAE([FromBody] CedulaComedorDto cedula)
         {
             List<EntregableDto> entregables = await _entregablesQuery.GetEntregablesByCedula(cedula.Id);

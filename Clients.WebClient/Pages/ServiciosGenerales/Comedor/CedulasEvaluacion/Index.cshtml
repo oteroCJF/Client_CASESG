@@ -118,6 +118,12 @@
                                     <strong class="card-title" style="color: #24135f; text-align: center; ">
                                         <b>Cédulas de Evaluación del Año @Model.Anio</b>
                                     </strong>
+                                    <div style="text-align: right;">
+                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#miModal" style="background-color: #24135f; border-color: red; font-size: 1em; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
+                                            ¡Ver Información Importante de Marzo!
+                                        </button>
+                                    </div>
+
                                 </div>
                                 <div class="card-body" style="font-size: 14px;">
                                     <table class="table cedulasEvaluacion row-border" width="100%">
@@ -126,11 +132,11 @@
                                                 <th>#</th>
                                                 <th>Año</th>
                                                 <th>Mes</th>
-                                                <th style="color: #24135f; font-weight: bold; font-size: 1.2em; text-align: center;">Contrato</th>
                                                 <th>Inmueble</th>
                                                 <th>Folio</th>
-                                                <th>Tipo de Servicio</th>
+                                                @*<th>Tipo de Servicio</th>*@
                                                 <th>Estatus</th>
+                                                <th style="color: #24135f; font-weight: bold; font-size: 1.2em; text-align: center;">Contrato</th>
                                                 <th class="text-center">Calificación</th>
                                                 @if (Model.Anio > 2023)
                                                 {
@@ -148,74 +154,75 @@
                                             @foreach (var cedula in Model.Cedulas.Items)
                                             {
                                                 c++;
-                                                <tr>
-                                                    <td>@c</td>
-                                                    <td>@cedula.Anio</td>
-                                                    <td>@cedula.Mes</td>
-                                                    <td>
-                                                        @if (cedula.ContratoId == 2)
-                                                        {
-                                                            <p style="color: black;">CON/DGRM/DCS/036/2024</p>
-                                                        }
-                                                        else if (cedula.ContratoId == 3)
-                                                        {
-                                                            <strong style="color: red;">CON/DGRM/DCS/023/2025</strong>
-                                                        }
-                                                    </td>
-                                                    <td>@cedula.Inmueble</td>
-                                                    <td>@cedula.Folio</td>
-                                                    <td>@cedula.Servicio</td>
-                                                    <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
-                                                    <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
-                                                    @if (cedula.Anio > 2023)
+                                            <tr>
+                                                <td>@c</td>
+                                                <td>@cedula.Anio</td>
+                                                <td>@cedula.Mes</td>
+                                                <td>@cedula.Inmueble</td>
+                                                <td>@cedula.Folio</td>
+                                                @*<td>@cedula.Servicio</td>*@
+                                                <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
+                                                <td>
+                                                    @if (cedula.ContratoId == 2)
                                                     {
-                                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
-                                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
-                                                        <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
+                                                        <p style="color: black;">CON/DGRM/DCS/036/2024</p>
                                                     }
-                                                    <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
-                                                    <td>
-                                                        @if (cedula.Cedula)
-                                                        {
-                                                            <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
-                                                        }
-                                                        else
-                                                        {
-                                                            <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Cédula pendiente de validar" data-placement="top"></i>
-                                                        }
+                                                    else if (cedula.ContratoId == 3)
+                                                    {
+                                                        <strong style="color: red;">CON/DGRM/DCS/023/2025</strong>
+                                                    }
+                                                </td>
+                                                <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
+                                                @if (cedula.Anio > 2023)
+                                                {
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
+                                                    <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
+                                                }
+                                                <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
+                                                <td>
+                                                    @if (cedula.Cedula)
+                                                    {
+                                                        <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Cédula pendiente de validar" data-placement="top"></i>
+                                                    }
 
-                                                        @if (cedula.Memorandum == true)
-                                                        {
-                                                            <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Memorándum validado" data-placement="top"></i>
-                                                        }
-                                                        else
-                                                        {
-                                                            <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Memorándum pendiente de validar" data-placement="top"></i>
-                                                        }
+                                                    @if (cedula.Memorandum == true)
+                                                    {
+                                                        <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Memorándum validado" data-placement="top"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-regular fa-clipboard-check text-danger mr-2" data-toggle="tooltip" title="Memorándum pendiente de validar" data-placement="top"></i>
+                                                    }
 
-                                                        @if (cedula.ActaFirmada)
-                                                        {
-                                                            <i class="fa-regular fa-file-check text-success" data-toggle="tooltip" title="Acta Entrega - Recepción" data-placement="top"></i>
-                                                        }
-                                                        else
-                                                        {
-                                                            <i class="fa-regular fa-file-xmark text-danger" data-toggle="tooltip" title="Acta Entrega - Recepción pendiente de validar" data-placement="top"></i>
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        @(
+                                                    @if (cedula.ActaFirmada)
+                                                    {
+                                                        <i class="fa-regular fa-file-check text-success" data-toggle="tooltip" title="Acta Entrega - Recepción" data-placement="top"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-regular fa-file-xmark text-danger" data-toggle="tooltip" title="Acta Entrega - Recepción pendiente de validar" data-placement="top"></i>
+                                                    }
+                                                </td>
+
+                                                <td>
+                                                    @(
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy").Equals("01/01/0001") ?
                                             Convert.ToDateTime(cedula.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt") :
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy hh:mm tt")
                                         )
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a class="btnRevision" href="javascript:" data-cedula="@cedula.Id" data-inmueble="@cedula.InmuebleId"
-                                                           data-toggle="tooltip" title="Seguimiento de la Cédula" data-placement="top">
-                                                            <i class="fad fa-eye text-success"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a class="btnRevision" href="javascript:" data-cedula="@cedula.Id" data-inmueble="@cedula.InmuebleId"
+                                                       data-toggle="tooltip" title="Seguimiento de la Cédula" data-placement="top">
+                                                        <i class="fad fa-eye text-success"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -335,6 +342,32 @@
                     </div>
                 }
             </div>
+
+                @*************MODAL DE AVISO MARZO*****@
+                        <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content" style="background-color: #ffffff;"> <div class="modal-header" style="background-color: #24135f; color: white;"> <h5 class="modal-title" id="miModalLabel">¡IMPORTANTE!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color: white;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="color: #333;"> <span style="color: black; font-weight: bold;">Para la evaluación del mes de Marzo, se encontrarán 2 cédulas correspondientes al mismo inmueble.</span>
+                            <br>Para diferenciarlas, se utilizará el número de Contrato que se encuentra en la columna respectiva.
+                            <br>
+                            <span style="color: #24135f; font-weight: bold;">La Nueva Cédula correspondiente al Nuevo Contrato se encuentra</span> <span style="color: red; font-weight: bold;">resaltada en color rojo</span> <span style="color: #24135f; font-weight: bold;">para su fácil identificación.</span>
+                              <div style="text-align: center;">
+                                <img src="~/img/NuevaCedulaMarzo.png" class="img-fluid" alt="Nueva Cedula Ejemplo">
+                                  <br>
+                                  <span style="color: red; font-weight: bold;">LA EVALUACIÓN DE ÉSTA COMPRENDE EL SERVICIO DEL 18 AL 31 DE MARZO</span>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="background-color: #e0d4ff;"> <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #24135f; border-color: #5e35b1; ">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <style>
                 .titulo-principal {
@@ -639,5 +672,18 @@
             }
             /******************** Filtros *******************/
         });
+
+                    $(document).ready(function () {
+                        var mostrarContadorStr = localStorage.getItem('modalMostrarContador');
+                        var mostrarContador = mostrarContadorStr ? parseInt(mostrarContadorStr, 10) : 0;
+                        var maxMostrarVeces = 8; // Define cuántas veces quieres que aparezca el modal
+                        var miModal = $('#miModal'); // Reemplaza 'miModal' con el ID de tu modal
+
+                        if (mostrarContador < maxMostrarVeces) {
+                            miModal.modal('show'); // Muestra el modal
+                            mostrarContador++;
+                            localStorage.setItem('modalMostrarContador', mostrarContador.toString()); // Incrementa y guarda el contador
+                        }
+                    });
                 </script>
             }

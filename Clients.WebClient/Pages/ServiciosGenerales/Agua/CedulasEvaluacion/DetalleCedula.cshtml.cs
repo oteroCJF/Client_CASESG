@@ -558,11 +558,23 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
             document.Replace("|FechaTimbrado|", fTimbrado, false, true);
             document.Replace("|FolioFactura|", fFolios, false, true);
 
-            //Notas de Crédito
-            document.Replace("|ImporteNota|", ncTotal, false, true);
-            document.Replace("|CantidadNota|", ncCantidad, false, true);
-            document.Replace("|TimbradoNota|", ncTimbrado, false, true);
-            document.Replace("|FolioNota|", ncFolios, false, true);
+            ////Notas de Crédito
+            //document.Replace("|ImporteNota|", ncTotal, false, true);
+            //document.Replace("|CantidadNota|", ncCantidad, false, true);
+            //document.Replace("|TimbradoNota|", ncTimbrado, false, true);
+            //document.Replace("|FolioNota|", ncFolios, false, true);
+
+            string importeNotaTexto = !string.IsNullOrEmpty(ncTotal) ? ncTotal : "No Aplica";
+            document.Replace("|ImporteNota|", importeNotaTexto, false, true);
+
+            string cantidadNotaTexto = !string.IsNullOrEmpty(ncCantidad) ? ncCantidad : "No Aplica";
+            document.Replace("|CantidadNota|", cantidadNotaTexto, false, true);
+
+            string timbradoNotaTexto = !string.IsNullOrEmpty(ncTimbrado) ? ncTimbrado : "No Aplica";
+            document.Replace("|TimbradoNota|", timbradoNotaTexto, false, true);
+
+            string folioNotaTexto = !string.IsNullOrEmpty(ncFolios) ? ncFolios : "No Aplica";
+            document.Replace("|FolioNota|", folioNotaTexto, false, true);
 
             byte[] toArray = null;
             using (MemoryStream ms1 = new MemoryStream())

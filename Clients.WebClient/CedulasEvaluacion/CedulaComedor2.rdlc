@@ -334,7 +334,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox36</rd:DefaultName>
-            <Top>3.9499cm</Top>
+            <Top>4.2674cm</Top>
             <Left>7.24641cm</Left>
             <Height>0.6cm</Height>
             <Width>6.38938cm</Width>
@@ -430,7 +430,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>24.39487cm</Top>
+            <Top>25.02987cm</Top>
             <Left>2.08383cm</Left>
             <Height>0.6cm</Height>
             <Width>16.10474cm</Width>
@@ -860,7 +860,7 @@
             <Top>2.08268cm</Top>
             <Left>1.12754cm</Left>
             <Height>1.8cm</Height>
-            <Width>18.24505cm</Width>
+            <Width>18.24507cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -1407,7 +1407,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>19.62396cm</Top>
+            <Top>20.25896cm</Top>
             <Left>1.12754cm</Left>
             <Height>2.32549cm</Height>
             <Width>17.81519cm</Width>
@@ -1710,7 +1710,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>22.02cm</Top>
+            <Top>22.655cm</Top>
             <Left>4.03618cm</Left>
             <Height>2.32549cm</Height>
             <Width>9.98551cm</Width>
@@ -1884,7 +1884,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.29617cm</Width>
+                  <Width>0.53959cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1940,7 +1940,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.6cm</Height>
+                  <Height>0.64233cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1974,11 +1974,11 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>1.89646cm</Height>
+                  <Height>0.6cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox15">
+                        <Textbox Name="Textbox19">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -1992,7 +1992,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox15</rd:DefaultName>
+                          <rd:DefaultName>Textbox19</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2313,6 +2313,74 @@
                     </TablixCell>
                   </TablixCells>
                 </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox95">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox95</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox112">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox112</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
@@ -2336,7 +2404,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Textbox Name="Categoria">
                             <CanGrow>true</CanGrow>
@@ -2344,6 +2412,15 @@
                             <Paragraphs>
                               <Paragraph>
                                 <TextRuns>
+                                  <TextRun>
+                                    <Value xml:space="preserve">
+</Value>
+                                    <Style>
+                                      <FontSize>12pt</FontSize>
+                                      <FontWeight>Bold</FontWeight>
+                                      <Color>Firebrick</Color>
+                                    </Style>
+                                  </TextRun>
                                   <TextRun>
                                     <Value>=Fields!Categoria.Value</Value>
                                     <Style>
@@ -2389,7 +2466,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>17.94888cm</Size>
+                                <Size>18.1923cm</Size>
                                 <CellContents>
                                   <Textbox Name="Pregunta">
                                     <CanGrow>true</CanGrow>
@@ -2435,7 +2512,7 @@
                             </TablixMember>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>17.94888cm</Size>
+                                <Size>18.1923cm</Size>
                                 <CellContents>
                                   <Textbox Name="Respuesta">
                                     <CanGrow>true</CanGrow>
@@ -2471,28 +2548,28 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
-                          <Tablix Name="Tablix2">
+                          <Tablix Name="Tablix7">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>5.98296cm</Width>
+                                  <Width>4.67399cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>5.16532cm</Width>
+                                  <Width>3.7416cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>6.8006cm</Width>
+                                  <Width>9.77671cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
                                 <TablixRow>
-                                  <Height>0.57781cm</Height>
+                                  <Height>0.3cm</Height>
                                   <TablixCells>
                                     <TablixCell>
                                       <CellContents>
-                                        <Textbox Name="Textbox50">
+                                        <Textbox Name="Textbox40">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
@@ -2509,7 +2586,7 @@
                                               <Style />
                                             </Paragraph>
                                           </Paragraphs>
-                                          <rd:DefaultName>Textbox50</rd:DefaultName>
+                                          <rd:DefaultName>Textbox40</rd:DefaultName>
                                           <Style>
                                             <Border>
                                               <Color>LightGrey</Color>
@@ -2526,14 +2603,14 @@
                                     </TablixCell>
                                     <TablixCell>
                                       <CellContents>
-                                        <Textbox Name="Textbox16">
+                                        <Textbox Name="Textbox43">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
                                             <Paragraph>
                                               <TextRuns>
                                                 <TextRun>
-                                                  <Value>Fecha de la incidencia</Value>
+                                                  <Value>Fecha Incidencia</Value>
                                                   <Style>
                                                     <FontWeight>Bold</FontWeight>
                                                     <Color>White</Color>
@@ -2543,7 +2620,7 @@
                                               <Style />
                                             </Paragraph>
                                           </Paragraphs>
-                                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                                          <rd:DefaultName>Textbox43</rd:DefaultName>
                                           <Style>
                                             <Border>
                                               <Color>LightGrey</Color>
@@ -2560,7 +2637,7 @@
                                     </TablixCell>
                                     <TablixCell>
                                       <CellContents>
-                                        <Textbox Name="Textbox48">
+                                        <Textbox Name="Textbox45">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
@@ -2577,7 +2654,7 @@
                                               <Style />
                                             </Paragraph>
                                           </Paragraphs>
-                                          <rd:DefaultName>Textbox48</rd:DefaultName>
+                                          <rd:DefaultName>Textbox45</rd:DefaultName>
                                           <Style>
                                             <Border>
                                               <Color>LightGrey</Color>
@@ -2595,11 +2672,11 @@
                                   </TablixCells>
                                 </TablixRow>
                                 <TablixRow>
-                                  <Height>1.31865cm</Height>
+                                  <Height>0.3cm</Height>
                                   <TablixCells>
                                     <TablixCell>
                                       <CellContents>
-                                        <Textbox Name="Incidencia">
+                                        <Textbox Name="Incidencia12">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
@@ -2613,7 +2690,7 @@
                                               <Style />
                                             </Paragraph>
                                           </Paragraphs>
-                                          <rd:DefaultName>Incidencia</rd:DefaultName>
+                                          <rd:DefaultName>Incidencia12</rd:DefaultName>
                                           <Style>
                                             <Border>
                                               <Color>LightGrey</Color>
@@ -2629,7 +2706,7 @@
                                     </TablixCell>
                                     <TablixCell>
                                       <CellContents>
-                                        <Textbox Name="FechaIncidencia">
+                                        <Textbox Name="FechaIncidencia4">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
@@ -2643,7 +2720,7 @@
                                               <Style />
                                             </Paragraph>
                                           </Paragraphs>
-                                          <rd:DefaultName>FechaIncidencia</rd:DefaultName>
+                                          <rd:DefaultName>FechaIncidencia4</rd:DefaultName>
                                           <Style>
                                             <Border>
                                               <Color>LightGrey</Color>
@@ -2659,7 +2736,7 @@
                                     </TablixCell>
                                     <TablixCell>
                                       <CellContents>
-                                        <Textbox Name="Observaciones">
+                                        <Textbox Name="Observaciones9">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
@@ -2674,7 +2751,7 @@
                                               <Style />
                                             </Paragraph>
                                           </Paragraphs>
-                                          <rd:DefaultName>Observaciones</rd:DefaultName>
+                                          <rd:DefaultName>Observaciones9</rd:DefaultName>
                                           <Style>
                                             <Border>
                                               <Color>LightGrey</Color>
@@ -2695,16 +2772,8 @@
                             <TablixColumnHierarchy>
                               <TablixMembers>
                                 <TablixMember />
-                                <TablixMember>
-                                  <Visibility>
-                                    <Hidden>=IIF(Fields!MFechaIncidencia.Value = true, false, true)</Hidden>
-                                  </Visibility>
-                                </TablixMember>
-                                <TablixMember>
-                                  <Visibility>
-                                    <Hidden>=IIF(Fields!MObservaciones.Value = true, false, true)</Hidden>
-                                  </Visibility>
-                                </TablixMember>
+                                <TablixMember />
+                                <TablixMember />
                               </TablixMembers>
                             </TablixColumnHierarchy>
                             <TablixRowHierarchy>
@@ -2713,17 +2782,11 @@
                                   <KeepWithGroup>After</KeepWithGroup>
                                 </TablixMember>
                                 <TablixMember>
-                                  <Group Name="Detalles2" />
-                                  <TablixMembers>
-                                    <TablixMember />
-                                  </TablixMembers>
+                                  <Group Name="Detalles18" />
                                 </TablixMember>
                               </TablixMembers>
                             </TablixRowHierarchy>
                             <DataSetName>Cuestionario</DataSetName>
-                            <Visibility>
-                              <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
-                            </Visibility>
                             <Style>
                               <Border>
                                 <Style>None</Style>
@@ -2746,22 +2809,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix3">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.46976cm</Width>
+                                  <Width>4.53061cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.43849cm</Width>
+                                  <Width>3.49934cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.12366cm</Width>
+                                  <Width>3.18451cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>6.91698cm</Width>
+                                  <Width>6.97783cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -3072,28 +3135,28 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix5">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>2.37682cm</Width>
+                                  <Width>2.41739cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.50037cm</Width>
+                                  <Width>2.54094cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>1.75051cm</Width>
+                                  <Width>1.79108cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>1.62561cm</Width>
+                                  <Width>1.66618cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.37682cm</Width>
+                                  <Width>2.41739cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>7.31874cm</Width>
+                                  <Width>7.35931cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -3537,22 +3600,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix9">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>3.69827cm</Width>
+                                  <Width>3.75912cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.00038cm</Width>
+                                  <Width>3.06123cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.62118cm</Width>
+                                  <Width>2.68203cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>8.62906cm</Width>
+                                  <Width>8.68991cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -3864,31 +3927,31 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix16">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>2.56412cm</Width>
+                                  <Width>2.5989cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.80847cm</Width>
+                                  <Width>2.84325cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.09356cm</Width>
+                                  <Width>2.12834cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>1.97527cm</Width>
+                                  <Width>2.01005cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>1.67127cm</Width>
+                                  <Width>1.70605cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>1.59101cm</Width>
+                                  <Width>1.62579cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>5.24517cm</Width>
+                                  <Width>5.27995cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -4412,22 +4475,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix19">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.42108cm</Width>
+                                  <Width>4.48193cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.42108cm</Width>
+                                  <Width>4.48193cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.42108cm</Width>
+                                  <Width>4.48193cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.68566cm</Width>
+                                  <Width>4.74651cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -4740,22 +4803,22 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix20">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>4.42108cm</Width>
+                                  <Width>4.48193cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.42108cm</Width>
+                                  <Width>4.48193cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.42108cm</Width>
+                                  <Width>4.48193cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.68566cm</Width>
+                                  <Width>4.74651cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -5066,28 +5129,28 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix21">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>3.3359cm</Width>
+                                  <Width>3.37646cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.80009cm</Width>
+                                  <Width>2.84065cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.23849cm</Width>
+                                  <Width>2.27905cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.41507cm</Width>
+                                  <Width>3.45563cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.08307cm</Width>
+                                  <Width>2.12363cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.07629cm</Width>
+                                  <Width>4.11685cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -5534,31 +5597,31 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix22">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>2.52633cm</Width>
+                                  <Width>2.5611cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.14945cm</Width>
+                                  <Width>2.18422cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.23709cm</Width>
+                                  <Width>2.27186cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.34788cm</Width>
+                                  <Width>2.38265cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.23677cm</Width>
+                                  <Width>2.27154cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>1.69274cm</Width>
+                                  <Width>1.72751cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>4.75862cm</Width>
+                                  <Width>4.79339cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -6117,28 +6180,28 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>17.94888cm</Size>
+                        <Size>18.1923cm</Size>
                         <CellContents>
                           <Tablix Name="Tablix24">
                             <TablixBody>
                               <TablixColumns>
                                 <TablixColumn>
-                                  <Width>2.90529cm</Width>
+                                  <Width>2.94586cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.90529cm</Width>
+                                  <Width>2.94586cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.15786cm</Width>
+                                  <Width>3.19843cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.90529cm</Width>
+                                  <Width>2.94586cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>2.90529cm</Width>
+                                  <Width>2.52596cm</Width>
                                 </TablixColumn>
                                 <TablixColumn>
-                                  <Width>3.16987cm</Width>
+                                  <Width>3.63034cm</Width>
                                 </TablixColumn>
                               </TablixColumns>
                               <TablixRows>
@@ -6593,15 +6656,874 @@
 )</Hidden>
                       </Visibility>
                     </TablixMember>
+                    <TablixMember>
+                      <TablixHeader>
+                        <Size>18.1923cm</Size>
+                        <CellContents>
+                          <Tablix Name="Tablix14">
+                            <TablixBody>
+                              <TablixColumns>
+                                <TablixColumn>
+                                  <Width>3.03205cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.03205cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.03205cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.03205cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>1.94727cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>4.11683cm</Width>
+                                </TablixColumn>
+                              </TablixColumns>
+                              <TablixRows>
+                                <TablixRow>
+                                  <Height>0.3cm</Height>
+                                  <TablixCells>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox96">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Incidencia</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox96</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox106">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Fecha Limite</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox106</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox104">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Fecha Notificacion</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox104</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox98">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Fecha Entrega</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox98</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox101">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Cantidad</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox101</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox108">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Observaciones</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox108</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                  </TablixCells>
+                                </TablixRow>
+                                <TablixRow>
+                                  <Height>0.3cm</Height>
+                                  <TablixCells>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Incidencia9">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!Incidencia.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Incidencia9</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="FechaLimite1">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!FechaLimite.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>FechaLimite1</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="FechaNotificacion">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!FechaNotificacion.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>FechaNotificacion</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="FechaEntrega3">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!FechaEntrega.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>FechaEntrega3</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Cantidad5">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!Cantidad.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Cantidad5</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Observaciones7">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!Observaciones.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Observaciones7</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                  </TablixCells>
+                                </TablixRow>
+                              </TablixRows>
+                            </TablixBody>
+                            <TablixColumnHierarchy>
+                              <TablixMembers>
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                              </TablixMembers>
+                            </TablixColumnHierarchy>
+                            <TablixRowHierarchy>
+                              <TablixMembers>
+                                <TablixMember>
+                                  <KeepWithGroup>After</KeepWithGroup>
+                                </TablixMember>
+                                <TablixMember>
+                                  <Group Name="Detalles15" />
+                                </TablixMember>
+                              </TablixMembers>
+                            </TablixRowHierarchy>
+                            <DataSetName>Cuestionario</DataSetName>
+                            <Style>
+                              <Border>
+                                <Style>None</Style>
+                              </Border>
+                            </Style>
+                          </Tablix>
+                        </CellContents>
+                      </TablixHeader>
+                      <Visibility>
+                        <Hidden>=IIF(
+	Fields!MFechaLimite.Value = true and
+	Fields!MFechaNotificacion.Value = true and
+	Fields!MFechaEntrega.Value = true and
+	Fields!MCantidad.Value = true and
+	Fields!MObservaciones.Value = true,
+	false,true
+)</Hidden>
+                      </Visibility>
+                    </TablixMember>
+                    <TablixMember>
+                      <TablixHeader>
+                        <Size>18.1923cm</Size>
+                        <CellContents>
+                          <Tablix Name="Tablix15">
+                            <TablixBody>
+                              <TablixColumns>
+                                <TablixColumn>
+                                  <Width>3.63846cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.63846cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.63846cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.63846cm</Width>
+                                </TablixColumn>
+                                <TablixColumn>
+                                  <Width>3.63846cm</Width>
+                                </TablixColumn>
+                              </TablixColumns>
+                              <TablixRows>
+                                <TablixRow>
+                                  <Height>0.3cm</Height>
+                                  <TablixCells>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox113">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Incidencia</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox113</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox119">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Fecha Limite</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox119</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox121">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Fecha Notificacion</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox121</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox115">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Fecha Entrega</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox115</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Textbox117">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>Observaciones</Value>
+                                                  <Style>
+                                                    <FontWeight>Bold</FontWeight>
+                                                    <Color>White</Color>
+                                                  </Style>
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Textbox117</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <BackgroundColor>Indigo</BackgroundColor>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                  </TablixCells>
+                                </TablixRow>
+                                <TablixRow>
+                                  <Height>0.3cm</Height>
+                                  <TablixCells>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Incidencia11">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!Incidencia.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Incidencia11</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="FechaLimite2">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!FechaLimite.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>FechaLimite2</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="FechaNotificacion1">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!FechaNotificacion.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>FechaNotificacion1</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="FechaEntrega4">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!FechaEntrega.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>FechaEntrega4</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                    <TablixCell>
+                                      <CellContents>
+                                        <Textbox Name="Observaciones8">
+                                          <CanGrow>true</CanGrow>
+                                          <KeepTogether>true</KeepTogether>
+                                          <Paragraphs>
+                                            <Paragraph>
+                                              <TextRuns>
+                                                <TextRun>
+                                                  <Value>=Fields!Observaciones.Value</Value>
+                                                  <Style />
+                                                </TextRun>
+                                              </TextRuns>
+                                              <Style />
+                                            </Paragraph>
+                                          </Paragraphs>
+                                          <rd:DefaultName>Observaciones8</rd:DefaultName>
+                                          <Style>
+                                            <Border>
+                                              <Color>LightGrey</Color>
+                                              <Style>Solid</Style>
+                                            </Border>
+                                            <PaddingLeft>2pt</PaddingLeft>
+                                            <PaddingRight>2pt</PaddingRight>
+                                            <PaddingTop>2pt</PaddingTop>
+                                            <PaddingBottom>2pt</PaddingBottom>
+                                          </Style>
+                                        </Textbox>
+                                      </CellContents>
+                                    </TablixCell>
+                                  </TablixCells>
+                                </TablixRow>
+                              </TablixRows>
+                            </TablixBody>
+                            <TablixColumnHierarchy>
+                              <TablixMembers>
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                                <TablixMember />
+                              </TablixMembers>
+                            </TablixColumnHierarchy>
+                            <TablixRowHierarchy>
+                              <TablixMembers>
+                                <TablixMember>
+                                  <KeepWithGroup>After</KeepWithGroup>
+                                </TablixMember>
+                                <TablixMember>
+                                  <Group Name="Detalles17" />
+                                </TablixMember>
+                              </TablixMembers>
+                            </TablixRowHierarchy>
+                            <DataSetName>Cuestionario</DataSetName>
+                            <Style>
+                              <Border>
+                                <Style>None</Style>
+                              </Border>
+                            </Style>
+                          </Tablix>
+                        </CellContents>
+                      </TablixHeader>
+                      <Visibility>
+                        <Hidden>=IIF(
+	Fields!MFechaLimite.Value = true and
+	Fields!MFechaNotificacion.Value = true and
+	Fields!MFechaEntrega.Value = true and
+	Fields!MCantidad.Value = false and
+	Fields!MObservaciones.Value = true,
+	false,true
+)</Hidden>
+                      </Visibility>
+                    </TablixMember>
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <KeepTogether>true</KeepTogether>
             <DataSetName>Cuestionario</DataSetName>
-            <Top>4.77898cm</Top>
-            <Left>1.12754cm</Left>
-            <Height>14.60291cm</Height>
-            <Width>18.24505cm</Width>
+            <Top>4.80015cm</Top>
+            <Left>1.13128cm</Left>
+            <Height>14.54878cm</Height>
+            <Width>18.73188cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -6610,7 +7532,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>9.93633in</Height>
+        <Height>10.30406in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -6708,7 +7630,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>2.72264cm</Height>
+          <Height>1.62306cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -6749,8 +7671,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>2.12264cm</Top>
-              <Left>14.16466cm</Left>
+              <Top>1.02306cm</Top>
+              <Left>13.86852cm</Left>
               <Height>0.6cm</Height>
               <Width>5.21167cm</Width>
               <Style>
@@ -6789,8 +7711,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>2.12264cm</Top>
-              <Left>0.42016cm</Left>
+              <Top>1.02306cm</Top>
+              <Left>1.12754cm</Left>
               <Height>0.6cm</Height>
               <Width>13.63866cm</Width>
               <ZIndex>1</ZIndex>
