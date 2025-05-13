@@ -255,6 +255,27 @@
     }
 </div>
 
+@*************MODAL DE AVISO CIERRE*****@
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="modal-header" style="background-color: #24135f; color: white;">
+                <h5 class="modal-title" id="miModalLabel">¡IMPORTANTE!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color: white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color: #333;">
+                <div style="text-align: center;">
+                    <img src="~/img/AvisoCases.png" class="img-fluid" alt="Aviso Cierre CASES">
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color: #e0d4ff;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #24135f; border-color: #5e35b1; ">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
 <style>
 
     .titulo-principal {
@@ -523,5 +544,24 @@
                 table.column(5).search(mergedVal, true).draw();
             }
         });
+
+        $(document).ready(function () {
+            var miModal = $('#miModal'); 
+            var fechaHoy = new Date().toDateString();
+            var modalDiarioStr = localStorage.getItem('modalDiario');
+            var modalDiario = modalDiarioStr ? JSON.parse(modalDiarioStr) : { fecha: null, contador: 0 };
+
+            if (modalDiario.fecha !== fechaHoy) {
+                // Es un nuevo día, reiniciar el contador
+                modalDiario = { fecha: fechaHoy, contador: 0 };
+            }
+
+            if (modalDiario.contador < 3) {
+                miModal.modal('show');
+                modalDiario.contador++;
+                localStorage.setItem('modalDiario', JSON.stringify(modalDiario));
+            }
+        });
+
     </script>
 }

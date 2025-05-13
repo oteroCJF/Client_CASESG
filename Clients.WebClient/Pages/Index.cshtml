@@ -1,96 +1,128 @@
 ﻿@page "/"
 @model IndexModel
 @{
-    ViewData["Titulo"] = "Dashboard de Servicios - "+Model.Anio;
+    ViewData["Titulo"] = "";
     ViewData["Title"] = "Página Principal";
 }
 
-<div class="container-fluid">
-    <form method="get" id="getAnio" asp-page-handler="GetAnio">
-        <div class="row col-lg-4">
-            <label class="label">Consultar información del año: </label>
-            <div class="input-group mb-3">
-                <select class="form-control" id="anioActual" asp-for="Anio">
-                    <option value="">Seleccione el Año</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2023">2024</option>
-                </select>
-                <div class="row">
-                    <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar Información</button>
-                </div>
-            </div>
-        </div>
-    </form>
+<div class="row justify-content-center">
+    <div class="col-md-12 text-center">
+        <img src="~/img/AvisoCases.png" class="img-fluid aviso-grande" alt="Nueva Cedula Ejemplo">
+    </div>
 </div>
 
-<div class="row">
-        <div class="row col-lg-12">
-            @*@foreach (var ds in Model.Dashboard)
-            {
-                @if (ds.DServicio.Cedulas.Count() > 0)
-                {
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Servicio de @ds.DServicio.Servicio.Nombre</h5>
-                            </div>
-                            <div class="card-body">
-                                @if (ds.DServicio.Cedulas.Count() > 0)
+<style>
+    /* Agrega tus estilos personalizados aquí */
+    .aviso-grande {
+        width: 100%; /* Ajusta según necesites, porcentaje del contenedor padre */
+        height: auto;
+        max-width: 1200px; /* Opcional: Establece un ancho máximo en píxeles */
+    }
+   
+</style>
+
+
+
+
+
+
+
+
+@*<div class="container-fluid">
+        <form method="get" id="getAnio" asp-page-handler="GetAnio">
+            <div class="row col-lg-4">
+                <label class="label">Consultar información del año: </label>
+                <div class="input-group mb-3">
+                    <select class="form-control" id="anioActual" asp-for="Anio">
+                        <option value="">Seleccione el Año</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2023">2024</option>
+                    </select>
+                    <div class="row">
+                        <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar Información</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>*@
+
+<!--<div class="row">
+
+
+    <div style="text-align: center;">
+        <img src="~/img/AvisoCases.png" class="img-fluid" alt="Nueva Cedula Ejemplo" style="width: 800%; height: auto;">
+    </div>
+</div>-->
+
+
+
+
+
+
+@*@foreach (var ds in Model.Dashboard)
+    {
+        @if (ds.DServicio.Cedulas.Count() > 0)
+        {
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Servicio de @ds.DServicio.Servicio.Nombre</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (ds.DServicio.Cedulas.Count() > 0)
+                        {
+                            <h6>Dashboard de servicios</h6>
+                            <div class="row col">
+                                @foreach (var cd in ds.DServicio.Cedulas)
                                 {
-                                    <h6>Dashboard de servicios</h6>
-                                    <div class="row col">
-                                        @foreach (var cd in ds.DServicio.Cedulas)
-                                        {
-                                            <div class="col-6 col-md-3 text-center">
-                                                <input type="text" class="knob" value="@cd.PorcentajeAvance" data-width="90" data-height="90"
-                                                       data-fgColor="@cd.FondoH">
-                                                <div class="knob-label @cd.Fondo.Replace("bg","text") font-weight-bold">@cd.Estatus - @cd.Total cédula(s)</div>
-                                            </div>
-                                        }
+                                    <div class="col-6 col-md-3 text-center">
+                                        <input type="text" class="knob" value="@cd.PorcentajeAvance" data-width="90" data-height="90"
+                                               data-fgColor="@cd.FondoH">
+                                        <div class="knob-label @cd.Fondo.Replace("bg","text") font-weight-bold">@cd.Estatus - @cd.Total cédula(s)</div>
                                     </div>
                                 }
                             </div>
-                        </div>
+                        }
                     </div>
+                </div>
+            </div>
+        }
+    }*@
+
+
+@*{
+    <script>
+        $(function () {
+            $(".cedulasServicio").click(function () {
+                Swal.fire({
+                    allowOutsideClick: false,
+                    icon: "info",
+                    title: 'CASESG',
+                    html: "Obteniendo el detalle del estatus <b>" + $(this).data("estatus") + "</b>, por favor espere."
+                })
+                Swal.showLoading();
+            });
+
+            $('.facturasServicio').knob({
+                max: $(this).data('maximo'),
+                format: function (value) {
+                    return value.toFixed(2) + '%';
+                },
+                draw: function () {
+                    $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
                 }
-            }*@
-        </div>
-</div>
+            });
 
-@section Scripts
-{
-<script>
-    $(function () {
-        $(".cedulasServicio").click(function () {
-            Swal.fire({
-                allowOutsideClick: false,
-                icon: "info",
-                title: 'CASESG',
-                html: "Obteniendo el detalle del estatus <b>" + $(this).data("estatus") + "</b>, por favor espere."
-            })
-            Swal.showLoading();
-        });
-
-        $('.facturasServicio').knob({
-            max: $(this).data('maximo'),
-            format: function (value) {
-                return value.toFixed(2) + '%';
-            },
-            draw: function () {
-                $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
-            }
-        });
-
-        $('.knob').knob({
-            max: $(this).data('maximo'),
-            format: function (value) {
-                return value.toFixed(2) + '%';
-            },
-            draw: function () {
-                $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
-            }
-        });
-    })
-</script>
-}
+            $('.knob').knob({
+                max: $(this).data('maximo'),
+                format: function (value) {
+                    return value.toFixed(2) + '%';
+                },
+                draw: function () {
+                    $(this.i).css('transform', 'rotate(0deg)').css('font-size', '11pt');
+                }
+            });
+        })
+    </script>
+}-->*@

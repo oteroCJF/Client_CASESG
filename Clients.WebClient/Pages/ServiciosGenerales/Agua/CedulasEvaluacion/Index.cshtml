@@ -78,10 +78,10 @@
         <div class="row mt-3">
             <section class="col-xl-10 connectedSortable">
                 <div class="card">
-                    <div class="card-header">                    
-                            <strong class="card-title" style="color: #24135f; text-align: center; ">
-                                <b>Cédulas de Evaluación del Año @Model.Anio</b> 
-                            </strong>
+                    <div class="card-header">
+                        <strong class="card-title" style="color: #24135f; text-align: center; ">
+                            <b>Cédulas de Evaluación del Año @Model.Anio</b>
+                        </strong>
                     </div>
                     <div class="card-body" style="font-size: 14px;">
                         <table class="table cedulasEvaluacion row-border" width="100%">
@@ -274,6 +274,29 @@
             </section>
         </div>
     }
+</div>
+
+
+@*************MODAL DE AVISO CIERRE*****@
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="modal-header" style="background-color: #24135f; color: white;">
+                <h5 class="modal-title" id="miModalLabel">¡IMPORTANTE!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color: white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="color: #333;">
+                <div style="text-align: center;">
+                    <img src="~/img/AvisoCases.png" class="img-fluid" alt="Aviso Cierre CASES">
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color: #e0d4ff;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #24135f; border-color: #5e35b1; ">Entendido</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -543,6 +566,24 @@
 
                 var mergedVal = estatus.join('|').replace("&", "\\&").replace(/\s/g, "\\s");
                 table.column(5).search(mergedVal, true).draw();
+            }
+        });
+
+        $(document).ready(function () {
+            var miModal = $('#miModal'); // Asegúrate de que este modal es el mismo o uno diferente si es necesario
+            var fechaHoy = new Date().toDateString();
+            var claveLocalStorage = 'modalClaseB'; // Clave específica para esta otra sección
+            var modalInfoStr = localStorage.getItem(claveLocalStorage);
+            var modalInfo = modalInfoStr ? JSON.parse(modalInfoStr) : { fecha: null, contador: 0 };
+
+            if (modalInfo.fecha !== fechaHoy) {
+                modalInfo = { fecha: fechaHoy, contador: 0 };
+            }
+
+            if (modalInfo.contador < 3) {
+                miModal.modal('show');
+                modalInfo.contador++;
+                localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));
             }
         });
     </script>
