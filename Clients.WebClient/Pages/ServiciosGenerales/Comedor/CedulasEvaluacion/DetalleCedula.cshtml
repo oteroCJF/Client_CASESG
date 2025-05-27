@@ -1021,7 +1021,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right-lg">Subtototal de deductivas sin I.V.A.</td>
+                                        <td class="text-right-lg">Total de Deductivas sin I.V.A.</td>
                                         <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tdeductivas)</td>
 
                                     </tr>
@@ -1066,7 +1066,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right-lg">Subtototal de penalizaciones sin I.V.A.</td>
+                                        <td class="text-right-lg">Total de Penalizaciones sin I.V.A.</td>
                                         <td class="text-right-lg">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C4}", tpenalizacion)</td>
 
                                     </tr>
@@ -2003,7 +2003,7 @@
 
                 var respuestaSeleccionada = $(this).data('respuesta');
                 var preguntaId = $(this).data('preguntaid');
-                var preguntaTitulo = $(this).data('titulo');             
+                var preguntaTitulo = $(this).data('titulo');
 
                 if ($(this).data('respuesta') == null || $(this).data('respuesta') == "") {
                     Swal.fire({
@@ -2057,7 +2057,7 @@
                         mensajeEspecifico = "<span style='color: red;'><b>Fecha Incidencia = </b></span> <b>Día en que se realizó la toma de muestras en el inmueble.</b> <br><span style='color: red;'><b>Cantidad = </b></span><b> Cantidad de muestras fuera de rango.</b>";
                       //PREGUNTA 17
                     } else if (preguntaId == 79) {
-                        mensajeEspecifico = "<span style='color: red;'><b>Fecha Incidencia = </b></span> <b>Colocar el último día límite definido para la entrega de resultados.</b>";                    
+                        mensajeEspecifico = "<span style='color: red;'><b>Fecha Incidencia = </b></span> <b>Colocar el último día límite definido para la entrega de resultados.</b>";
                         //PREGUNTA 3
                     } else if (preguntaId == 65) {
                         mensajeEspecifico = "<span style='color: red;'><b>Fecha Programada = </b></span> <b>Colocar el día definido para la entrega de la bitácora.</b>";
@@ -2398,7 +2398,7 @@
                 }
                             });
 
-            $(document).on("click", ".editIncidencia", function () {           
+            $(document).on("click", ".editIncidencia", function () {
                 var numeropregunta = $(this).data("pregunta");
                 var preguntaRedaccion = $(this).data("preguntatexto");
                 $("#mensaje-pregunta").html("<b>" + numeropregunta + ".- " + preguntaRedaccion + "</b>");
@@ -2428,7 +2428,7 @@
                     mensajeEspecifico = "<span style='color: red;'><b>Fecha Incidencia = </b></span> <b>Día en que se realizó la toma de muestras en el inmueble.</b> <br><span style='color: red;'><b>Cantidad = </b></span><b> Cantidad de muestras fuera de rango.</b>";
                     //PREGUNTA 17
                 } else if (numeropregunta == 17) {
-                    mensajeEspecifico = "<span style='color: red;'><b>Fecha Incidencia = </b></span> <b>Colocar el último día límite definido para la entrega de resultados.</b>";           
+                    mensajeEspecifico = "<span style='color: red;'><b>Fecha Incidencia = </b></span> <b>Colocar el último día límite definido para la entrega de resultados.</b>";
                       //PREGUNTA 3
                 } else if (numeropregunta == 3) {
                     mensajeEspecifico = "<span style='color: red;'><b>Fecha Programada = </b></span> <b>Colocar el día definido para la entrega de la bitácora.</b>";
@@ -2452,7 +2452,7 @@
                 $("#campoPreguntaId").val($(this).data("preguntaid"));
                 $("#campoAbreviacion").val($(this).data("abreviacion"));
                 $("#modal-incidencias").modal("show");
-  
+
             });
 
             $(document).on('change', '.chkEnseres', function () {
@@ -4790,7 +4790,7 @@
                     type: "put",
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(cRespuestas),
-                    success: function () {        
+                    success: function () {
 
                         if (obligatorio && respuesta != "N/A") {
                             Swal.fire({
@@ -4858,12 +4858,36 @@
                             });
                         }
                         else {
-                            Swal.fire({
-                                icon: "error",
-                                title: 'Servicio de ' + servicio.descripcion,
-                                html: "No es posible generar el <b>Acta Entrega - Recepción</b> ya que aún no se adjunta el XML de la <b>Nota de Crédito</b>.",
-                                confirmButtonText: 'Cerrar'
+
+                              axios.get('/comedor/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?nFacturacion=' + @Model.Repositorio.Id+'&CedulaId=' + @Model.Cedula.Id+'&nInmueble=' + @Model.Inmueble.Id+'&Supervision=' + supervision + '&Handler=ActaEntregaRecepcion', { responseType: 'blob' }).then(response => {
+                                if (response.status == 200) {
+                                    const href = URL.createObjectURL(response.data);
+                                    const link = document.createElement('a');
+                                    link.href = href;
+                                    link.setAttribute('download', 'Acta_Entrega_Recepcion_Comedor.docx');
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                    URL.revokeObjectURL(href);
+                                    Swal.fire({
+                                        allowOutsideClick: false,
+                                        icon: "info",
+                                        title: 'Servicio de ' + servicio.descripcion,
+                                        html: "El <b>Acta Entrega - Recepción</b> se descargó correctamente. <p class='text-justify mt-3'>" +
+                                            "<b class='text-danger'>Sugerencia:</b> En caso de que se generé una hoja en blanco favor de eliminarla.</p>",
+                                        confirmButtonText: 'Cerrar'
+                                    });
+                                    Swal.hideLoading();
+                                }
                             });
+
+
+                            //Swal.fire({
+                            //    icon: "error",
+                            //    title: 'Servicio de ' + servicio.descripcion,
+                            //    html: "No es posible generar el <b>Acta Entrega - Recepción</b> ya que aún no se adjunta el XML de la <b>Nota de Crédito</b>.",
+                            //    confirmButtonText: 'Cerrar'
+                            //});
                         }
                     }
                     else {
