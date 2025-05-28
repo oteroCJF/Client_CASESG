@@ -2969,11 +2969,30 @@
 
                             if ($("#campoFechaIncidencia").val() != "" && pregunta != 24 && pregunta != 63) {
 
-                                const Incidencia = new Date($("#campoFechaIncidencia").val());
+                                // Obtiene el valor del campo de fecha (ej. "2025-04-01")
+                                const fechaString = $("#campoFechaIncidencia").val();
+
+                                // Divide la cadena en sus componentes (año, mes, día)
+                                const partes = fechaString.split('-'); // ["2025", "04", "01"]
+
+                                // Convierte las partes a números enteros
+                                const anio = parseInt(partes[0], 10);
+                                // Importante: getMonth() es base 0 (0=Enero), así que restamos 1 al mes
+                                const mesIndex = parseInt(partes[1], 10) - 1;
+                                const diaDelMes = parseInt(partes[2], 10);
+
+                                // Crea el objeto Date usando los componentes numéricos, lo que lo fija a la hora local
+                                const Incidencia = new Date(anio, mesIndex, diaDelMes);
+
+                                //const Incidencia = new Date($("#campoFechaIncidencia").val());
+
                                 const mes = Incidencia.getMonth() + 1;
-                                const dia = Incidencia.getDay() + 1;
+                                const dia = Incidencia.getDate();
 
                                 if (mes != @Model.Cedula.Mes.Id) {
+                                        console.log("Valor de CampoFechaInci:", mes, dia);
+                                        console.log("Valor del Modelo:", @Model.Cedula.Mes.Id);
+
                                     denegate = true;
                                     $("#error_campoFechaIncidencia").css("display", "block");
                                     Swal.fire({
@@ -4241,16 +4260,16 @@
             });
 
             $(".revisarCAE").click(function () {
-                if (!validaNC()) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Servicio de ' + servicio.descripcion,
-                        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
-                        confirmButtonText: 'Cerrar'
-                    });
+                //if (!validaNC()) {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: 'Servicio de ' + servicio.descripcion,
+                //        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
+                //        confirmButtonText: 'Cerrar'
+                //    });
 
-                    return false;
-                }
+                //    return false;
+                //}
 
                 if (validaEntregables()) {
                     Swal.fire({
@@ -4479,16 +4498,16 @@
             });
 
             $(".tramitar").click(function () {
-                if (!validaNC()) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Servicio de ' + servicio.descripcion,
-                        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
-                        confirmButtonText: 'Cerrar'
-                    });
+                //if (!validaNC()) {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: 'Servicio de ' + servicio.descripcion,
+                //        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
+                //        confirmButtonText: 'Cerrar'
+                //    });
 
-                    return false;
-                }
+                //    return false;
+                //}
 
                 if (validaEntregables()) {
                     Swal.fire({

@@ -704,23 +704,23 @@
             /******************** Filtros *******************/
         });
 
-        $(document).ready(function () {
-            var miModal = $('#miModal'); // Asegúrate de que este modal es el mismo o uno diferente si es necesario
-            var fechaHoy = new Date().toDateString();
-            var claveLocalStorage = 'modalClaseF'; // Clave específica para esta otra sección
-            var modalInfoStr = localStorage.getItem(claveLocalStorage);
-            var modalInfo = modalInfoStr ? JSON.parse(modalInfoStr) : { fecha: null, contador: 0 };
+        //$(document).ready(function () {
+        //    var miModal = $('#miModal'); // Asegúrate de que este modal es el mismo o uno diferente si es necesario
+        //    var fechaHoy = new Date().toDateString();
+        //    var claveLocalStorage = 'modalClaseF'; // Clave específica para esta otra sección
+        //    var modalInfoStr = localStorage.getItem(claveLocalStorage);
+        //    var modalInfo = modalInfoStr ? JSON.parse(modalInfoStr) : { fecha: null, contador: 0 };
 
-            if (modalInfo.fecha !== fechaHoy) {
-                modalInfo = { fecha: fechaHoy, contador: 0 };
-            }
+        //    if (modalInfo.fecha !== fechaHoy) {
+        //        modalInfo = { fecha: fechaHoy, contador: 0 };
+        //    }
 
-            if (modalInfo.contador < 3) {
-                miModal.modal('show');
-                modalInfo.contador++;
-                localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));
-            }
-        });
+        //    if (modalInfo.contador < 3) {
+        //        miModal.modal('show');
+        //        modalInfo.contador++;
+        //        localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));
+        //    }
+        //});
 
                     $(document).ready(function () {
                         var miModal2 = $('#miModal2'); // Asegúrate de que este modal es el mismo o uno diferente si es necesario
@@ -733,7 +733,7 @@
                             modalInfo = { fecha: fechaHoy, contador: 0 };
                         }
 
-                        if (modalInfo.contador < 3) {
+                        if (modalInfo.contador < 1) {
                             miModal2.modal('show');
                             modalInfo.contador++;
                             localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));
