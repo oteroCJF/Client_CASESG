@@ -556,7 +556,7 @@
                 modalDiario = { fecha: fechaHoy, contador: 0 };
             }
 
-            if (modalDiario.contador < 3) {
+            if (modalDiario.contador < 0) {
                 miModal.modal('show');
                 modalDiario.contador++;
                 localStorage.setItem('modalDiario', JSON.stringify(modalDiario));

@@ -580,7 +580,7 @@
                 modalInfo = { fecha: fechaHoy, contador: 0 };
             }
 
-            if (modalInfo.contador < 3) {
+            if (modalInfo.contador < 0) {
                 miModal.modal('show');
                 modalInfo.contador++;
                 localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));

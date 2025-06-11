@@ -119,11 +119,11 @@
                         <strong class="card-title" style="color: #24135f; text-align: center; ">
                             <b>Cédulas de Evaluación del Año @Model.Anio</b>
                         </strong>
-                        <div style="text-align: right;">
+                        @*<div style="text-align: right;">
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#miModal" style="background-color: #24135f; border-color: red; font-size: 1em; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
                                 ¡Ver Información Importante de Marzo!
                             </button>
-                        </div>
+                        </div>*@
 
                     </div>
                     <div class="card-body" style="font-size: 14px;">
@@ -135,9 +135,10 @@
                                     <th>Mes</th>
                                     <th>Inmueble</th>
                                     <th>Folio</th>
+                                    <th>Contrato</th>
                                     @*<th>Tipo de Servicio</th>*@
                                     <th>Estatus</th>
-                                    <th style="color: #24135f; font-weight: bold; font-size: 1.2em; text-align: center;">Contrato</th>
+                                    @*<th style="color: #24135f; font-weight: bold; font-size: 1.2em; text-align: center;">Contrato</th>*@
                                     <th class="text-center">Calificación</th>
                                     @if (Model.Anio > 2023)
                                     {
@@ -159,21 +160,24 @@
                                         <td>@c</td>
                                         <td>@cedula.Anio</td>
                                         <td>@cedula.Mes</td>
-                                        <td>@cedula.Inmueble</td>
+                                        <td><strong>@cedula.Inmueble</strong></td>
                                         <td>@cedula.Folio</td>
-                                        @*<td>@cedula.Servicio</td>*@
-                                        <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
-                                        <td>
+                                          <td>
                                             @if (cedula.ContratoId == 2)
                                             {
-                                                <p style="color: black;">CON/DGRM/DCS/036/2024</p>
+                                              <p>CON/DGRM/DCS/036/2024</p>
                                             }
                                             else if (cedula.ContratoId == 3)
                                             {
-                                                <strong style="color: red;">CON/DGRM/DCS/023/2025</strong>
+                                                <p>CON/DGRM/DCS/023/2025</p>
                                             }
                                         </td>
-                                        <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
+                                        @*<td>@cedula.Servicio</td>*@
+                                        <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
+                                      
+                                        <td class="text-center @(cedula.Calificacion < 8 ? "text-danger font-weight-bold" : "")">
+                                            @(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")
+                                        </td>
                                         @if (cedula.Anio > 2023)
                                         {
                                             <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
@@ -733,7 +737,7 @@
                             modalInfo = { fecha: fechaHoy, contador: 0 };
                         }
 
-                        if (modalInfo.contador < 1) {
+                        if (modalInfo.contador < 0) {
                             miModal2.modal('show');
                             modalInfo.contador++;
                             localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));
