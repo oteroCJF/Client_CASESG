@@ -678,11 +678,11 @@
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-archivo="@en.Archivo"
                                                data-observaciones="@en.Observaciones">
                                                 <i class="fas fa-eye text-success mr-2"></i>
-                                            </a>                                  
+                                            </a>
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("editarEntregable")).Count() != 0 &&
-                                          (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
+                                        (fe != null ? fe.Editable : false) && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
@@ -693,7 +693,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("autorizarEntregable")).Count() != 0 && (fe != null ? fe.Autorizar : false)
-                                          && !en.estatus.Nombre.Equals("Autorizado"))
+                                        && !en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="autorizarEntregable" href="javascript:" data-toggle="tooltip" title="Autorizar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -702,7 +702,7 @@
                                         }
 
                                         @if (Model.Permisos.Where(p => p.Permiso.Abreviacion.Equals("rechazarEntregable")).Count() != 0 && (fe != null ? fe.Rechazar : false)
-                                          && !en.estatus.Nombre.Equals("Rechazado"))
+                                        && !en.estatus.Nombre.Equals("Rechazado"))
                                         {
                                             <a class="rechazarEntregable" href="javascript:" data-toggle="tooltip" title="Rechazar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-entregableid="@en.EntregableId">
@@ -711,15 +711,24 @@
                                         }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("ActaER") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                          (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                        (Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a href="javascript:" class="generaAER" data-toggle="tooltip" title="Generar  @nuevoNombreEntregable">
                                                 <i class="fa-sharp fa-regular fa-file-word"></i>
                                             </a>
                                         }
+                                        @if (en.tipoEntregable.Abreviacion.Equals("Reporte(s)")  && en.estatus.Nombre.Equals("Rechazado") &&
+                                            Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado"))
+                                        {
+                                        <a class="editarEntregable" href="javascript:" data-toggle="tooltip" title="Cargar   @nuevoNombreEntregable"
+                                           data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id"
+                                           data-entregableid="@en.EntregableId" data-file="@en.Archivo">
+                                            <i class="fas fa-pencil text-primary mr-2"></i>
+                                        </a>
+                                        }
 
                                         @if (en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") && !en.estatus.Nombre.Equals("Autorizado") &&
-                                          (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
+                                        (Model.Cedula.Estatus.Nombre.Equals("Enviada a DAS") || Model.Cedula.Estatus.Nombre.Equals("Autorizada") || Model.Cedula.Estatus.Nombre.Equals("Trámite Rechazado")))
                                         {
                                             <a class="generarCedula" href="javascript:" data-toggle="tooltip" title="Generar la Cédula de Evaluación"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id">
@@ -728,7 +737,7 @@
                                         }
 
                                         @if ((en.tipoEntregable.Abreviacion.Equals("Memorandum") || en.tipoEntregable.Abreviacion.Equals("Cedula_Firmada") || en.tipoEntregable.Abreviacion.Equals("ActaER")) && !en.Validado
-                                          && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
+                                        && Model.Cedula.Estatus.Nombre.Equals("En Trámite") && en.estatus.Nombre.Equals("Autorizado"))
                                         {
                                             <a class="validarEntregable" href="javascript:" data-toggle="tooltip" title="Validar   @nuevoNombreEntregable"
                                                data-placement="top" data-tipo="@en.tipoEntregable.Nombre" data-id="@en.Id" data-estatusid="@en.EstatusId"
@@ -736,6 +745,8 @@
                                                 <i class="fa-regular fa-check-double text-primary ml-2"></i>
                                             </a>
                                         }
+
+
                                     </td>
                                 </tr>
                             }

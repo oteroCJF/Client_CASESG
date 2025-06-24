@@ -391,7 +391,7 @@
             </div>
             <div class="modal-body" style="color: #333;">
                 <div style="text-align: center;">
-                    <img src="~/img/AvisoCases.png" class="img-fluid" alt="Aviso Cierre CASES">
+                    <img src="~/img/MensajeFechasNuevo.png" class="img-fluid" alt="Aviso Cierre CASES">
                 </div>
             </div>
             <div class="modal-footer" style="background-color: #e0d4ff;">
@@ -737,7 +737,7 @@
                             modalInfo = { fecha: fechaHoy, contador: 0 };
                         }
 
-                        if (modalInfo.contador < 0) {
+                        if (modalInfo.contador < 2) {
                             miModal2.modal('show');
                             modalInfo.contador++;
                             localStorage.setItem(claveLocalStorage, JSON.stringify(modalInfo));
