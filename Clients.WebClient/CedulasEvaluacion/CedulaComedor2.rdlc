@@ -430,8 +430,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>CedulaComedor</DataSetName>
-            <Top>25.02987cm</Top>
-            <Left>2.08383cm</Left>
+            <Top>24.7547cm</Top>
+            <Left>2.08757cm</Left>
             <Height>0.6cm</Height>
             <Width>16.10474cm</Width>
             <ZIndex>2</ZIndex>
@@ -1407,8 +1407,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>20.25896cm</Top>
-            <Left>1.12754cm</Left>
+            <Top>19.98379cm</Top>
+            <Left>1.13128cm</Left>
             <Height>2.32549cm</Height>
             <Width>17.81519cm</Width>
             <ZIndex>5</ZIndex>
@@ -1426,10 +1426,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>4.64457cm</Width>
+                  <Width>9.48058cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.34094cm</Width>
+                  <Width>8.34679cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1550,7 +1550,8 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>_____________________________ </Value>
+                                  <Value>_____________________________
+ </Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1710,10 +1711,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>22.655cm</Top>
-            <Left>4.03618cm</Left>
+            <Top>22.37983cm</Top>
+            <Left>1.49992cm</Left>
             <Height>2.32549cm</Height>
-            <Width>9.98551cm</Width>
+            <Width>17.82737cm</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
               <Hidden>=IIF(Fields!Reviso.Value.Equals(Fields!Superviso.Value), False, True)</Hidden>
@@ -7523,7 +7524,7 @@
             <Top>4.80015cm</Top>
             <Left>1.13128cm</Left>
             <Height>14.54878cm</Height>
-            <Width>18.73188cm</Width>
+            <Width>18.73189cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -7532,7 +7533,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>10.30406in</Height>
+        <Height>10.0155in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -7630,7 +7631,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>1.62306cm</Height>
+          <Height>0.65644cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -7671,8 +7672,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>1.02306cm</Top>
-              <Left>13.86852cm</Left>
+              <Top>0.05644cm</Top>
+              <Left>14.89899cm</Left>
               <Height>0.6cm</Height>
               <Width>5.21167cm</Width>
               <Style>
@@ -7711,8 +7712,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox2</rd:DefaultName>
-              <Top>1.02306cm</Top>
-              <Left>1.12754cm</Left>
+              <Top>0.05644cm</Top>
+              <Left>0.00027cm</Left>
               <Height>0.6cm</Height>
               <Width>13.63866cm</Width>
               <ZIndex>1</ZIndex>

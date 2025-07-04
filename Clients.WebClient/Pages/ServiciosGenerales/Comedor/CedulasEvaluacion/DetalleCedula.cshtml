@@ -4260,16 +4260,16 @@
             });
 
             $(".revisarCAE").click(function () {
-                //if (!validaNC()) {
-                //    Swal.fire({
-                //        icon: 'error',
-                //        title: 'Servicio de ' + servicio.descripcion,
-                //        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
-                //        confirmButtonText: 'Cerrar'
-                //    });
+                if (!validaNC()) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
+                        confirmButtonText: 'Cerrar'
+                    });
 
-                //    return false;
-                //}
+                    return false;
+                }
 
                 if (validaEntregables()) {
                     Swal.fire({
@@ -4498,16 +4498,16 @@
             });
 
             $(".tramitar").click(function () {
-                //if (!validaNC()) {
-                //    Swal.fire({
-                //        icon: 'error',
-                //        title: 'Servicio de ' + servicio.descripcion,
-                //        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
-                //        confirmButtonText: 'Cerrar'
-                //    });
+                if (!validaNC()) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Servicio de ' + servicio.descripcion,
+                        html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
+                        confirmButtonText: 'Cerrar'
+                    });
 
-                //    return false;
-                //}
+                    return false;
+                }
 
                 if (validaEntregables()) {
                     Swal.fire({
@@ -4899,14 +4899,12 @@
                                     Swal.hideLoading();
                                 }
                             });
-
-
-                            //Swal.fire({
-                            //    icon: "error",
-                            //    title: 'Servicio de ' + servicio.descripcion,
-                            //    html: "No es posible generar el <b>Acta Entrega - Recepción</b> ya que aún no se adjunta el XML de la <b>Nota de Crédito</b>.",
-                            //    confirmButtonText: 'Cerrar'
-                            //});
+                            Swal.fire({
+                                icon: "error",
+                                title: 'Servicio de ' + servicio.descripcion,
+                                html: "No es posible generar el <b>Acta Entrega - Recepción</b> ya que aún no se adjunta el XML de la <b>Nota de Crédito</b>.",
+                                confirmButtonText: 'Cerrar'
+                            });
                         }
                     }
                     else {

@@ -381,80 +381,79 @@
                                             ci = 0;
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
-                                                    <table class="table tblIncidencias" width="100%">
+                                                    <table class="table tblIncidencias table-striped table-bordered table-hover dataTables" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Tipo</th>
                                                                 @if (@rs.ciMensajeria.FechaProgramada)
                                                                 {
-                                                                    <th>Fecha programada</th>
+                                                                    <th class="text-center">Fecha programada</th>
                                                                 }
                                                                 @if (@rs.ciMensajeria.FechaEntrega)
                                                                 {
-                                                                    <th>Fecha de entrega</th>
+                                                                    <th class="text-center">Fecha de entrega</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.NumeroGuia)
                                                                 {
-                                                                    <th>Número de guía</th>
+                                                                    <th class="text-center">Número de guía</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.CodigoRastreo)
                                                                 {
-                                                                    <th>Código de rastreo</th>
+                                                                    <th class="text-center">Código de rastreo</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.Acuse)
                                                                 {
-                                                                    <th>Acuse</th>
+                                                                    <th class="text-center">Acuse</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.Sobrepeso)
                                                                 {
-                                                                    <th>Sobrepeso (Kg)</th>
+                                                                    <th class="text-center">Sobrepeso (Kg)</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.TipoServicio)
                                                                 {
-                                                                    <th>Tipo de servicio</th>
+                                                                    <th class="text-center">Tipo de servicio</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.TipoIndemnizacion)
                                                                 {
-                                                                    <th>Tipo de contenido</th>
+                                                                    <th class="text-center">Tipo de contenido</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.Acta)
                                                                 {
-                                                                    <th>Acta del incidente</th>
+                                                                      <th class="text-center">Acta del incidente</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.Escrito)
                                                                 {
-                                                                    <th>Escrito robo/extravio</th>
+                                                                    <th class="text-center">Escrito robo/extravio</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.Comprobante)
                                                                 {
-                                                                    <th>Comprobante</th>
+                                                                    <th class="text-center">Comprobante</th>
                                                                 }
 
                                                                 @if (@rs.ciMensajeria.Observaciones)
                                                                 {
-                                                                    <th>Observaciones</th>
+                                                                    <th class="text-center">Observaciones</th>
                                                                 }
 
-                                                                @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
-                                                         !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                                @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") && !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
-                                                                    <th>Monto Penalizacion</th>
+                                                            <th class="text-center">Monto Penalizacion</th>
                                                                 }
 
                                                                 @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
-                                                         Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
+                                                 Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                 {
-                                                                    <th>Acciones</th>
+                                                            <th class="text-center">Acciones</th>
                                                                 }
                                                             </tr>
                                                         </thead>
@@ -467,47 +466,47 @@
                                                                     <td>@inc.Incidencia.Valor</td>
                                                                     @if (@rs.ciMensajeria.FechaProgramada)
                                                                     {
-                                                                        <td>@Convert.ToDateTime(inc.FechaProgramada).ToString("dd/MM/yyyy")</td>
+                                                                          <td class="text-center">@Convert.ToDateTime(inc.FechaProgramada).ToString("dd/MM/yyyy")</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.FechaEntrega)
                                                                     {
-                                                                        <td>@Convert.ToDateTime(inc.FechaEntrega).ToString("dd/MM/yyyy")</td>
+                                                                        <td class="text-center">@Convert.ToDateTime(inc.FechaEntrega).ToString("dd/MM/yyyy")</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.NumeroGuia)
                                                                     {
-                                                                        <td>@inc.NumeroGuia</td>
+                                                                        <td class="text-center">@inc.NumeroGuia</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.CodigoRastreo)
                                                                     {
-                                                                        <td>@inc.CodigoRastreo</td>
+                                                                        <td class="text-center">@inc.CodigoRastreo</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.Acuse)
                                                                     {
-                                                                        <td>@inc.Acuse</td>
+                                                                        <td class="text-center">@inc.Acuse</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.Sobrepeso)
                                                                     {
-                                                                        <td>@inc.Sobrepeso</td>
+                                                                        <td class="text-center">@inc.Sobrepeso</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.TipoServicio)
                                                                     {
-                                                                        <td>@inc.TipoServicio</td>
+                                                                        <td class="text-center">@inc.TipoServicio</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.TipoIndemnizacion)
                                                                     {
-                                                                        <td>@inc.Indemnizacion.Nombre</td>
+                                                                        <td class="text-center">@inc.Indemnizacion.Nombre</td>
                                                                     }
 
                                                                     @if (@rs.ciMensajeria.Acta)
                                                                     {
-                                                                        <td>
+                                                                        <td class="text-center">
                                                                             <a href="javascript:" data-guia="@inc.NumeroGuia" class="verActa"
                                                                                data-codigo="@inc.CodigoRastreo" data-tiposervicio="@inc.TipoServicio"
                                                                                data-archivo="@inc.Acta" data-sobrepeso="@inc.Sobrepeso"
@@ -520,7 +519,7 @@
 
                                                                     @if (@rs.ciMensajeria.Escrito)
                                                                     {
-                                                                        <td>
+                                                                        <td class="text-center">
                                                                             <a href="javascript:" data-guia="@inc.NumeroGuia" class="verActa"
                                                                                data-codigo="@inc.CodigoRastreo" data-tiposervicio="@inc.TipoServicio"
                                                                                data-archivo="@inc.Escrito" data-sobrepeso="@inc.Sobrepeso"
@@ -533,7 +532,7 @@
 
                                                                     @if (@rs.ciMensajeria.Comprobante)
                                                                     {
-                                                                        <td>
+                                                                        <td class="text-center">
                                                                             <a href="javascript:" data-guia="@inc.NumeroGuia" class="verActa"
                                                                                data-codigo="@inc.CodigoRastreo" data-tiposervicio="@inc.TipoServicio"
                                                                                data-archivo="@inc.Comprobante" data-sobrepeso="@inc.Sobrepeso"
@@ -551,13 +550,13 @@
                                                                     @if (!Model.Cedula.Estatus.Nombre.Equals("Rechazada") && !Model.Cedula.Estatus.Nombre.Equals("En Proceso") &&
                                                               !Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                     {
-                                                                        <td>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
+                                                                         <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @inc.MontoPenalizacion)</td>
                                                                     }
 
                                                                     @if (Model.Cedula.Estatus.Nombre.Equals("Rechazada") || Model.Cedula.Estatus.Nombre.Equals("En Proceso") ||
                                                               Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                     {
-                                                                        <td>
+                                                                        <td class="text-center">
                                                                             <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
                                                                                data-abreviacion="@rs.cuestionario.Abreviacion" data-incidencia="@inc.Id"
                                                                                data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
