@@ -381,7 +381,7 @@
                                             ci = 0;
                                             <div class="row mt-3">
                                                 <div class="col-lg-12">
-                                                    <table class="table tblIncidencias table-striped table-bordered table-hover dataTables" width="100%">
+                                                    <table class="table tblIncidencias dataTables" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
@@ -633,8 +633,11 @@
                                                                     {
                                                                         <td></td>
                                                                     }
-                                                                    <td><b>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", rs.iMensajeria.Sum(i => i.MontoPenalizacion))</b></td>
-                                                                </tr>
+                                                                <td class="text-end py-3">
+                                                                    <h3 class="text-danger fw-bold mb-0">
+                                                                        <strong>@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", rs.iMensajeria.Sum(i => i.MontoPenalizacion))</strong>
+                                                                    </h3>
+                                                                </td>                                                                </tr>
                                                             </tfoot>
                                                         }
                                                     </table>
@@ -837,7 +840,7 @@
                             }
                         }
 
-                        @if (Model.Cedula.Penalizacion != 0)
+                        @if (tdeductivasB != 0 || deductivaCalidad != 0)
                         {
                             <h5 class="mt-4 text-center font-weight-bold">Deductivas Aplicadas sin IVA</h5>
                             <table class="table table-hover table-bordered dataTable" width="100%">
@@ -852,8 +855,8 @@
                                 <tbody>
                                     @foreach (var rs in Model.Cedula.respuestas)
                                     {
-                                        // Omitir elementos con rs.Pregunta igual a 6 o 10
-                                        if ((rs.Pregunta == 7 || rs.Pregunta == 11) && rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo != null && rs.cuestionario.Tipo.Equals("Deductiva"))
+                                        // Omitir elementos con rs.Pregunta igual a 7 o 11
+                                        if ((rs.Pregunta == 7 || rs.Pregunta == 11) && rs.Penalizable == true && rs.cuestionario.Tipo != null && rs.cuestionario.Tipo.Equals("Deductiva"))
                                         {
                                             <tr>
                                                 <td class="text-center">@rs.Pregunta</td>
@@ -863,27 +866,30 @@
                                             </tr>
                                         }
                                     }
-                                    <tr>
-                                        <td class="text-center">-</td>
-                                        <td class="text-center">Deductiva</td>
-                                        <td class="text-center"><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
-                                        <td class="text-right-lg font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", deductivaCalidad)</td>
-                                    </tr>
+                                    @if (deductivaCalidad != 0)
+                                    {
+                                        <tr>
+                                            <td class="text-center">-</td>
+                                            <td class="text-center">Deductiva</td>
+                                            <td class="text-center"><i class="fa-sharp fa-regular fa-thumbs-up mr-2"></i> Calidad y eficiencia del servicio</td>
+                                            <td class="text-right-lg font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", deductivaCalidad)</td>
+                                        </tr>
+                                    }
                                 </tbody>
                                 <tfoot>
                                     <tr class="font-weight-bold text-primary bg-light">
                                         <td colspan="3" class="text-right-lg">Total de Deductivas sin IVA</td>
                                         <td class="text-right-lg font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", (deductivaCalidad + tdeductivasB))</td>
                                     </tr>
-                                    @*<tr class="font-weight-bold text-primary bg-light">
+                                    <tr class="font-weight-bold text-primary bg-light">
                                         <td colspan="3" class="text-right-lg">Solicitar Nota de Crédito por:</td>
                                         <td class="text-right-lg font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", ((deductivaCalidad + tdeductivasB) * 1.16m))</td>
-                                    </tr>*@
+                                    </tr>
                                 </tfoot>
                             </table>
+
                         }
 
-                        ---
 
                         @{ // Calcular tdeductivas *antes* de la condición del if
                             // Esto es vital para que la condición sepa si hay algo que mostrar.
@@ -924,7 +930,7 @@
                                         }
 
                                         // La condición original para filtrar las filas individuales
-                                        if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo != null && rs.cuestionario.Tipo.Equals("Deductiva"))
+                                        if (rs.Penalizable == true && rs.cuestionario.Tipo != null && rs.cuestionario.Tipo.Equals("Deductiva"))
                                         {
                                             <tr>
                                                 <td class="text-center">@rs.Pregunta</td>
@@ -954,7 +960,8 @@
                                 {
                                     tpenalizacion += (decimal)rs.MontoPenalizacion;
                                 }
-                            } }
+                            }
+                        }
 
                         @if (tpenalizacion != 0) // Ahora condicionamos la aparición de la tabla con el total calculado
                         {
@@ -972,7 +979,7 @@
                                     @foreach (var rs in Model.Cedula.respuestas)
                                     {
                                         // La condición interna sigue siendo necesaria para filtrar las filas individuales
-                                        if (rs.MontoPenalizacion != 0 && rs.cuestionario.Tipo != null && rs.cuestionario.Tipo.Equals("Penalizacion"))
+                                        if (rs.Penalizable == true && rs.cuestionario.Tipo != null && rs.cuestionario.Tipo.Equals("Penalizacion"))
                                         {
                                             <tr>
                                                 <td class="text-center">@rs.Pregunta</td>
@@ -2585,7 +2592,7 @@
                                 }).then(function () {
                                     return false;
                                 });
-                            }                      
+                            }
 
 
                                 @*if ($("#campoFechaProgramada").val() != "") {
@@ -2615,7 +2622,7 @@
                                      }
                                 }*@
                         }
-                            
+
 
 
 
@@ -4487,12 +4494,44 @@
             });
 
             $(".tramitar").click(function () {
+                  // Obtén el valor de la penalización del modelo Razor
+             const penalizacion = @(Math.Round(((tdeductivasB + deductivaCalidad) * 1.16m) + tdeductivas, 2));
+             // Obtén el total de las notas de crédito que calculamos en Razor (la variable C# totalNotasCredito)
+             const totalNotasCreditoCalculado = @totalNotasCredito; // Aquí se inyecta el valor calculado por Razor
+
+                console.log("Penalización de la Cédula:", penalizacion);
+                console.log("Total de Notas de Crédito (NC):", totalNotasCreditoCalculado);
+
+
                  if (!validaNC()) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Servicio de Mensajería Acelerada',
                         html: 'La cédula cuenta con deductivas y aún no se adjunta la <b>Nota de Crédito</b>, favor de contactar a la <b>DAS</b>.',
                         confirmButtonText: 'Cerrar'
+                    });
+
+                    return false;
+                }
+
+                if (!(totalNotasCreditoCalculado >= penalizacion)) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Servicio de Mensajería Acelerada',
+                        html: `El total de las notas de crédito cargadas en el sistema <b style="color: red;">NO COINCIDE</b> con el total de las deductivas calculadas.<br><br>
+                               Notas de Crédito Cargadas: $${totalNotasCreditoCalculado}<br>
+                               Deductivas calculadas con IVA: $${penalizacion}
+                                <br><br>
+                               Por favor, verifica las notas de crédito cargadas o contacta al personal de operación de la <b style="color: red;">Dirección de Aministración de Servicios</b>.`,
+                        confirmButtonText: 'Cerrar',
+                        background: '#FFFFFF',
+                        customClass: {
+                            popup: 'border-danger border-3 large-swal-popup'
+                        },
+                        backdrop: `rgba(0,0,0,0.8)`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false
                     });
 
                     return false;
@@ -4549,6 +4588,7 @@
                         }
                     });
                 }
+
             });
 
             $(".tramitePago").click(function () {

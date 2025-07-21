@@ -91,7 +91,9 @@
                                         <td>@cedula.Inmueble</td>
                                         <td>@cedula.Folio</td>
                                         <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
-                                        <td class="text-center">@(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")</td>
+                                        <td class="text-center @(cedula.Calificacion < 8 ? "text-danger font-weight-bold" : "")">
+                                            @(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")
+                                        </td>
                                         <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
                                         <td class="text-center">@Html.Raw(cedula.RequiereNC == true ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
                                         <td>
