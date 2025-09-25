@@ -2243,7 +2243,7 @@
                         allowOutsideClick: false,
                         icon: "info",
                         title: servicio.descripcion,
-                        html: "Obteniendo la fecha limite para la aclaración sobre la reposición de equipo de cocina propiedad del Consejo, espere por favor."
+                        html: "Obteniendo la fecha limite para la aclaración sobre la reposición de equipo de cocina propiedad del Órgano, espere por favor."
                     });
                     Swal.showLoading();
                     axios.get('/comedor/' + @Model.Modulo.Id + '/' + @Model.Submodulo.Id + '/detalle/' + @Model.Inmueble.Id + '/' + @Model.Cedula.Id + '?Fecha=' + $(this).val() + '&handler=FechaLimiteReposicionPregunta22')
@@ -2252,7 +2252,7 @@
                                 allowOutsideClick: false,
                                 icon: "info",
                                 title: servicio.descripcion,
-                                html: "La fecha límite para la aclaración sobre la reposición de equipo de cocina propiedad del Consejo (5 días hábiles) es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
+                                html: "La fecha límite para la aclaración sobre la reposición de equipo de cocina propiedad del Órgano (5 días hábiles) es el: <b>" + response.data.slice(8, 10) + "/" + response.data.slice(5, 7) + "/" + response.data.slice(0, 4),
                                 confirmButtonText: 'Cerrar'
 
                             });
@@ -3987,7 +3987,8 @@
                                 });
                                 Swal.showLoading();
                                 axios.put('/comedor/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/detalle/' + @Model.Inmueble.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
-                                    Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
+                                    Id: parseInt(cedula.id), 
+                                    EstatusId: $(this).data("estatusid"), Calcula: true, UsuarioId: usuario,
                                     EFacturaId: parseInt($(this).data('efacturaid')),
                                     ENotaCreditoId: parseInt($(this).data('enotaid')),
                                     RepositorioId: parseInt(repositorio), Observaciones: "Se envía la cédula de evaluación a su revisión por la DAS.",

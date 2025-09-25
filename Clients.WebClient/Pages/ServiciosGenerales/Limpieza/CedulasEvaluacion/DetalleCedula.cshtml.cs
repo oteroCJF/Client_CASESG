@@ -413,6 +413,7 @@ namespace Clients.WebClient.Pages.Limpieza.CedulasEvaluacion
             }
             Document document = new Document();
             var path = @"E:\Plantillas\Acta ER\Acta Entrega - Recepción 2022 Limpieza.docx";
+            //var path = @"C:\Users\coterog\Desktop\Acta Entrega - Recepción 2022 Limpieza.docx";
             var cedula = await _cedula.GetCedulaById(cedulaId);
             document.LoadFromFile(path);
 
@@ -466,14 +467,14 @@ namespace Clients.WebClient.Pages.Limpieza.CedulasEvaluacion
             {
                 if (i.iLimpieza.Count() > 0)
                 {
-                    document.Replace("|Declaraciones|", "\nSe hace constar que los servicios fueron recibidos por el Consejo de la Judicatura " +
-                        "Federal, presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
+                    document.Replace("|Declaraciones|", "\nSe hace constar que los servicios fueron recibidos por el Órgano de Administración Judicial," +
+                        " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
                         "evaluación de servicios generales.", false, true);
                     break;
                 }
                 else
                 {
-                    document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del Consejo de la Judicatura Federal conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
+                    document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del Órgano de Administración Judicial conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
                 }
             }
 

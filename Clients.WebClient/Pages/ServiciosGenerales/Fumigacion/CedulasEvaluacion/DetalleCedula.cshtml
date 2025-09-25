@@ -3257,7 +3257,8 @@
                                 html: "Enviando la cédula de evaluación a revisión de la CAE, espere por favor."
                             });
                             axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
-                                Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
+                                Id: parseInt(cedula.id), 
+                                EstatusId: $(this).data("estatusid"),
                                 UsuarioId: usuario,
                                 RepositorioId: parseInt(facturacion.id),
                                 EFacturaId: parseInt($(this).data('efacturaid')),
@@ -3281,12 +3282,28 @@
                                     });
                                 }
                             }).catch(error => {
+                                console.error("Error completo de la solicitud:", error); // Muestra el objeto de error completo
+                                if (error.response) {
+                                    // El servidor respondió con un código de estado fuera del rango 2xx
+                                    console.error("Datos del error de respuesta (server):", error.response.data);
+                                    console.error("Estado del error de respuesta (status):", error.response.status);
+                                    console.error("Headers del error de respuesta:", error.response.headers);
+                                } else if (error.request) {
+                                    // La solicitud fue hecha pero no se recibió respuesta (ej. sin conexión a internet)
+                                    console.error("No se recibió respuesta del servidor:", error.request);
+                                } else {
+                                    // Algo más causó el error (ej. error en la configuración de Axios, error en el código JS)
+                                    console.error("Error al configurar la solicitud o en el código JS:", error.message);
+                                }
+
                                 Swal.fire({
-                                    icon: "error",
-                                    title: 'Servicio de '+servicio.descripcion,
-                                    html: "Hubo un error al autorizar la cédula de evaluación. Contacte a su administrador del sistema.",
+                                    icon: "warning",
+                                    title: 'Servicio de ' + servicio.descripcion,
+                                    html: "Espere un momento, por favor.",
                                     confirmButtonText: 'Cerrar'
                                 });
+                                Swal.showLoading();
+                                window.location.reload();
                             });
                         }
                     });
@@ -3481,6 +3498,8 @@
                                 title: 'Servicio de '+servicio.descripcion,
                                 html: "Tramitando la cédula de evaluación, espere por favor."
                             });
+                            Swal.showLoading();
+                            window.location.reload();
                             axios.put('/fumigacion/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?handler=UpdateCedula', {
                                 Id: parseInt(cedula.id), EstatusId: $(this).data("estatusid"),
                                 EFacturaId: parseInt($(this).data('efacturaid')),

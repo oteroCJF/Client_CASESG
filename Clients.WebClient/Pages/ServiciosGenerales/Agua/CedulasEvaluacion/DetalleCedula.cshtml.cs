@@ -501,14 +501,14 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
 
             if (Incidencias.Count() > 0)
             {
-                document.Replace("|Declaraciones|", "Se hace constar que los bienes solicitados fueron recibidos por el Consejo de la Judicatura " +
-                    "Federal, presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
+                document.Replace("|Declaraciones|", "Se hace constar que los bienes solicitados fueron recibidos por el Órgano de Administración Judicial," +
+                    " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
                     "evaluación de servicios generales.", false, true);
             }
             else
             {
                 document.Replace("|Declaraciones|", "Se hace constar que los bienes solicitados fueron recibidos a entera satisfacción del " +
-                    "Consejo de la Judicatura Federal conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios " +
+                    "Órgano de Administración Judicial conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios " +
                     "generales.", false, true);
             }
 
