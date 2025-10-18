@@ -1043,7 +1043,7 @@
             </TablixRowHierarchy>
             <DataSetName>CedulaFumigacion</DataSetName>
             <Top>1.38081cm</Top>
-            <Left>1.80988cm</Left>
+            <Left>1.49238cm</Left>
             <Height>0.6cm</Height>
             <Width>17.30314cm</Width>
             <ZIndex>1</ZIndex>
@@ -1470,7 +1470,7 @@
             </TablixRowHierarchy>
             <DataSetName>CedulaFumigacion</DataSetName>
             <Top>2.0736cm</Top>
-            <Left>1.36135cm</Left>
+            <Left>1.04385cm</Left>
             <Height>1.8cm</Height>
             <Width>17.75167cm</Width>
             <ZIndex>2</ZIndex>
@@ -1500,7 +1500,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox36</rd:DefaultName>
             <Top>4.01016cm</Top>
-            <Left>6.51457cm</Left>
+            <Left>6.19707cm</Left>
             <Height>0.6cm</Height>
             <Width>6.38938cm</Width>
             <ZIndex>3</ZIndex>
@@ -1532,9 +1532,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>4.69405cm</Top>
-            <Left>1.53254cm</Left>
+            <Left>1.21504cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1564,9 +1564,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>5.97888cm</Top>
-            <Left>1.54539cm</Left>
+            <Left>1.22789cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1594,9 +1594,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox59</rd:DefaultName>
             <Top>6.6459cm</Top>
-            <Left>1.55286cm</Left>
+            <Left>1.23536cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -1626,9 +1626,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>8.57215cm</Top>
-            <Left>1.55286cm</Left>
+            <Left>1.23536cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.7814cm</Width>
+            <Width>17.44819cm</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -1656,9 +1656,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox59</rd:DefaultName>
             <Top>9.23565cm</Top>
-            <Left>1.55286cm</Left>
+            <Left>1.23536cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.78141cm</Width>
+            <Width>17.4482cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -1686,9 +1686,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox59</rd:DefaultName>
             <Top>11.83755cm</Top>
-            <Left>1.58461cm</Left>
+            <Left>1.26711cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>9</ZIndex>
             <Style>
               <Border>
@@ -1718,9 +1718,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>11.167cm</Top>
-            <Left>1.57714cm</Left>
+            <Left>1.25964cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -1750,9 +1750,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>13.75031cm</Top>
-            <Left>1.62694cm</Left>
+            <Left>1.30944cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <Border>
@@ -1779,10 +1779,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox59</rd:DefaultName>
-            <Top>22.3657cm</Top>
-            <Left>1.66207cm</Left>
+            <Top>26.1757cm</Top>
+            <Left>1.34457cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -1811,10 +1811,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
-            <Top>21.69514cm</Top>
-            <Left>1.63627cm</Left>
+            <Top>25.50514cm</Top>
+            <Left>1.31877cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
@@ -1830,16 +1830,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.46792cm</Width>
+                  <Width>3.88462cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.40623cm</Width>
+                  <Width>3.82293cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.62667cm</Width>
+                  <Width>4.04337cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.28059cm</Width>
+                  <Width>5.69729cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2161,9 +2161,9 @@
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP2</DataSetName>
             <Top>7.29176cm</Top>
-            <Left>1.55286cm</Left>
+            <Left>1.23536cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.78141cm</Width>
+            <Width>17.4482cm</Width>
             <ZIndex>14</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -2178,19 +2178,19 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.92671cm</Width>
+                  <Width>3.26007cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.83336cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.57715cm</Width>
+                  <Width>2.91051cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.36498cm</Width>
+                  <Width>3.69834cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.47909cm</Width>
+                  <Width>4.81245cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2594,9 +2594,9 @@
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP4</DataSetName>
             <Top>12.50445cm</Top>
-            <Left>1.5983cm</Left>
+            <Left>1.2808cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.84793cm</Width>
+            <Width>17.51472cm</Width>
             <ZIndex>15</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -2611,7 +2611,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>15.75713cm</Width>
+                  <Width>17.42392cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2679,9 +2679,9 @@
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP1</DataSetName>
             <Top>5.34371cm</Top>
-            <Left>1.55286cm</Left>
+            <Left>1.23536cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>16</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -2696,16 +2696,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.87349cm</Width>
+                  <Width>3.29019cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.53007cm</Width>
+                  <Width>3.94677cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.37094cm</Width>
+                  <Width>3.78764cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.98263cm</Width>
+                  <Width>6.39933cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3034,9 +3034,9 @@
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP3</DataSetName>
             <Top>9.90268cm</Top>
-            <Left>1.57714cm</Left>
+            <Left>1.25964cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>17</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -3062,10 +3062,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox59</rd:DefaultName>
-            <Top>24.90273cm</Top>
-            <Left>1.63627cm</Left>
+            <Top>28.71273cm</Top>
+            <Left>1.31877cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>18</ZIndex>
             <Style>
               <Border>
@@ -3094,10 +3094,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
-            <Top>24.27098cm</Top>
-            <Left>1.63627cm</Left>
+            <Top>28.08098cm</Top>
+            <Left>1.31877cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>19</ZIndex>
             <Style>
               <Border>
@@ -3556,8 +3556,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>27.86987cm</Top>
-            <Left>0.86898cm</Left>
+            <Top>31.36237cm</Top>
+            <Left>0.55148cm</Left>
             <Height>2.32549cm</Height>
             <Width>17.58793cm</Width>
             <ZIndex>20</ZIndex>
@@ -3859,8 +3859,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>30.23416cm</Top>
-            <Left>3.27491cm</Left>
+            <Top>33.72666cm</Top>
+            <Left>2.95741cm</Left>
             <Height>2.32549cm</Height>
             <Width>12.74476cm</Width>
             <ZIndex>21</ZIndex>
@@ -4062,8 +4062,8 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP10</DataSetName>
-            <Top>23.03273cm</Top>
-            <Left>1.63627cm</Left>
+            <Top>26.84273cm</Top>
+            <Left>1.31877cm</Left>
             <Height>1.2cm</Height>
             <Width>9.3713cm</Width>
             <ZIndex>22</ZIndex>
@@ -4080,19 +4080,19 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.63946cm</Width>
+                  <Width>2.97282cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.98083cm</Width>
+                  <Width>3.31419cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.5cm</Width>
+                  <Width>2.83336cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.50013cm</Width>
+                  <Width>3.83349cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.09847cm</Width>
+                  <Width>4.43183cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -4494,9 +4494,9 @@
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP5</DataSetName>
             <Top>15.0951cm</Top>
-            <Left>1.66207cm</Left>
+            <Left>1.34457cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.71889cm</Width>
+            <Width>17.38568cm</Width>
             <ZIndex>23</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -4525,9 +4525,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>16.37623cm</Top>
-            <Left>1.67977cm</Left>
+            <Left>1.36227cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>24</ZIndex>
             <Style>
               <Border>
@@ -4557,9 +4557,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
             <Top>17.72412cm</Top>
-            <Left>1.67639cm</Left>
+            <Left>1.35889cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>25</ZIndex>
             <Style>
               <Border>
@@ -4588,10 +4588,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
-            <Top>19.03673cm</Top>
-            <Left>1.68288cm</Left>
+            <Top>20.30673cm</Top>
+            <Left>1.36538cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>26</ZIndex>
             <Style>
               <Border>
@@ -4607,7 +4607,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>15.75713cm</Width>
+                  <Width>17.42392cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -4668,10 +4668,10 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP8</DataSetName>
-            <Top>19.71406cm</Top>
-            <Left>1.68599cm</Left>
+            <Top>20.98406cm</Top>
+            <Left>1.36849cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>27</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -4699,10 +4699,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox37</rd:DefaultName>
-            <Top>20.34934cm</Top>
-            <Left>1.68599cm</Left>
+            <Top>22.88934cm</Top>
+            <Left>1.36849cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>28</ZIndex>
             <Style>
               <Border>
@@ -4718,7 +4718,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>15.75713cm</Width>
+                  <Width>17.42392cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -4779,10 +4779,10 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP9</DataSetName>
-            <Top>21.02667cm</Top>
-            <Left>1.6891cm</Left>
+            <Top>23.56667cm</Top>
+            <Left>1.3716cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>29</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -4797,7 +4797,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>15.76984cm</Width>
+                  <Width>17.43663cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -4905,10 +4905,10 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <KeepTogether>true</KeepTogether>
             <DataSetName>IncidenciasP11</DataSetName>
-            <Top>25.64737cm</Top>
-            <Left>1.67639cm</Left>
+            <Top>29.45737cm</Top>
+            <Left>1.35889cm</Left>
             <Height>1.2cm</Height>
-            <Width>15.76984cm</Width>
+            <Width>17.43663cm</Width>
             <ZIndex>30</ZIndex>
             <Visibility>
               <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
@@ -4939,9 +4939,9 @@
             </Paragraphs>
             <rd:DefaultName>FechaIncidencia</rd:DefaultName>
             <Top>17.04679cm</Top>
-            <Left>1.66207cm</Left>
+            <Left>1.34457cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>31</ZIndex>
             <Style>
               <Border>
@@ -4974,9 +4974,9 @@
             </Paragraphs>
             <rd:DefaultName>FechaIncidencia</rd:DefaultName>
             <Top>18.3944cm</Top>
-            <Left>1.67795cm</Left>
+            <Left>1.36045cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>32</ZIndex>
             <Style>
               <Border>
@@ -5009,9 +5009,9 @@
             </Paragraphs>
             <rd:DefaultName>FechaIncidencia</rd:DefaultName>
             <Top>14.42454cm</Top>
-            <Left>1.66207cm</Left>
+            <Left>1.34457cm</Left>
             <Height>0.6cm</Height>
-            <Width>15.75713cm</Width>
+            <Width>17.42392cm</Width>
             <ZIndex>33</ZIndex>
             <Style>
               <Border>
@@ -5024,11 +5024,465 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Tablix Name="Tablix16">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>3.33168cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox74">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Fecha de entrega</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox44</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Indigo</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="FechaProgramada10">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!FechaProgramada.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>FechaProgramada</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Detalles13" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <RepeatColumnHeaders>true</RepeatColumnHeaders>
+            <RepeatRowHeaders>true</RepeatRowHeaders>
+            <KeepTogether>true</KeepTogether>
+            <DataSetName>IncidenciasP9</DataSetName>
+            <Top>24.16667cm</Top>
+            <Left>1.3716cm</Left>
+            <Height>1.2cm</Height>
+            <Width>3.33168cm</Width>
+            <ZIndex>34</ZIndex>
+            <Visibility>
+              <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Tablix Name="Tablix18">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>3.35871cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox75">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Fecha de entrega</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox44</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Indigo</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="FechaProgramada11">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!FechaProgramada.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>FechaProgramada</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Detalles15" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <RepeatColumnHeaders>true</RepeatColumnHeaders>
+            <RepeatRowHeaders>true</RepeatRowHeaders>
+            <KeepTogether>true</KeepTogether>
+            <DataSetName>IncidenciasP8</DataSetName>
+            <Top>21.61934cm</Top>
+            <Left>1.34457cm</Left>
+            <Height>1.2cm</Height>
+            <Width>3.35871cm</Width>
+            <ZIndex>35</ZIndex>
+            <Visibility>
+              <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Tablix Name="Tablix21">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>7.07095cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>10.38cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox76">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Fecha de la incidencia</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox44</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Indigo</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox31">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Observaciones</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox31</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>Indigo</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="FechaProgramada12">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!FechaProgramada.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>FechaProgramada</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Observaciones4">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Observaciones.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Observaciones4</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Detalles18" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <RepeatColumnHeaders>true</RepeatColumnHeaders>
+            <RepeatRowHeaders>true</RepeatRowHeaders>
+            <KeepTogether>true</KeepTogether>
+            <DataSetName>IncidenciasP7</DataSetName>
+            <Top>18.9944cm</Top>
+            <Left>1.34457cm</Left>
+            <Height>1.2cm</Height>
+            <Width>17.45095cm</Width>
+            <ZIndex>36</ZIndex>
+            <Visibility>
+              <Hidden>=IIF(CountRows()&gt;0,false,true)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
         </ReportItems>
-        <Height>13.02709in</Height>
+        <Height>14.31876in</Height>
         <Style />
       </Body>
-      <Width>7.52481in</Width>
+      <Width>7.86648in</Width>
       <Page>
         <PageHeader>
           <Height>2.39889cm</Height>
@@ -5060,7 +5514,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -5069,7 +5525,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -5078,14 +5536,15 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.67733cm</Top>
-              <Left>2.43134cm</Left>
               <Height>1.4672cm</Height>
-              <Width>12.9775cm</Width>
+              <Width>19.11302cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -5105,7 +5564,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>4.19462cm</Height>
+          <Height>1.235cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -5146,8 +5605,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>TotalPages</rd:DefaultName>
-              <Top>3.59462cm</Top>
-              <Left>13.80868cm</Left>
+              <Top>0.635cm</Top>
+              <Left>13.57934cm</Left>
               <Height>0.6cm</Height>
               <Width>5cm</Width>
               <Style>
@@ -5186,8 +5645,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
-              <Top>3.57819cm</Top>
-              <Left>0.635cm</Left>
+              <Top>0.635cm</Top>
+              <Left>0.40566cm</Left>
               <Height>0.6cm</Height>
               <Width>6.61935cm</Width>
               <ZIndex>1</ZIndex>

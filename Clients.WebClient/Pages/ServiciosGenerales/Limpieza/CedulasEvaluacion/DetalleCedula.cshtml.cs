@@ -465,16 +465,37 @@ namespace Clients.WebClient.Pages.Limpieza.CedulasEvaluacion
 
             foreach (var i in cedula.respuestas)
             {
-                if (i.iLimpieza.Count() > 0)
+                //CEDULAS DE SEPTIEMBRE 2025: ID 1233 hacia arriba
+                if (cedulaId >= 1233)
                 {
-                    document.Replace("|Declaraciones|", "\nSe hace constar que los servicios fueron recibidos por el Órgano de Administración Judicial," +
-                        " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
-                        "evaluación de servicios generales.", false, true);
-                    break;
+
+                    if (i.iLimpieza.Count() > 0)
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios fueron recibidos por el Órgano de Administración Judicial," +
+                            " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
+                            "evaluación de servicios generales.", false, true);
+                        break;
+                    }
+                    else
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del Órgano de Administración Judicial, conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
+                    }
                 }
+                //CEDULAS DE OCTUBRE 2025: ID 1232 hacia abajo
                 else
                 {
-                    document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del Órgano de Administración Judicial conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
+
+                    if (i.iLimpieza.Count() > 0)
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios fueron recibidos por el entonces Consejo de la Judicatura Federal," +
+                            " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
+                            "evaluación de servicios generales.", false, true);
+                        break;
+                    }
+                    else
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del entonces Consejo de la Judicatura Federal, conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
+                    }
                 }
             }
 
