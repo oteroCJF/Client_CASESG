@@ -399,7 +399,8 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Cédula Automatizada para la Supervisión y Evaluación del Servicio de Limpieza en Áreas Comunes y Oficinas</Value>
+                    <Value>Cédula Automatizada para la Supervisión y Evaluación del
+ Servicio de Limpieza en Áreas Comunes y Oficinas</Value>
                     <Style>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -2493,13 +2494,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>5.48761cm</Width>
+                  <Width>5.76405cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.02642cm</Width>
+                  <Width>5.30286cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.00107cm</Width>
+                  <Width>6.27751cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -2936,10 +2937,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>21.55162cm</Top>
-            <Left>0.86898cm</Left>
+            <Top>23.13912cm</Top>
+            <Left>0.40217cm</Left>
             <Height>2.32549cm</Height>
-            <Width>16.5151cm</Width>
+            <Width>17.34441cm</Width>
             <ZIndex>20</ZIndex>
             <Visibility>
               <Hidden>=IIF(Fields!Reviso.Value.Equals(Fields!Superviso.Value), True, False)</Hidden>
@@ -3239,7 +3240,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>Firmantes</DataSetName>
-            <Top>23.91591cm</Top>
+            <Top>25.50341cm</Top>
             <Left>4.54491cm</Left>
             <Height>2.32549cm</Height>
             <Width>12.74476cm</Width>
@@ -3745,7 +3746,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>10.33126in</Height>
+        <Height>10.95626in</Height>
         <Style />
       </Body>
       <Width>7.52481in</Width>
@@ -3780,7 +3781,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -3789,7 +3792,9 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
@@ -3798,14 +3803,15 @@
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.67733cm</Top>
-              <Left>2.43134cm</Left>
               <Height>1.4672cm</Height>
-              <Width>12.9775cm</Width>
+              <Width>19.11302cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -3906,10 +3912,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox34</rd:DefaultName>
-              <Top>0.40319cm</Top>
+              <Top>0.41962cm</Top>
               <Left>1.36135cm</Left>
               <Height>0.6cm</Height>
-              <Width>6.61935cm</Width>
+              <Width>10.02166cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>

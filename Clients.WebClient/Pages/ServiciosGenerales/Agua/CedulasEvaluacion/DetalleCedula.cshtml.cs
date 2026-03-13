@@ -498,6 +498,43 @@ namespace Clients.WebClient.Pages.Agua.CedulasEvaluacion
             document.Replace("|PeriodoFinal|", Repositorio.Contrato.FinVigencia.Day + " de " + Repositorio.Contrato.FinVigencia.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")) + " de " + Repositorio.Contrato.FinVigencia.Year, false, true);
             document.Replace("|Coordinacion|", (supervision.Equals("CAE") ? "COORDINACIÓN DE ADMINISTRACIÓN DE EDIFICIOS" : "COORDINACIÓN DE ADMINISTRACIÓN REGIONAL"), false, true);
 
+            foreach (var i in cedula.respuestas)
+            {
+                //CEDULAS DE AGOSTO 2025: ID 776 hacia abajo
+
+                if (cedulaId <= 776)
+                {
+                    if (i.iAgua.Count() > 0)
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios fueron recibidos por el entonces Consejo de la Judicatura Federal," +
+                            " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
+                            "evaluación de servicios generales.", false, true);
+                        break;
+
+                        
+                    }
+                    else
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del entonces Consejo de la Judicatura Federal, conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
+                    }
+                }
+                //CEDULAS DE SEPTIEMBRE 2025: ID 776 hacia arriba
+                else
+                {
+
+                    if (i.iAgua.Count() > 0)
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios fueron recibidos por el Órgano de Administración Judicial," +
+                             " presentando incidencias, mismas que se vierten en la cédula automatizada para la supervisión y " +
+                             "evaluación de servicios generales.", false, true);
+                        break;
+                    }
+                    else
+                    {
+                        document.Replace("|Declaraciones|", "Se hace constar que los servicios solicitados fueron atendidos a entera satisfacción del Órgano de Administración Judicial, conforme se visualiza en la cédula automatizada para la supervisión y evaluación de servicios generales.", false, true);
+                    }
+                }
+            }
 
             if (Incidencias.Count() > 0)
             {

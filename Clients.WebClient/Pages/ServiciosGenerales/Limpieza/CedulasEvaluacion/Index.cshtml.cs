@@ -1,5 +1,8 @@
+using Api.Gateway.Models;
 using Api.Gateway.Models.Catalogos.DTOs.Servicios;
+using Api.Gateway.Models.CedulasEvaluacion.ServiciosGenerales.DTOs;
 using Api.Gateway.Models.CedulasEvaluacion.ServiciosGenerales.DTOs.Limpieza;
+using Api.Gateway.Models.Estatus.DTOs;
 using Api.Gateway.Models.Inmuebles.DTOs.Inmuebles;
 using Api.Gateway.Models.Modulos.DTOs;
 using Api.Gateway.Models.Permisos.DTOs;
@@ -7,6 +10,8 @@ using Api.Gateway.WebClient.Proxy.Catalogos.CTServicios;
 using Api.Gateway.WebClient.Proxy.Inmuebles;
 using Api.Gateway.WebClient.Proxy.Limpieza.CedulaEvaluacion;
 using Api.Gateway.WebClient.Proxy.Modulos;
+using Api.Gateway.WebClient.Proxy.Meses;
+using Api.Gateway.WebClient.Proxy.Estatus;
 using Api.Gateway.WebClient.Proxy.Permisos;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -16,17 +21,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Api.Gateway.Models.Meses.DTOs;
 
 namespace Clients.WebClient.Pages.Limpieza.CedulasEvaluacion
 {
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class IndexModel : PageModel
     {
+        private readonly IMesProxy _mes;
         private readonly IModuloProxy _modulo;
         private readonly ICTServicioProxy _servicios;
         private readonly IInmuebleProxy _inmuebles;
         private readonly ILCedulaProxy _cedula;
+        private readonly IEstatusCedulaProxy _estatusc;
         private readonly IPermisoProxy _permisos;
+
 
         [BindProperty(SupportsGet = true)]
         public int Anio { get; set; }
@@ -37,11 +46,15 @@ namespace Clients.WebClient.Pages.Limpieza.CedulasEvaluacion
         public CTServicioDto Servicio { get; set; }
         public List<PermisoUsuarioDto> Permisos { get; set; }
         public List<CedulaLimpiezaDto> Cedulas { get; set; }
+        public List<MesDto> FiltrosMes { get; set; } = new List<MesDto>();
+        public List<EstatusDto> FiltrosEstatus { get; set; } = new List<EstatusDto>();
+        public List<InmuebleDto> FiltrosInmueble { get; set; } = new List<InmuebleDto>();
 
 
-        public IndexModel(IModuloProxy modulo, IInmuebleProxy inmuebles, ICTServicioProxy servicios,
+        public IndexModel(IMesProxy mes, IModuloProxy modulo, IInmuebleProxy inmuebles, ICTServicioProxy servicios,
                           IPermisoProxy permisos, ILCedulaProxy cedula)
         {
+            _mes = mes;
             _modulo = modulo;
             _inmuebles = inmuebles;
             _servicios = servicios;
@@ -67,6 +80,42 @@ namespace Clients.WebClient.Pages.Limpieza.CedulasEvaluacion
             {
                 Response.Redirect("/error/denegado");
             }
+        }
+
+        private async Task<List<EstatusDto>> GetFiltrosEstatus(DataCollection<CedulaEvaluacionDto> cedulas)
+        {
+            List<EstatusDto> estatus = new List<EstatusDto>();
+            if (cedulas.Items != null)
+            {
+                var estatusId = cedulas.Items.Select(c => c.EstatusId).Distinct().ToList();
+                estatus = (await _estatusc.GetAllEstatusCedulaAsync()).Where(e => estatusId.Contains(e.Id)).ToList();
+            }
+
+            return estatus;
+        }
+
+        private async Task<List<InmuebleDto>> GetFiltrosInmueble(DataCollection<CedulaEvaluacionDto> cedulas)
+        {
+            List<InmuebleDto> inmuebles = new List<InmuebleDto>();
+            if (cedulas.Items != null)
+            {
+                var inmueblesId = cedulas.Items.Select(c => c.InmuebleId).Distinct().ToList();
+                inmuebles = (await _inmuebles.GetAllInmueblesAsync()).Where(e => inmueblesId.Contains(e.Id)).ToList();
+            }
+
+            return inmuebles;
+        }
+
+        private async Task<List<MesDto>> GetFiltrosMes(DataCollection<CedulaEvaluacionDto> cedulas)
+        {
+            List<MesDto> meses = new List<MesDto>();
+            if (cedulas.Items != null)
+            {
+                var mesesId = cedulas.Items.Select(c => c.MesId).Distinct().ToList();
+                meses = (await _mes.GetAllAsync()).Where(m => mesesId.Contains(m.Id)).ToList();
+            }
+
+            return meses;
         }
     }
 }
