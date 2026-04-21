@@ -186,14 +186,14 @@
                         <table class="table cedulasEvaluacion table-hover table-striped table-bordered table-sm" width="100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Año</th>
-                                    <th>Mes</th>
-                                    <th>Inmueble</th>
-                                    <th>Folio</th>
-                                    <th>Contrato</th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Año</th>
+                                    <th class="text-center">Mes</th>
+                                    <th class="text-center">Inmueble</th>
+                                    <th class="text-center">Folio</th>
+                                    <th class="text-center">Contrato</th>
                                     @*<th>Tipo de Servicio</th>*@
-                                    <th>Estatus</th>
+                                    <th class="text-center">Estatus</th>
                                     @*<th style="color: #24135f; font-weight: bold; font-size: 1.2em; text-align: center;">Contrato</th>*@
                                     <th class="text-center">Calificación</th>
                                         @if (Model.Anio > 2023)
@@ -203,9 +203,9 @@
                                             <th>Total Deductivas sin IVA</th>
                                         }
                                     <th class="text-center">Requiere NC</th>
-                                    <th>Validación</th>
-                                    <th>Última actualización</th>
-                                    <th>Acciones</th>
+                                    <th class="text-center">Validación</th>
+                                    <th class="text-center">Última actualización</th>
+                                    <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -213,12 +213,12 @@
                                 {
                                     c++;
                                     <tr>
-                                        <td>@c</td>
-                                        <td>@cedula.Anio</td>
-                                        <td>@cedula.Mes</td>
-                                        <td><strong>@cedula.Inmueble</strong></td>
-                                        <td>@cedula.Folio</td>
-                                        <td>
+                                        <td class="text-center">@c</td>
+                                        <td class="text-center">@cedula.Anio</td>
+                                        <td class="text-center">@cedula.Mes</td>
+                                        <td class="text-center"><strong>@cedula.Inmueble</strong></td>
+                                        <td class="text-center">@cedula.Folio</td>
+                                        <td class="text-center">
                                             @if (cedula.ContratoId == 2)
                                             {
                                                 <p>CON/DGRM/DCS/036/2024</p>
@@ -233,19 +233,19 @@
                                             }
                                         </td>
                                         @*<td>@cedula.Servicio</td>*@
-                                        <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold">@cedula.Estatus</td>
+                                        <td class="@(cedula.Fondo.Replace("bg","text")) font-weight-bold text-center">@cedula.Estatus</td>
                                       
                                         <td class="text-center @(cedula.Calificacion < 8 ? "text-danger font-weight-bold" : "")">
                                             @(cedula.Calificacion != 0 ? cedula.Calificacion.ToString() : "-")
                                         </td>
                                         @if (cedula.Anio > 2023)
                                         {
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
-                                            <td class="text-right">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
+                                            <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.Factura)</td>
+                                            <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.NC)</td>
+                                            <td class="text-center">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @cedula.TotalDeductivas)</td>
                                         }
                                         <td class="text-center">@Html.Raw(cedula.TotalDeductivas != 0 ? "<b class='text-danger'>Si</b>" : "<b class='text-success'>No</b>")</td>
-                                        <td>
+                                        <td class="text-center">
                                             @if (cedula.Cedula)
                                             {
                                                 <i class="fa-regular fa-check text-success mr-2" data-toggle="tooltip" title="Cédula validada" data-placement="top"></i>
@@ -274,7 +274,7 @@
                                             }
                                         </td>
 
-                                        <td>
+                                        <td class="text-center">
                                             @(
                                             Convert.ToDateTime(cedula.FechaActualizacion).ToString("dd/MM/yyyy").Equals("01/01/0001") ?
                                             Convert.ToDateTime(cedula.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt") :

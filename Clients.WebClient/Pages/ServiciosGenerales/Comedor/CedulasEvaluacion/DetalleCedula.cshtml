@@ -133,7 +133,7 @@
                 <div class="row col-lg-12 mt-3">
                     <h5> Factura(s) y/o Nota(s) de Crédito</h5>
                     <div class="col-lg-12 mt-3 ml-2">
-                        <table class="table tblIncidencias tablaFacturas" width="100%">
+                        <table class="table tblIncidencias tablaFacturas table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -191,7 +191,7 @@
                                 <div class="col-lg-12">
                                     <div class="conceptosFactura" id="conceptoFactura_@fac.Id">
                                         <h3>Conceptos de la @(fac.Tipo.Equals("Factura") ? "Factura" : "Nota de Crédito") con Folio: @fac.Folio</h3>
-                                        <table id="@fac.Folio" style="width: 90%" class="table tableConceptos mt-3 float-right">
+                                        <table id="@fac.Folio" style="width: 90%" class="table tableConceptos table-bordered mt-3 float-right">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -251,21 +251,10 @@
                             <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
                             <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
                             @*<td data-toggle="tooltip" title="Contrato Actual" data-placement="top"><strong>Contrato: </strong>@Model.Cedula.Contrato.NoContrato</td>*@
-                            <td data-toggle="tooltip" title="Contrato Actual" data-placement="top">
-                                <strong>Contrato: </strong>
-                                @if (@Model.Cedula.ContratoId <= 2)
-                                {
-                                    <span>CON/DGRM/DCS/036/2024</span>
-                                }
-                                else if (@Model.Cedula.ContratoId == 3)
-                                {
-                                    <span>CON/DGRM/DCS/023/2025</span>
-                                }
-                                else if (Model.Cedula.ContratoId == 4)
-                                {
-                                    <span>CON/OAJ/DGRM/DCS/019/2026</span>
-                                }
-                            </td>
+                        <td data-toggle="tooltip" title="Contrato Actual" data-placement="top">
+                            <strong>Contrato: </strong>
+                            @Model.Repositorio.Contrato.NoContrato
+                        </td>
                             <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
 
 
@@ -289,7 +278,7 @@
                                     <div class="card-body">
                                         <div class="row col-lg-12 mt-3">
                                             <div class="col-md-12">
-                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <ul class="nav nav-evaluacion-separada" id="myTab" role="tablist">
                                                     @foreach (var rs in ct.Respuestas)
                                                     {
                                                         <li class="nav-item" role="presentation">
@@ -312,7 +301,7 @@
                                                         <div class="tab-pane fade mt-2 ml-3 " id="@rs.cuestionario.Abreviacion" role="tabpanel" aria-labelledby="pregunta-tab">
                                                             <div class="row col-lg-12 h5 mt-3">
                                                                 <div class="col-lg-10">
-                                                                    @rs.Pregunta.- @rs.cuestionario.Pregunta
+                                                                    <b> @rs.Pregunta.- @rs.cuestionario.Pregunta </b>
                                                                     <a href="javascript:" class="text-primary ml-2 btnAyuda" data-toggle="tooltip" title="Ayuda" data-placement="top" data-ayuda="@rs.cuestionario.Ayuda">
                                                                         <i class="fa-solid fa-circle-question"></i>
                                                                     </a>
@@ -438,7 +427,7 @@
                                                                 ci = 0;
                                                                 <div class="row mt-3">
                                                                     <div class="col-lg-12">
-                                                                        <table class="table tblIncidencias" width="100%">
+                                                                        <table class="table tblIncidencias table-bordered" width="100%">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>#</th>
@@ -632,7 +621,7 @@
                                                                                             {
                                                                                                 <td>
                                                                                                     <b>Observaciones: </b>@inc.Observaciones
-                                                                                                    <table class="table dtlIncidencias" width="100%">
+                                                                                                    <table class="table dtlIncidencias table-bordered" width="100%">
                                                                                                         <thead>
                                                                                                             <tr>
                                                                                                                 <th>#</th>
@@ -781,7 +770,7 @@
                                                             {
                                                                 ci = 0;
                                                                 <div class="row col-lg-12 mt-3">
-                                                                    <table class="table">
+                                                                    <table class="table table-bordered">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>#</th>
@@ -819,7 +808,7 @@
                     <i class="fa-sharp fa-light fa-paperclip mr-2"></i> Entregables
                 </div>
                 <div class="card-body cuerpoEntregables" style="display: none">
-                    <table class="table row-border dataTable" width="100%">
+                    <table class="table table-bordered dataTable" width="100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -981,7 +970,7 @@
                         </ul>
                         <p></p>
                         <strong style="font-size: 22px; color:dodgerblue">Deductivas</strong>
-                        <table class="table row-border dataTable" width="100%">
+                        <table class="table row-border dataTable table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -1037,7 +1026,7 @@
                         </table>
                         <p></p>
                         <strong style="font-size: 19px; color:red">Penalizaciones</strong>
-                        <table class="table row-border dataTable" width="100%">
+                        <table class="table row-border dataTable table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -1093,7 +1082,7 @@
                     <i class="fal fa-timeline-arrow mr-2"></i> Seguimiento a la cédula
                 </div>
                 <div class="card-body cuerpoSegCedula" style="display: none">
-                    <table class="table dataTable tblLogCedula" width="100%">
+                    <table class="table dataTable tblLogCedula table-bordered " width="100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -1129,7 +1118,7 @@
                     <i class="fa-light fa-timeline mr-2"></i> Seguimiento a entregables
                 </div>
                 <div class="card-body cuerpoSegEntregables" style="display: none">
-                    <table class="table dataTable tblLogEntregables" width="100%">
+                    <table class="table dataTable tblLogEntregables table-bordered" width="100%">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -1487,6 +1476,48 @@
 @* Modal para la captura de Incidencias *@
 
 <style>
+    .nav-evaluacion-separada {
+        border: none !important;
+        gap: 15px; /* Espacio real entre cada pestaña */
+        padding: 10px 5px;
+    }
+
+        /* Estilo base de cada pestaña (Pregunta) */
+        .nav-evaluacion-separada .nav-item .nav-link {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important; /* Borde gris suave */
+            border-radius: 12px !important; /* Bordes muy redondeados */
+            color: #475569 !important;
+            padding: 12px 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+            display: flex;
+            align-items: center;
+            min-width: 160px; /* Asegura que no se vean apretadas */
+            justify-content: center;
+        }
+
+            /* Efecto al pasar el mouse */
+            .nav-evaluacion-separada .nav-item .nav-link:hover {
+                transform: translateY(-3px); /* Brinca un poco */
+                border-color: #cbd5e1 !important;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            /* ESTADO SELECCIONADO (La pregunta activa) */
+            .nav-evaluacion-separada .nav-item .nav-link.active {
+                border: 2px solid #24135f !important; /* Borde azul más grueso */
+                color: #24135f !important;
+                transform: translateY(-5px); /* Se eleva más que las otras */
+                box-shadow: 0 10px 20px rgb(103 0 252 / 0.20);
+                z-index: 10;
+            }
+
+        /* Ajuste del icono dentro de la pestaña separada */
+        .nav-evaluacion-separada .nav-link i {
+            font-size: 1.1rem;
+            margin-right: 10px;
+        }
     .text-right-lg {
         text-align: right;
         font-size: 1.3em;

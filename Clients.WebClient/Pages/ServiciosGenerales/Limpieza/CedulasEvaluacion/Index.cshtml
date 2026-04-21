@@ -1,10 +1,10 @@
 ﻿@page "/limpieza/cedulasEvaluacion/{moduloId}/{submoduloId}/index"
 @model Clients.WebClient.Pages.Limpieza.CedulasEvaluacion.IndexModel
 @{
-    ViewData["Title"] = "Servicio de Limpieza en Áreas Comunes y Oficinas";
+    ViewData["Title"] = "Servicio de Limpieza de Muebles e Inmuebles del Poder Judicial de la Federación";
 
     <div class="titulo-principal">
-        <b>Servicio de @Model.Servicio.Descripcion</b> <i class="fad fa-soap mr-2"></i>
+        <b>Servicio de Limpieza de Muebles e Inmuebles</b> <i class="fad fa-soap mr-2"></i>
     </div>
 
     ViewData["Action"] = "Inicio";
@@ -12,22 +12,143 @@
 
 <div class="container-fluid">
     <form method="get" id="getAnio" asp-page-handler="GetAnio">
-        <div class="row col-3">
-            <label class="label">Consultar información del año: </label>
-            <div class="input-group mb-3">
-                <select class="form-control" id="anioActual" asp-for="Anio">
-                    <option value="">Seleccione el Año</option>
-                    @for (var i = 2022; i <= DateTime.Now.Year; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-                <div class="row">
-                    <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar</button>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="label">Consultar información del año: </label>
+                <div class="input-group mb-3">
+                    <select class="form-control" id="anioActual" asp-for="Anio">
+                        <option value="">Seleccione el Año</option>
+                        @for (var i = 2022; i <= DateTime.Now.Year; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                    <div class="row">
+                        <button class="btn btn-primary ml-3" id="consultarFacturas" type="submit">Consultar</button>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-md-9 d-flex">
+
+                <div class="col-md-6 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <div class="row no-gutters">
+                            <div class="col-md-2 text-center mt-4">
+                                <img src="~/img/servicios/@String.Concat(@Model.Servicio.Id, ".png")" alt="" class="img-fluid" width="90" height="100">
+                            </div>
+                            <div class="col-9">
+                                <div style="
+                                            background-color: #ffffff;
+                                            border-radius: 12px;
+                                            padding: 20px;
+                                            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                                            max-width: 400px;
+                                            font-family: sans-serif;">
+
+                                    <div style="margin-bottom: 15px;">
+                                        <span style="
+                                                    color: #666;
+                                                    font-size: 0.75rem;
+                                                    text-transform: uppercase;
+                                                    font-weight: bold;
+                                                    letter-spacing: 0.5px;">
+                                            Convenio Anterior
+                                        </span>
+                                        <div style="
+                                                    color: #d32f2f;
+                                                    font-size: 1.1rem;
+                                                    font-weight: 900;
+                                                    margin-top: 4px;">
+                                            CONV/DGRM/DCS/017/2025
+                                        </div>
+                                    </div>
+
+                                    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 10px; font-size: 1.2rem;">📅</div>
+                                        <div>
+                                            <span style="
+                                                        color: #000000;
+                                                        font-weight: bold;
+                                                        font-size: 0.85rem;
+                                                        display: block; ">
+                                                Vigencia del Servicio
+                                            </span>
+                                            <span style="
+                                                    color: #555;
+                                                    font-size: 0.9rem;">
+                                                 1 de septiembre al 31 de diciembre 2025
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch">
+                    <div class="card w-100" style="background-color: #20A440;">
+                        <div class="row no-gutters">
+                            <div class="col-md-2 text-center mt-4">
+                                <img src="~/img/servicios/@String.Concat(@Model.Servicio.Id, ".png")" alt="" class="img-fluid" width="90" height="100">
+                            </div>
+                            <div class="col-md-9">
+                                <div style="
+                                            border-radius: 12px;
+                                            padding: 20px;
+                                             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                                            max-width: 400px;
+                                            font-family: sans-serif;">
+
+                                    <div style="margin-bottom: 15px;">
+                                        <span style="
+                                                    color: #000000;
+                                                    font-size: 0.75rem;
+                                                    text-transform: uppercase;
+                                                    font-weight: bold;
+                                                    letter-spacing: 0.5px; ">
+                                            Nuevo Contrato
+                                        </span>
+                                        <div style=" color: #000000; font-size: 1.1rem; font-weight: 900; margin-top: 4px;">
+                                            CON/OAJ/DGRM/DCS/008/2026
+                                        </div>
+                                    </div>
+
+                                    <hr style="border: 0; border-top: 1px solid #000000; margin: 15px 0; opacity: 0.5;">
+
+                                    <div style="display: flex; align-items: flex-start;">
+                                        <div style="margin-right: 10px; font-size: 1.2rem;">📅</div>
+                                        <div>
+                                            <span style="
+                                                        color: #000000;
+                                                        font-weight: bold;
+                                                        font-size: 0.85rem;
+                                                        display: block; ">
+                                                Vigencia del Servicio
+                                            </span>
+                                            <span style=" color: #000000; font-size: 0.9rem;">
+                                               1 de enero al 31 de diciembre 2026
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </form>
+
+
+
+
+
+
+
     @if (Model.Cedulas != null && Model.Cedulas.Count() > 0)
     {
         <div class="row col-lg-12">
@@ -81,6 +202,50 @@
             opacity: 1;
         }
     }
+
+
+    .example-1 {
+        position: relative;
+        overflow-y: scroll;
+        height: 300px;
+        display: none;
+    }
+
+    #recargarPagina {
+        cursor: pointer;
+        font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+        padding: 3px 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom-primary {
+        background-color: #24135f !important;
+        border-color: #24135f !important;
+    }
+
+    .scrollbar-deep-purple::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-deep-purple::-webkit-scrollbar {
+        width: 8px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-deep-purple::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+        background-color: #512da8;
+    }
+
+    .scrollbar-deep-purple {
+        scrollbar-color: #512da8 #F5F5F5;
+    }
+
+
+
 </style>
 @section Scripts{
     <script>

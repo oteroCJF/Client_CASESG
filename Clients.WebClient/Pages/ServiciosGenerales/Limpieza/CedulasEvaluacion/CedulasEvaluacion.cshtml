@@ -5,7 +5,7 @@
     ViewData["Title"] = "Servicio de " + Model.Servicio.Descripcion;
 
     <div class="titulo-principal">
-        <b>Servicio de @Model.Servicio.Descripcion</b> <i class="fad fa-soap mr-2"></i>
+        <b>Servicio de Limpieza de Muebles e Inmuebles</b> <i class="fad fa-soap mr-2"></i>
         <a href="/limpieza/cedulasEvaluacion/@Model.Modulo.Id/@Model.Submodulo/index?Anio=@Model.Repositorio.Anio" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar botonregreso col-1" data-toggle="tooltip" title="Regresar a los meses" data-placement="top">
             <i class="fal fa-arrow-left"></i>
         </a>
@@ -16,6 +16,66 @@
     var FEAplicados = HttpContext.Request.Query["Estatus"].ToString()?.Split(",").ToList();
     var FIAplicados = HttpContext.Request.Query["Inmueble"].ToString().Split(",").ToList();
 }
+<br />
+<div class="col-md-9 d-flex">
+    <div class="col-md-4 d-flex align-items-stretch mr-2">
+        <div class="card w-100 shadow-sm">
+            <div class="row no-gutters align-items-center">
+                <div class="col-3 text-center">
+                    <img src="~/img/servicios/@String.Concat(@Model.Servicio.Id, ".png")" alt="" class="img-fluid" style="max-height: 60px; width: auto;">
+                </div>
+                <div class="col-9">
+                    <div style="background-color: #ffffff; border-radius: 8px; padding: 10px; font-family: sans-serif;">
+                        <div>
+                            <span style="color: #666; font-size: 0.65rem; text-transform: uppercase; font-weight: bold;">
+                                Convenio Anterior
+                            </span>
+                            <div style="color: #d32f2f; font-size: 0.9rem; font-weight: 900; line-height: 1.1;">
+                                CONV/DGRM/DCS/017/2025
+                            </div>
+                        </div>
+                        <hr style="margin: 8px 0; border-top: 1px solid #eee;">
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 5px; font-size: 0.9rem;">📅</span>
+                            <span style="color: #555; font-size: 0.75rem; line-height: 1.1;">
+                                1 de sep al 31 de dic 2025
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5 d-flex align-items-stretch">
+        <div class="card w-100 shadow-sm" style="background-color: #20A440;">
+            <div class="row no-gutters align-items-center">
+                <div class="col-3 text-center">
+                    <img src="~/img/servicios/@String.Concat(@Model.Servicio.Id, ".png")" alt="" class="img-fluid" style="max-height: 60px; width: auto;">
+                </div>
+                <div class="col-9">
+                    <div style="border-radius: 8px; padding: 10px; font-family: sans-serif;">
+                        <div>
+                            <span style="color: #000; font-size: 0.65rem; text-transform: uppercase; font-weight: bold;">
+                                Nuevo Contrato
+                            </span>
+                            <div style="color: #000; font-size: 0.9rem; font-weight: 900; line-height: 1.1;">
+                                CON/OAJ/DGRM/DCS/008/2026
+                            </div>
+                        </div>
+                        <hr style="margin: 8px 0; border-top: 1px solid #000; opacity: 0.3;">
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 5px; font-size: 0.9rem;">📅</span>
+                            <span style="color: #000; font-size: 0.75rem; line-height: 1.1;">
+                                1 de ene al 31 de dic 2026
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="row col-lg-12">
@@ -199,25 +259,25 @@
 
 @*************MODAL DE AVISO CIERRE*****@
 @*<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content" style="background-color: #ffffff;">
-            <div class="modal-header" style="background-color: #24135f; color: white;">
-                <h5 class="modal-title" id="miModalLabel">¡IMPORTANTE!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color: white;">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="color: #333;">
-                <div style="text-align: center;">
-                    <img src="~/img/MensajeFechasNuevoAGOSTOfin.png" class="img-fluid" alt="Aviso Cierre CASES">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: #ffffff;">
+                <div class="modal-header" style="background-color: #24135f; color: white;">
+                    <h5 class="modal-title" id="miModalLabel">¡IMPORTANTE!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color: white;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="color: #333;">
+                    <div style="text-align: center;">
+                        <img src="~/img/MensajeFechasNuevoAGOSTOfin.png" class="img-fluid" alt="Aviso Cierre CASES">
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: #e0d4ff;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #24135f; border-color: #5e35b1; ">Entendido</button>
                 </div>
             </div>
-            <div class="modal-footer" style="background-color: #e0d4ff;">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #24135f; border-color: #5e35b1; ">Entendido</button>
-            </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 <style>
 

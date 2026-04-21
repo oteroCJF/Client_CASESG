@@ -2,7 +2,7 @@
 @model Clients.WebClient.Pages.Limpieza.CedulasEvaluacion.DetalleModel;
 @{
     <div class="titulo-principal">
-        <b> @Model.Servicio.Descripcion</b><i class="fad fa-soap mr-2"></i>
+        <b>Servicio de Limpieza de Muebles e Inmuebles </b><i class="fad fa-soap mr-2"></i>
         <a href="/limpieza/@Model.Modulo.Id/@Model.Submodulo.Id/facturacion/@Model.Repositorio.Anio/@Model.Repositorio.MesId/@Model.Cedula.ContratoId@Request.QueryString.Value" type='button' class="btn btn-sm btn-warning float-right ml-2 btnRegresar botonregreso col-1" data-toggle="tooltip" title="Regresar" data-placement="top">
             <i class="fal fa-arrow-left"></i>
         </a>
@@ -26,6 +26,7 @@
         var ce = 0;
         var lc = 0;
         var sp = 0;
+        int InasistenciasP10 = 0;
         decimal tdeductivas = Model.Cedula.Penalizacion;
         decimal tpenalizacion = 0;
         var pDeductivas = Model.Cedula.respuestas.Where(r => r.cuestionario.Tipo.Equals("Deductiva")).Select(c => c.cuestionario.Consecutivo);
@@ -130,7 +131,7 @@
                         <div class="row col-lg-12 mt-3">
                             <h5> Factura(s) y/o Nota(s) de Crédito</h5>
                             <div class="col-lg-12 mt-3 ml-2">
-                                <table class="table tblIncidencias tablaFacturas" width="100%">
+                                <table class="table tblIncidencias tablaFacturas table-bordered" width="100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -236,7 +237,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header cabeceraCedula">
-                            <i class="fas fa-list-check mr-2"></i> Cédula de Evaluación
+                            <i class="fas fa-list-check mr-2"></i> Cédula de Evaluación | <b>@Model.Cedula.Folio</b>
                         </div>
                         <div class="card-body cuerpoCedula">
                             <table class="table table-borderless">
@@ -244,6 +245,11 @@
                                     <td data-toggle="tooltip" title="Folio de evaluación asignado por el sistema" data-placement="top" style="font-family: Tahoma; font-size: 13.5px; letter-spacing: 0.8px;"><strong>Folio: </strong> @Model.Cedula.Folio</td>
                                     <td data-toggle="tooltip" title="Año de evaluación del servicio" data-placement="top"><strong>Año: </strong>@Model.Cedula.Anio</td>
                                     <td data-toggle="tooltip" title="Mes evaluado" data-placement="top"><strong>Mes: </strong>@Model.Cedula.Mes.Nombre</td>
+                                    <td data-toggle="tooltip" title="Contrato Actual" data-placement="top">
+                                        <strong>Contrato: </strong>
+                                        @Model.Repositorio.Contrato.NoContrato
+
+                                    </td>
                                     <td data-toggle="tooltip" title="Administración/Inmueble evaluado" data-placement="top"><strong>Inmueble: </strong>@Model.Cedula.Inmueble.Nombre</td>
                                     <td data-toggle="tooltip" title="Estatus de la cédula" data-placement="top">
                                         <strong style="color: @(Model.Cedula.Estatus.FondoHexadecimal)"><b class="mr-1">Estatus:</b> @Html.Raw(Model.Cedula.Estatus.Icono) @Model.Cedula.Estatus.Nombre</strong>
@@ -252,7 +258,7 @@
                             </table>
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-md-12">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <ul class="nav nav-evaluacion-separada" id="myTab" role="tablist">
                                         @foreach (var rs in Model.Cedula.respuestas)
                                         {
                                             <li class="nav-item" role="presentation">
@@ -340,7 +346,7 @@
                                                                            data-incidenciaid="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Id"
                                                                            data-toggle="tooltip" title="Agregar nueva incidencia" data-placement="top">
                                                                             <i class="fas fa-plus mr-1"></i> @(rs.cuestionario.Abreviacion.Contains("FechaCierre") ? "Registrar Fecha de Cierre":
-                                                                                                       rs.cuestionario.Abreviacion.Contains("SUA") ? "Registrar SUA" : "Registrar Inasistencia(s)")
+                                                                                                       rs.cuestionario.Abreviacion.Contains("SUA") ? "(Si) Registrar Entrega SUA / (No) Registrar Incidencia" : "Registrar Inasistencia(s) (Solo si aplica)")
                                                                         </a>
                                                                     }
                                                                 }
@@ -368,7 +374,7 @@
                                                     ci = 0;
                                                     <div class="row mt-3">
                                                         <div class="col-lg-12">
-                                                            <table class="table tblIncidencias" width="100%">
+                                                            <table class="table tblIncidencias  table-bordered" width="100%">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>#</th>
@@ -427,6 +433,8 @@
 
                                                                             @if (@rs.ciLimpieza.Inasistencias)
                                                                             {
+                                                                                InasistenciasP10 = Convert.ToInt32(inc.Inasistencias);
+
                                                                                 <td>@inc.Inasistencias</td>
                                                                             }
 
@@ -450,14 +458,14 @@
                                                                                 Model.Cedula.Estatus.Nombre.Equals("Sin Iniciar"))
                                                                             {
                                                                                 <td>
-                                                                                    <a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
+                                                                                    @*<a href="javascript:" class="editIncidencia" data-pregunta="@rs.cuestionario.Consecutivo"
                                                                                        data-abreviacion="@rs.cuestionario.Abreviacion" data-incidencia="@inc.Id"
                                                                                        data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
                                                                                        data-incidenciaid="@inc.IncidenciaId" data-tipoi="@inc.Incidencia.Incidencia.Valor"
                                                                                        data-preguntaid="@rs.cuestionario.Id" data-inasistencias="@inc.Inasistencias" data-mesid="@inc.MesId"
                                                                                        data-observaciones="@inc.Observaciones">
                                                                                         <i class="fas fa-pencil text-primary"></i>
-                                                                                    </a>
+                                                                                    </a>*@
                                                                                     <a href="javascript:" class="eliminarIncidencia ml-2"
                                                                                        data-titulo="@Model.CTIncidencias.Single(i=> i.Abreviacion.Equals(rs.cuestionario.Abreviacion)).Valor"
                                                                                        data-abreviacion="@rs.cuestionario.Abreviacion"
@@ -513,7 +521,7 @@
                                                 {
                                                     ci = 0;
                                                     <div class="row col-lg-12 mt-3">
-                                                        <table class="table">
+                                                        <table class="table  table-bordered">
                                                             <thead>
                                                                 <tr>
                                                                     <th>#</th>
@@ -546,7 +554,7 @@
                             <i class="fa-sharp fa-light fa-paperclip mr-2"></i> Entregables
                         </div>
                         <div class="card-body cuerpoEntregables" style="display: none">
-                            <table class="table row-border dataTable" width="100%">
+                            <table class="table row-border dataTable table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -710,7 +718,7 @@
                                 <table class="table row-border dataTable" width="100%">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">Pregunta</th>
+                                            <th class="text-center">Pregunta</th>                                           
                                             <th>Tipo</th>
                                             <th>Concepto</th>
                                             <th class="text-right">Monto</th>
@@ -724,6 +732,7 @@
                                                 <tr>
                                                     <td class="text-center">@rs.Pregunta</td>
                                                     <td>Deductiva</td>
+                                                    <td>@InasistenciasP10</td>
                                                     <td>@Html.Raw(rs.cuestionario.Icono) @rs.cuestionario.Concepto</td>
                                                     <td class="text-right text-primary font-weight-bold">@String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C}", @rs.MontoPenalizacion)</td>
                                                 </tr>
@@ -804,7 +813,7 @@
                             <i class="fal fa-timeline-arrow mr-2"></i> Seguimiento a la cédula
                         </div>
                         <div class="card-body cuerpoSegCedula" style="display: none">
-                            <table class="table dataTable tblLogCedula" width="100%">
+                            <table class="table dataTable tblLogCedula table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -840,7 +849,7 @@
                             <i class="fa-light fa-timeline mr-2"></i> Seguimiento a entregables
                         </div>
                         <div class="card-body cuerpoSegEntregables" style="display: none">
-                            <table class="table dataTable tblLogEntregables" width="100%">
+                            <table class="table dataTable tblLogEntregables table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -1012,6 +1021,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row mt-2" id="divObservaciones">
                             <div class="col-lg-12">
                                 <div class="form-row col-lg-12">
@@ -1120,6 +1130,60 @@
         @*Fin Modal para ver la factura*@
 
         <style>
+            .nav-evaluacion-separada {
+                border: none !important;
+                gap: 15px; /* Espacio real entre cada pestaña */
+                padding: 10px 5px;
+            }
+
+                /* Estilo base de cada pestaña (Pregunta) */
+                .nav-evaluacion-separada .nav-item .nav-link {
+                    background: #ffffff !important;
+                    border: 1px solid #e2e8f0 !important; /* Borde gris suave */
+                    border-radius: 12px !important; /* Bordes muy redondeados */
+                    color: #475569 !important;
+                    padding: 12px 20px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+                    display: flex;
+                    align-items: center;
+                    min-width: 160px; /* Asegura que no se vean apretadas */
+                    justify-content: center;
+                }
+
+                    /* Efecto al pasar el mouse */
+                    .nav-evaluacion-separada .nav-item .nav-link:hover {
+                        transform: translateY(-3px); /* Brinca un poco */
+                        border-color: #cbd5e1 !important;
+                        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+                    }
+
+                    /* ESTADO SELECCIONADO (La pregunta activa) */
+                    .nav-evaluacion-separada .nav-item .nav-link.active {
+                        border: 2px solid #24135f !important; /* Borde azul más grueso */
+                        color: #24135f !important;
+                        transform: translateY(-5px); /* Se eleva más que las otras */
+                        box-shadow: 0 10px 20px rgb(103 0 252 / 0.20);
+                        z-index: 10;
+                    }
+
+                /* Ajuste del icono dentro de la pestaña separada */
+                .nav-evaluacion-separada .nav-link i {
+                    font-size: 1.1rem;
+                    margin-right: 10px;
+                }
+
+            .text-right-lg {
+                text-align: right;
+                font-size: 1.3em;
+            }
+
+            .botonregreso {
+                position: relative; /* Agrega esta línea */
+                left: -33px;
+            }
+
+
             .titulo-principal {
                 font-family: Arial, sans-serif;
                 font-size: 20px;
@@ -1747,6 +1811,7 @@
                 axios.get('/limpieza/' + @Model.Modulo.Id+'/' + @Model.Submodulo.Id+'/facturacion/detalle/' + @Model.Inmueble.Id+'/' + @Model.Repositorio.Id+'/' + @Model.Cedula.Id+'?tipo=' + $(this).val() + '&handler=NombresByTipo').then(response => {
                     if (response.status == 200)
                     {
+                        
                         var options = '<option value="0">Seleccione una opción</option>';
                         for (var i = 0; i < response.data.length; i++) {
                             options += '<option value="' + response.data[i].id + '">' + response.data[i].nombre + '</option>'
@@ -1803,10 +1868,32 @@
                             $("#divFechaIncidencia").css("display", "block");
                             if (abreviacion == "SUA") {
                                 $("#divFechaIncidencia > label").text("Fecha de entrega");
+
                             }
                             else if (abreviacion == "FechaCierre") {
                                 $("#divFechaIncidencia > label").text("Fecha de cierre");
                             }
+                            else if (abreviacion == "CalidadMateriales") {
+                                $("#divCampoIncidencia").css("display", "block");
+                                $("#divFechaIncidencia > label").text("Fecha Programada de Entrega:");
+
+
+                                $("#divInasistencias").css("display", "block");
+                                $("#divInasistencias > label").text("Número de días naturales de atraso:");
+                             
+                                $("#CampoTipoIncidencia > label").text("Material o Insumo NO ENTREGADO:");
+
+
+                            }
+                            if (abreviacion == "EntregablesPlazos" ||
+                                abreviacion == "AditamentosPlazos" ||
+                                abreviacion == "ProgramaOperativo" 
+                            ) {
+
+                                $("#divInasistencias").show(); // .show() es lo mismo que display: block en jQuery
+                                $("#divInasistencias > label").text("Número de días naturales de atraso:");
+                            }
+
                         }
                         if (configuracion[i].detalles) {
                             $("#divCampoIncidencia").css("display", "block");
@@ -1822,6 +1909,11 @@
 
                         if (configuracion[i].observaciones) {
                             $("#divObservaciones").css("display", "block");
+                        }
+
+                        if (abreviacion == "SUA" && configuracion[i].inasistencias) {
+                            $("#divInasistencias").css("display", "block");
+                            $("#divInasistencias > label").text("Número de días naturales de atraso:");
                         }
 
                         return;
@@ -1890,12 +1982,15 @@
                             $("#campoSuaMes").val(respuestas[pregunta - 1].iLimpieza[i].mesId);
                             $("#divFechaIncidencia > label").text("Fecha de entrega");
                             $("#divSuaMes").css("display", "block");
+
                         }
 
                         if (respuestas[pregunta - 1].iLimpieza[i].ciLimpieza.observaciones) {
                             $("#campoObservaciones").val(respuestas[pregunta - 1].iLimpieza[i].observaciones);
                             $("#divObservaciones").css("display", "block");
                         }
+
+
 
                         return;
                     }
@@ -1949,17 +2044,20 @@
                         }
 
                         if (configuracion[i].inasistencias) {
-                            if ($("#campoInasistencias").val() == "") {
+                            // Agregamos la condición :visible
+                            if ($("#campoInasistencias").is(":visible") && $("#campoInasistencias").val().trim() === "") {
                                 denegate = true;
+
                                 $('#campoInasistencias').addClass('is-invalid');
-                                $("#error_campoInasistencias").css("display", "block");
+                                $("#error_campoInasistencias").show();
+
                                 Swal.fire({
-                                    'icon': 'error',
+                                    icon: 'error',
                                     title: 'Servicio de ' + servicio.descripcion,
-                                    'html': "No ha capturado las <b>Inasistencias</b>."
-                                }).then(function () {
-                                    return false;
+                                    html: "No ha capturado las <b>Inasistencias</b>."
                                 });
+
+                                return false;
                             }
                         }
 
@@ -1979,16 +2077,19 @@
                         }
 
                         if (configuracion[i].observaciones) {
-                            if ($("#campoObservaciones").val() == "") {
+                            // Validamos: ¿Es visible AND está vacío?
+                            if ($("#campoObservaciones").is(":visible") && $("#campoObservaciones").val().trim() === "") {
                                 denegate = true;
+
                                 $("#error_observaciones").css("display", "block");
+
                                 Swal.fire({
                                     'icon': 'error',
                                     title: 'Servicio de ' + servicio.descripcion,
                                     'html': "No se han capturado las <b>Observaciones</b>."
-                                }).then(function () {
-                                    return false;
                                 });
+
+                                return false;
                             }
                         }
                     }
